@@ -2023,16 +2023,19 @@ collapse all</a>
 <font class='lnum'>1113</font>   #!/usr/bin/perl
 <font class='lnum'>1114</font>   
 <font class='lnum'>1115</font>   #---------------------------------------------------------------------------------    
-<font class='lnum'>1116</font>   #----------------------Script proper----------------------------------------------
-<font class='lnum'>1117</font>   
-<font class='lnum'>1118</font>   
-<font class='lnum'>1119</font>   <font class='chunkref'>&lt;&lt;general settings&gt;&gt</font>;
-<font class='lnum'>1120</font>   <font class='chunkref'>&lt;&lt;main despatcher&gt;&gt</font>;
-<font class='lnum'>1121</font>   <font class='chunkref'>&lt;&lt;tangle me&gt;&gt</font>;
-<font class='lnum'>1122</font>   <font class='chunkref'>&lt;&lt;weave me&gt;&gt</font>;
-<font class='lnum'>1123</font>   
-<font class='lnum'>1124</font>   # END OF SCRIPT
-<font class='lnum'>1125</font>   </fieldset></pre>
+<font class='lnum'>1116</font>   #
+<font class='lnum'>1117</font>   #	This script is licensed under GPL version 3
+<font class='lnum'>1118</font>   #
+<font class='lnum'>1119</font>   #----------------------Script proper----------------------------------------------
+<font class='lnum'>1120</font>   
+<font class='lnum'>1121</font>   
+<font class='lnum'>1122</font>   <font class='chunkref'>&lt;&lt;general settings&gt;&gt</font>;
+<font class='lnum'>1123</font>   <font class='chunkref'>&lt;&lt;main despatcher&gt;&gt</font>;
+<font class='lnum'>1124</font>   <font class='chunkref'>&lt;&lt;tangle me&gt;&gt</font>;
+<font class='lnum'>1125</font>   <font class='chunkref'>&lt;&lt;weave me&gt;&gt</font>;
+<font class='lnum'>1126</font>   
+<font class='lnum'>1127</font>   # END OF SCRIPT
+<font class='lnum'>1128</font>   </fieldset></pre>
 <p>
 <p>
 
@@ -2050,15 +2053,15 @@ E.g. "noweb" tangler gets confused if it finds double angle brackets<br>
 anywhere, so sometimes it's possible to fool it by setting a var in the<br>
 perl script like this:<br>
 <p>
-<font class='lnum'>1138</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;general settings&gt;&gt;=</legend>
-<font class='lnum'>1139</font>     # need to fool the noweb "notangle" utility, switch markup modes etc.
-<font class='lnum'>1140</font>     $lt = "&lt;";
-<font class='lnum'>1141</font>     $gt = "&gt;";
-<font class='lnum'>1142</font>     $lt_esc = "&lt;";
-<font class='lnum'>1143</font>     $gt_esc = "&gt;";
-<font class='lnum'>1144</font>     $dash = "-";
-<font class='lnum'>1145</font>     $dot = "\.";
-<font class='lnum'>1146</font>   </fieldset></pre>
+<font class='lnum'>1141</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;general settings&gt;&gt;=</legend>
+<font class='lnum'>1142</font>     # need to fool the noweb "notangle" utility, switch markup modes etc.
+<font class='lnum'>1143</font>     $lt = "&lt;";
+<font class='lnum'>1144</font>     $gt = "&gt;";
+<font class='lnum'>1145</font>     $lt_esc = "&lt;";
+<font class='lnum'>1146</font>     $gt_esc = "&gt;";
+<font class='lnum'>1147</font>     $dash = "-";
+<font class='lnum'>1148</font>     $dot = "\.";
+<font class='lnum'>1149</font>   </fieldset></pre>
 <p>
 But more importantly:<br>
 There are a number of parameters that can be set from the literate source file<br>
@@ -2067,22 +2070,22 @@ These are assigned defaults here. You can refer to this portion of the script<br
 to find out what parameters are settable in your document template and expand the<br>
 tunings if you modify MOLLY.pl<br>
 <p>
-<font class='lnum'>1155</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;general settings&gt;&gt;=</legend>
-<font class='lnum'>1156</font>   
-<font class='lnum'>1157</font>     # ----- GENERAL settings -----
-<font class='lnum'>1158</font>     
-<font class='lnum'>1159</font>     # am I a module? 1:0
-<font class='lnum'>1160</font>     $i_am_module = 1;
-<font class='lnum'>1161</font>   
-<font class='lnum'>1162</font>     # print toc? 1:0
-<font class='lnum'>1163</font>     $print_toc = 1 unless defined $print_toc;
-<font class='lnum'>1164</font>       
-<font class='lnum'>1165</font>     # keep TOC expanded on initial load? "block":"none"
-<font class='lnum'>1166</font>     $toc_expanded = $toc_expanded || "block";
-<font class='lnum'>1167</font>   
-<font class='lnum'>1168</font>     # keep TOC expanded in initial load? "block":"none"
-<font class='lnum'>1169</font>     $ind_expanded = $ind_expanded || "none";
-<font class='lnum'>1170</font>   </fieldset></pre>
+<font class='lnum'>1158</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;general settings&gt;&gt;=</legend>
+<font class='lnum'>1159</font>   
+<font class='lnum'>1160</font>     # ----- GENERAL settings -----
+<font class='lnum'>1161</font>     
+<font class='lnum'>1162</font>     # am I a module? 1:0
+<font class='lnum'>1163</font>     $i_am_module = 1;
+<font class='lnum'>1164</font>   
+<font class='lnum'>1165</font>     # print toc? 1:0
+<font class='lnum'>1166</font>     $print_toc = 1 unless defined $print_toc;
+<font class='lnum'>1167</font>       
+<font class='lnum'>1168</font>     # keep TOC expanded on initial load? "block":"none"
+<font class='lnum'>1169</font>     $toc_expanded = $toc_expanded || "block";
+<font class='lnum'>1170</font>   
+<font class='lnum'>1171</font>     # keep TOC expanded in initial load? "block":"none"
+<font class='lnum'>1172</font>     $ind_expanded = $ind_expanded || "none";
+<font class='lnum'>1173</font>   </fieldset></pre>
 <p>
 The script will behave differently depending on its own name. One "major" name<br>
 can be used with others existing as soft links (although an "thttpd" lightweight<br>
@@ -2091,50 +2094,50 @@ The modes are detected by file extensions, which are set here.<br>
 'Weaving' = creating a formatted HTML documentation file on STDOUT<br>
 'Tangling' = creating the program/script source on STDOUT<br>
 <p>
-<font class='lnum'>1179</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;general settings&gt;&gt;=</legend>
-<font class='lnum'>1180</font>     # what is the file extention to weave it? (perms must allow execution!)
-<font class='lnum'>1181</font>     # e.g. "scriptname.weave" or "scriptname.cgi" etc.
-<font class='lnum'>1182</font>     $weave_extension = $weave_extension || "weave";	# default is "weave"
-<font class='lnum'>1183</font>   
-<font class='lnum'>1184</font>       # what is the file extention to tangle it? (perms must allow execution!)
-<font class='lnum'>1185</font>       # e.g. "scriptname.tangle",  "scriptname.pl" etc.
-<font class='lnum'>1186</font>       $tangle_extension = $tangle_extension || "tangle";	# default is "tangle"
-<font class='lnum'>1187</font>   
-<font class='lnum'>1188</font>   
-<font class='lnum'>1189</font>   
-<font class='lnum'>1190</font>     # tangle? Or run? (perms must allow execution)
-<font class='lnum'>1191</font>     $tangle_me = 1;
+<font class='lnum'>1182</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;general settings&gt;&gt;=</legend>
+<font class='lnum'>1183</font>     # what is the file extention to weave it? (perms must allow execution!)
+<font class='lnum'>1184</font>     # e.g. "scriptname.weave" or "scriptname.cgi" etc.
+<font class='lnum'>1185</font>     $weave_extension = $weave_extension || "weave";	# default is "weave"
+<font class='lnum'>1186</font>   
+<font class='lnum'>1187</font>       # what is the file extention to tangle it? (perms must allow execution!)
+<font class='lnum'>1188</font>       # e.g. "scriptname.tangle",  "scriptname.pl" etc.
+<font class='lnum'>1189</font>       $tangle_extension = $tangle_extension || "tangle";	# default is "tangle"
+<font class='lnum'>1190</font>   
+<font class='lnum'>1191</font>   
 <font class='lnum'>1192</font>   
-<font class='lnum'>1193</font>         # -- not implemented yet --
-<font class='lnum'>1194</font>         #
-<font class='lnum'>1195</font>         #$run_me = 0;
-<font class='lnum'>1196</font>         # what interpreter to run the tangle output with?
-<font class='lnum'>1197</font>         #$run_me_with="/usr/bin/perl";
-<font class='lnum'>1198</font>   
-<font class='lnum'>1199</font>   
-<font class='lnum'>1200</font>   # number lines ? 1 : else
-<font class='lnum'>1201</font>   $line_numbering = 1;
-<font class='lnum'>1202</font>   </fieldset></pre>
+<font class='lnum'>1193</font>     # tangle? Or run? (perms must allow execution)
+<font class='lnum'>1194</font>     $tangle_me = 1;
+<font class='lnum'>1195</font>   
+<font class='lnum'>1196</font>         # -- not implemented yet --
+<font class='lnum'>1197</font>         #
+<font class='lnum'>1198</font>         #$run_me = 0;
+<font class='lnum'>1199</font>         # what interpreter to run the tangle output with?
+<font class='lnum'>1200</font>         #$run_me_with="/usr/bin/perl";
+<font class='lnum'>1201</font>   
+<font class='lnum'>1202</font>   
+<font class='lnum'>1203</font>   # number lines ? 1 : else
+<font class='lnum'>1204</font>   $line_numbering = 1;
+<font class='lnum'>1205</font>   </fieldset></pre>
 <p>
 The document sections ("chunks") can be marked with actual HTML tags ("rawHTML") or<br>
 with a smaller number of the same tags in "dots" in place of "angle brackets", i.e.<br>
 dot-br-dot, not open.angle-br-closing.angle<br>
 This is selected here:<br>
 <p>
-<font class='lnum'>1209</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;general settings&gt;&gt;=</legend>
-<font class='lnum'>1210</font>   # how are doc sections marked? "dotHTML":"rawHTML"
-<font class='lnum'>1211</font>   $weave_markup = $weave_markup || "rawHTML"; # default is "rawHTML"
-<font class='lnum'>1212</font>   
-<font class='lnum'>1213</font>       if ($weave_markup eq "dotHTML") {
-<font class='lnum'>1214</font>   	$tag_open_symbol = $dot;	# this will take care of default
-<font class='lnum'>1215</font>   	$tag_close_symbol = $dot;	# when no var is set in the Lit Src file
-<font class='lnum'>1216</font>       }
-<font class='lnum'>1217</font>       elsif ($weave_markup eq "rawHTML") { 
-<font class='lnum'>1218</font>   	$tag_open_symbol = $lt;
-<font class='lnum'>1219</font>   	$tag_close_symbol = $gt;
-<font class='lnum'>1220</font>       } #fi
-<font class='lnum'>1221</font>   
-<font class='lnum'>1222</font>   </fieldset></pre>
+<font class='lnum'>1212</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;general settings&gt;&gt;=</legend>
+<font class='lnum'>1213</font>   # how are doc sections marked? "dotHTML":"rawHTML"
+<font class='lnum'>1214</font>   $weave_markup = $weave_markup || "rawHTML"; # default is "rawHTML"
+<font class='lnum'>1215</font>   
+<font class='lnum'>1216</font>       if ($weave_markup eq "dotHTML") {
+<font class='lnum'>1217</font>   	$tag_open_symbol = $dot;	# this will take care of default
+<font class='lnum'>1218</font>   	$tag_close_symbol = $dot;	# when no var is set in the Lit Src file
+<font class='lnum'>1219</font>       }
+<font class='lnum'>1220</font>       elsif ($weave_markup eq "rawHTML") { 
+<font class='lnum'>1221</font>   	$tag_open_symbol = $lt;
+<font class='lnum'>1222</font>   	$tag_close_symbol = $gt;
+<font class='lnum'>1223</font>       } #fi
+<font class='lnum'>1224</font>   
+<font class='lnum'>1225</font>   </fieldset></pre>
 <p>
 It would make sense to add a few more markups to the program, i.e. some "wiki" many use,<br>
 and some TeX basic tags for automatic translation, if the doc is tagged as a TeX file.<br>
@@ -2177,9 +2180,9 @@ If the script name ends in "weave" (e.g. script.weave), it will be weaved to STD
 If the name ends in "tangle", the source starting from the default chunk &lt; &lt;*&gt; &gt;<br>
 (without spaces) will be dumped to STDOUT:<br>
 <p>
-<font class='lnum'>1244</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;main despatcher&gt;&gt;=</legend>
-<font class='lnum'>1245</font>   <font class='chunkref'>&lt;&lt;main despatcher kludgy&gt;&gt</font>;
-<font class='lnum'>1246</font>   </fieldset></pre>
+<font class='lnum'>1247</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;main despatcher&gt;&gt;=</legend>
+<font class='lnum'>1248</font>   <font class='chunkref'>&lt;&lt;main despatcher kludgy&gt;&gt</font>;
+<font class='lnum'>1249</font>   </fieldset></pre>
 <p>
 	<fieldset><legend><a href="javascript:;" onmousedown="toggleCombined('33');">
  With tanglediffs as an option </a></legend></fieldset>
@@ -2210,10 +2213,10 @@ The tanglediffs will present a form to select a disk file to tanglediff against;
 subsequent views of output can be done by reloading the page in a browser.<br>
 </ul><br>
 <p>
-<font class='lnum'>1272</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;main despatcher with tanglediffs&gt;&gt;=</legend>
-<font class='lnum'>1273</font>   ;
-<font class='lnum'>1274</font>   
-<font class='lnum'>1275</font>   </fieldset></pre>
+<font class='lnum'>1275</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;main despatcher with tanglediffs&gt;&gt;=</legend>
+<font class='lnum'>1276</font>   ;
+<font class='lnum'>1277</font>   
+<font class='lnum'>1278</font>   </fieldset></pre>
 <p>
 	<fieldset><legend><a href="javascript:;" onmousedown="toggleCombined('34');">
  a skeleton script to test this snippet </a></legend></fieldset>
@@ -2226,41 +2229,41 @@ To test: <br>
 </li><li> and set thttpd.conf to treat x.tangle as cgi<br>
 </li></ol><br>
 <p>
-<font class='lnum'>1283</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;tanglediff test 1&gt;&gt;=</legend>
-<font class='lnum'>1284</font>   #!/usr/bin/perl
-<font class='lnum'>1285</font>   
-<font class='lnum'>1286</font>   if ( $0 =~ m!\.tangle$! ) { 
-<font class='lnum'>1287</font>       if ($ENV{'REQUEST_METHOD'}){ goto TANGLEDIFF_ME }
-<font class='lnum'>1288</font>       else { goto TANGLE_ME; }
-<font class='lnum'>1289</font>   }
-<font class='lnum'>1290</font>   elsif ( $0 =~ m!\.weave$! ) {
-<font class='lnum'>1291</font>       goto WEAVE_ME
+<font class='lnum'>1286</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;tanglediff test 1&gt;&gt;=</legend>
+<font class='lnum'>1287</font>   #!/usr/bin/perl
+<font class='lnum'>1288</font>   
+<font class='lnum'>1289</font>   if ( $0 =~ m!\.tangle$! ) { 
+<font class='lnum'>1290</font>       if ($ENV{'REQUEST_METHOD'}){ goto TANGLEDIFF_ME }
+<font class='lnum'>1291</font>       else { goto TANGLE_ME; }
 <font class='lnum'>1292</font>   }
-<font class='lnum'>1293</font>   else {
-<font class='lnum'>1294</font>       #output error message and usage 
-<font class='lnum'>1295</font>       exit;
-<font class='lnum'>1296</font>   }
-<font class='lnum'>1297</font>   
-<font class='lnum'>1298</font>   TANGLE_ME:
-<font class='lnum'>1299</font>       print "I am being tangled\n";
-<font class='lnum'>1300</font>       exit;
-<font class='lnum'>1301</font>   
-<font class='lnum'>1302</font>   TANGLEDIFF_ME:
-<font class='lnum'>1303</font>       #disassemble and check the query string here
-<font class='lnum'>1304</font>       #and accordingly do a primitive protocol:
-<font class='lnum'>1305</font>   	# output file selection form of none
-<font class='lnum'>1306</font>   	# show the diff if selected, e.g. 
-<font class='lnum'>1307</font>   	#   "script.tangle?filename_on_disk_to_tanglediff_against"
-<font class='lnum'>1308</font>       
-<font class='lnum'>1309</font>       #debug:
-<font class='lnum'>1310</font>       print "I am in a tanglediffer\n";
-<font class='lnum'>1311</font>       exit;
-<font class='lnum'>1312</font>   
-<font class='lnum'>1313</font>   WEAVE_ME:
-<font class='lnum'>1314</font>       print "I am in a weaver\n";
-<font class='lnum'>1315</font>       exit;
-<font class='lnum'>1316</font>   
-<font class='lnum'>1317</font>   </fieldset></pre>
+<font class='lnum'>1293</font>   elsif ( $0 =~ m!\.weave$! ) {
+<font class='lnum'>1294</font>       goto WEAVE_ME
+<font class='lnum'>1295</font>   }
+<font class='lnum'>1296</font>   else {
+<font class='lnum'>1297</font>       #output error message and usage 
+<font class='lnum'>1298</font>       exit;
+<font class='lnum'>1299</font>   }
+<font class='lnum'>1300</font>   
+<font class='lnum'>1301</font>   TANGLE_ME:
+<font class='lnum'>1302</font>       print "I am being tangled\n";
+<font class='lnum'>1303</font>       exit;
+<font class='lnum'>1304</font>   
+<font class='lnum'>1305</font>   TANGLEDIFF_ME:
+<font class='lnum'>1306</font>       #disassemble and check the query string here
+<font class='lnum'>1307</font>       #and accordingly do a primitive protocol:
+<font class='lnum'>1308</font>   	# output file selection form of none
+<font class='lnum'>1309</font>   	# show the diff if selected, e.g. 
+<font class='lnum'>1310</font>   	#   "script.tangle?filename_on_disk_to_tanglediff_against"
+<font class='lnum'>1311</font>       
+<font class='lnum'>1312</font>       #debug:
+<font class='lnum'>1313</font>       print "I am in a tanglediffer\n";
+<font class='lnum'>1314</font>       exit;
+<font class='lnum'>1315</font>   
+<font class='lnum'>1316</font>   WEAVE_ME:
+<font class='lnum'>1317</font>       print "I am in a weaver\n";
+<font class='lnum'>1318</font>       exit;
+<font class='lnum'>1319</font>   
+<font class='lnum'>1320</font>   </fieldset></pre>
 <p>
 <b>also</b> where there were "weaver" and "tangler" before, I'll have one more "tanglediff"<br>
 subsection below to set the "diff" invocation and dumping its output.<br>
@@ -2314,84 +2317,84 @@ I could also do "weavediff" and "tanglediff" for ease of checking in the browser
 <p>
 In that case the despatcher will be different:<br>
 <p>
-<font class='lnum'>1350</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;tanglediff.test2.pl&gt;&gt;=</legend>
-<font class='lnum'>1351</font>   #!/usr/bin/perl
-<font class='lnum'>1352</font>   
-<font class='lnum'>1353</font>   $weave_extension = "weave";
-<font class='lnum'>1354</font>   $tangle_extension = "tangle";
+<font class='lnum'>1353</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;tanglediff.test2.pl&gt;&gt;=</legend>
+<font class='lnum'>1354</font>   #!/usr/bin/perl
 <font class='lnum'>1355</font>   
-<font class='lnum'>1356</font>   
-<font class='lnum'>1357</font>   # -- a call for the weaver --
-<font class='lnum'>1358</font>   if ( $0 =~ m!\.$weave_extension$! ) {
+<font class='lnum'>1356</font>   $weave_extension = "weave";
+<font class='lnum'>1357</font>   $tangle_extension = "tangle";
+<font class='lnum'>1358</font>   
 <font class='lnum'>1359</font>   
-<font class='lnum'>1360</font>       # --- a call from CGI ---
-<font class='lnum'>1361</font>       if ($ENV{'REQUEST_METHOD'}){
+<font class='lnum'>1360</font>   # -- a call for the weaver --
+<font class='lnum'>1361</font>   if ( $0 =~ m!\.$weave_extension$! ) {
 <font class='lnum'>1362</font>   
-<font class='lnum'>1363</font>   	print "\nFIRST OF ALL, THIS IS A CALL TO WEAVER\n";
-<font class='lnum'>1364</font>   
-<font class='lnum'>1365</font>   	#pull and process QUERY_STRING to weave or tanglediff
-<font class='lnum'>1366</font>   	
-<font class='lnum'>1367</font>   	if ( $ENV{'QUERY_STRING'} eq "" ) {
-<font class='lnum'>1368</font>   
-<font class='lnum'>1369</font>   	    print "&lt;html&gt;&lt;body&gt;\n";
-<font class='lnum'>1370</font>   	    print "a CGI call for weaving&lt;br&gt;\n";
-<font class='lnum'>1371</font>   	    print "&lt;/body&gt;&lt;/html";
-<font class='lnum'>1372</font>   	}
-<font class='lnum'>1373</font>   
-<font class='lnum'>1374</font>   
-<font class='lnum'>1375</font>   	elsif ( $ENV{'QUERY_STRING'} eq "diff") {
-<font class='lnum'>1376</font>   	    print "here I should output the file selection form for tangle-diff\n"
-<font class='lnum'>1377</font>   	}
-<font class='lnum'>1378</font>   	elsif ($ENV{'QUERY_STRING'} =~ m!^diff&(.*)$! ) {
-<font class='lnum'>1379</font>   
-<font class='lnum'>1380</font>   	    # check the supposed filename is an allowed alphanumeric:
-<font class='lnum'>1381</font>   	    # convert spaces into underscores and check for match to "\w+"
-<font class='lnum'>1382</font>   	    print "a call from CGI for a diff with some file.. going to check if it exists..\n";
-<font class='lnum'>1383</font>   
-<font class='lnum'>1384</font>   	    # for the test - just get the file
-<font class='lnum'>1385</font>   	    # /if the file with such a name exists, of course/
-<font class='lnum'>1386</font>   	    if (-f $1) {
-<font class='lnum'>1387</font>   
-<font class='lnum'>1388</font>   		# then run the piped command like
-<font class='lnum'>1389</font>   		# scriptname.tangle | diff -y -w --left-column xxz -
-<font class='lnum'>1390</font>   		print "here tanglediff pipe will be with the given file\n"
-<font class='lnum'>1391</font>   
-<font class='lnum'>1392</font>   	    } # fi rung the tanglediff pipe
-<font class='lnum'>1393</font>   	} # fi this is CGI GET args for tanglediffing
-<font class='lnum'>1394</font>   	else {
-<font class='lnum'>1395</font>   	    print "a call from CGI to the weaver -- with unknown arguments&lt;br&gt;\n";
-<font class='lnum'>1396</font>   	}
-<font class='lnum'>1397</font>   
-<font class='lnum'>1398</font>       } # this was a call from CGI
-<font class='lnum'>1399</font>   
-<font class='lnum'>1400</font>       # --- a call from CL ---
-<font class='lnum'>1401</font>       else {
-<font class='lnum'>1402</font>   	#process command-line args
-<font class='lnum'>1403</font>   	# to weave or weavediff or tanglediff
-<font class='lnum'>1404</font>   	print "this is a call from CL\n";
-<font class='lnum'>1405</font>   	print " arg1 is $ARGV[0] -- arg2 is $ARGV[1]\n";
-<font class='lnum'>1406</font>   	print "The same 3 options will apply: weave, ask for selection and tanglediff\n";
-<font class='lnum'>1407</font>       } # esle, fi -- this was a call from command line
-<font class='lnum'>1408</font>   }
-<font class='lnum'>1409</font>   
-<font class='lnum'>1410</font>   # -- a call for the tangler -- 
-<font class='lnum'>1411</font>   elsif ( $0 =~ m!\.$tangle_extension$! ) {
+<font class='lnum'>1363</font>       # --- a call from CGI ---
+<font class='lnum'>1364</font>       if ($ENV{'REQUEST_METHOD'}){
+<font class='lnum'>1365</font>   
+<font class='lnum'>1366</font>   	print "\nFIRST OF ALL, THIS IS A CALL TO WEAVER\n";
+<font class='lnum'>1367</font>   
+<font class='lnum'>1368</font>   	#pull and process QUERY_STRING to weave or tanglediff
+<font class='lnum'>1369</font>   	
+<font class='lnum'>1370</font>   	if ( $ENV{'QUERY_STRING'} eq "" ) {
+<font class='lnum'>1371</font>   
+<font class='lnum'>1372</font>   	    print "&lt;html&gt;&lt;body&gt;\n";
+<font class='lnum'>1373</font>   	    print "a CGI call for weaving&lt;br&gt;\n";
+<font class='lnum'>1374</font>   	    print "&lt;/body&gt;&lt;/html";
+<font class='lnum'>1375</font>   	}
+<font class='lnum'>1376</font>   
+<font class='lnum'>1377</font>   
+<font class='lnum'>1378</font>   	elsif ( $ENV{'QUERY_STRING'} eq "diff") {
+<font class='lnum'>1379</font>   	    print "here I should output the file selection form for tangle-diff\n"
+<font class='lnum'>1380</font>   	}
+<font class='lnum'>1381</font>   	elsif ($ENV{'QUERY_STRING'} =~ m!^diff&(.*)$! ) {
+<font class='lnum'>1382</font>   
+<font class='lnum'>1383</font>   	    # check the supposed filename is an allowed alphanumeric:
+<font class='lnum'>1384</font>   	    # convert spaces into underscores and check for match to "\w+"
+<font class='lnum'>1385</font>   	    print "a call from CGI for a diff with some file.. going to check if it exists..\n";
+<font class='lnum'>1386</font>   
+<font class='lnum'>1387</font>   	    # for the test - just get the file
+<font class='lnum'>1388</font>   	    # /if the file with such a name exists, of course/
+<font class='lnum'>1389</font>   	    if (-f $1) {
+<font class='lnum'>1390</font>   
+<font class='lnum'>1391</font>   		# then run the piped command like
+<font class='lnum'>1392</font>   		# scriptname.tangle | diff -y -w --left-column xxz -
+<font class='lnum'>1393</font>   		print "here tanglediff pipe will be with the given file\n"
+<font class='lnum'>1394</font>   
+<font class='lnum'>1395</font>   	    } # fi rung the tanglediff pipe
+<font class='lnum'>1396</font>   	} # fi this is CGI GET args for tanglediffing
+<font class='lnum'>1397</font>   	else {
+<font class='lnum'>1398</font>   	    print "a call from CGI to the weaver -- with unknown arguments&lt;br&gt;\n";
+<font class='lnum'>1399</font>   	}
+<font class='lnum'>1400</font>   
+<font class='lnum'>1401</font>       } # this was a call from CGI
+<font class='lnum'>1402</font>   
+<font class='lnum'>1403</font>       # --- a call from CL ---
+<font class='lnum'>1404</font>       else {
+<font class='lnum'>1405</font>   	#process command-line args
+<font class='lnum'>1406</font>   	# to weave or weavediff or tanglediff
+<font class='lnum'>1407</font>   	print "this is a call from CL\n";
+<font class='lnum'>1408</font>   	print " arg1 is $ARGV[0] -- arg2 is $ARGV[1]\n";
+<font class='lnum'>1409</font>   	print "The same 3 options will apply: weave, ask for selection and tanglediff\n";
+<font class='lnum'>1410</font>       } # esle, fi -- this was a call from command line
+<font class='lnum'>1411</font>   }
 <font class='lnum'>1412</font>   
-<font class='lnum'>1413</font>       # do direct tangling
-<font class='lnum'>1414</font>       # will not execute in the browser, as the web server
-<font class='lnum'>1415</font>       # does not allow it?? -- or filter on REQUEST_METHOD, too?
-<font class='lnum'>1416</font>       print "a CL call for tangling\n";
-<font class='lnum'>1417</font>   
-<font class='lnum'>1418</font>   }
-<font class='lnum'>1419</font>   
-<font class='lnum'>1420</font>   # -- a call for other extensions --
-<font class='lnum'>1421</font>   else {
-<font class='lnum'>1422</font>       #print usage
-<font class='lnum'>1423</font>       print "a call with an unknown extension or a call to 'tangle' from under CGI\n";
-<font class='lnum'>1424</font>       print "Not allowed, printing usage..\n";
-<font class='lnum'>1425</font>   }
-<font class='lnum'>1426</font>   
-<font class='lnum'>1427</font>   </fieldset></pre>
+<font class='lnum'>1413</font>   # -- a call for the tangler -- 
+<font class='lnum'>1414</font>   elsif ( $0 =~ m!\.$tangle_extension$! ) {
+<font class='lnum'>1415</font>   
+<font class='lnum'>1416</font>       # do direct tangling
+<font class='lnum'>1417</font>       # will not execute in the browser, as the web server
+<font class='lnum'>1418</font>       # does not allow it?? -- or filter on REQUEST_METHOD, too?
+<font class='lnum'>1419</font>       print "a CL call for tangling\n";
+<font class='lnum'>1420</font>   
+<font class='lnum'>1421</font>   }
+<font class='lnum'>1422</font>   
+<font class='lnum'>1423</font>   # -- a call for other extensions --
+<font class='lnum'>1424</font>   else {
+<font class='lnum'>1425</font>       #print usage
+<font class='lnum'>1426</font>       print "a call with an unknown extension or a call to 'tangle' from under CGI\n";
+<font class='lnum'>1427</font>       print "Not allowed, printing usage..\n";
+<font class='lnum'>1428</font>   }
+<font class='lnum'>1429</font>   
+<font class='lnum'>1430</font>   </fieldset></pre>
 <p>
 <p>
 <b> So </b> this one seems to be Ok, although I still dislike its cludginess. I'd like a<br>
@@ -2446,26 +2449,26 @@ collapse all</a>
 command line options parsing??<br>
 Error/usage message should be html-ized too??<br>
 <p>
-<font class='lnum'>1445</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;main despatcher kludgy&gt;&gt;=</legend>
-<font class='lnum'>1446</font>     # -- MAIN DESPATCHER ----
-<font class='lnum'>1447</font>   
-<font class='lnum'>1448</font>     # check if $i_am_module and set filenames to $0 - or 
-<font class='lnum'>1449</font>     # process CL options otherwise
+<font class='lnum'>1448</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;main despatcher kludgy&gt;&gt;=</legend>
+<font class='lnum'>1449</font>     # -- MAIN DESPATCHER ----
 <font class='lnum'>1450</font>   
-<font class='lnum'>1451</font>     # (temp) - 2 options, to weave and to tangle in module mode:
-<font class='lnum'>1452</font>     #
-<font class='lnum'>1453</font>     if ( $0 =~ m!\w+\.$weave_extension$! ) { goto WEAVE_ME }
-<font class='lnum'>1454</font>     elsif ( $tangle_me) {goto TANGLE_ME}
-<font class='lnum'>1455</font>     else {
-<font class='lnum'>1456</font>     print &lt;&lt;end_of_print;
-<font class='lnum'>1457</font>   
-<font class='lnum'>1458</font>   	USAGE:
-<font class='lnum'>1459</font>   	Not set to tangle.
-<font class='lnum'>1460</font>   	Set variables at the beginning of the script properly.  
-<font class='lnum'>1461</font>   
-<font class='lnum'>1462</font>   end_of_print
-<font class='lnum'>1463</font>     }
-<font class='lnum'>1464</font>   </fieldset></pre>
+<font class='lnum'>1451</font>     # check if $i_am_module and set filenames to $0 - or 
+<font class='lnum'>1452</font>     # process CL options otherwise
+<font class='lnum'>1453</font>   
+<font class='lnum'>1454</font>     # (temp) - 2 options, to weave and to tangle in module mode:
+<font class='lnum'>1455</font>     #
+<font class='lnum'>1456</font>     if ( $0 =~ m!\w+\.$weave_extension$! ) { goto WEAVE_ME }
+<font class='lnum'>1457</font>     elsif ( $tangle_me) {goto TANGLE_ME}
+<font class='lnum'>1458</font>     else {
+<font class='lnum'>1459</font>     print &lt;&lt;end_of_print;
+<font class='lnum'>1460</font>   
+<font class='lnum'>1461</font>   	USAGE:
+<font class='lnum'>1462</font>   	Not set to tangle.
+<font class='lnum'>1463</font>   	Set variables at the beginning of the script properly.  
+<font class='lnum'>1464</font>   
+<font class='lnum'>1465</font>   end_of_print
+<font class='lnum'>1466</font>     }
+<font class='lnum'>1467</font>   </fieldset></pre>
 <p>
 <p>
 <p>
@@ -2565,30 +2568,30 @@ Later other modes of operation may be incorporated here.<br>
 <p>
 Passes the request to "notangle" from the "noweb" literate tools suite.<br>
 <p>
-<font class='lnum'>1506</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;tangle me&gt;&gt;=</legend>
-<font class='lnum'>1507</font>   <font class='chunkref'>&lt;&lt;tangle me with filtering&gt;&gt</font>;
-<font class='lnum'>1508</font>   </fieldset></pre>
+<font class='lnum'>1509</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;tangle me&gt;&gt;=</legend>
+<font class='lnum'>1510</font>   <font class='chunkref'>&lt;&lt;tangle me with filtering&gt;&gt</font>;
+<font class='lnum'>1511</font>   </fieldset></pre>
 <p>
 <p>
-<font class='lnum'>1511</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;tangle me straight&gt;&gt;=</legend>
-<font class='lnum'>1512</font>   
-<font class='lnum'>1513</font>   
-<font class='lnum'>1514</font>   TANGLE_ME:
+<font class='lnum'>1514</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;tangle me straight&gt;&gt;=</legend>
 <font class='lnum'>1515</font>   
-<font class='lnum'>1516</font>   	open TANGLE_PIPE, "| notangle -t4 -";
-<font class='lnum'>1517</font>   
-<font class='lnum'>1518</font>   	open MYSELF, "&lt;$0";
-<font class='lnum'>1519</font>   	while  (&lt;MYSELF&gt;) {
-<font class='lnum'>1520</font>   	    # filter here
-<font class='lnum'>1521</font>   	    # filter here and
-<font class='lnum'>1522</font>   	print TANGLE_PIPE $_;
-<font class='lnum'>1523</font>   	}
-<font class='lnum'>1524</font>   
-<font class='lnum'>1525</font>   	close TANGLE_PIPE;
-<font class='lnum'>1526</font>   	close MYSELF;
-<font class='lnum'>1527</font>   exit;
-<font class='lnum'>1528</font>   
-<font class='lnum'>1529</font>   </fieldset></pre>
+<font class='lnum'>1516</font>   
+<font class='lnum'>1517</font>   TANGLE_ME:
+<font class='lnum'>1518</font>   
+<font class='lnum'>1519</font>   	open TANGLE_PIPE, "| notangle -t4 -";
+<font class='lnum'>1520</font>   
+<font class='lnum'>1521</font>   	open MYSELF, "&lt;$0";
+<font class='lnum'>1522</font>   	while  (&lt;MYSELF&gt;) {
+<font class='lnum'>1523</font>   	    # filter here
+<font class='lnum'>1524</font>   	    # filter here and
+<font class='lnum'>1525</font>   	print TANGLE_PIPE $_;
+<font class='lnum'>1526</font>   	}
+<font class='lnum'>1527</font>   
+<font class='lnum'>1528</font>   	close TANGLE_PIPE;
+<font class='lnum'>1529</font>   	close MYSELF;
+<font class='lnum'>1530</font>   exit;
+<font class='lnum'>1531</font>   
+<font class='lnum'>1532</font>   </fieldset></pre>
 <p>
 Pre-filtering might need to bo done. E.g. "notangle" gets confused by double angle brackets<br>
 even when those are inside the document chunks.<br>
@@ -2600,34 +2603,34 @@ if I want to do it from command-line with some special options or for a non-root
 <p>
 This is not a full solution in itself. Consider it as a template for pre-filtering, sort of.<br>
 <p>
-<font class='lnum'>1541</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;tangle me with filtering&gt;&gt;=</legend>
-<font class='lnum'>1542</font>   
-<font class='lnum'>1543</font>   
-<font class='lnum'>1544</font>   TANGLE_ME:
+<font class='lnum'>1544</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;tangle me with filtering&gt;&gt;=</legend>
 <font class='lnum'>1545</font>   
-<font class='lnum'>1546</font>   	open TANGLE_PIPE, "| notangle -t4 -";
-<font class='lnum'>1547</font>   
-<font class='lnum'>1548</font>   	open MYSELF, "&lt;$0";
-<font class='lnum'>1549</font>   	while  (&lt;MYSELF&gt;) {
+<font class='lnum'>1546</font>   
+<font class='lnum'>1547</font>   TANGLE_ME:
+<font class='lnum'>1548</font>   
+<font class='lnum'>1549</font>   	open TANGLE_PIPE, "| notangle -t4 -";
 <font class='lnum'>1550</font>   
-<font class='lnum'>1551</font>   	    if ( m!^(goto)?&lt;\&lt;(.*)&gt;\&gt;=! ... m!^@\s*$! ) { # -- CODE CHUNKS -- 
-<font class='lnum'>1552</font>   		print TANGLE_PIPE $_;
-<font class='lnum'>1553</font>   	    }
-<font class='lnum'>1554</font>   	    else {  # -- DOC CHUNKS /and beginning of file, irrelevant / --
-<font class='lnum'>1555</font>   
-<font class='lnum'>1556</font>   		# filter double angle brackets that confuse "notangle"
-<font class='lnum'>1557</font>   		s/&lt;&lt;/$lt_esc$lt_esc/g;
-<font class='lnum'>1558</font>   		s/&gt;&gt;/$gt_esc$gt_esc/g;
-<font class='lnum'>1559</font>   		print TANGLE_PIPE $_;
-<font class='lnum'>1560</font>   	    }
-<font class='lnum'>1561</font>   
-<font class='lnum'>1562</font>   	} # elihw
-<font class='lnum'>1563</font>   
-<font class='lnum'>1564</font>   	close TANGLE_PIPE;
-<font class='lnum'>1565</font>   	close MYSELF;
-<font class='lnum'>1566</font>   exit;
-<font class='lnum'>1567</font>   
-<font class='lnum'>1568</font>   </fieldset></pre>
+<font class='lnum'>1551</font>   	open MYSELF, "&lt;$0";
+<font class='lnum'>1552</font>   	while  (&lt;MYSELF&gt;) {
+<font class='lnum'>1553</font>   
+<font class='lnum'>1554</font>   	    if ( m!^(goto)?&lt;\&lt;(.*)&gt;\&gt;=! ... m!^@\s*$! ) { # -- CODE CHUNKS -- 
+<font class='lnum'>1555</font>   		print TANGLE_PIPE $_;
+<font class='lnum'>1556</font>   	    }
+<font class='lnum'>1557</font>   	    else {  # -- DOC CHUNKS /and beginning of file, irrelevant / --
+<font class='lnum'>1558</font>   
+<font class='lnum'>1559</font>   		# filter double angle brackets that confuse "notangle"
+<font class='lnum'>1560</font>   		s/&lt;&lt;/$lt_esc$lt_esc/g;
+<font class='lnum'>1561</font>   		s/&gt;&gt;/$gt_esc$gt_esc/g;
+<font class='lnum'>1562</font>   		print TANGLE_PIPE $_;
+<font class='lnum'>1563</font>   	    }
+<font class='lnum'>1564</font>   
+<font class='lnum'>1565</font>   	} # elihw
+<font class='lnum'>1566</font>   
+<font class='lnum'>1567</font>   	close TANGLE_PIPE;
+<font class='lnum'>1568</font>   	close MYSELF;
+<font class='lnum'>1569</font>   exit;
+<font class='lnum'>1570</font>   
+<font class='lnum'>1571</font>   </fieldset></pre>
 <p>
 <b> BUG of sorts </b><br>
 the "lt" and "gt" escapes in the code chunks right above ("tangle me with filtering") are not <br>
@@ -2686,22 +2689,22 @@ instead??<br>
 <p>
 PErl will require a module then:<br>
 <p>
-<font class='lnum'>1601</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;md5 hashing from perl&gt;&gt;=</legend>
-<font class='lnum'>1602</font>   #!/usr/bin/perl
-<font class='lnum'>1603</font>   # Functional style
-<font class='lnum'>1604</font>    use Digest::MD5 qw(md5 md5_hex md5_base64);
-<font class='lnum'>1605</font>   
-<font class='lnum'>1606</font>    #$digest = md5($data);
-<font class='lnum'>1607</font>    #$digest = md5_hex($data);
-<font class='lnum'>1608</font>    #$digest = md5_base64($data);
-<font class='lnum'>1609</font>   
-<font class='lnum'>1610</font>    # my test:
-<font class='lnum'>1611</font>    $digest1 = md5_base64("md5 hashing from perl");
-<font class='lnum'>1612</font>    $digest2 = md5_base64("Chunk names are free phrases in a human lang. I need poss. to make a hash 
-<font class='lnum'>1613</font>       of contents with the title as  the key. A phrase is not good for that, so could I use MD5 
-<font class='lnum'>1614</font>       hashes of the title");
-<font class='lnum'>1615</font>    print "$digest1\n$digest2\n";
-<font class='lnum'>1616</font>   </fieldset></pre>
+<font class='lnum'>1604</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;md5 hashing from perl&gt;&gt;=</legend>
+<font class='lnum'>1605</font>   #!/usr/bin/perl
+<font class='lnum'>1606</font>   # Functional style
+<font class='lnum'>1607</font>    use Digest::MD5 qw(md5 md5_hex md5_base64);
+<font class='lnum'>1608</font>   
+<font class='lnum'>1609</font>    #$digest = md5($data);
+<font class='lnum'>1610</font>    #$digest = md5_hex($data);
+<font class='lnum'>1611</font>    #$digest = md5_base64($data);
+<font class='lnum'>1612</font>   
+<font class='lnum'>1613</font>    # my test:
+<font class='lnum'>1614</font>    $digest1 = md5_base64("md5 hashing from perl");
+<font class='lnum'>1615</font>    $digest2 = md5_base64("Chunk names are free phrases in a human lang. I need poss. to make a hash 
+<font class='lnum'>1616</font>       of contents with the title as  the key. A phrase is not good for that, so could I use MD5 
+<font class='lnum'>1617</font>       hashes of the title");
+<font class='lnum'>1618</font>    print "$digest1\n$digest2\n";
+<font class='lnum'>1619</font>   </fieldset></pre>
 <p>
 
 </ul>
@@ -2734,16 +2737,16 @@ create hash;
 <p>
 I will get here if I am "scriptname.tangle" and $builtin_tangler = 1<br>
 <p>
-<font class='lnum'>1628</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;built-in tangler skeleton&gt;&gt;=</legend>
-<font class='lnum'>1629</font>   #!/usr/bin/perl
-<font class='lnum'>1630</font>       use Digest::MD5 qw(md5_base64);
-<font class='lnum'>1631</font>   
-<font class='lnum'>1632</font>       $use_builtin_tangler = 1;
-<font class='lnum'>1633</font>       unless ($use_builtin_tangler) {print "not set to tangle in the options\n"; exit}
+<font class='lnum'>1631</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;built-in tangler skeleton&gt;&gt;=</legend>
+<font class='lnum'>1632</font>   #!/usr/bin/perl
+<font class='lnum'>1633</font>       use Digest::MD5 qw(md5_base64);
 <font class='lnum'>1634</font>   
-<font class='lnum'>1635</font>       <font class='chunkref'>&lt;&lt;first pass of tangling - accumulate in RAM&gt;&gt</font>;
-<font class='lnum'>1636</font>       <font class='chunkref'>&lt;&lt;second pass of tangling - print out&gt;&gt</font>;
-<font class='lnum'>1637</font>   </fieldset></pre>
+<font class='lnum'>1635</font>       $use_builtin_tangler = 1;
+<font class='lnum'>1636</font>       unless ($use_builtin_tangler) {print "not set to tangle in the options\n"; exit}
+<font class='lnum'>1637</font>   
+<font class='lnum'>1638</font>       <font class='chunkref'>&lt;&lt;first pass of tangling - accumulate in RAM&gt;&gt</font>;
+<font class='lnum'>1639</font>       <font class='chunkref'>&lt;&lt;second pass of tangling - print out&gt;&gt</font>;
+<font class='lnum'>1640</font>   </fieldset></pre>
 <p>
 <b> <i> note 1 </i> </b><br>
 The following works with implicit understanting of the correct sequencing of the symbols in the<br>
@@ -2761,38 +2764,38 @@ One idea is to have immediate access to "parent roots", because I foresee 3 mode
 If I do not maintain the 3 modes and tangle from the "*" specified in the LitSource file, I won't<br>
 need the indeces, I think.<br>
 <p>
-<font class='lnum'>1655</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;first pass of tangling - accumulate in RAM&gt;&gt;=</legend>
-<font class='lnum'>1656</font>       open LITSOURCE, "&lt; $ARGV[$1]" || die "could not open the file to tangle\n";
-<font class='lnum'>1657</font>   
-<font class='lnum'>1658</font>       $chunk_beg_pattern = "^&lt;\&lt;(.*)&gt;\&gt;=";
-<font class='lnum'>1659</font>       $chunk_end_pattern = "^@\s*$";
-<font class='lnum'>1660</font>       $chunk_ref_pattern = "&lt;\&lt;(.*?)&gt;\&gt;[^=]"; # can be used several times in a line
-<font class='lnum'>1661</font>   
-<font class='lnum'>1662</font>       %code_chunks_buf = (); # accumulating chunks bodies
-<font class='lnum'>1663</font>       %code_chunks_index = (); # like "goto" stack per chunk
+<font class='lnum'>1658</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;first pass of tangling - accumulate in RAM&gt;&gt;=</legend>
+<font class='lnum'>1659</font>       open LITSOURCE, "&lt; $ARGV[$1]" || die "could not open the file to tangle\n";
+<font class='lnum'>1660</font>   
+<font class='lnum'>1661</font>       $chunk_beg_pattern = "^&lt;\&lt;(.*)&gt;\&gt;=";
+<font class='lnum'>1662</font>       $chunk_end_pattern = "^@\s*$";
+<font class='lnum'>1663</font>       $chunk_ref_pattern = "&lt;\&lt;(.*?)&gt;\&gt;[^=]"; # can be used several times in a line
 <font class='lnum'>1664</font>   
-<font class='lnum'>1665</font>   while (&lt;LITSOURCE&gt;) {
-<font class='lnum'>1666</font>   
-<font class='lnum'>1667</font>       if ( m!$chunk_beg_pattern! .. m!$chunk_end_pattern! ) { # -- CODE CHUNKS -- 
-<font class='lnum'>1668</font>   
-<font class='lnum'>1669</font>   	if ( $_ =~ m!$chunk_beg_pattern! ) {
-<font class='lnum'>1670</font>   	    # form md5 and push into the hash-stack
-<font class='lnum'>1671</font>   	    $title_hash = md5_base64($1);
-<font class='lnum'>1672</font>   	    }
-<font class='lnum'>1673</font>   	elsif ( $_ =~ m!$chunk_end_pattern! )  {
-<font class='lnum'>1674</font>   	    # end of code chunk
+<font class='lnum'>1665</font>       %code_chunks_buf = (); # accumulating chunks bodies
+<font class='lnum'>1666</font>       %code_chunks_index = (); # like "goto" stack per chunk
+<font class='lnum'>1667</font>   
+<font class='lnum'>1668</font>   while (&lt;LITSOURCE&gt;) {
+<font class='lnum'>1669</font>   
+<font class='lnum'>1670</font>       if ( m!$chunk_beg_pattern! .. m!$chunk_end_pattern! ) { # -- CODE CHUNKS -- 
+<font class='lnum'>1671</font>   
+<font class='lnum'>1672</font>   	if ( $_ =~ m!$chunk_beg_pattern! ) {
+<font class='lnum'>1673</font>   	    # form md5 and push into the hash-stack
+<font class='lnum'>1674</font>   	    $title_hash = md5_base64($1);
 <font class='lnum'>1675</font>   	    }
-<font class='lnum'>1676</font>   	elsif ( $_ =~ m!$chunk_ref_pattern! ) {
-<font class='lnum'>1677</font>   	    # form and push "goto" and "cont" into the hash-stack
+<font class='lnum'>1676</font>   	elsif ( $_ =~ m!$chunk_end_pattern! )  {
+<font class='lnum'>1677</font>   	    # end of code chunk
 <font class='lnum'>1678</font>   	    }
-<font class='lnum'>1679</font>   	else { # chunk body: accumulate
-<font class='lnum'>1680</font>   	    $code_chunks_buf{$title_hash} .= $_;
+<font class='lnum'>1679</font>   	elsif ( $_ =~ m!$chunk_ref_pattern! ) {
+<font class='lnum'>1680</font>   	    # form and push "goto" and "cont" into the hash-stack
 <font class='lnum'>1681</font>   	    }
-<font class='lnum'>1682</font>       } #fi
-<font class='lnum'>1683</font>   
-<font class='lnum'>1684</font>   
-<font class='lnum'>1685</font>   } #eliwh
-<font class='lnum'>1686</font>   </fieldset></pre>
+<font class='lnum'>1682</font>   	else { # chunk body: accumulate
+<font class='lnum'>1683</font>   	    $code_chunks_buf{$title_hash} .= $_;
+<font class='lnum'>1684</font>   	    }
+<font class='lnum'>1685</font>       } #fi
+<font class='lnum'>1686</font>   
+<font class='lnum'>1687</font>   
+<font class='lnum'>1688</font>   } #eliwh
+<font class='lnum'>1689</font>   </fieldset></pre>
 <p>
 Now all code chunks, concatenated if they have the same name, are in RAM (inside %title_hash), <br>
 I can do the second pass and unravel them.<br>
@@ -2813,15 +2816,15 @@ err.. multiline matching; only-once + continuation -- the regexp options needed 
 <p>
 Secondly, it creates a recursive function.<br>
 <p>
-<font class='lnum'>1707</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;second pass of tangling - print out&gt;&gt;=</legend>
-<font class='lnum'>1708</font>   # second pass - tangling from %code_chunks_buf using %code_chunks_index for directions
-<font class='lnum'>1709</font>   
-<font class='lnum'>1710</font>   $default_root = md5_base64("*");
-<font class='lnum'>1711</font>   
-<font class='lnum'>1712</font>       # bullshit
-<font class='lnum'>1713</font>       #$code_chunks_buf{$default_root} =~ m!!;
+<font class='lnum'>1710</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;second pass of tangling - print out&gt;&gt;=</legend>
+<font class='lnum'>1711</font>   # second pass - tangling from %code_chunks_buf using %code_chunks_index for directions
+<font class='lnum'>1712</font>   
+<font class='lnum'>1713</font>   $default_root = md5_base64("*");
 <font class='lnum'>1714</font>   
-<font class='lnum'>1715</font>   </fieldset></pre>
+<font class='lnum'>1715</font>       # bullshit
+<font class='lnum'>1716</font>       #$code_chunks_buf{$default_root} =~ m!!;
+<font class='lnum'>1717</font>   
+<font class='lnum'>1718</font>   </fieldset></pre>
 <b> ...STOP... </b><br>
 <p>
 <p>
@@ -2905,57 +2908,57 @@ see "global matching" subsection in the above doc (under "using regexp in Perl")
 <p>
 HEre's a snippet that seems to work:<br>
 <p>
-<font class='lnum'>1757</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;matchstring2.pl&gt;&gt;=</legend>
-<font class='lnum'>1758</font>   #!/usr/bin/perl
-<font class='lnum'>1759</font>   
-<font class='lnum'>1760</font>   #------JUST a string to test the regexps on ------------
-<font class='lnum'>1761</font>   $string = &lt;&lt;end_of_string;
-<font class='lnum'>1762</font>   bla-bla-bla /leaving it out/
-<font class='lnum'>1763</font>   end_of_string
-<font class='lnum'>1764</font>   
-<font class='lnum'>1765</font>   #---------------end of string--------------
-<font class='lnum'>1766</font>   
-<font class='lnum'>1767</font>   =head
-<font class='lnum'>1768</font>   # first test, bad:
-<font class='lnum'>1769</font>   # match-prematch work, but on the WHOLE string. BAD:
-<font class='lnum'>1770</font>     while ( $string =~ m!&lt;\&lt;(.*?)&gt;\&gt;[^=]!gc) {
-<font class='lnum'>1771</font>       print "\n\n---PREMATCH---\n$`\n\n";
-<font class='lnum'>1772</font>       print "MATCH\n$1\n\n";
-<font class='lnum'>1773</font>       }
-<font class='lnum'>1774</font>   =cut
-<font class='lnum'>1775</font>   
-<font class='lnum'>1776</font>   
-<font class='lnum'>1777</font>   # --HERE'S ANOTHER IDEA--
-<font class='lnum'>1778</font>   # the use of \G ancor and poss the pos() function
-<font class='lnum'>1779</font>   #pos($string) = 0;
-<font class='lnum'>1780</font>   while ( $string =~ m!\G(.*?)&lt;\&lt;(.*?)&gt;\&gt;!gs) {
-<font class='lnum'>1781</font>     
-<font class='lnum'>1782</font>     $off = length($2);
-<font class='lnum'>1783</font>     $position = pos($string);
-<font class='lnum'>1784</font>     #pos($string) = $position + $off;
-<font class='lnum'>1785</font>     print "\n\t---title---\n$2 of length $off at $position \n\t----after----\n$1\n========\n";
-<font class='lnum'>1786</font>   
-<font class='lnum'>1787</font>   }
-<font class='lnum'>1788</font>   
-<font class='lnum'>1789</font>   # ONE PROBLEM:
-<font class='lnum'>1790</font>   # last piece, post-chunk ?? OR not a prob when reading from a file??
+<font class='lnum'>1760</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;matchstring2.pl&gt;&gt;=</legend>
+<font class='lnum'>1761</font>   #!/usr/bin/perl
+<font class='lnum'>1762</font>   
+<font class='lnum'>1763</font>   #------JUST a string to test the regexps on ------------
+<font class='lnum'>1764</font>   $string = &lt;&lt;end_of_string;
+<font class='lnum'>1765</font>   bla-bla-bla /leaving it out/
+<font class='lnum'>1766</font>   end_of_string
+<font class='lnum'>1767</font>   
+<font class='lnum'>1768</font>   #---------------end of string--------------
+<font class='lnum'>1769</font>   
+<font class='lnum'>1770</font>   =head
+<font class='lnum'>1771</font>   # first test, bad:
+<font class='lnum'>1772</font>   # match-prematch work, but on the WHOLE string. BAD:
+<font class='lnum'>1773</font>     while ( $string =~ m!&lt;\&lt;(.*?)&gt;\&gt;[^=]!gc) {
+<font class='lnum'>1774</font>       print "\n\n---PREMATCH---\n$`\n\n";
+<font class='lnum'>1775</font>       print "MATCH\n$1\n\n";
+<font class='lnum'>1776</font>       }
+<font class='lnum'>1777</font>   =cut
+<font class='lnum'>1778</font>   
+<font class='lnum'>1779</font>   
+<font class='lnum'>1780</font>   # --HERE'S ANOTHER IDEA--
+<font class='lnum'>1781</font>   # the use of \G ancor and poss the pos() function
+<font class='lnum'>1782</font>   #pos($string) = 0;
+<font class='lnum'>1783</font>   while ( $string =~ m!\G(.*?)&lt;\&lt;(.*?)&gt;\&gt;!gs) {
+<font class='lnum'>1784</font>     
+<font class='lnum'>1785</font>     $off = length($2);
+<font class='lnum'>1786</font>     $position = pos($string);
+<font class='lnum'>1787</font>     #pos($string) = $position + $off;
+<font class='lnum'>1788</font>     print "\n\t---title---\n$2 of length $off at $position \n\t----after----\n$1\n========\n";
+<font class='lnum'>1789</font>   
+<font class='lnum'>1790</font>   }
 <font class='lnum'>1791</font>   
-<font class='lnum'>1792</font>   
-<font class='lnum'>1793</font>   # Looks like this can solve the prob of parsing a code chunk with included &lt; &lt;references&gt; &gt;
-<font class='lnum'>1794</font>   #	when hitting a match:
-<font class='lnum'>1795</font>   #		- append $1 to the chunk buffer
-<font class='lnum'>1796</font>   #		- get md5, push it into the index
-<font class='lnum'>1797</font>   #		- form an md5 for the continuation and start that new chunk
-<font class='lnum'>1798</font>   #		- .. and push "goto" this continuation into the prev chunk index
-<font class='lnum'>1799</font>   #
-<font class='lnum'>1800</font>   # Do this linearly on all cut out code chunks of the Literate Source file (appending those 
-<font class='lnum'>1801</font>   # with the same names)
-<font class='lnum'>1802</font>   # and print out from memory on pass 2 according to the goto index.
-<font class='lnum'>1803</font>   #
-<font class='lnum'>1804</font>   # Should preserve all offsets as well.
-<font class='lnum'>1805</font>   #
-<font class='lnum'>1806</font>   #---------------------------------------------------
-<font class='lnum'>1807</font>   </fieldset></pre>
+<font class='lnum'>1792</font>   # ONE PROBLEM:
+<font class='lnum'>1793</font>   # last piece, post-chunk ?? OR not a prob when reading from a file??
+<font class='lnum'>1794</font>   
+<font class='lnum'>1795</font>   
+<font class='lnum'>1796</font>   # Looks like this can solve the prob of parsing a code chunk with included &lt; &lt;references&gt; &gt;
+<font class='lnum'>1797</font>   #	when hitting a match:
+<font class='lnum'>1798</font>   #		- append $1 to the chunk buffer
+<font class='lnum'>1799</font>   #		- get md5, push it into the index
+<font class='lnum'>1800</font>   #		- form an md5 for the continuation and start that new chunk
+<font class='lnum'>1801</font>   #		- .. and push "goto" this continuation into the prev chunk index
+<font class='lnum'>1802</font>   #
+<font class='lnum'>1803</font>   # Do this linearly on all cut out code chunks of the Literate Source file (appending those 
+<font class='lnum'>1804</font>   # with the same names)
+<font class='lnum'>1805</font>   # and print out from memory on pass 2 according to the goto index.
+<font class='lnum'>1806</font>   #
+<font class='lnum'>1807</font>   # Should preserve all offsets as well.
+<font class='lnum'>1808</font>   #
+<font class='lnum'>1809</font>   #---------------------------------------------------
+<font class='lnum'>1810</font>   </fieldset></pre>
 <p>
 <p>
 <p>
@@ -3023,20 +3026,20 @@ collapse all</a>
 <p>
 The idea of the weaver is simple, again.<br>
 <p>
-<font class='lnum'>1822</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;weave me&gt;&gt;=</legend>
-<font class='lnum'>1823</font>   
-<font class='lnum'>1824</font>   
-<font class='lnum'>1825</font>   WEAVE_ME:
+<font class='lnum'>1825</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;weave me&gt;&gt;=</legend>
 <font class='lnum'>1826</font>   
-<font class='lnum'>1827</font>   #1. Set formatting strings for weaver
-<font class='lnum'>1828</font>   <font class='chunkref'>&lt;&lt;set formatting strings for weaver&gt;&gt</font>;
+<font class='lnum'>1827</font>   
+<font class='lnum'>1828</font>   WEAVE_ME:
 <font class='lnum'>1829</font>   
-<font class='lnum'>1830</font>   #2. accumulate result in a buffer
-<font class='lnum'>1831</font>   <font class='chunkref'>&lt;&lt;accumulate result in a buffer&gt;&gt</font>;
+<font class='lnum'>1830</font>   #1. Set formatting strings for weaver
+<font class='lnum'>1831</font>   <font class='chunkref'>&lt;&lt;set formatting strings for weaver&gt;&gt</font>;
 <font class='lnum'>1832</font>   
-<font class='lnum'>1833</font>   #3. print out the TOC, the Chunks Index, the output buffer and close the page.
-<font class='lnum'>1834</font>   <font class='chunkref'>&lt;&lt;print out&gt;&gt</font>;
-<font class='lnum'>1835</font>   </fieldset></pre>
+<font class='lnum'>1833</font>   #2. accumulate result in a buffer
+<font class='lnum'>1834</font>   <font class='chunkref'>&lt;&lt;accumulate result in a buffer&gt;&gt</font>;
+<font class='lnum'>1835</font>   
+<font class='lnum'>1836</font>   #3. print out the TOC, the Chunks Index, the output buffer and close the page.
+<font class='lnum'>1837</font>   <font class='chunkref'>&lt;&lt;print out&gt;&gt</font>;
+<font class='lnum'>1838</font>   </fieldset></pre>
 <p>
 <p>
 
@@ -3093,126 +3096,126 @@ Here's the actual script that was used to test the JS folding and<br>
 tying of folding to the TOC section highlighting:<br>
 <p>
 <p>
-<font class='lnum'>1882</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;test.html&gt;&gt;=</legend>
-<font class='lnum'>1883</font>   
-<font class='lnum'>1884</font>   &lt;html&gt;
-<font class='lnum'>1885</font>   &lt;head&gt;
+<font class='lnum'>1885</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;test.html&gt;&gt;=</legend>
 <font class='lnum'>1886</font>   
-<font class='lnum'>1887</font>   
-<font class='lnum'>1888</font>   &lt;style type="text/css"&gt;
+<font class='lnum'>1887</font>   &lt;html&gt;
+<font class='lnum'>1888</font>   &lt;head&gt;
 <font class='lnum'>1889</font>   
 <font class='lnum'>1890</font>   
-<font class='lnum'>1891</font>   .unhilited {background-color:white}
-<font class='lnum'>1892</font>   .hilited {background-color:yellow; text-decoration:underline}
-<font class='lnum'>1893</font>   &lt;/style&gt;
-<font class='lnum'>1894</font>   
-<font class='lnum'>1895</font>   
-<font class='lnum'>1896</font>   &lt;script type="text/javascript"&gt;
+<font class='lnum'>1891</font>   &lt;style type="text/css"&gt;
+<font class='lnum'>1892</font>   
+<font class='lnum'>1893</font>   
+<font class='lnum'>1894</font>   .unhilited {background-color:white}
+<font class='lnum'>1895</font>   .hilited {background-color:yellow; text-decoration:underline}
+<font class='lnum'>1896</font>   &lt;/style&gt;
 <font class='lnum'>1897</font>   
-<font class='lnum'>1898</font>       function setHilite(evt) {
-<font class='lnum'>1899</font>   	evt = (evt) ? evt : ((window.event) ? window.event : null);
-<font class='lnum'>1900</font>   	if (evt) {
-<font class='lnum'>1901</font>   	    var elem = (evt.srcElement) ? evt.srcElement : evt.target;
-<font class='lnum'>1902</font>   	    elem.className = "hilited";
-<font class='lnum'>1903</font>   	}
-<font class='lnum'>1904</font>       }
-<font class='lnum'>1905</font>   
-<font class='lnum'>1906</font>   
-<font class='lnum'>1907</font>   function setUnHilite(evt) {
-<font class='lnum'>1908</font>       evt = (evt) ? evt : ((window.event) ? window.event : null);
-<font class='lnum'>1909</font>   	if (evt) {
-<font class='lnum'>1910</font>       	    var elem = (evt.srcElement) ? evt.srcElement : evt.target;
-<font class='lnum'>1911</font>       	    elem.className = "unhilited";
-<font class='lnum'>1912</font>   	}
-<font class='lnum'>1913</font>   }
-<font class='lnum'>1914</font>   
-<font class='lnum'>1915</font>   function toggleDiv(divid) {
-<font class='lnum'>1916</font>   var el = document.getElementById(divid);
-<font class='lnum'>1917</font>   el.style.display = (el.style.display == 'block') ? 'none' : 'block';
-<font class='lnum'>1918</font>   }
-<font class='lnum'>1919</font>   
-<font class='lnum'>1920</font>   function toggleCombined(divid){
-<font class='lnum'>1921</font>       if(document.getElementById(divid).style.display == 'none'){
-<font class='lnum'>1922</font>         document.getElementById(divid).style.display = 'block';
-<font class='lnum'>1923</font>   	document.getElementById("toc"+divid).className="hilited";
-<font class='lnum'>1924</font>       }
-<font class='lnum'>1925</font>       
-<font class='lnum'>1926</font>       else{
-<font class='lnum'>1927</font>         document.getElementById(divid).style.display = 'none';
-<font class='lnum'>1928</font>   	document.getElementById("toc"+divid).className="unhilited";
-<font class='lnum'>1929</font>       }
-<font class='lnum'>1930</font>   }
-<font class='lnum'>1931</font>   
-<font class='lnum'>1932</font>   
-<font class='lnum'>1933</font>   function expandDiv(divid){
-<font class='lnum'>1934</font>   	document.getElementById("toc"+divid).className="hilited";
-<font class='lnum'>1935</font>   }
-<font class='lnum'>1936</font>   
-<font class='lnum'>1937</font>   
-<font class='lnum'>1938</font>   
-<font class='lnum'>1939</font>   &lt;/script&gt;
-<font class='lnum'>1940</font>   &lt;/head&gt;
+<font class='lnum'>1898</font>   
+<font class='lnum'>1899</font>   &lt;script type="text/javascript"&gt;
+<font class='lnum'>1900</font>   
+<font class='lnum'>1901</font>       function setHilite(evt) {
+<font class='lnum'>1902</font>   	evt = (evt) ? evt : ((window.event) ? window.event : null);
+<font class='lnum'>1903</font>   	if (evt) {
+<font class='lnum'>1904</font>   	    var elem = (evt.srcElement) ? evt.srcElement : evt.target;
+<font class='lnum'>1905</font>   	    elem.className = "hilited";
+<font class='lnum'>1906</font>   	}
+<font class='lnum'>1907</font>       }
+<font class='lnum'>1908</font>   
+<font class='lnum'>1909</font>   
+<font class='lnum'>1910</font>   function setUnHilite(evt) {
+<font class='lnum'>1911</font>       evt = (evt) ? evt : ((window.event) ? window.event : null);
+<font class='lnum'>1912</font>   	if (evt) {
+<font class='lnum'>1913</font>       	    var elem = (evt.srcElement) ? evt.srcElement : evt.target;
+<font class='lnum'>1914</font>       	    elem.className = "unhilited";
+<font class='lnum'>1915</font>   	}
+<font class='lnum'>1916</font>   }
+<font class='lnum'>1917</font>   
+<font class='lnum'>1918</font>   function toggleDiv(divid) {
+<font class='lnum'>1919</font>   var el = document.getElementById(divid);
+<font class='lnum'>1920</font>   el.style.display = (el.style.display == 'block') ? 'none' : 'block';
+<font class='lnum'>1921</font>   }
+<font class='lnum'>1922</font>   
+<font class='lnum'>1923</font>   function toggleCombined(divid){
+<font class='lnum'>1924</font>       if(document.getElementById(divid).style.display == 'none'){
+<font class='lnum'>1925</font>         document.getElementById(divid).style.display = 'block';
+<font class='lnum'>1926</font>   	document.getElementById("toc"+divid).className="hilited";
+<font class='lnum'>1927</font>       }
+<font class='lnum'>1928</font>       
+<font class='lnum'>1929</font>       else{
+<font class='lnum'>1930</font>         document.getElementById(divid).style.display = 'none';
+<font class='lnum'>1931</font>   	document.getElementById("toc"+divid).className="unhilited";
+<font class='lnum'>1932</font>       }
+<font class='lnum'>1933</font>   }
+<font class='lnum'>1934</font>   
+<font class='lnum'>1935</font>   
+<font class='lnum'>1936</font>   function expandDiv(divid){
+<font class='lnum'>1937</font>   	document.getElementById("toc"+divid).className="hilited";
+<font class='lnum'>1938</font>   }
+<font class='lnum'>1939</font>   
+<font class='lnum'>1940</font>   
 <font class='lnum'>1941</font>   
-<font class='lnum'>1942</font>   &lt;body &gt;
-<font class='lnum'>1943</font>   &lt;h2&gt;Here's the tested element&lt;/h2&gt;
-<font class='lnum'>1944</font>   Here is some ordinary text&lt;br&gt;
-<font class='lnum'>1945</font>   &lt;span class="unhilited" onmouseover="setHilite(event)" 
-<font class='lnum'>1946</font>       onmouseout="setUnHilite(event)"&gt; 
-<font class='lnum'>1947</font>       &lt;a href="javascript:;" onmousedown="toggleDiv(15);"&gt;&lt;b&gt; process section headings &lt;/b&gt;&lt;/a&gt;&lt;br&gt;
-<font class='lnum'>1948</font>       and this is some potentially hot spot text.&lt;/span&gt;
-<font class='lnum'>1949</font>   
-<font class='lnum'>1950</font>   &lt;div id=15&gt;
-<font class='lnum'>1951</font>       .. and this is the text&lt;br&gt;
-<font class='lnum'>1952</font>       that should be hidden/collapsed
-<font class='lnum'>1953</font>   
-<font class='lnum'>1954</font>   &lt;/div&gt;
-<font class='lnum'>1955</font>   
+<font class='lnum'>1942</font>   &lt;/script&gt;
+<font class='lnum'>1943</font>   &lt;/head&gt;
+<font class='lnum'>1944</font>   
+<font class='lnum'>1945</font>   &lt;body &gt;
+<font class='lnum'>1946</font>   &lt;h2&gt;Here's the tested element&lt;/h2&gt;
+<font class='lnum'>1947</font>   Here is some ordinary text&lt;br&gt;
+<font class='lnum'>1948</font>   &lt;span class="unhilited" onmouseover="setHilite(event)" 
+<font class='lnum'>1949</font>       onmouseout="setUnHilite(event)"&gt; 
+<font class='lnum'>1950</font>       &lt;a href="javascript:;" onmousedown="toggleDiv(15);"&gt;&lt;b&gt; process section headings &lt;/b&gt;&lt;/a&gt;&lt;br&gt;
+<font class='lnum'>1951</font>       and this is some potentially hot spot text.&lt;/span&gt;
+<font class='lnum'>1952</font>   
+<font class='lnum'>1953</font>   &lt;div id=15&gt;
+<font class='lnum'>1954</font>       .. and this is the text&lt;br&gt;
+<font class='lnum'>1955</font>       that should be hidden/collapsed
 <font class='lnum'>1956</font>   
-<font class='lnum'>1957</font>   &lt;h2&gt;Here's the tested element 0&lt;/h2&gt;
-<font class='lnum'>1958</font>   HHHHere is some ordinary text&lt;br&gt;
-<font class='lnum'>1959</font>   &lt;a href="javascript:;" onmousedown="toggleCombined(13);" id="toc13"&gt;
-<font class='lnum'>1960</font>       &lt;b&gt; process section headings &lt;/b&gt;&lt;/a&gt;&lt;br&gt;
-<font class='lnum'>1961</font>   
-<font class='lnum'>1962</font>   &lt;div id=13 &gt;&lt;script language=javascript&gt; document.getElementById("toc"+13).className='hilited';&lt;/script&gt;
-<font class='lnum'>1963</font>       .. and this is the text&lt;br&gt;
-<font class='lnum'>1964</font>       that should be hidden/collapsed
-<font class='lnum'>1965</font>   
-<font class='lnum'>1966</font>   &lt;/div&gt;
-<font class='lnum'>1967</font>   
+<font class='lnum'>1957</font>   &lt;/div&gt;
+<font class='lnum'>1958</font>   
+<font class='lnum'>1959</font>   
+<font class='lnum'>1960</font>   &lt;h2&gt;Here's the tested element 0&lt;/h2&gt;
+<font class='lnum'>1961</font>   HHHHere is some ordinary text&lt;br&gt;
+<font class='lnum'>1962</font>   &lt;a href="javascript:;" onmousedown="toggleCombined(13);" id="toc13"&gt;
+<font class='lnum'>1963</font>       &lt;b&gt; process section headings &lt;/b&gt;&lt;/a&gt;&lt;br&gt;
+<font class='lnum'>1964</font>   
+<font class='lnum'>1965</font>   &lt;div id=13 &gt;&lt;script language=javascript&gt; document.getElementById("toc"+13).className='hilited';&lt;/script&gt;
+<font class='lnum'>1966</font>       .. and this is the text&lt;br&gt;
+<font class='lnum'>1967</font>       that should be hidden/collapsed
 <font class='lnum'>1968</font>   
-<font class='lnum'>1969</font>   
+<font class='lnum'>1969</font>   &lt;/div&gt;
 <font class='lnum'>1970</font>   
-<font class='lnum'>1971</font>   &lt;h2&gt;Here's the tested element 1&lt;/h2&gt;
-<font class='lnum'>1972</font>   HHHHere is some ordinary text&lt;br&gt;
-<font class='lnum'>1973</font>   &lt;a href="javascript:;" onmousedown="toggleCombined(14);" id="toc14"&gt;
-<font class='lnum'>1974</font>       &lt;script language=javascript&gt; document.getElementById("toc"+14).className='hilited';&lt;/script&gt;
-<font class='lnum'>1975</font>       &lt;b&gt; process section headings &lt;/b&gt;&lt;/a&gt;&lt;br&gt;
-<font class='lnum'>1976</font>   
-<font class='lnum'>1977</font>   &lt;div id=14 &gt;
-<font class='lnum'>1978</font>       .. and this is the text&lt;br&gt;
-<font class='lnum'>1979</font>       that should be hidden/collapsed
-<font class='lnum'>1980</font>   
-<font class='lnum'>1981</font>   &lt;/div&gt;
-<font class='lnum'>1982</font>   
+<font class='lnum'>1971</font>   
+<font class='lnum'>1972</font>   
+<font class='lnum'>1973</font>   
+<font class='lnum'>1974</font>   &lt;h2&gt;Here's the tested element 1&lt;/h2&gt;
+<font class='lnum'>1975</font>   HHHHere is some ordinary text&lt;br&gt;
+<font class='lnum'>1976</font>   &lt;a href="javascript:;" onmousedown="toggleCombined(14);" id="toc14"&gt;
+<font class='lnum'>1977</font>       &lt;script language=javascript&gt; document.getElementById("toc"+14).className='hilited';&lt;/script&gt;
+<font class='lnum'>1978</font>       &lt;b&gt; process section headings &lt;/b&gt;&lt;/a&gt;&lt;br&gt;
+<font class='lnum'>1979</font>   
+<font class='lnum'>1980</font>   &lt;div id=14 &gt;
+<font class='lnum'>1981</font>       .. and this is the text&lt;br&gt;
+<font class='lnum'>1982</font>       that should be hidden/collapsed
 <font class='lnum'>1983</font>   
-<font class='lnum'>1984</font>   &lt;h2&gt;Here's the tested element 2&lt;/h2&gt;
-<font class='lnum'>1985</font>   HHHHere is some ordinary text&lt;br&gt;
-<font class='lnum'>1986</font>   &lt;span  id="toc16"&gt; 
-<font class='lnum'>1987</font>       &lt;a href="javascript:;" onmousedown="toggleCombined(16);"&gt;&lt;b&gt; process section headings &lt;/b&gt;&lt;/a&gt;&lt;br&gt;
-<font class='lnum'>1988</font>       and this is some potentially hot spot text.&lt;/span&gt;
-<font class='lnum'>1989</font>   
-<font class='lnum'>1990</font>   &lt;div id=16&gt;
-<font class='lnum'>1991</font>       .. and this is the text&lt;br&gt;
-<font class='lnum'>1992</font>       that should be hidden/collapsed
-<font class='lnum'>1993</font>   
-<font class='lnum'>1994</font>   &lt;/div&gt;
-<font class='lnum'>1995</font>   
+<font class='lnum'>1984</font>   &lt;/div&gt;
+<font class='lnum'>1985</font>   
+<font class='lnum'>1986</font>   
+<font class='lnum'>1987</font>   &lt;h2&gt;Here's the tested element 2&lt;/h2&gt;
+<font class='lnum'>1988</font>   HHHHere is some ordinary text&lt;br&gt;
+<font class='lnum'>1989</font>   &lt;span  id="toc16"&gt; 
+<font class='lnum'>1990</font>       &lt;a href="javascript:;" onmousedown="toggleCombined(16);"&gt;&lt;b&gt; process section headings &lt;/b&gt;&lt;/a&gt;&lt;br&gt;
+<font class='lnum'>1991</font>       and this is some potentially hot spot text.&lt;/span&gt;
+<font class='lnum'>1992</font>   
+<font class='lnum'>1993</font>   &lt;div id=16&gt;
+<font class='lnum'>1994</font>       .. and this is the text&lt;br&gt;
+<font class='lnum'>1995</font>       that should be hidden/collapsed
 <font class='lnum'>1996</font>   
-<font class='lnum'>1997</font>   
-<font class='lnum'>1998</font>   &lt;/body&gt;
-<font class='lnum'>1999</font>   &lt;/html&gt;
+<font class='lnum'>1997</font>   &lt;/div&gt;
+<font class='lnum'>1998</font>   
+<font class='lnum'>1999</font>   
 <font class='lnum'>2000</font>   
-<font class='lnum'>2001</font>   </fieldset></pre>
+<font class='lnum'>2001</font>   &lt;/body&gt;
+<font class='lnum'>2002</font>   &lt;/html&gt;
+<font class='lnum'>2003</font>   
+<font class='lnum'>2004</font>   </fieldset></pre>
 <p>
 <p>
 <p>
@@ -3367,69 +3370,69 @@ collapse all</a>
 
 
 <p>
-<font class='lnum'>2077</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;set formatting strings for weaver&gt;&gt;=</legend>
-<font class='lnum'>2078</font>   
-<font class='lnum'>2079</font>     #----SETTING FORMATTING STRINGS-----------
-<font class='lnum'>2080</font>     
-<font class='lnum'>2081</font>   $html_head = &lt;&lt;head_end;  
-<font class='lnum'>2082</font>   
-<font class='lnum'>2083</font>   &lt;head&gt;
-<font class='lnum'>2084</font>   &lt;meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" /&gt; 
+<font class='lnum'>2080</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;set formatting strings for weaver&gt;&gt;=</legend>
+<font class='lnum'>2081</font>   
+<font class='lnum'>2082</font>     #----SETTING FORMATTING STRINGS-----------
+<font class='lnum'>2083</font>     
+<font class='lnum'>2084</font>   $html_head = &lt;&lt;head_end;  
 <font class='lnum'>2085</font>   
-<font class='lnum'>2086</font>   <font class='chunkref'>&lt;&lt;JS script functions&gt;&gt</font>;
-<font class='lnum'>2087</font>   <font class='chunkref'>&lt;&lt;stylesheet&gt;&gt</font>;
+<font class='lnum'>2086</font>   &lt;head&gt;
+<font class='lnum'>2087</font>   &lt;meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" /&gt; 
 <font class='lnum'>2088</font>   
-<font class='lnum'>2089</font>   &lt;/head&gt;
-<font class='lnum'>2090</font>   head_end
+<font class='lnum'>2089</font>   <font class='chunkref'>&lt;&lt;JS script functions&gt;&gt</font>;
+<font class='lnum'>2090</font>   <font class='chunkref'>&lt;&lt;stylesheet&gt;&gt</font>;
 <font class='lnum'>2091</font>   
-<font class='lnum'>2092</font>   $html_body_table = "&lt;center&gt;&lt;table class='outertable'&gt;&lt;tr&gt;&lt;td&gt;";
-<font class='lnum'>2093</font>   $html_body_table_end = "\n&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/center&gt;&lt;/body&gt;&lt;/html&gt;\n";
+<font class='lnum'>2092</font>   &lt;/head&gt;
+<font class='lnum'>2093</font>   head_end
 <font class='lnum'>2094</font>   
-<font class='lnum'>2095</font>   
-<font class='lnum'>2096</font>   	
+<font class='lnum'>2095</font>   $html_body_table = "&lt;center&gt;&lt;table class='outertable'&gt;&lt;tr&gt;&lt;td&gt;";
+<font class='lnum'>2096</font>   $html_body_table_end = "\n&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/center&gt;&lt;/body&gt;&lt;/html&gt;\n";
 <font class='lnum'>2097</font>   
-<font class='lnum'>2098</font>   $folding_section_start1_str = &lt;&lt;'fold_sect_start_1_xxx';
-<font class='lnum'>2099</font>   	&lt;fieldset&gt;&lt;legend&gt;&lt;a href="javascript:;" onmousedown="toggleCombined('$section_num');"&gt;
-<font class='lnum'>2100</font>   fold_sect_start_1_xxx
-<font class='lnum'>2101</font>   
-<font class='lnum'>2102</font>   
-<font class='lnum'>2103</font>   $folding_section_start2_str = &lt;&lt;'fold_sect_start_2_xxx';
-<font class='lnum'>2104</font>   &lt;/a&gt;&lt;/legend&gt;&lt;/fieldset&gt;
-<font class='lnum'>2105</font>   &lt;p&gt;
-<font class='lnum'>2106</font>   &lt;div id="$section_num" style="display:$fold_state"&gt; $highlight_state  
-<font class='lnum'>2107</font>   &lt;ul&gt;
-<font class='lnum'>2108</font>   
-<font class='lnum'>2109</font>   fold_sect_start_2_xxx
-<font class='lnum'>2110</font>   
+<font class='lnum'>2098</font>   
+<font class='lnum'>2099</font>   	
+<font class='lnum'>2100</font>   
+<font class='lnum'>2101</font>   $folding_section_start1_str = &lt;&lt;'fold_sect_start_1_xxx';
+<font class='lnum'>2102</font>   	&lt;fieldset&gt;&lt;legend&gt;&lt;a href="javascript:;" onmousedown="toggleCombined('$section_num');"&gt;
+<font class='lnum'>2103</font>   fold_sect_start_1_xxx
+<font class='lnum'>2104</font>   
+<font class='lnum'>2105</font>   
+<font class='lnum'>2106</font>   $folding_section_start2_str = &lt;&lt;'fold_sect_start_2_xxx';
+<font class='lnum'>2107</font>   &lt;/a&gt;&lt;/legend&gt;&lt;/fieldset&gt;
+<font class='lnum'>2108</font>   &lt;p&gt;
+<font class='lnum'>2109</font>   &lt;div id="$section_num" style="display:$fold_state"&gt; $highlight_state  
+<font class='lnum'>2110</font>   &lt;ul&gt;
 <font class='lnum'>2111</font>   
-<font class='lnum'>2112</font>   $folding_section_end_str = &lt;&lt;'folding_section_end_xxx';
-<font class='lnum'>2113</font>   &lt;/ul&gt;
-<font class='lnum'>2114</font>   &lt;p&gt;
-<font class='lnum'>2115</font>   &lt;br&gt;
-<font class='lnum'>2116</font>   &lt;i&gt;&lt;font size=-1&gt;
-<font class='lnum'>2117</font>   &lt;a href="javascript:;"onmousedown="toggleCombined('$section_num_prev');"&gt;
-<font class='lnum'>2118</font>   Close the subsection&lt;/a&gt;&lt;/font&gt;
-<font class='lnum'>2119</font>   &lt;/i&gt; -- &lt;i&gt;&lt;font size=-1&gt;
-<font class='lnum'>2120</font>   &lt;a href="javascript:;" onmousedown="showAll();"&gt;
-<font class='lnum'>2121</font>   expand all&lt;/a&gt; -- 
-<font class='lnum'>2122</font>   &lt;a href="javascript:;" onmousedown="hideAll();"&gt;
-<font class='lnum'>2123</font>   collapse all&lt;/a&gt;
-<font class='lnum'>2124</font>   &lt;/font&gt;&lt;/i&gt;
-<font class='lnum'>2125</font>   
-<font class='lnum'>2126</font>   &lt;p&gt;
-<font class='lnum'>2127</font>   &lt;/div&gt;
+<font class='lnum'>2112</font>   fold_sect_start_2_xxx
+<font class='lnum'>2113</font>   
+<font class='lnum'>2114</font>   
+<font class='lnum'>2115</font>   $folding_section_end_str = &lt;&lt;'folding_section_end_xxx';
+<font class='lnum'>2116</font>   &lt;/ul&gt;
+<font class='lnum'>2117</font>   &lt;p&gt;
+<font class='lnum'>2118</font>   &lt;br&gt;
+<font class='lnum'>2119</font>   &lt;i&gt;&lt;font size=-1&gt;
+<font class='lnum'>2120</font>   &lt;a href="javascript:;"onmousedown="toggleCombined('$section_num_prev');"&gt;
+<font class='lnum'>2121</font>   Close the subsection&lt;/a&gt;&lt;/font&gt;
+<font class='lnum'>2122</font>   &lt;/i&gt; -- &lt;i&gt;&lt;font size=-1&gt;
+<font class='lnum'>2123</font>   &lt;a href="javascript:;" onmousedown="showAll();"&gt;
+<font class='lnum'>2124</font>   expand all&lt;/a&gt; -- 
+<font class='lnum'>2125</font>   &lt;a href="javascript:;" onmousedown="hideAll();"&gt;
+<font class='lnum'>2126</font>   collapse all&lt;/a&gt;
+<font class='lnum'>2127</font>   &lt;/font&gt;&lt;/i&gt;
 <font class='lnum'>2128</font>   
-<font class='lnum'>2129</font>   folding_section_end_xxx
-<font class='lnum'>2130</font>   
+<font class='lnum'>2129</font>   &lt;p&gt;
+<font class='lnum'>2130</font>   &lt;/div&gt;
 <font class='lnum'>2131</font>   
-<font class='lnum'>2132</font>   $code_frameset_start_pre = "&lt;pre&gt;&lt;fieldset class='codefieldset'&gt;&lt;legend class='codelegend'&gt;";
-<font class='lnum'>2133</font>   $code_frameset_start_post = "=&lt;/legend&gt;";
-<font class='lnum'>2134</font>   $code_frameset_end = "&lt;/fieldset&gt;&lt;/pre&gt;\n";
-<font class='lnum'>2135</font>   
-<font class='lnum'>2136</font>   
-<font class='lnum'>2137</font>   
+<font class='lnum'>2132</font>   folding_section_end_xxx
+<font class='lnum'>2133</font>   
+<font class='lnum'>2134</font>   
+<font class='lnum'>2135</font>   $code_frameset_start_pre = "&lt;pre&gt;&lt;fieldset class='codefieldset'&gt;&lt;legend class='codelegend'&gt;";
+<font class='lnum'>2136</font>   $code_frameset_start_post = "=&lt;/legend&gt;";
+<font class='lnum'>2137</font>   $code_frameset_end = "&lt;/fieldset&gt;&lt;/pre&gt;\n";
 <font class='lnum'>2138</font>   
-<font class='lnum'>2139</font>   </fieldset></pre>
+<font class='lnum'>2139</font>   
+<font class='lnum'>2140</font>   
+<font class='lnum'>2141</font>   
+<font class='lnum'>2142</font>   </fieldset></pre>
 <p>
 
 	<fieldset><legend><a href="javascript:;" onmousedown="toggleCombined('50');">
@@ -3440,44 +3443,44 @@ collapse all</a>
 
 
 <p>
-<font class='lnum'>2145</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;JS script functions&gt;&gt;=</legend>
-<font class='lnum'>2146</font>   &lt;script language="javascript"&gt;
-<font class='lnum'>2147</font>   
-<font class='lnum'>2148</font>   
-<font class='lnum'>2149</font>   function toggleDiv(divid) {
-<font class='lnum'>2150</font>   var el = document.getElementById(divid);
-<font class='lnum'>2151</font>   el.style.display = (el.style.display == 'block') ? 'none' : 'block';
-<font class='lnum'>2152</font>   }
-<font class='lnum'>2153</font>   
-<font class='lnum'>2154</font>   
-<font class='lnum'>2155</font>   function toggleCombined(divid){
-<font class='lnum'>2156</font>       if(document.getElementById(divid).style.display == 'none'){
-<font class='lnum'>2157</font>         document.getElementById(divid).style.display = 'block';
-<font class='lnum'>2158</font>   	document.getElementById("toc"+divid).className="hilited";
-<font class='lnum'>2159</font>       }
-<font class='lnum'>2160</font>       else{
-<font class='lnum'>2161</font>         document.getElementById(divid).style.display = 'none';
-<font class='lnum'>2162</font>   	document.getElementById("toc"+divid).className="unhilited";
-<font class='lnum'>2163</font>       }
-<font class='lnum'>2164</font>   }
-<font class='lnum'>2165</font>   
-<font class='lnum'>2166</font>   
-<font class='lnum'>2167</font>   function showAll(){
-<font class='lnum'>2168</font>   for(i=1; i &lt;= 10000; i++){
-<font class='lnum'>2169</font>       document.getElementById(i).style.display = 'block';
-<font class='lnum'>2170</font>       document.getElementById("toc"+i).className="hilited";
-<font class='lnum'>2171</font>       };
-<font class='lnum'>2172</font>   }
-<font class='lnum'>2173</font>   
-<font class='lnum'>2174</font>   function hideAll(){
-<font class='lnum'>2175</font>   for(i=1; i &lt;= 10000; i++){
-<font class='lnum'>2176</font>       document.getElementById(i).style.display = 'none';
-<font class='lnum'>2177</font>       document.getElementById("toc"+i).className="unhilited";
-<font class='lnum'>2178</font>       };
-<font class='lnum'>2179</font>   }
-<font class='lnum'>2180</font>   
-<font class='lnum'>2181</font>   &lt;/script&gt;
-<font class='lnum'>2182</font>   </fieldset></pre>
+<font class='lnum'>2148</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;JS script functions&gt;&gt;=</legend>
+<font class='lnum'>2149</font>   &lt;script language="javascript"&gt;
+<font class='lnum'>2150</font>   
+<font class='lnum'>2151</font>   
+<font class='lnum'>2152</font>   function toggleDiv(divid) {
+<font class='lnum'>2153</font>   var el = document.getElementById(divid);
+<font class='lnum'>2154</font>   el.style.display = (el.style.display == 'block') ? 'none' : 'block';
+<font class='lnum'>2155</font>   }
+<font class='lnum'>2156</font>   
+<font class='lnum'>2157</font>   
+<font class='lnum'>2158</font>   function toggleCombined(divid){
+<font class='lnum'>2159</font>       if(document.getElementById(divid).style.display == 'none'){
+<font class='lnum'>2160</font>         document.getElementById(divid).style.display = 'block';
+<font class='lnum'>2161</font>   	document.getElementById("toc"+divid).className="hilited";
+<font class='lnum'>2162</font>       }
+<font class='lnum'>2163</font>       else{
+<font class='lnum'>2164</font>         document.getElementById(divid).style.display = 'none';
+<font class='lnum'>2165</font>   	document.getElementById("toc"+divid).className="unhilited";
+<font class='lnum'>2166</font>       }
+<font class='lnum'>2167</font>   }
+<font class='lnum'>2168</font>   
+<font class='lnum'>2169</font>   
+<font class='lnum'>2170</font>   function showAll(){
+<font class='lnum'>2171</font>   for(i=1; i &lt;= 10000; i++){
+<font class='lnum'>2172</font>       document.getElementById(i).style.display = 'block';
+<font class='lnum'>2173</font>       document.getElementById("toc"+i).className="hilited";
+<font class='lnum'>2174</font>       };
+<font class='lnum'>2175</font>   }
+<font class='lnum'>2176</font>   
+<font class='lnum'>2177</font>   function hideAll(){
+<font class='lnum'>2178</font>   for(i=1; i &lt;= 10000; i++){
+<font class='lnum'>2179</font>       document.getElementById(i).style.display = 'none';
+<font class='lnum'>2180</font>       document.getElementById("toc"+i).className="unhilited";
+<font class='lnum'>2181</font>       };
+<font class='lnum'>2182</font>   }
+<font class='lnum'>2183</font>   
+<font class='lnum'>2184</font>   &lt;/script&gt;
+<font class='lnum'>2185</font>   </fieldset></pre>
 <p>
 <p>
 <p>
@@ -3506,146 +3509,146 @@ collapse all</a>
 
 
 <p>
-<font class='lnum'>2190</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;stylesheet&gt;&gt;=</legend>
-<font class='lnum'>2191</font>   &lt;style type="text/css" media="screen"&gt;
-<font class='lnum'>2192</font>   
-<font class='lnum'>2193</font>   
-<font class='lnum'>2194</font>   BODY {
-<font class='lnum'>2195</font>   	FONT-SIZE: 10pt;
-<font class='lnum'>2196</font>   	&lt;!--FONT-FAMILY: sans-serif --&gt;
-<font class='lnum'>2197</font>   	background: #f0f0f0;
-<font class='lnum'>2198</font>   	}
-<font class='lnum'>2199</font>   FIELDSET {
-<font class='lnum'>2200</font>   	BORDER-RIGHT: #000000 1px solid; 
-<font class='lnum'>2201</font>   	BORDER-TOP: #000000 1px solid; 
-<font class='lnum'>2202</font>   	BORDER-LEFT: #000000 1px solid; 
-<font class='lnum'>2203</font>   	BORDER-BOTTOM: #000000 1px solid; 
-<font class='lnum'>2204</font>   	PADDING-RIGHT: 5px; 
-<font class='lnum'>2205</font>   	PADDING-LEFT: 5px; 
-<font class='lnum'>2206</font>   	PADDING-BOTTOM: 2px; 
-<font class='lnum'>2207</font>   	PADDING-TOP: 5px;
-<font class='lnum'>2208</font>   	MARGIN-BOTTOM: 1px; 
-<font class='lnum'>2209</font>   	background: #f5f5f5; 
-<font class='lnum'>2210</font>   	color: #000000;
-<font class='lnum'>2211</font>   	}
-<font class='lnum'>2212</font>   LEGEND {
-<font class='lnum'>2213</font>   	BORDER-RIGHT: #a9a9a9 1px solid; 
-<font class='lnum'>2214</font>   	BORDER-BOTTOM: #a9a9a9 1px solid;
-<font class='lnum'>2215</font>   	BORDER-TOP: #a9a9a9 1px solid; 
-<font class='lnum'>2216</font>   	BORDER-LEFT: #a9a9a9 1px solid; 
-<font class='lnum'>2217</font>   	PADDING-RIGHT: 20px; 
-<font class='lnum'>2218</font>   	PADDING-LEFT: 20px; 
-<font class='lnum'>2219</font>   	PADDING-BOTTOM: 5px; 
-<font class='lnum'>2220</font>   	PADDING-TOP: 5px; 
-<font class='lnum'>2221</font>   	FONT-WEIGHT: bold;  
-<font class='lnum'>2222</font>   	BACKGROUND: #fdfdfd; 
-<font class='lnum'>2223</font>   	color: #000000;
-<font class='lnum'>2224</font>   	}
-<font class='lnum'>2225</font>   PRE	{
-<font class='lnum'>2226</font>           PADDING-LEFT: 20px; 
-<font class='lnum'>2227</font>           PADDING-RIGHT: 5px; 
-<font class='lnum'>2228</font>           padding-top: 0px; 
-<font class='lnum'>2229</font>           padding-bottom: 6px;
-<font class='lnum'>2230</font>           MARGIN-BOTTOM: 1px; 
-<font class='lnum'>2231</font>           BORDER-TOP: #a9a9a9 0px solid;
-<font class='lnum'>2232</font>           BORDER-RIGHT: #a9a9a9 0px solid; 
-<font class='lnum'>2233</font>           BORDER-LEFT: #a9a9a9 0px solid;
-<font class='lnum'>2234</font>           BORDER-BOTTOM: #a9a9a9 0px solid;        
-<font class='lnum'>2235</font>   	background: #fefefe;
-<font class='lnum'>2236</font>   	}
-<font class='lnum'>2237</font>   
-<font class='lnum'>2238</font>   
-<font class='lnum'>2239</font>   .tocfieldset {
-<font class='lnum'>2240</font>   	background: #ffffff; 
-<font class='lnum'>2241</font>   	color: #000000;
-<font class='lnum'>2242</font>   	}
-<font class='lnum'>2243</font>   
-<font class='lnum'>2244</font>   .codefieldset {
-<font class='lnum'>2245</font>   	BORDER-RIGHT: #000 1px solid; 
-<font class='lnum'>2246</font>   	BORDER-TOP: #000 1px solid; 
-<font class='lnum'>2247</font>   	BORDER-LEFT: #000 1px solid; 
-<font class='lnum'>2248</font>   	BORDER-BOTTOM: #000 1px solid; 
-<font class='lnum'>2249</font>   	background: #ffffff; 
-<font class='lnum'>2250</font>   	color: #000;
-<font class='lnum'>2251</font>   	MARGIN-BOTTOM: 1px; 
-<font class='lnum'>2252</font>   	PADDING-LEFT: 15px; 
-<font class='lnum'>2253</font>   	PADDING-RIGHT: 5px; 
-<font class='lnum'>2254</font>   	PADDING-BOTTOM: 10px; 
-<font class='lnum'>2255</font>   	PADDING-TOP: 1px;
-<font class='lnum'>2256</font>   	}
-<font class='lnum'>2257</font>   .codelegend {
-<font class='lnum'>2258</font>   	BORDER-RIGHT: #777 1px solid; 
-<font class='lnum'>2259</font>   	BORDER-TOP: #777 1px solid; 
-<font class='lnum'>2260</font>   	BORDER-LEFT: #777 1px solid; 
-<font class='lnum'>2261</font>   	BORDER-BOTTOM: #777 1px solid
-<font class='lnum'>2262</font>   	PADDING-RIGHT: 10px; 
-<font class='lnum'>2263</font>   	PADDING-LEFT: 10px; 
-<font class='lnum'>2264</font>   	PADDING-TOP: 2px; 
-<font class='lnum'>2265</font>   	PADDING-BOTTOM: 2px; 
-<font class='lnum'>2266</font>   	background: #ffffff; 
-<font class='lnum'>2267</font>   	color: #00b;
-<font class='lnum'>2268</font>   	FONT-WEIGHT: bold;  
-<font class='lnum'>2269</font>   	/font-variant: small-caps;
-<font class='lnum'>2270</font>   	/font-style: italic;
-<font class='lnum'>2271</font>   	}
-<font class='lnum'>2272</font>   
-<font class='lnum'>2273</font>   
-<font class='lnum'>2274</font>   
-<font class='lnum'>2275</font>   .chunkref {
-<font class='lnum'>2276</font>           color: #00b;	
-<font class='lnum'>2277</font>           background: #f6f6f6;
-<font class='lnum'>2278</font>           /font-style: italic;
-<font class='lnum'>2279</font>           font-weight: bold;
-<font class='lnum'>2280</font>           /font-variant: small-caps;
-<font class='lnum'>2281</font>   	}
-<font class='lnum'>2282</font>   
-<font class='lnum'>2283</font>   
-<font class='lnum'>2284</font>   .outertable {
-<font class='lnum'>2285</font>   	width: 99%; 
-<font class='lnum'>2286</font>   	cellpadding: 25; 
-<font class='lnum'>2287</font>   	background: #ffffff; 
-<font class='lnum'>2288</font>   	border: 1px solid;
-<font class='lnum'>2289</font>   	}
-<font class='lnum'>2290</font>   
-<font class='lnum'>2291</font>   .hl	{
-<font class='lnum'>2292</font>   	 ;
-<font class='lnum'>2293</font>           PADDING-LEFT: 5px; PADDING-RIGHT: 5px; 
-<font class='lnum'>2294</font>           padding-top: 5px; padding-bottom: 5px;
-<font class='lnum'>2295</font>           MARGIN-BOTTOM: 1px; 
-<font class='lnum'>2296</font>           BORDER-TOP: #a9a9a9 0px solid;
-<font class='lnum'>2297</font>           BORDER-RIGHT: #a9a9a9 0px solid; 
-<font class='lnum'>2298</font>           BORDER-LEFT: #a9a9a9 0px solid;
-<font class='lnum'>2299</font>           BORDER-BOTTOM: #a9a9a9 0px solid;        
-<font class='lnum'>2300</font>           background: #f5f5f5;	
-<font class='lnum'>2301</font>           width: 70%;
-<font class='lnum'>2302</font>   	}
-<font class='lnum'>2303</font>   
-<font class='lnum'>2304</font>   .hl-wide {
-<font class='lnum'>2305</font>   	 ;
-<font class='lnum'>2306</font>           PADDING-LEFT: 5px; 
-<font class='lnum'>2307</font>           PADDING-RIGHT: 5px; 
-<font class='lnum'>2308</font>           padding-top: 15px; 
-<font class='lnum'>2309</font>           padding-bottom: 15px;
-<font class='lnum'>2310</font>           MARGIN-BOTTOM: 1px; 
-<font class='lnum'>2311</font>           BORDER-TOP: #a9a9a9 0px solid;
-<font class='lnum'>2312</font>           BORDER-RIGHT: #a9a9a9 0px solid; 
-<font class='lnum'>2313</font>           BORDER-LEFT: #a9a9a9 0px solid;
-<font class='lnum'>2314</font>           BORDER-BOTTOM: #a9a9a9 0px solid;        
-<font class='lnum'>2315</font>           background: #fbfbfb;	
-<font class='lnum'>2316</font>   	}
-<font class='lnum'>2317</font>   
-<font class='lnum'>2318</font>   .lnum {
-<font class='lnum'>2319</font>   
-<font class='lnum'>2320</font>   	color: #a0a0a0;
-<font class='lnum'>2321</font>   	/background: #fbfbfb;
-<font class='lnum'>2322</font>   	}
-<font class='lnum'>2323</font>   
-<font class='lnum'>2324</font>   .unhilited {background-color:white}
-<font class='lnum'>2325</font>   .hilited {background-color:#c0c0ff}
+<font class='lnum'>2193</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;stylesheet&gt;&gt;=</legend>
+<font class='lnum'>2194</font>   &lt;style type="text/css" media="screen"&gt;
+<font class='lnum'>2195</font>   
+<font class='lnum'>2196</font>   
+<font class='lnum'>2197</font>   BODY {
+<font class='lnum'>2198</font>   	FONT-SIZE: 10pt;
+<font class='lnum'>2199</font>   	&lt;!--FONT-FAMILY: sans-serif --&gt;
+<font class='lnum'>2200</font>   	background: #f0f0f0;
+<font class='lnum'>2201</font>   	}
+<font class='lnum'>2202</font>   FIELDSET {
+<font class='lnum'>2203</font>   	BORDER-RIGHT: #000000 1px solid; 
+<font class='lnum'>2204</font>   	BORDER-TOP: #000000 1px solid; 
+<font class='lnum'>2205</font>   	BORDER-LEFT: #000000 1px solid; 
+<font class='lnum'>2206</font>   	BORDER-BOTTOM: #000000 1px solid; 
+<font class='lnum'>2207</font>   	PADDING-RIGHT: 5px; 
+<font class='lnum'>2208</font>   	PADDING-LEFT: 5px; 
+<font class='lnum'>2209</font>   	PADDING-BOTTOM: 2px; 
+<font class='lnum'>2210</font>   	PADDING-TOP: 5px;
+<font class='lnum'>2211</font>   	MARGIN-BOTTOM: 1px; 
+<font class='lnum'>2212</font>   	background: #f5f5f5; 
+<font class='lnum'>2213</font>   	color: #000000;
+<font class='lnum'>2214</font>   	}
+<font class='lnum'>2215</font>   LEGEND {
+<font class='lnum'>2216</font>   	BORDER-RIGHT: #a9a9a9 1px solid; 
+<font class='lnum'>2217</font>   	BORDER-BOTTOM: #a9a9a9 1px solid;
+<font class='lnum'>2218</font>   	BORDER-TOP: #a9a9a9 1px solid; 
+<font class='lnum'>2219</font>   	BORDER-LEFT: #a9a9a9 1px solid; 
+<font class='lnum'>2220</font>   	PADDING-RIGHT: 20px; 
+<font class='lnum'>2221</font>   	PADDING-LEFT: 20px; 
+<font class='lnum'>2222</font>   	PADDING-BOTTOM: 5px; 
+<font class='lnum'>2223</font>   	PADDING-TOP: 5px; 
+<font class='lnum'>2224</font>   	FONT-WEIGHT: bold;  
+<font class='lnum'>2225</font>   	BACKGROUND: #fdfdfd; 
+<font class='lnum'>2226</font>   	color: #000000;
+<font class='lnum'>2227</font>   	}
+<font class='lnum'>2228</font>   PRE	{
+<font class='lnum'>2229</font>           PADDING-LEFT: 20px; 
+<font class='lnum'>2230</font>           PADDING-RIGHT: 5px; 
+<font class='lnum'>2231</font>           padding-top: 0px; 
+<font class='lnum'>2232</font>           padding-bottom: 6px;
+<font class='lnum'>2233</font>           MARGIN-BOTTOM: 1px; 
+<font class='lnum'>2234</font>           BORDER-TOP: #a9a9a9 0px solid;
+<font class='lnum'>2235</font>           BORDER-RIGHT: #a9a9a9 0px solid; 
+<font class='lnum'>2236</font>           BORDER-LEFT: #a9a9a9 0px solid;
+<font class='lnum'>2237</font>           BORDER-BOTTOM: #a9a9a9 0px solid;        
+<font class='lnum'>2238</font>   	background: #fefefe;
+<font class='lnum'>2239</font>   	}
+<font class='lnum'>2240</font>   
+<font class='lnum'>2241</font>   
+<font class='lnum'>2242</font>   .tocfieldset {
+<font class='lnum'>2243</font>   	background: #ffffff; 
+<font class='lnum'>2244</font>   	color: #000000;
+<font class='lnum'>2245</font>   	}
+<font class='lnum'>2246</font>   
+<font class='lnum'>2247</font>   .codefieldset {
+<font class='lnum'>2248</font>   	BORDER-RIGHT: #000 1px solid; 
+<font class='lnum'>2249</font>   	BORDER-TOP: #000 1px solid; 
+<font class='lnum'>2250</font>   	BORDER-LEFT: #000 1px solid; 
+<font class='lnum'>2251</font>   	BORDER-BOTTOM: #000 1px solid; 
+<font class='lnum'>2252</font>   	background: #ffffff; 
+<font class='lnum'>2253</font>   	color: #000;
+<font class='lnum'>2254</font>   	MARGIN-BOTTOM: 1px; 
+<font class='lnum'>2255</font>   	PADDING-LEFT: 15px; 
+<font class='lnum'>2256</font>   	PADDING-RIGHT: 5px; 
+<font class='lnum'>2257</font>   	PADDING-BOTTOM: 10px; 
+<font class='lnum'>2258</font>   	PADDING-TOP: 1px;
+<font class='lnum'>2259</font>   	}
+<font class='lnum'>2260</font>   .codelegend {
+<font class='lnum'>2261</font>   	BORDER-RIGHT: #777 1px solid; 
+<font class='lnum'>2262</font>   	BORDER-TOP: #777 1px solid; 
+<font class='lnum'>2263</font>   	BORDER-LEFT: #777 1px solid; 
+<font class='lnum'>2264</font>   	BORDER-BOTTOM: #777 1px solid
+<font class='lnum'>2265</font>   	PADDING-RIGHT: 10px; 
+<font class='lnum'>2266</font>   	PADDING-LEFT: 10px; 
+<font class='lnum'>2267</font>   	PADDING-TOP: 2px; 
+<font class='lnum'>2268</font>   	PADDING-BOTTOM: 2px; 
+<font class='lnum'>2269</font>   	background: #ffffff; 
+<font class='lnum'>2270</font>   	color: #00b;
+<font class='lnum'>2271</font>   	FONT-WEIGHT: bold;  
+<font class='lnum'>2272</font>   	/font-variant: small-caps;
+<font class='lnum'>2273</font>   	/font-style: italic;
+<font class='lnum'>2274</font>   	}
+<font class='lnum'>2275</font>   
+<font class='lnum'>2276</font>   
+<font class='lnum'>2277</font>   
+<font class='lnum'>2278</font>   .chunkref {
+<font class='lnum'>2279</font>           color: #00b;	
+<font class='lnum'>2280</font>           background: #f6f6f6;
+<font class='lnum'>2281</font>           /font-style: italic;
+<font class='lnum'>2282</font>           font-weight: bold;
+<font class='lnum'>2283</font>           /font-variant: small-caps;
+<font class='lnum'>2284</font>   	}
+<font class='lnum'>2285</font>   
+<font class='lnum'>2286</font>   
+<font class='lnum'>2287</font>   .outertable {
+<font class='lnum'>2288</font>   	width: 99%; 
+<font class='lnum'>2289</font>   	cellpadding: 25; 
+<font class='lnum'>2290</font>   	background: #ffffff; 
+<font class='lnum'>2291</font>   	border: 1px solid;
+<font class='lnum'>2292</font>   	}
+<font class='lnum'>2293</font>   
+<font class='lnum'>2294</font>   .hl	{
+<font class='lnum'>2295</font>   	 ;
+<font class='lnum'>2296</font>           PADDING-LEFT: 5px; PADDING-RIGHT: 5px; 
+<font class='lnum'>2297</font>           padding-top: 5px; padding-bottom: 5px;
+<font class='lnum'>2298</font>           MARGIN-BOTTOM: 1px; 
+<font class='lnum'>2299</font>           BORDER-TOP: #a9a9a9 0px solid;
+<font class='lnum'>2300</font>           BORDER-RIGHT: #a9a9a9 0px solid; 
+<font class='lnum'>2301</font>           BORDER-LEFT: #a9a9a9 0px solid;
+<font class='lnum'>2302</font>           BORDER-BOTTOM: #a9a9a9 0px solid;        
+<font class='lnum'>2303</font>           background: #f5f5f5;	
+<font class='lnum'>2304</font>           width: 70%;
+<font class='lnum'>2305</font>   	}
+<font class='lnum'>2306</font>   
+<font class='lnum'>2307</font>   .hl-wide {
+<font class='lnum'>2308</font>   	 ;
+<font class='lnum'>2309</font>           PADDING-LEFT: 5px; 
+<font class='lnum'>2310</font>           PADDING-RIGHT: 5px; 
+<font class='lnum'>2311</font>           padding-top: 15px; 
+<font class='lnum'>2312</font>           padding-bottom: 15px;
+<font class='lnum'>2313</font>           MARGIN-BOTTOM: 1px; 
+<font class='lnum'>2314</font>           BORDER-TOP: #a9a9a9 0px solid;
+<font class='lnum'>2315</font>           BORDER-RIGHT: #a9a9a9 0px solid; 
+<font class='lnum'>2316</font>           BORDER-LEFT: #a9a9a9 0px solid;
+<font class='lnum'>2317</font>           BORDER-BOTTOM: #a9a9a9 0px solid;        
+<font class='lnum'>2318</font>           background: #fbfbfb;	
+<font class='lnum'>2319</font>   	}
+<font class='lnum'>2320</font>   
+<font class='lnum'>2321</font>   .lnum {
+<font class='lnum'>2322</font>   
+<font class='lnum'>2323</font>   	color: #a0a0a0;
+<font class='lnum'>2324</font>   	/background: #fbfbfb;
+<font class='lnum'>2325</font>   	}
 <font class='lnum'>2326</font>   
-<font class='lnum'>2327</font>   
-<font class='lnum'>2328</font>   &lt;/STYLE&gt;
-<font class='lnum'>2329</font>   </fieldset></pre>
+<font class='lnum'>2327</font>   .unhilited {background-color:white}
+<font class='lnum'>2328</font>   .hilited {background-color:#c0c0ff}
+<font class='lnum'>2329</font>   
+<font class='lnum'>2330</font>   
+<font class='lnum'>2331</font>   &lt;/STYLE&gt;
+<font class='lnum'>2332</font>   </fieldset></pre>
 <p>
 <p>
 <p>
@@ -3696,25 +3699,25 @@ collapse all</a>
 <p>
 Some of the vars may be unused later (run perl -wc to check?)<br>
 <p>
-<font class='lnum'>2343</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;accumulate result in a buffer&gt;&gt;=</legend>
-<font class='lnum'>2344</font>   #2. accumulate result in a buffer
-<font class='lnum'>2345</font>   
-<font class='lnum'>2346</font>   
-<font class='lnum'>2347</font>   # vars for the main loop over lines of the target file
+<font class='lnum'>2346</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;accumulate result in a buffer&gt;&gt;=</legend>
+<font class='lnum'>2347</font>   #2. accumulate result in a buffer
 <font class='lnum'>2348</font>   
-<font class='lnum'>2349</font>    $chunkbuf = ''; # collects whole formatted project file in memory
-<font class='lnum'>2350</font>    $tocbuf = "";	# will accumulate TOC contents, i.e. small
-<font class='lnum'>2351</font>    @indbuf = ();  # accumulates index of code chunks, small
-<font class='lnum'>2352</font>    #%indbuf = ();
-<font class='lnum'>2353</font>    @headings = ();	# the stack for nested subsections numbers/ids
-<font class='lnum'>2354</font>   
-<font class='lnum'>2355</font>    $section_num = 0;
-<font class='lnum'>2356</font>    $section_num_prev = 0;
-<font class='lnum'>2357</font>    $section_level = 0;
-<font class='lnum'>2358</font>    $prev_section_level = $section_level;
-<font class='lnum'>2359</font>    $line_counter = 0;
-<font class='lnum'>2360</font>    $in_pre_tag = 0;
-<font class='lnum'>2361</font>   </fieldset></pre>
+<font class='lnum'>2349</font>   
+<font class='lnum'>2350</font>   # vars for the main loop over lines of the target file
+<font class='lnum'>2351</font>   
+<font class='lnum'>2352</font>    $chunkbuf = ''; # collects whole formatted project file in memory
+<font class='lnum'>2353</font>    $tocbuf = "";	# will accumulate TOC contents, i.e. small
+<font class='lnum'>2354</font>    @indbuf = ();  # accumulates index of code chunks, small
+<font class='lnum'>2355</font>    #%indbuf = ();
+<font class='lnum'>2356</font>    @headings = ();	# the stack for nested subsections numbers/ids
+<font class='lnum'>2357</font>   
+<font class='lnum'>2358</font>    $section_num = 0;
+<font class='lnum'>2359</font>    $section_num_prev = 0;
+<font class='lnum'>2360</font>    $section_level = 0;
+<font class='lnum'>2361</font>    $prev_section_level = $section_level;
+<font class='lnum'>2362</font>    $line_counter = 0;
+<font class='lnum'>2363</font>    $in_pre_tag = 0;
+<font class='lnum'>2364</font>   </fieldset></pre>
 <p>
 <p>
 The logic is this: (a) all project files, unless they are machine-generated code, are<br>
@@ -3725,47 +3728,47 @@ Only 3 distinctions need to be made while iterating over hte lines of the Litera
 file, between section headings, chunks of code and the lines from the body of documentation<br>
 chunks.<br>
 <p>
-<font class='lnum'>2372</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;accumulate result in a buffer&gt;&gt;=</legend>
-<font class='lnum'>2373</font>   
-<font class='lnum'>2374</font>   open FF, "&lt; $0";
-<font class='lnum'>2375</font>   
+<font class='lnum'>2375</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;accumulate result in a buffer&gt;&gt;=</legend>
 <font class='lnum'>2376</font>   
-<font class='lnum'>2377</font>   while (&lt;FF&gt;) {
+<font class='lnum'>2377</font>   open FF, "&lt; $0";
 <font class='lnum'>2378</font>   
-<font class='lnum'>2379</font>      $line_counter++;
-<font class='lnum'>2380</font>   
-<font class='lnum'>2381</font>       # cut out the MOLLY.pl invocation itself, the top of the Lit src file
-<font class='lnum'>2382</font>       #if ( m%^#-+\s*?start of script% ... m%^xxxxxxxxxxxx% ) {  
-<font class='lnum'>2383</font>       if ( m%^__DATA__% ... m%^xxxxxxxxxxxx% ) {
-<font class='lnum'>2384</font>       s!^__DATA__\s*$!!;
-<font class='lnum'>2385</font>   
-<font class='lnum'>2386</font>   
-<font class='lnum'>2387</font>   
-<font class='lnum'>2388</font>   <font class='chunkref'>&lt;&lt;process code chunks&gt;&gt</font>;
-<font class='lnum'>2389</font>   <font class='chunkref'>&lt;&lt;process section headings&gt;&gt</font>;
-<font class='lnum'>2390</font>   <font class='chunkref'>&lt;&lt;body HTML formatters&gt;&gt</font>;
-<font class='lnum'>2391</font>   
-<font class='lnum'>2392</font>   
-<font class='lnum'>2393</font>   	# debug
-<font class='lnum'>2394</font>   	#print "---- $_";
+<font class='lnum'>2379</font>   
+<font class='lnum'>2380</font>   while (&lt;FF&gt;) {
+<font class='lnum'>2381</font>   
+<font class='lnum'>2382</font>      $line_counter++;
+<font class='lnum'>2383</font>   
+<font class='lnum'>2384</font>       # cut out the MOLLY.pl invocation itself, the top of the Lit src file
+<font class='lnum'>2385</font>       #if ( m%^#-+\s*?start of script% ... m%^xxxxxxxxxxxx% ) {  
+<font class='lnum'>2386</font>       if ( m%^__DATA__% ... m%^xxxxxxxxxxxx% ) {
+<font class='lnum'>2387</font>       s!^__DATA__\s*$!!;
+<font class='lnum'>2388</font>   
+<font class='lnum'>2389</font>   
+<font class='lnum'>2390</font>   
+<font class='lnum'>2391</font>   <font class='chunkref'>&lt;&lt;process code chunks&gt;&gt</font>;
+<font class='lnum'>2392</font>   <font class='chunkref'>&lt;&lt;process section headings&gt;&gt</font>;
+<font class='lnum'>2393</font>   <font class='chunkref'>&lt;&lt;body HTML formatters&gt;&gt</font>;
+<font class='lnum'>2394</font>   
 <font class='lnum'>2395</font>   
-<font class='lnum'>2396</font>      } # fi "start of script"
-<font class='lnum'>2397</font>   
-<font class='lnum'>2398</font>   } #elihw over the whole input file
-<font class='lnum'>2399</font>   
-<font class='lnum'>2400</font>   	
-<font class='lnum'>2401</font>   
+<font class='lnum'>2396</font>   	# debug
+<font class='lnum'>2397</font>   	#print "---- $_";
+<font class='lnum'>2398</font>   
+<font class='lnum'>2399</font>      } # fi "start of script"
+<font class='lnum'>2400</font>   
+<font class='lnum'>2401</font>   } #elihw over the whole input file
 <font class='lnum'>2402</font>   
-<font class='lnum'>2403</font>    foreach (@headings)  {
+<font class='lnum'>2403</font>   	
 <font class='lnum'>2404</font>   
-<font class='lnum'>2405</font>   	($section_level, $section_num_prev) = split /-/, $_;
-<font class='lnum'>2406</font>   	$folding_section_end = $folding_section_end_str;
-<font class='lnum'>2407</font>   	$folding_section_end =~ s!(\$section_num_prev)!$1!ee;
-<font class='lnum'>2408</font>   	$chunkbuf .= $folding_section_end; 
-<font class='lnum'>2409</font>   
-<font class='lnum'>2410</font>   	};
-<font class='lnum'>2411</font>   
-<font class='lnum'>2412</font>   </fieldset></pre>
+<font class='lnum'>2405</font>   
+<font class='lnum'>2406</font>    foreach (@headings)  {
+<font class='lnum'>2407</font>   
+<font class='lnum'>2408</font>   	($section_level, $section_num_prev) = split /-/, $_;
+<font class='lnum'>2409</font>   	$folding_section_end = $folding_section_end_str;
+<font class='lnum'>2410</font>   	$folding_section_end =~ s!(\$section_num_prev)!$1!ee;
+<font class='lnum'>2411</font>   	$chunkbuf .= $folding_section_end; 
+<font class='lnum'>2412</font>   
+<font class='lnum'>2413</font>   	};
+<font class='lnum'>2414</font>   
+<font class='lnum'>2415</font>   </fieldset></pre>
 <p>
 <p>
 <p>
@@ -3794,38 +3797,38 @@ updated.<br>
 Then "fieldset" formatting is written around the code chunk and line numbering (if set<br>
 in an option var) is written too<br>
 <p>
-<font class='lnum'>2436</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;process code chunks&gt;&gt;=</legend>
-<font class='lnum'>2437</font>   
-<font class='lnum'>2438</font>   	if ( m!^(goto)?&lt;\&lt;(.*)&gt;\&gt;=! ... m!^@\s*$! ) { # -- CODE CHUNKS -- 
-<font class='lnum'>2439</font>   		$chunk_title = $2;
+<font class='lnum'>2439</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;process code chunks&gt;&gt;=</legend>
 <font class='lnum'>2440</font>   
-<font class='lnum'>2441</font>   		s/&lt;/&lt;/g;	# escape &lt;
-<font class='lnum'>2442</font>   		s/&gt;/&gt;/g;	# escape &gt;
+<font class='lnum'>2441</font>   	if ( m!^(goto)?&lt;\&lt;(.*)&gt;\&gt;=! ... m!^@\s*$! ) { # -- CODE CHUNKS -- 
+<font class='lnum'>2442</font>   		$chunk_title = $2;
 <font class='lnum'>2443</font>   
-<font class='lnum'>2444</font>   		if (m!(&lt;&lt;(.+?)&gt;&gt);(=)?!) 
-<font class='lnum'>2445</font>   		  {
-<font class='lnum'>2446</font>   		  $reference = $1;
-<font class='lnum'>2447</font>   		  $ind_str = "&lt;&lt;$2&gt;&gt; $section_num";
-<font class='lnum'>2448</font>   		  if (defined $3) {$ind_str .= "&lt;sub&gt;def&lt;/sub&gt;"}
-<font class='lnum'>2449</font>   		  else { s!$reference!&lt;font class='chunkref'&gt;$reference&lt;/font&gt;! }
-<font class='lnum'>2450</font>   
-<font class='lnum'>2451</font>   		  unshift @indbuf, $ind_str;
-<font class='lnum'>2452</font>   
-<font class='lnum'>2453</font>   		} # fi - chunks index accumulation
-<font class='lnum'>2454</font>   
-<font class='lnum'>2455</font>   		# simple fieldset frames around code snippets
-<font class='lnum'>2456</font>   		s!^(goto)?&lt;&lt;(.+)&gt;&gt;=!$code_frameset_start_pre$1&lt;&lt;$2&gt;&gt;$code_frameset_start_post!;
-<font class='lnum'>2457</font>   		s!^@\s*$!$code_frameset_end!;
-<font class='lnum'>2458</font>   
-<font class='lnum'>2459</font>   		if ( $line_numbering ) { 
-<font class='lnum'>2460</font>   		$chunkbuf .= "&lt;font class='lnum'&gt;" . $line_counter . "&lt;/font&gt;   " . $_;
-<font class='lnum'>2461</font>   		}
-<font class='lnum'>2462</font>   		else{
-<font class='lnum'>2463</font>   		$chunkbuf .= $_;
+<font class='lnum'>2444</font>   		s/&lt;/&lt;/g;	# escape &lt;
+<font class='lnum'>2445</font>   		s/&gt;/&gt;/g;	# escape &gt;
+<font class='lnum'>2446</font>   
+<font class='lnum'>2447</font>   		if (m!(&lt;&lt;(.+?)&gt;&gt);(=)?!) 
+<font class='lnum'>2448</font>   		  {
+<font class='lnum'>2449</font>   		  $reference = $1;
+<font class='lnum'>2450</font>   		  $ind_str = "&lt;&lt;$2&gt;&gt; $section_num";
+<font class='lnum'>2451</font>   		  if (defined $3) {$ind_str .= "&lt;sub&gt;def&lt;/sub&gt;"}
+<font class='lnum'>2452</font>   		  else { s!$reference!&lt;font class='chunkref'&gt;$reference&lt;/font&gt;! }
+<font class='lnum'>2453</font>   
+<font class='lnum'>2454</font>   		  unshift @indbuf, $ind_str;
+<font class='lnum'>2455</font>   
+<font class='lnum'>2456</font>   		} # fi - chunks index accumulation
+<font class='lnum'>2457</font>   
+<font class='lnum'>2458</font>   		# simple fieldset frames around code snippets
+<font class='lnum'>2459</font>   		s!^(goto)?&lt;&lt;(.+)&gt;&gt;=!$code_frameset_start_pre$1&lt;&lt;$2&gt;&gt;$code_frameset_start_post!;
+<font class='lnum'>2460</font>   		s!^@\s*$!$code_frameset_end!;
+<font class='lnum'>2461</font>   
+<font class='lnum'>2462</font>   		if ( $line_numbering ) { 
+<font class='lnum'>2463</font>   		$chunkbuf .= "&lt;font class='lnum'&gt;" . $line_counter . "&lt;/font&gt;   " . $_;
 <font class='lnum'>2464</font>   		}
-<font class='lnum'>2465</font>   
-<font class='lnum'>2466</font>   	} # fi code chunks
-<font class='lnum'>2467</font>   </fieldset></pre>
+<font class='lnum'>2465</font>   		else{
+<font class='lnum'>2466</font>   		$chunkbuf .= $_;
+<font class='lnum'>2467</font>   		}
+<font class='lnum'>2468</font>   
+<font class='lnum'>2469</font>   	} # fi code chunks
+<font class='lnum'>2470</font>   </fieldset></pre>
 <p>
 <p>
 <p>
@@ -3873,109 +3876,109 @@ The logic was tested first in an external skeleton script.<br>
 CHANGES" subsection<br>
 <p>
 <p>
-<font class='lnum'>2494</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;process section headings&gt;&gt;=</legend>
-<font class='lnum'>2495</font>   
-<font class='lnum'>2496</font>   	# -- SECTION HEADINGS 
-<font class='lnum'>2497</font>      #elsif ( m!\.(\+)?h(\d)\.(.*?)\./h\d\.! ) {	# old version, no "rawHTML" enabled yet
-<font class='lnum'>2498</font>      elsif ( m!$tag_open_symbol(\+)?h(\d)$tag_close_symbol(.*?)$tag_open_symbol/h\d$tag_close_symbol! ) {	
-<font class='lnum'>2499</font>   
-<font class='lnum'>2500</font>   
-<font class='lnum'>2501</font>   
-<font class='lnum'>2502</font>   	# -- using split vars for substitution to avoid
-<font class='lnum'>2503</font>   	#	regexps and need to keep old state --	
+<font class='lnum'>2497</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;process section headings&gt;&gt;=</legend>
+<font class='lnum'>2498</font>   
+<font class='lnum'>2499</font>   	# -- SECTION HEADINGS 
+<font class='lnum'>2500</font>      #elsif ( m!\.(\+)?h(\d)\.(.*?)\./h\d\.! ) {	# old version, no "rawHTML" enabled yet
+<font class='lnum'>2501</font>      elsif ( m!$tag_open_symbol(\+)?h(\d)$tag_close_symbol(.*?)$tag_open_symbol/h\d$tag_close_symbol! ) {	
+<font class='lnum'>2502</font>   
+<font class='lnum'>2503</font>   
 <font class='lnum'>2504</font>   
-<font class='lnum'>2505</font>   	$section_num_prev = $section_num;
-<font class='lnum'>2506</font>   	$section_num = $section_num + 1;
+<font class='lnum'>2505</font>   	# -- using split vars for substitution to avoid
+<font class='lnum'>2506</font>   	#	regexps and need to keep old state --	
 <font class='lnum'>2507</font>   
-<font class='lnum'>2508</font>   
-<font class='lnum'>2509</font>   		#default for fold state in "settings" ??
-<font class='lnum'>2510</font>   		if ($1 eq "+") {
-<font class='lnum'>2511</font>   		    $fold_state="block";
-<font class='lnum'>2512</font>   		    $highlight_state = qq!  &lt;script language=javascript&gt; 
-<font class='lnum'>2513</font>   		    document.getElementById("toc"+ $section_num).className='hilited';
-<font class='lnum'>2514</font>   		    &lt;/script&gt; !;
-<font class='lnum'>2515</font>   		} 
-<font class='lnum'>2516</font>   		else {
-<font class='lnum'>2517</font>   		    $fold_state="none";
-<font class='lnum'>2518</font>   		    $highlight_state = "";
-<font class='lnum'>2519</font>   		};
-<font class='lnum'>2520</font>   		$section_level = $2;
-<font class='lnum'>2521</font>   		$section_title = $3;
-<font class='lnum'>2522</font>   
-<font class='lnum'>2523</font>   
-<font class='lnum'>2524</font>   	
+<font class='lnum'>2508</font>   	$section_num_prev = $section_num;
+<font class='lnum'>2509</font>   	$section_num = $section_num + 1;
+<font class='lnum'>2510</font>   
+<font class='lnum'>2511</font>   
+<font class='lnum'>2512</font>   		#default for fold state in "settings" ??
+<font class='lnum'>2513</font>   		if ($1 eq "+") {
+<font class='lnum'>2514</font>   		    $fold_state="block";
+<font class='lnum'>2515</font>   		    $highlight_state = qq!  &lt;script language=javascript&gt; 
+<font class='lnum'>2516</font>   		    document.getElementById("toc"+ $section_num).className='hilited';
+<font class='lnum'>2517</font>   		    &lt;/script&gt; !;
+<font class='lnum'>2518</font>   		} 
+<font class='lnum'>2519</font>   		else {
+<font class='lnum'>2520</font>   		    $fold_state="none";
+<font class='lnum'>2521</font>   		    $highlight_state = "";
+<font class='lnum'>2522</font>   		};
+<font class='lnum'>2523</font>   		$section_level = $2;
+<font class='lnum'>2524</font>   		$section_title = $3;
 <font class='lnum'>2525</font>   
-<font class='lnum'>2526</font>   	
-<font class='lnum'>2527</font>   
-<font class='lnum'>2528</font>   	$folding_section_start1 = $folding_section_start1_str;
-<font class='lnum'>2529</font>   	$folding_section_start2 = $folding_section_start2_str;
-<font class='lnum'>2530</font>   	$folding_section_end = $folding_section_end_str;
-<font class='lnum'>2531</font>   
-<font class='lnum'>2532</font>   
-<font class='lnum'>2533</font>   	$folding_section_start1 =~ s!(\$section_num)!$1!ee;
-<font class='lnum'>2534</font>   	$folding_section_start2 =~ s!(\$section_num)!$1!ee;
-<font class='lnum'>2535</font>   	$folding_section_start2 =~ s!(\$fold_state)!$1!ee;
-<font class='lnum'>2536</font>   	$folding_section_start2 =~ s!(\$highlight_state)!$1!ee;
-<font class='lnum'>2537</font>   	$folding_section_end =~ s!(\$section_num_prev)!$1!ee;
-<font class='lnum'>2538</font>   
-<font class='lnum'>2539</font>   
-<font class='lnum'>2540</font>   	$section_id = $section_level . '-' . $section_num;
+<font class='lnum'>2526</font>   
+<font class='lnum'>2527</font>   	
+<font class='lnum'>2528</font>   
+<font class='lnum'>2529</font>   	
+<font class='lnum'>2530</font>   
+<font class='lnum'>2531</font>   	$folding_section_start1 = $folding_section_start1_str;
+<font class='lnum'>2532</font>   	$folding_section_start2 = $folding_section_start2_str;
+<font class='lnum'>2533</font>   	$folding_section_end = $folding_section_end_str;
+<font class='lnum'>2534</font>   
+<font class='lnum'>2535</font>   
+<font class='lnum'>2536</font>   	$folding_section_start1 =~ s!(\$section_num)!$1!ee;
+<font class='lnum'>2537</font>   	$folding_section_start2 =~ s!(\$section_num)!$1!ee;
+<font class='lnum'>2538</font>   	$folding_section_start2 =~ s!(\$fold_state)!$1!ee;
+<font class='lnum'>2539</font>   	$folding_section_start2 =~ s!(\$highlight_state)!$1!ee;
+<font class='lnum'>2540</font>   	$folding_section_end =~ s!(\$section_num_prev)!$1!ee;
 <font class='lnum'>2541</font>   
 <font class='lnum'>2542</font>   
-<font class='lnum'>2543</font>   	# finish previous subsection if not the first section in the file
-<font class='lnum'>2544</font>   	# ..and deal with nesting of sections according to their "depth level"
+<font class='lnum'>2543</font>   	$section_id = $section_level . '-' . $section_num;
+<font class='lnum'>2544</font>   
 <font class='lnum'>2545</font>   
-<font class='lnum'>2546</font>   	# this is NOT the first section:
-<font class='lnum'>2547</font>   	if ( exists $headings[0] ){
+<font class='lnum'>2546</font>   	# finish previous subsection if not the first section in the file
+<font class='lnum'>2547</font>   	# ..and deal with nesting of sections according to their "depth level"
 <font class='lnum'>2548</font>   
-<font class='lnum'>2549</font>   		($prev_section_level, $prev_section_num)  = split /-/, $headings[0];
-<font class='lnum'>2550</font>   
-<font class='lnum'>2551</font>   		if ($section_level == $prev_section_level){
-<font class='lnum'>2552</font>   
-<font class='lnum'>2553</font>   		# close prev, start new
-<font class='lnum'>2554</font>   		$chunkbuf .= $folding_section_end;
-<font class='lnum'>2555</font>   		shift @headings;
-<font class='lnum'>2556</font>   		
-<font class='lnum'>2557</font>   		}
-<font class='lnum'>2558</font>   
-<font class='lnum'>2559</font>   		elsif($section_level &lt; $prev_section_level){
-<font class='lnum'>2560</font>   		
-<font class='lnum'>2561</font>   		  # close a bunch of them, in a loop -- THEN start a new one.
-<font class='lnum'>2562</font>   		  do  {
-<font class='lnum'>2563</font>   			($prev_section_level, $section_num_prev) = split /-/, shift @headings;
-<font class='lnum'>2564</font>   			
-<font class='lnum'>2565</font>   			$folding_section_end = $folding_section_end_str;
-<font class='lnum'>2566</font>   			$folding_section_end =~ s!(\$section_num_prev)!$1!ee;
-<font class='lnum'>2567</font>   			$chunkbuf .= $folding_section_end;
-<font class='lnum'>2568</font>   
-<font class='lnum'>2569</font>   		   } while ( $section_level &lt; $prev_section_level );
-<font class='lnum'>2570</font>   		}
-<font class='lnum'>2571</font>   	} # fi not the first section
-<font class='lnum'>2572</font>   
-<font class='lnum'>2573</font>   
-<font class='lnum'>2574</font>   	# common operations		
-<font class='lnum'>2575</font>   	unshift @headings, $section_id ;
-<font class='lnum'>2576</font>   	$chunkbuf .= $folding_section_start1;
-<font class='lnum'>2577</font>   	$chunkbuf .= $section_title; 
-<font class='lnum'>2578</font>   	$chunkbuf .= $folding_section_start2;
-<font class='lnum'>2579</font>   
-<font class='lnum'>2580</font>   	$toc_indent = "&nbsp;" x ($section_level * 7);
-<font class='lnum'>2581</font>   	#$toc_indent = "&nbsp;" x (($section_level-1) * 7 );
-<font class='lnum'>2582</font>   	#$tocbuf .= "\n&lt;p&gt;\n" if ( $section_level == 1 ); 
-<font class='lnum'>2583</font>   	$tocbuf .= $toc_indent . 
-<font class='lnum'>2584</font>   		"&lt;i&gt;" . $section_num . "&lt;/i&gt;" .
-<font class='lnum'>2585</font>   		qq/&nbsp;&lt;a href="javascript:;" onmousedown="toggleCombined(/ .  
-<font class='lnum'>2586</font>   		$section_num . 
-<font class='lnum'>2587</font>   		qq/);" id="toc/ . $section_num .
-<font class='lnum'>2588</font>   		qq/"&gt;&lt;b&gt;/ .
-<font class='lnum'>2589</font>   		$section_title . 
-<font class='lnum'>2590</font>   		"&lt;/b&gt;&lt;/a&gt;&lt;br&gt;\n";
-<font class='lnum'>2591</font>   
-<font class='lnum'>2592</font>      } #; fisle: end elif headings
-<font class='lnum'>2593</font>   
-<font class='lnum'>2594</font>   	
-<font class='lnum'>2595</font>   
-<font class='lnum'>2596</font>   </fieldset></pre>
+<font class='lnum'>2549</font>   	# this is NOT the first section:
+<font class='lnum'>2550</font>   	if ( exists $headings[0] ){
+<font class='lnum'>2551</font>   
+<font class='lnum'>2552</font>   		($prev_section_level, $prev_section_num)  = split /-/, $headings[0];
+<font class='lnum'>2553</font>   
+<font class='lnum'>2554</font>   		if ($section_level == $prev_section_level){
+<font class='lnum'>2555</font>   
+<font class='lnum'>2556</font>   		# close prev, start new
+<font class='lnum'>2557</font>   		$chunkbuf .= $folding_section_end;
+<font class='lnum'>2558</font>   		shift @headings;
+<font class='lnum'>2559</font>   		
+<font class='lnum'>2560</font>   		}
+<font class='lnum'>2561</font>   
+<font class='lnum'>2562</font>   		elsif($section_level &lt; $prev_section_level){
+<font class='lnum'>2563</font>   		
+<font class='lnum'>2564</font>   		  # close a bunch of them, in a loop -- THEN start a new one.
+<font class='lnum'>2565</font>   		  do  {
+<font class='lnum'>2566</font>   			($prev_section_level, $section_num_prev) = split /-/, shift @headings;
+<font class='lnum'>2567</font>   			
+<font class='lnum'>2568</font>   			$folding_section_end = $folding_section_end_str;
+<font class='lnum'>2569</font>   			$folding_section_end =~ s!(\$section_num_prev)!$1!ee;
+<font class='lnum'>2570</font>   			$chunkbuf .= $folding_section_end;
+<font class='lnum'>2571</font>   
+<font class='lnum'>2572</font>   		   } while ( $section_level &lt; $prev_section_level );
+<font class='lnum'>2573</font>   		}
+<font class='lnum'>2574</font>   	} # fi not the first section
+<font class='lnum'>2575</font>   
+<font class='lnum'>2576</font>   
+<font class='lnum'>2577</font>   	# common operations		
+<font class='lnum'>2578</font>   	unshift @headings, $section_id ;
+<font class='lnum'>2579</font>   	$chunkbuf .= $folding_section_start1;
+<font class='lnum'>2580</font>   	$chunkbuf .= $section_title; 
+<font class='lnum'>2581</font>   	$chunkbuf .= $folding_section_start2;
+<font class='lnum'>2582</font>   
+<font class='lnum'>2583</font>   	$toc_indent = "&nbsp;" x ($section_level * 7);
+<font class='lnum'>2584</font>   	#$toc_indent = "&nbsp;" x (($section_level-1) * 7 );
+<font class='lnum'>2585</font>   	#$tocbuf .= "\n&lt;p&gt;\n" if ( $section_level == 1 ); 
+<font class='lnum'>2586</font>   	$tocbuf .= $toc_indent . 
+<font class='lnum'>2587</font>   		"&lt;i&gt;" . $section_num . "&lt;/i&gt;" .
+<font class='lnum'>2588</font>   		qq/&nbsp;&lt;a href="javascript:;" onmousedown="toggleCombined(/ .  
+<font class='lnum'>2589</font>   		$section_num . 
+<font class='lnum'>2590</font>   		qq/);" id="toc/ . $section_num .
+<font class='lnum'>2591</font>   		qq/"&gt;&lt;b&gt;/ .
+<font class='lnum'>2592</font>   		$section_title . 
+<font class='lnum'>2593</font>   		"&lt;/b&gt;&lt;/a&gt;&lt;br&gt;\n";
+<font class='lnum'>2594</font>   
+<font class='lnum'>2595</font>      } #; fisle: end elif headings
+<font class='lnum'>2596</font>   
+<font class='lnum'>2597</font>   	
+<font class='lnum'>2598</font>   
+<font class='lnum'>2599</font>   </fieldset></pre>
 <p>
 <p>
 <p>
@@ -4029,75 +4032,75 @@ and so the subsequent regexps must match on "& l t ;" not on the angle bracket i
 cases.<br>
 <p>
 <p>
-<font class='lnum'>2629</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;body HTML formatters&gt;&gt;=</legend>
-<font class='lnum'>2630</font>   
-<font class='lnum'>2631</font>   	elsif( $weave_markup eq "dotHTML" ) {	# dotHTML formatter here
-<font class='lnum'>2632</font>   
-<font class='lnum'>2633</font>   	      s/^=begin.*$//;	# - eliminate perl escaping, start
-<font class='lnum'>2634</font>   	      s/^=cut.*$//;		# - eliminate perl escaping, end
-<font class='lnum'>2635</font>      	      #s/^{{{\d+(.*)$/$1/;	# - eliminate vim folding markup, start 
-<font class='lnum'>2636</font>   					# - dummy, as it is killed in "headings" processing 
-<font class='lnum'>2637</font>   	      s/^}}}\d+//;	# - eliminate vim folding markup, end
-<font class='lnum'>2638</font>   
-<font class='lnum'>2639</font>   		s/&lt;/&lt;/g;	# escape &lt;
-<font class='lnum'>2640</font>   		s/&gt;/&gt;/g;	# escape &gt;
+<font class='lnum'>2632</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;body HTML formatters&gt;&gt;=</legend>
+<font class='lnum'>2633</font>   
+<font class='lnum'>2634</font>   	elsif( $weave_markup eq "dotHTML" ) {	# dotHTML formatter here
+<font class='lnum'>2635</font>   
+<font class='lnum'>2636</font>   	      s/^=begin.*$//;	# - eliminate perl escaping, start
+<font class='lnum'>2637</font>   	      s/^=cut.*$//;		# - eliminate perl escaping, end
+<font class='lnum'>2638</font>      	      #s/^{{{\d+(.*)$/$1/;	# - eliminate vim folding markup, start 
+<font class='lnum'>2639</font>   					# - dummy, as it is killed in "headings" processing 
+<font class='lnum'>2640</font>   	      s/^}}}\d+//;	# - eliminate vim folding markup, end
 <font class='lnum'>2641</font>   
-<font class='lnum'>2642</font>   
-<font class='lnum'>2643</font>   	      # Paragraphs and line breaks are automatic now:
-<font class='lnum'>2644</font>   	      # ... unless we are dealing with the "preformat" tag
-<font class='lnum'>2645</font>   		#--note! that ranges do not work here
-<font class='lnum'>2646</font>   		$in_pre_tag = 1 if (m!\.pre\.!);
-<font class='lnum'>2647</font>   		$in_pre_tag = 0 if (m!\./pre\.!);;
-<font class='lnum'>2648</font>   
-<font class='lnum'>2649</font>   		s/\.(\/?)pre\./&lt;$1pre&gt;/g;
-<font class='lnum'>2650</font>   
-<font class='lnum'>2651</font>   	    unless ($in_pre_tag) {
-<font class='lnum'>2652</font>   	    (m/^\s*$/) and s/$_/&lt;p&gt;\n/
-<font class='lnum'>2653</font>   	    or s/\n/&lt;br&gt;\n/;
-<font class='lnum'>2654</font>   	    }
-<font class='lnum'>2655</font>   </fieldset></pre>
+<font class='lnum'>2642</font>   		s/&lt;/&lt;/g;	# escape &lt;
+<font class='lnum'>2643</font>   		s/&gt;/&gt;/g;	# escape &gt;
+<font class='lnum'>2644</font>   
+<font class='lnum'>2645</font>   
+<font class='lnum'>2646</font>   	      # Paragraphs and line breaks are automatic now:
+<font class='lnum'>2647</font>   	      # ... unless we are dealing with the "preformat" tag
+<font class='lnum'>2648</font>   		#--note! that ranges do not work here
+<font class='lnum'>2649</font>   		$in_pre_tag = 1 if (m!\.pre\.!);
+<font class='lnum'>2650</font>   		$in_pre_tag = 0 if (m!\./pre\.!);;
+<font class='lnum'>2651</font>   
+<font class='lnum'>2652</font>   		s/\.(\/?)pre\./&lt;$1pre&gt;/g;
+<font class='lnum'>2653</font>   
+<font class='lnum'>2654</font>   	    unless ($in_pre_tag) {
+<font class='lnum'>2655</font>   	    (m/^\s*$/) and s/$_/&lt;p&gt;\n/
+<font class='lnum'>2656</font>   	    or s/\n/&lt;br&gt;\n/;
+<font class='lnum'>2657</font>   	    }
+<font class='lnum'>2658</font>   </fieldset></pre>
 <p>
 Now the regexps to cut out "#--------" lines and substitute "dot-notation" with angle brackets:<br>
 <p>
-<font class='lnum'>2659</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;body HTML formatters&gt;&gt;=</legend>
-<font class='lnum'>2660</font>   	      # originally I separated header from the body with such a line
-<font class='lnum'>2661</font>   	      #s/^#-----.*/starting the table here/;
-<font class='lnum'>2662</font>   	      s/^#-----.*//;
-<font class='lnum'>2663</font>   
-<font class='lnum'>2664</font>   
-<font class='lnum'>2665</font>   		# add more here
+<font class='lnum'>2662</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;body HTML formatters&gt;&gt;=</legend>
+<font class='lnum'>2663</font>   	      # originally I separated header from the body with such a line
+<font class='lnum'>2664</font>   	      #s/^#-----.*/starting the table here/;
+<font class='lnum'>2665</font>   	      s/^#-----.*//;
 <font class='lnum'>2666</font>   
-<font class='lnum'>2667</font>   		s/\.(\/?)b\./&lt;$1b&gt;/g;
-<font class='lnum'>2668</font>   		s/\.(\/?)i\./&lt;$1i&gt;/g;
-<font class='lnum'>2669</font>   		s/\.(\/?)ul\./&lt;$1ul&gt;/g;
-<font class='lnum'>2670</font>   		s/\.(\/?)li\./&lt;$1li&gt;/g;
-<font class='lnum'>2671</font>   		s/\.(\/?)ol\./&lt;$1ol&gt;/g;
-<font class='lnum'>2672</font>   		s/\.(\/?)s\./&lt;$1s&gt;/g;
-<font class='lnum'>2673</font>   		s/\.(\/?)div\./&lt;$1div&gt;/g;
-<font class='lnum'>2674</font>   		s/\.br\./&lt;br&gt;/g;
-<font class='lnum'>2675</font>   		s/\.p\./&lt;p&gt;/g;
-<font class='lnum'>2676</font>   
-<font class='lnum'>2677</font>   
-<font class='lnum'>2678</font>   		s/\.(\/?)tab\./&lt;$1ul&gt;/g;	# "tabbing" with "ul"
+<font class='lnum'>2667</font>   
+<font class='lnum'>2668</font>   		# add more here
+<font class='lnum'>2669</font>   
+<font class='lnum'>2670</font>   		s/\.(\/?)b\./&lt;$1b&gt;/g;
+<font class='lnum'>2671</font>   		s/\.(\/?)i\./&lt;$1i&gt;/g;
+<font class='lnum'>2672</font>   		s/\.(\/?)ul\./&lt;$1ul&gt;/g;
+<font class='lnum'>2673</font>   		s/\.(\/?)li\./&lt;$1li&gt;/g;
+<font class='lnum'>2674</font>   		s/\.(\/?)ol\./&lt;$1ol&gt;/g;
+<font class='lnum'>2675</font>   		s/\.(\/?)s\./&lt;$1s&gt;/g;
+<font class='lnum'>2676</font>   		s/\.(\/?)div\./&lt;$1div&gt;/g;
+<font class='lnum'>2677</font>   		s/\.br\./&lt;br&gt;/g;
+<font class='lnum'>2678</font>   		s/\.p\./&lt;p&gt;/g;
 <font class='lnum'>2679</font>   
 <font class='lnum'>2680</font>   
-<font class='lnum'>2681</font>   		# this is some bullshit ???
-<font class='lnum'>2682</font>   		s/\.hr\./&lt;hr /g;
-<font class='lnum'>2683</font>   		s/\.\/hr\./&gt;/g;
-<font class='lnum'>2684</font>   
-<font class='lnum'>2685</font>   		s!\.a\.(.+?)\.\/a\.!&lt;a href=$1&gt;$1&lt;/a&gt;!g;
-<font class='lnum'>2686</font>   
-<font class='lnum'>2687</font>   		# rudimentary &nbsp; s p a c i n g &nbsp (one word only)
-<font class='lnum'>2688</font>   		#s!\.x\.(.+?)\./x\.!join " ","&nbsp;&nbsp;",(split //, $1),"&nbsp;&nbsp;"!eg;
+<font class='lnum'>2681</font>   		s/\.(\/?)tab\./&lt;$1ul&gt;/g;	# "tabbing" with "ul"
+<font class='lnum'>2682</font>   
+<font class='lnum'>2683</font>   
+<font class='lnum'>2684</font>   		# this is some bullshit ???
+<font class='lnum'>2685</font>   		s/\.hr\./&lt;hr /g;
+<font class='lnum'>2686</font>   		s/\.\/hr\./&gt;/g;
+<font class='lnum'>2687</font>   
+<font class='lnum'>2688</font>   		s!\.a\.(.+?)\.\/a\.!&lt;a href=$1&gt;$1&lt;/a&gt;!g;
 <font class='lnum'>2689</font>   
-<font class='lnum'>2690</font>   		# slightly better spacing (phrases, too):
-<font class='lnum'>2691</font>   		# although redundant  with more work than is needed
-<font class='lnum'>2692</font>   		if ( m!(\.x\.)(.+?)(\./x\.)!g) {
-<font class='lnum'>2693</font>   		    s!(\.x\.)(.+?)(\./x\.)!join " _ ", $1, (split / /, $2), $3!eg;
-<font class='lnum'>2694</font>   		    s!\.x\.(.+?)\./x\.!join " ", (split //, $1)!eg;
-<font class='lnum'>2695</font>   		    s!  _  ! &nbsp; !g;
-<font class='lnum'>2696</font>   		}
-<font class='lnum'>2697</font>   </fieldset></pre>
+<font class='lnum'>2690</font>   		# rudimentary &nbsp; s p a c i n g &nbsp (one word only)
+<font class='lnum'>2691</font>   		#s!\.x\.(.+?)\./x\.!join " ","&nbsp;&nbsp;",(split //, $1),"&nbsp;&nbsp;"!eg;
+<font class='lnum'>2692</font>   
+<font class='lnum'>2693</font>   		# slightly better spacing (phrases, too):
+<font class='lnum'>2694</font>   		# although redundant  with more work than is needed
+<font class='lnum'>2695</font>   		if ( m!(\.x\.)(.+?)(\./x\.)!g) {
+<font class='lnum'>2696</font>   		    s!(\.x\.)(.+?)(\./x\.)!join " _ ", $1, (split / /, $2), $3!eg;
+<font class='lnum'>2697</font>   		    s!\.x\.(.+?)\./x\.!join " ", (split //, $1)!eg;
+<font class='lnum'>2698</font>   		    s!  _  ! &nbsp; !g;
+<font class='lnum'>2699</font>   		}
+<font class='lnum'>2700</font>   </fieldset></pre>
 <p>
 <b> BUG! </b> This URL breaks my "ancor" dot-tags: <br>
      <pre> http://www.cs.tufts.edu/~nr/noweb </pre><br>
@@ -4108,16 +4111,16 @@ If an HTML tag is not in the above chunk, either add it or write with the two fo
 tags (slow and not nice on your fingers, though). You might need to use them also when your HTML<br>
 tag conntains some options, and so is not of generic simple type.<br>
 <p>
-<font class='lnum'>2708</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;body HTML formatters&gt;&gt;=</legend>
-<font class='lnum'>2709</font>   		# generic for all tags with options
-<font class='lnum'>2710</font>   		s!\.&lt;\. !&lt;!g;
-<font class='lnum'>2711</font>   		s! \.&gt;\.!&gt;!g;
-<font class='lnum'>2712</font>   
-<font class='lnum'>2713</font>   
-<font class='lnum'>2714</font>   		$chunkbuf .= $_;
+<font class='lnum'>2711</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;body HTML formatters&gt;&gt;=</legend>
+<font class='lnum'>2712</font>   		# generic for all tags with options
+<font class='lnum'>2713</font>   		s!\.&lt;\. !&lt;!g;
+<font class='lnum'>2714</font>   		s! \.&gt;\.!&gt;!g;
 <font class='lnum'>2715</font>   
-<font class='lnum'>2716</font>   	}
-<font class='lnum'>2717</font>   </fieldset></pre>
+<font class='lnum'>2716</font>   
+<font class='lnum'>2717</font>   		$chunkbuf .= $_;
+<font class='lnum'>2718</font>   
+<font class='lnum'>2719</font>   	}
+<font class='lnum'>2720</font>   </fieldset></pre>
 <p>
 <p>
 <b> rawHTML formatter</b><br>
@@ -4140,30 +4143,30 @@ If you do, it is sometimes easy to clean headings with a few regexps in a good e
 It is very convenient and I keep large manuals as folding HTML documents.<br>
 <p>
 <p>
-<font class='lnum'>2740</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;body HTML formatters&gt;&gt;=</legend>
-<font class='lnum'>2741</font>   	elsif( $weave_markup eq "rawHTML" ) {	# if the doc chunks marked up with real HTML
-<font class='lnum'>2742</font>   		s!^#-----.*!!;
-<font class='lnum'>2743</font>   
-<font class='lnum'>2744</font>   
-<font class='lnum'>2745</font>   	      # Paragraphs and line breaks are automatic now:
-<font class='lnum'>2746</font>   	      # ... unless we are dealing with the "preformat" tag
-<font class='lnum'>2747</font>   		#--note! that ranges do not work here
-<font class='lnum'>2748</font>   		$in_pre_tag = 1 if (m!&lt;pre&gt;!);
-<font class='lnum'>2749</font>   		$in_pre_tag = 0 if (m!&lt;/pre&gt;!);;
-<font class='lnum'>2750</font>   
-<font class='lnum'>2751</font>   
-<font class='lnum'>2752</font>   		unless ($in_pre_tag) {
-<font class='lnum'>2753</font>   		(m/^\s*$/) and s/$_/&lt;p&gt;\n/
-<font class='lnum'>2754</font>   		or s/\n/&lt;br&gt;\n/;
-<font class='lnum'>2755</font>   		}
-<font class='lnum'>2756</font>   
-<font class='lnum'>2757</font>   
-<font class='lnum'>2758</font>   		$chunkbuf .= $_;
-<font class='lnum'>2759</font>   	} # esle -- for rest of the body
+<font class='lnum'>2743</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;body HTML formatters&gt;&gt;=</legend>
+<font class='lnum'>2744</font>   	elsif( $weave_markup eq "rawHTML" ) {	# if the doc chunks marked up with real HTML
+<font class='lnum'>2745</font>   		s!^#-----.*!!;
+<font class='lnum'>2746</font>   
+<font class='lnum'>2747</font>   
+<font class='lnum'>2748</font>   	      # Paragraphs and line breaks are automatic now:
+<font class='lnum'>2749</font>   	      # ... unless we are dealing with the "preformat" tag
+<font class='lnum'>2750</font>   		#--note! that ranges do not work here
+<font class='lnum'>2751</font>   		$in_pre_tag = 1 if (m!&lt;pre&gt;!);
+<font class='lnum'>2752</font>   		$in_pre_tag = 0 if (m!&lt;/pre&gt;!);;
+<font class='lnum'>2753</font>   
+<font class='lnum'>2754</font>   
+<font class='lnum'>2755</font>   		unless ($in_pre_tag) {
+<font class='lnum'>2756</font>   		(m/^\s*$/) and s/$_/&lt;p&gt;\n/
+<font class='lnum'>2757</font>   		or s/\n/&lt;br&gt;\n/;
+<font class='lnum'>2758</font>   		}
+<font class='lnum'>2759</font>   
 <font class='lnum'>2760</font>   
-<font class='lnum'>2761</font>   
-<font class='lnum'>2762</font>   
-<font class='lnum'>2763</font>   </fieldset></pre>
+<font class='lnum'>2761</font>   		$chunkbuf .= $_;
+<font class='lnum'>2762</font>   	} # esle -- for rest of the body
+<font class='lnum'>2763</font>   
+<font class='lnum'>2764</font>   
+<font class='lnum'>2765</font>   
+<font class='lnum'>2766</font>   </fieldset></pre>
 <p>
 	<fieldset><legend><a href="javascript:;" onmousedown="toggleCombined('56');">
  test of &nbsp;&nbsp; s p a c i n g &nbsp;&nbsp; regexp </a></legend></fieldset>
@@ -4186,32 +4189,32 @@ not while still reading the Literate Source file line by line,  &nbsp;  b u t  &
 $chunkbuf is completely formed in RAM.<br>
 <p>
 <p>
-<font class='lnum'>2781</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;spacing.pl&gt;&gt;=</legend>
-<font class='lnum'>2782</font>   #!/usr/bin/perl
-<font class='lnum'>2783</font>   #
-<font class='lnum'>2784</font>   $str = $ARGV[0];
-<font class='lnum'>2785</font>   $str_sp = $ARGV[0];
-<font class='lnum'>2786</font>   #print "string is $str\n";
-<font class='lnum'>2787</font>   
-<font class='lnum'>2788</font>       # "sp" dot-markup to intersperse spaces: the basic formula
-<font class='lnum'>2789</font>       #$spaced_str =~ s!(asdf)!join " ", (split //, $1)!eg;
-<font class='lnum'>2790</font>       #
-<font class='lnum'>2791</font>       
-<font class='lnum'>2792</font>       # -- idea 3 from above: this works but is cumbersome --
-<font class='lnum'>2793</font>       #$str_sp =~ s!(\.x\.)(.+?)(\./x\.)!join " _ ", $1, (split / /, $2), $3!eg;
-<font class='lnum'>2794</font>       #$str_sp =~ s!\.x\.(.+?)\./x\.!join " ", (split //, $1)!eg;
-<font class='lnum'>2795</font>       #$str_sp =~ s! _ ! &nbsp;&nbsp; !g;
-<font class='lnum'>2796</font>   
-<font class='lnum'>2797</font>       # -- first get the matching string in "if", then massage it:
-<font class='lnum'>2798</font>       if ($str_sp =~ m!(\.x\.)(.+?)(\./x\.)!g) {
-<font class='lnum'>2799</font>   	$str_sp =~ s!(\.x\.)(.+?)(\./x\.)!join " _ ", $1, (split / /, $2), $3!eg;
-<font class='lnum'>2800</font>           $str_sp =~ s!\.x\.(.+?)\./x\.!join " ", (split //, $1)!eg;
-<font class='lnum'>2801</font>   	$str_sp =~ s!  _  ! &nbsp; !g;
-<font class='lnum'>2802</font>       }
-<font class='lnum'>2803</font>   
-<font class='lnum'>2804</font>       #print "\nthe string is $str\n";
-<font class='lnum'>2805</font>       print "\nthe str_sp is $str_sp\n\n";
-<font class='lnum'>2806</font>   </fieldset></pre>
+<font class='lnum'>2784</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;spacing.pl&gt;&gt;=</legend>
+<font class='lnum'>2785</font>   #!/usr/bin/perl
+<font class='lnum'>2786</font>   #
+<font class='lnum'>2787</font>   $str = $ARGV[0];
+<font class='lnum'>2788</font>   $str_sp = $ARGV[0];
+<font class='lnum'>2789</font>   #print "string is $str\n";
+<font class='lnum'>2790</font>   
+<font class='lnum'>2791</font>       # "sp" dot-markup to intersperse spaces: the basic formula
+<font class='lnum'>2792</font>       #$spaced_str =~ s!(asdf)!join " ", (split //, $1)!eg;
+<font class='lnum'>2793</font>       #
+<font class='lnum'>2794</font>       
+<font class='lnum'>2795</font>       # -- idea 3 from above: this works but is cumbersome --
+<font class='lnum'>2796</font>       #$str_sp =~ s!(\.x\.)(.+?)(\./x\.)!join " _ ", $1, (split / /, $2), $3!eg;
+<font class='lnum'>2797</font>       #$str_sp =~ s!\.x\.(.+?)\./x\.!join " ", (split //, $1)!eg;
+<font class='lnum'>2798</font>       #$str_sp =~ s! _ ! &nbsp;&nbsp; !g;
+<font class='lnum'>2799</font>   
+<font class='lnum'>2800</font>       # -- first get the matching string in "if", then massage it:
+<font class='lnum'>2801</font>       if ($str_sp =~ m!(\.x\.)(.+?)(\./x\.)!g) {
+<font class='lnum'>2802</font>   	$str_sp =~ s!(\.x\.)(.+?)(\./x\.)!join " _ ", $1, (split / /, $2), $3!eg;
+<font class='lnum'>2803</font>           $str_sp =~ s!\.x\.(.+?)\./x\.!join " ", (split //, $1)!eg;
+<font class='lnum'>2804</font>   	$str_sp =~ s!  _  ! &nbsp; !g;
+<font class='lnum'>2805</font>       }
+<font class='lnum'>2806</font>   
+<font class='lnum'>2807</font>       #print "\nthe string is $str\n";
+<font class='lnum'>2808</font>       print "\nthe str_sp is $str_sp\n\n";
+<font class='lnum'>2809</font>   </fieldset></pre>
 <p>
 <p>
 <p>
@@ -4279,202 +4282,202 @@ collapse all</a>
 <p>
 Page and the outer formatting table:<br>
 <p>
-<font class='lnum'>2821</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;print out&gt;&gt;=</legend>
-<font class='lnum'>2822</font>   
-<font class='lnum'>2823</font>     # begin the page:
-<font class='lnum'>2824</font>     print "&lt;html&gt;  $html_head &lt;body&gt;  $html_body_table \n";
+<font class='lnum'>2824</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;print out&gt;&gt;=</legend>
 <font class='lnum'>2825</font>   
-<font class='lnum'>2826</font>     # print out the TOC, the Chunks Index, the output buffer and close the page.
-<font class='lnum'>2827</font>   
-<font class='lnum'>2828</font>   </fieldset></pre>
+<font class='lnum'>2826</font>     # begin the page:
+<font class='lnum'>2827</font>     print "&lt;html&gt;  $html_head &lt;body&gt;  $html_body_table \n";
+<font class='lnum'>2828</font>   
+<font class='lnum'>2829</font>     # print out the TOC, the Chunks Index, the output buffer and close the page.
+<font class='lnum'>2830</font>   
+<font class='lnum'>2831</font>   </fieldset></pre>
 <p>
 Next print the short instructions section (collapsible) at the top:<br>
 <p>
-<font class='lnum'>2832</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;print out&gt;&gt;=</legend>
-<font class='lnum'>2833</font>   
-<font class='lnum'>2834</font>   print &lt;&lt;end_of_print;
-<font class='lnum'>2835</font>   &lt;p&gt;&lt;fieldset class='tocfieldset'&gt;&lt;legend&gt;&lt;b&gt;TABLE OF CONTENTS: outline of the document structure&lt;/b&gt;&lt;/legend&gt;
+<font class='lnum'>2835</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;print out&gt;&gt;=</legend>
 <font class='lnum'>2836</font>   
-<font class='lnum'>2837</font>   &lt;ul&gt;
-<font class='lnum'>2838</font>   &lt;p&gt;
-<font class='lnum'>2839</font>   &lt;br&gt;
-<font class='lnum'>2840</font>   &lt;div class='hl' align=center&gt;
-<font class='lnum'>2841</font>   &lt;a href="javascript:;" onmousedown="toggleDiv('tochowto');"&gt;
-<font class='lnum'>2842</font>   &lt;b&gt;HOW TO USE THE FOLDING DOCUMENT [expand/collapse]&lt;/b&gt;&lt;/a&gt;
-<font class='lnum'>2843</font>   &lt;/div&gt;
-<font class='lnum'>2844</font>   &lt;div id='tochowto' style='display:none' style='background:#ffffff'&gt; 
-<font class='lnum'>2845</font>   &lt;p&gt;
-<font class='lnum'>2846</font>   &lt;ul&gt;
-<font class='lnum'>2847</font>   &lt;li&gt;&lt;b&gt;Collapsing is necessary when&lt;/b&gt; you work on some code and must exclude 
-<font class='lnum'>2848</font>   &lt;br&gt;irrelevant sections of the rest of the literate project file. This 
-<font class='lnum'>2849</font>   &lt;br&gt;greatly helps to clear thinking by eliminating a general feeling of 
-<font class='lnum'>2850</font>   &lt;br&gt;being in a maze of code and unnecessary "housekeeping" tasks.
-<font class='lnum'>2851</font>   &lt;br&gt;One can say that there is a limited "buffer capacity" in the human
-<font class='lnum'>2852</font>   &lt;br&gt;mind, and relieving it of the need to remember where things are in a 
-<font class='lnum'>2853</font>   &lt;br&gt;larger file, at which other points one must fill in values or adjust
-<font class='lnum'>2854</font>   &lt;br&gt;invocation etc. &lt;i&gt;immediately makes the user "more intelligent"&lt;/i&gt;
-<font class='lnum'>2855</font>   &lt;/li&gt;&lt;li&gt;&lt;b&gt;To toggle&lt;/b&gt; a section open/closed, click on the corresponding link
-<font class='lnum'>2856</font>   &lt;br&gt;Remember to open &lt;i&gt;all sections above it&lt;/i&gt; for it to become visible.
-<font class='lnum'>2857</font>   &lt;/li&gt;&lt;li&gt;&lt;b&gt;To restore the default view&lt;/b&gt; reload the page in the browser.
-<font class='lnum'>2858</font>   &lt;/li&gt;&lt;li&gt;
-<font class='lnum'>2859</font>   &lt;b&gt;To keep some sections open&lt;/b&gt; upon each reload - 
-<font class='lnum'>2860</font>   &lt;br&gt;e.g. you work on the code, update it constantly and cannot reopen it 
-<font class='lnum'>2861</font>   &lt;br&gt;again and again - mark their sections in the source file with a plus, 
-<font class='lnum'>2862</font>   &lt;br&gt;i.e. write the opening tag (only)  as +h2, +h3 (in &lt; &gt;  or in dots
-<font class='lnum'>2863</font>   &lt;br&gt;for dotHTML). Again, all sections above must be marked open too. 
-<font class='lnum'>2864</font>   &lt;p&gt;&lt;b&gt;Note that&lt;/b&gt; "expand all" and "collapse all" disregard these settings.
-<font class='lnum'>2865</font>   &lt;br&gt;Reload the page after using those options to again view the text according 
-<font class='lnum'>2866</font>   &lt;br&gt;to your preferences.
-<font class='lnum'>2867</font>   &lt;/li&gt;&lt;li&gt;
-<font class='lnum'>2868</font>   &lt;b&gt; To use the Index &lt;/b&gt;, click on the numbered sections in the TOC above
-<font class='lnum'>2869</font>   &lt;br&gt;(opening them; use highlighting as a guide; when sections are visible,
-<font class='lnum'>2870</font>   &lt;br&gt;the slider on your browser window  will shorten too), or "expand all", 
-<font class='lnum'>2871</font>   &lt;br&gt;and then use your browser's Find function to highlight all chunk name 
-<font class='lnum'>2872</font>   &lt;br&gt;instances in the visible text
-<font class='lnum'>2873</font>   &lt;/li&gt;&lt;li&gt;
-<font class='lnum'>2874</font>   &lt;b&gt;To search for variables etc.&lt;/b&gt;, "expand all" text - or manually 
-<font class='lnum'>2875</font>   &lt;br&gt;expand needed sections - and then use your browser's Find function to 
-<font class='lnum'>2876</font>   &lt;br&gt;highlight all and jump between the found items.
-<font class='lnum'>2877</font>   &lt;p&gt;&lt;/li&gt;
-<font class='lnum'>2878</font>   
-<font class='lnum'>2879</font>   &lt;/div&gt; 
-<font class='lnum'>2880</font>   &lt;p&gt;
-<font class='lnum'>2881</font>   &lt;br&gt;
-<font class='lnum'>2882</font>   &lt;p&gt;
-<font class='lnum'>2883</font>   &lt;div class='hl' align=center&gt;
-<font class='lnum'>2884</font>   &lt;!--i&gt;&lt;font size=-3&gt; expand all -- collapse all&lt;/font&gt;&lt;/i--&gt;
-<font class='lnum'>2885</font>   &lt;a href="javascript:;" onmousedown="toggleDiv('tocmain');"&gt;
-<font class='lnum'>2886</font>   &lt;b&gt;TABLE OF CONTENTS [expand/collapse]&lt;/b&gt;&lt;/a&gt;
-<font class='lnum'>2887</font>   &lt;/div&gt;
-<font class='lnum'>2888</font>   
-<font class='lnum'>2889</font>   &lt;div id='tocmain' style='display:$toc_expanded' style='background:#ffffff'&gt; 
-<font class='lnum'>2890</font>   &lt;p&gt;
-<font class='lnum'>2891</font>   &lt;br&gt;
-<font class='lnum'>2892</font>   &lt;p&gt;
-<font class='lnum'>2893</font>   end_of_print
-<font class='lnum'>2894</font>   
-<font class='lnum'>2895</font>   </fieldset></pre>
+<font class='lnum'>2837</font>   print &lt;&lt;end_of_print;
+<font class='lnum'>2838</font>   &lt;p&gt;&lt;fieldset class='tocfieldset'&gt;&lt;legend&gt;&lt;b&gt;TABLE OF CONTENTS: outline of the document structure&lt;/b&gt;&lt;/legend&gt;
+<font class='lnum'>2839</font>   
+<font class='lnum'>2840</font>   &lt;ul&gt;
+<font class='lnum'>2841</font>   &lt;p&gt;
+<font class='lnum'>2842</font>   &lt;br&gt;
+<font class='lnum'>2843</font>   &lt;div class='hl' align=center&gt;
+<font class='lnum'>2844</font>   &lt;a href="javascript:;" onmousedown="toggleDiv('tochowto');"&gt;
+<font class='lnum'>2845</font>   &lt;b&gt;HOW TO USE THE FOLDING DOCUMENT [expand/collapse]&lt;/b&gt;&lt;/a&gt;
+<font class='lnum'>2846</font>   &lt;/div&gt;
+<font class='lnum'>2847</font>   &lt;div id='tochowto' style='display:none' style='background:#ffffff'&gt; 
+<font class='lnum'>2848</font>   &lt;p&gt;
+<font class='lnum'>2849</font>   &lt;ul&gt;
+<font class='lnum'>2850</font>   &lt;li&gt;&lt;b&gt;Collapsing is necessary when&lt;/b&gt; you work on some code and must exclude 
+<font class='lnum'>2851</font>   &lt;br&gt;irrelevant sections of the rest of the literate project file. This 
+<font class='lnum'>2852</font>   &lt;br&gt;greatly helps to clear thinking by eliminating a general feeling of 
+<font class='lnum'>2853</font>   &lt;br&gt;being in a maze of code and unnecessary "housekeeping" tasks.
+<font class='lnum'>2854</font>   &lt;br&gt;One can say that there is a limited "buffer capacity" in the human
+<font class='lnum'>2855</font>   &lt;br&gt;mind, and relieving it of the need to remember where things are in a 
+<font class='lnum'>2856</font>   &lt;br&gt;larger file, at which other points one must fill in values or adjust
+<font class='lnum'>2857</font>   &lt;br&gt;invocation etc. &lt;i&gt;immediately makes the user "more intelligent"&lt;/i&gt;
+<font class='lnum'>2858</font>   &lt;/li&gt;&lt;li&gt;&lt;b&gt;To toggle&lt;/b&gt; a section open/closed, click on the corresponding link
+<font class='lnum'>2859</font>   &lt;br&gt;Remember to open &lt;i&gt;all sections above it&lt;/i&gt; for it to become visible.
+<font class='lnum'>2860</font>   &lt;/li&gt;&lt;li&gt;&lt;b&gt;To restore the default view&lt;/b&gt; reload the page in the browser.
+<font class='lnum'>2861</font>   &lt;/li&gt;&lt;li&gt;
+<font class='lnum'>2862</font>   &lt;b&gt;To keep some sections open&lt;/b&gt; upon each reload - 
+<font class='lnum'>2863</font>   &lt;br&gt;e.g. you work on the code, update it constantly and cannot reopen it 
+<font class='lnum'>2864</font>   &lt;br&gt;again and again - mark their sections in the source file with a plus, 
+<font class='lnum'>2865</font>   &lt;br&gt;i.e. write the opening tag (only)  as +h2, +h3 (in &lt; &gt;  or in dots
+<font class='lnum'>2866</font>   &lt;br&gt;for dotHTML). Again, all sections above must be marked open too. 
+<font class='lnum'>2867</font>   &lt;p&gt;&lt;b&gt;Note that&lt;/b&gt; "expand all" and "collapse all" disregard these settings.
+<font class='lnum'>2868</font>   &lt;br&gt;Reload the page after using those options to again view the text according 
+<font class='lnum'>2869</font>   &lt;br&gt;to your preferences.
+<font class='lnum'>2870</font>   &lt;/li&gt;&lt;li&gt;
+<font class='lnum'>2871</font>   &lt;b&gt; To use the Index &lt;/b&gt;, click on the numbered sections in the TOC above
+<font class='lnum'>2872</font>   &lt;br&gt;(opening them; use highlighting as a guide; when sections are visible,
+<font class='lnum'>2873</font>   &lt;br&gt;the slider on your browser window  will shorten too), or "expand all", 
+<font class='lnum'>2874</font>   &lt;br&gt;and then use your browser's Find function to highlight all chunk name 
+<font class='lnum'>2875</font>   &lt;br&gt;instances in the visible text
+<font class='lnum'>2876</font>   &lt;/li&gt;&lt;li&gt;
+<font class='lnum'>2877</font>   &lt;b&gt;To search for variables etc.&lt;/b&gt;, "expand all" text - or manually 
+<font class='lnum'>2878</font>   &lt;br&gt;expand needed sections - and then use your browser's Find function to 
+<font class='lnum'>2879</font>   &lt;br&gt;highlight all and jump between the found items.
+<font class='lnum'>2880</font>   &lt;p&gt;&lt;/li&gt;
+<font class='lnum'>2881</font>   
+<font class='lnum'>2882</font>   &lt;/div&gt; 
+<font class='lnum'>2883</font>   &lt;p&gt;
+<font class='lnum'>2884</font>   &lt;br&gt;
+<font class='lnum'>2885</font>   &lt;p&gt;
+<font class='lnum'>2886</font>   &lt;div class='hl' align=center&gt;
+<font class='lnum'>2887</font>   &lt;!--i&gt;&lt;font size=-3&gt; expand all -- collapse all&lt;/font&gt;&lt;/i--&gt;
+<font class='lnum'>2888</font>   &lt;a href="javascript:;" onmousedown="toggleDiv('tocmain');"&gt;
+<font class='lnum'>2889</font>   &lt;b&gt;TABLE OF CONTENTS [expand/collapse]&lt;/b&gt;&lt;/a&gt;
+<font class='lnum'>2890</font>   &lt;/div&gt;
+<font class='lnum'>2891</font>   
+<font class='lnum'>2892</font>   &lt;div id='tocmain' style='display:$toc_expanded' style='background:#ffffff'&gt; 
+<font class='lnum'>2893</font>   &lt;p&gt;
+<font class='lnum'>2894</font>   &lt;br&gt;
+<font class='lnum'>2895</font>   &lt;p&gt;
+<font class='lnum'>2896</font>   end_of_print
+<font class='lnum'>2897</font>   
+<font class='lnum'>2898</font>   </fieldset></pre>
 <p>
 Table of Contents from the formed "tocbuf":<br>
 <p>
-<font class='lnum'>2899</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;print out&gt;&gt;=</legend>
-<font class='lnum'>2900</font>   
-<font class='lnum'>2901</font>    print "$tocbuf" if $print_toc;
-<font class='lnum'>2902</font>    #print "$tocbuf";
+<font class='lnum'>2902</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;print out&gt;&gt;=</legend>
 <font class='lnum'>2903</font>   
-<font class='lnum'>2904</font>   print "&lt;/div&gt;\n";
-<font class='lnum'>2905</font>   
-<font class='lnum'>2906</font>   </fieldset></pre>
+<font class='lnum'>2904</font>    print "$tocbuf" if $print_toc;
+<font class='lnum'>2905</font>    #print "$tocbuf";
+<font class='lnum'>2906</font>   
+<font class='lnum'>2907</font>   print "&lt;/div&gt;\n";
+<font class='lnum'>2908</font>   
+<font class='lnum'>2909</font>   </fieldset></pre>
 <p>
 Start the "Index of code chunks", collapsible:<br>
 <p>
-<font class='lnum'>2910</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;print out&gt;&gt;=</legend>
-<font class='lnum'>2911</font>   
-<font class='lnum'>2912</font>   print &lt;&lt;end_of_print;
-<font class='lnum'>2913</font>   &lt;p&gt;
-<font class='lnum'>2914</font>   &lt;br&gt;
-<font class='lnum'>2915</font>   &lt;p&gt;
-<font class='lnum'>2916</font>   &lt;!--fieldset&gt;&lt;legend--&gt;
-<font class='lnum'>2917</font>   &lt;div class='hl' align=center&gt;
-<font class='lnum'>2918</font>   &lt;a href="javascript:;" onmousedown="toggleDiv('indbuf');"&gt;
-<font class='lnum'>2919</font>   &lt;b&gt;INDEX of Code Chunks [expand/collapse]&lt;/b&gt;&lt;/a&gt;
-<font class='lnum'>2920</font>   &lt;/div&gt;
-<font class='lnum'>2921</font>   &lt;!--/legend&gt;&lt;/fieldset--&gt;
-<font class='lnum'>2922</font>   &lt;p&gt;
-<font class='lnum'>2923</font>   &lt;div id='indbuf' style='display:$ind_expanded' style='background:#ffffff'&gt; 
-<font class='lnum'>2924</font>   &lt;ul&gt;
+<font class='lnum'>2913</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;print out&gt;&gt;=</legend>
+<font class='lnum'>2914</font>   
+<font class='lnum'>2915</font>   print &lt;&lt;end_of_print;
+<font class='lnum'>2916</font>   &lt;p&gt;
+<font class='lnum'>2917</font>   &lt;br&gt;
+<font class='lnum'>2918</font>   &lt;p&gt;
+<font class='lnum'>2919</font>   &lt;!--fieldset&gt;&lt;legend--&gt;
+<font class='lnum'>2920</font>   &lt;div class='hl' align=center&gt;
+<font class='lnum'>2921</font>   &lt;a href="javascript:;" onmousedown="toggleDiv('indbuf');"&gt;
+<font class='lnum'>2922</font>   &lt;b&gt;INDEX of Code Chunks [expand/collapse]&lt;/b&gt;&lt;/a&gt;
+<font class='lnum'>2923</font>   &lt;/div&gt;
+<font class='lnum'>2924</font>   &lt;!--/legend&gt;&lt;/fieldset--&gt;
 <font class='lnum'>2925</font>   &lt;p&gt;
-<font class='lnum'>2926</font>   &lt;b&gt;"Def" subscript&lt;/b&gt; means the chunk is defined, while a bare number means 
-<font class='lnum'>2927</font>   &lt;br&gt;the chunk is being used in the given section.
+<font class='lnum'>2926</font>   &lt;div id='indbuf' style='display:$ind_expanded' style='background:#ffffff'&gt; 
+<font class='lnum'>2927</font>   &lt;ul&gt;
 <font class='lnum'>2928</font>   &lt;p&gt;
-<font class='lnum'>2929</font>   end_of_print
-<font class='lnum'>2930</font>   
-<font class='lnum'>2931</font>   </fieldset></pre>
+<font class='lnum'>2929</font>   &lt;b&gt;"Def" subscript&lt;/b&gt; means the chunk is defined, while a bare number means 
+<font class='lnum'>2930</font>   &lt;br&gt;the chunk is being used in the given section.
+<font class='lnum'>2931</font>   &lt;p&gt;
+<font class='lnum'>2932</font>   end_of_print
+<font class='lnum'>2933</font>   
+<font class='lnum'>2934</font>   </fieldset></pre>
 <p>
 <p>
 Index of code chunks; calculated in this snippet:<br>
 <p>
-<font class='lnum'>2936</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;print out&gt;&gt;=</legend>
-<font class='lnum'>2937</font>   
-<font class='lnum'>2938</font>   	 $ind_outbuf = '';
-<font class='lnum'>2939</font>   	 $prev_ch_name = '';
+<font class='lnum'>2939</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;print out&gt;&gt;=</legend>
 <font class='lnum'>2940</font>   
-<font class='lnum'>2941</font>   	 #for (sort @indbuf){ print $_, "&lt;br&gt;";}
-<font class='lnum'>2942</font>   
-<font class='lnum'>2943</font>   	 for (sort @indbuf){
-<font class='lnum'>2944</font>   
-<font class='lnum'>2945</font>   	   ($ch_name, $closing_bracket, $ref_num) = split /&gt;/, $_; 
-<font class='lnum'>2946</font>   		#/ - for editor colouring bug
+<font class='lnum'>2941</font>   	 $ind_outbuf = '';
+<font class='lnum'>2942</font>   	 $prev_ch_name = '';
+<font class='lnum'>2943</font>   
+<font class='lnum'>2944</font>   	 #for (sort @indbuf){ print $_, "&lt;br&gt;";}
+<font class='lnum'>2945</font>   
+<font class='lnum'>2946</font>   	 for (sort @indbuf){
 <font class='lnum'>2947</font>   
-<font class='lnum'>2948</font>   	    if ( $ch_name eq $prev_ch_name ){ 
-<font class='lnum'>2949</font>   	      $ind_outbuf .= " &lt;b&gt;" . $ref_num . "&lt;/b&gt; ";
-<font class='lnum'>2950</font>   	    }
-<font class='lnum'>2951</font>   	    else{
-<font class='lnum'>2952</font>   	      print  $ind_outbuf, "&lt;br&gt;\n"; 
-<font class='lnum'>2953</font>   	      $ch_namestr = $ch_name;
-<font class='lnum'>2954</font>   	      $ch_namestr =~ s!&lt;&lt;!!;
-<font class='lnum'>2955</font>   	      $ind_outbuf = 
-<font class='lnum'>2956</font>   	      	"&lt;b&gt;&lt;&lt;&lt;/b&gt;&lt;font class='chunkref'&gt;" . 
-<font class='lnum'>2957</font>   	      	$ch_namestr . 
-<font class='lnum'>2958</font>   	      	"&lt;/font&gt;&lt;b&gt;&gt;&gt;&lt;/b&gt; -- &lt;b&gt;" . 
-<font class='lnum'>2959</font>   	      	$ref_num . 
-<font class='lnum'>2960</font>   	      	"&lt;/b&gt; ";
-<font class='lnum'>2961</font>   	    }
-<font class='lnum'>2962</font>   	    $prev_ch_name = $ch_name;
-<font class='lnum'>2963</font>   
-<font class='lnum'>2964</font>   	 }; # rof - forming the code chunks index
-<font class='lnum'>2965</font>   
-<font class='lnum'>2966</font>   	print $ind_outbuf, "&lt;br&gt;\n";
-<font class='lnum'>2967</font>   
-<font class='lnum'>2968</font>   </fieldset></pre>
+<font class='lnum'>2948</font>   	   ($ch_name, $closing_bracket, $ref_num) = split /&gt;/, $_; 
+<font class='lnum'>2949</font>   		#/ - for editor colouring bug
+<font class='lnum'>2950</font>   
+<font class='lnum'>2951</font>   	    if ( $ch_name eq $prev_ch_name ){ 
+<font class='lnum'>2952</font>   	      $ind_outbuf .= " &lt;b&gt;" . $ref_num . "&lt;/b&gt; ";
+<font class='lnum'>2953</font>   	    }
+<font class='lnum'>2954</font>   	    else{
+<font class='lnum'>2955</font>   	      print  $ind_outbuf, "&lt;br&gt;\n"; 
+<font class='lnum'>2956</font>   	      $ch_namestr = $ch_name;
+<font class='lnum'>2957</font>   	      $ch_namestr =~ s!&lt;&lt;!!;
+<font class='lnum'>2958</font>   	      $ind_outbuf = 
+<font class='lnum'>2959</font>   	      	"&lt;b&gt;&lt;&lt;&lt;/b&gt;&lt;font class='chunkref'&gt;" . 
+<font class='lnum'>2960</font>   	      	$ch_namestr . 
+<font class='lnum'>2961</font>   	      	"&lt;/font&gt;&lt;b&gt;&gt;&gt;&lt;/b&gt; -- &lt;b&gt;" . 
+<font class='lnum'>2962</font>   	      	$ref_num . 
+<font class='lnum'>2963</font>   	      	"&lt;/b&gt; ";
+<font class='lnum'>2964</font>   	    }
+<font class='lnum'>2965</font>   	    $prev_ch_name = $ch_name;
+<font class='lnum'>2966</font>   
+<font class='lnum'>2967</font>   	 }; # rof - forming the code chunks index
+<font class='lnum'>2968</font>   
+<font class='lnum'>2969</font>   	print $ind_outbuf, "&lt;br&gt;\n";
+<font class='lnum'>2970</font>   
+<font class='lnum'>2971</font>   </fieldset></pre>
 <p>
 <p>
 "expand all" and "collapse all" at the end of the TOC/Chunk Index section <br>
 at the top of the page:<br>
 <p>
-<font class='lnum'>2974</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;print out&gt;&gt;=</legend>
-<font class='lnum'>2975</font>   
-<font class='lnum'>2976</font>     # The "expand all" "collapse all" control
-<font class='lnum'>2977</font>   
-<font class='lnum'>2978</font>   print &lt;&lt;end_of_print;
-<font class='lnum'>2979</font>   &lt;/div&gt;\n&lt;p&gt;
-<font class='lnum'>2980</font>   &lt;br&gt;
-<font class='lnum'>2981</font>   &lt;p&gt;&lt;div class='hl' align=center&gt;&lt;i&gt;
-<font class='lnum'>2982</font>   &lt;a href="javascript:;" onmousedown="showAll();"&gt;
-<font class='lnum'>2983</font>   expand all&lt;/a&gt; -- 
-<font class='lnum'>2984</font>   &lt;a href="javascript:;" onmousedown="hideAll();"&gt;
-<font class='lnum'>2985</font>   collapse all&lt;/a&gt;
-<font class='lnum'>2986</font>   &lt;/i&gt;&lt;/div&gt;&lt;p&gt;
-<font class='lnum'>2987</font>   end_of_print
-<font class='lnum'>2988</font>   
-<font class='lnum'>2989</font>   
-<font class='lnum'>2990</font>    print "&lt;/ul&gt;&lt;/fieldset&gt;&lt;p&gt;\n&lt;br&gt;";
+<font class='lnum'>2977</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;print out&gt;&gt;=</legend>
+<font class='lnum'>2978</font>   
+<font class='lnum'>2979</font>     # The "expand all" "collapse all" control
+<font class='lnum'>2980</font>   
+<font class='lnum'>2981</font>   print &lt;&lt;end_of_print;
+<font class='lnum'>2982</font>   &lt;/div&gt;\n&lt;p&gt;
+<font class='lnum'>2983</font>   &lt;br&gt;
+<font class='lnum'>2984</font>   &lt;p&gt;&lt;div class='hl' align=center&gt;&lt;i&gt;
+<font class='lnum'>2985</font>   &lt;a href="javascript:;" onmousedown="showAll();"&gt;
+<font class='lnum'>2986</font>   expand all&lt;/a&gt; -- 
+<font class='lnum'>2987</font>   &lt;a href="javascript:;" onmousedown="hideAll();"&gt;
+<font class='lnum'>2988</font>   collapse all&lt;/a&gt;
+<font class='lnum'>2989</font>   &lt;/i&gt;&lt;/div&gt;&lt;p&gt;
+<font class='lnum'>2990</font>   end_of_print
 <font class='lnum'>2991</font>   
-<font class='lnum'>2992</font>   </fieldset></pre>
+<font class='lnum'>2992</font>   
+<font class='lnum'>2993</font>    print "&lt;/ul&gt;&lt;/fieldset&gt;&lt;p&gt;\n&lt;br&gt;";
+<font class='lnum'>2994</font>   
+<font class='lnum'>2995</font>   </fieldset></pre>
 <p>
 <p>
 <p>
 ..and the document itself, formed earlier in the "chunkbuf" string in memory:<br>
 <p>
-<font class='lnum'>2998</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;print out&gt;&gt;=</legend>
-<font class='lnum'>2999</font>   
-<font class='lnum'>3000</font>   # The FULL OUTPUT, the file body:
-<font class='lnum'>3001</font>    	print $chunkbuf;
+<font class='lnum'>3001</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;print out&gt;&gt;=</legend>
 <font class='lnum'>3002</font>   
-<font class='lnum'>3003</font>   </fieldset></pre>
+<font class='lnum'>3003</font>   # The FULL OUTPUT, the file body:
+<font class='lnum'>3004</font>    	print $chunkbuf;
+<font class='lnum'>3005</font>   
+<font class='lnum'>3006</font>   </fieldset></pre>
 <p>
 Close the HTML formatting tags at the end of the page:<br>
 <p>
-<font class='lnum'>3007</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;print out&gt;&gt;=</legend>
-<font class='lnum'>3008</font>   
-<font class='lnum'>3009</font>   # close the page
-<font class='lnum'>3010</font>   	print $html_body_table_end;
-<font class='lnum'>3011</font>   	
-<font class='lnum'>3012</font>   exit;
-<font class='lnum'>3013</font>   
-<font class='lnum'>3014</font>   #--- END OF SCRIPT ---
-<font class='lnum'>3015</font>   
-<font class='lnum'>3016</font>   </fieldset></pre>
+<font class='lnum'>3010</font>   <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;print out&gt;&gt;=</legend>
+<font class='lnum'>3011</font>   
+<font class='lnum'>3012</font>   # close the page
+<font class='lnum'>3013</font>   	print $html_body_table_end;
+<font class='lnum'>3014</font>   	
+<font class='lnum'>3015</font>   exit;
+<font class='lnum'>3016</font>   
+<font class='lnum'>3017</font>   #--- END OF SCRIPT ---
+<font class='lnum'>3018</font>   
+<font class='lnum'>3019</font>   </fieldset></pre>
 <p>
 End of the project file<br>
 <p>

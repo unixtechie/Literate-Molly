@@ -1113,6 +1113,9 @@ server as well as a folding weaver and a tangler.
 #!/usr/bin/perl
 
 #---------------------------------------------------------------------------------    
+#
+#	This script is licensed under GPL version 3
+#
 #----------------------Script proper----------------------------------------------
 
 
