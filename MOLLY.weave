@@ -1,0 +1,3028 @@
+#!/usr/bin/perl
+
+# print TOC? 1:0
+#$print_toc=1;	# default is to print
+
+# keep TOC expanded? "block":"none"
+#$toc_expanded="block";	# default is to unfold
+
+# keep Chunks Index expanded? "block":"none"
+#$ind_expanded="none";	# default is to keep folded
+
+# number lines in code sections? 1 : else
+#$line_numbering = 1;	# default is to number
+
+# what is the file extention to weave it? (perms must allow execution!)
+# e.g. "scriptname.weave" or "scriptname.cgi" etc.
+#$weave_extension = "weave";	# default is "weave"
+
+# what is the file extention to tangle it? (perms must allow execution!)
+# e.g. "scriptname.tangle",  "scriptname.pl" etc.
+#$tangle_extension = "tangle";	# default is "tangle"
+
+
+# how are doc sections marked? "dotHTML":"rawHTML"
+ $weave_markup = "dotHTML"; # default is "rawHTML"
+
+
+# old name of the module
+#do "LPM-0.53.ffpl" ;
+
+do "MOLLY.pl";
+exit;
+__DATA__
+#---------------start of script-------------
+
+.<. center .>. .b. Licensing ./b.
+MOLLY is licensed under GNU Public License version 3. .<. /center .>.
+
+
+#-----------------------------------------
+{{{1 .+h1. MOLLY.pl module ./h1.
+#-----------------------------------------
+
+.b. What is it? ./b.
+This is a small perl script that implements a new type of "weaver" for Literate Programming, which:
+    .ul. .li. is HTML-based,
+    ./li..li. can produce formatted documents automatically, as a CGI script, as well as in 
+    a separate step, as a classical weaver and
+    ./li. .li. creates .i.folding./i. documents./li. ./ul.
+.b.Why?./b.
+    .ul..li. This greatly simplifies markup, ridding it of TeX entanglement and reducing it 
+    to basic HTML tagging
+    ./li..li. while folding allows the programmer to apply a number of code management and 
+    organizational techiniques not possible before with flat Literate Programming source 
+    files. ./li../ul.
+
+
+.b.Below./b. you will find 
+(a) an explanation of the concepts involved 
+(b) usage information and 
+(c) the annotated literate source of the script
+
+
+
+.br.
+#------------------------------------------------------------
+{{{2 .h2. --THE CHUNK TO TANGLE BY DEFAULT -- ./h2.
+#------------------------------------------------------------
+
+
+<<*>>=
+<<MOLLY.pl module>>
+@
+
+<<*-dis>>=
+<<spacing.pl>>
+@
+<<*-dis>>=
+<<tanglediff.test2.pl>>
+@
+
+<<*-dis>>=
+<<md5 hashing from perl>>
+@
+
+}}}2
+
+
+
+#--------------------------------------------
+{{{2 .h2. How to use MOLLY.pl ./h2.
+#--------------------------------------------
+
+.b. What is MOLLY.pl ? ./b.
+Traditionally literate programming tools include two major ones, one to "tangle" (i.e. create
+machine code from a Literate Source file), and another one to "weave" (formatted 
+documentation from the same LSFile).
+The developer is supposed to run the tangler after each change to be able to re-run (or recompile)
+the code.
+
+This script is a "weaver", and a "pass-through" tangler for use with "noweb" tools by Norman Ramsey,
+(by default it passes tangling to the the "notangle" utility).
+
+Starting from some version it also includes a  simple built-in tangler.
+
+I called the script "Molly" because I think of it as a "MOdule for LIterate programming".
+
+
+.br.
+.b. My workflow - literate programming with Molly ./b.
+.ol.
+    .li. I run a web server on localhost:8000, for myself only. My development directory is under
+    the web server - or is linked to the web server document tree.
+
+    ./li. .li. I write my Literate Source file in a vim editor. I mark up the documentation section
+    (i.e. not code) with most basic HTML tags (e.g. <h2>, <b>, <ul> ...). 
+    The code sections live between "< < section name > > =" and "@" (in the first
+    position in the line), as is required by "noweb" literate programming tools.
+
+    ./li. .li. I view my file in a web browser, and reload the page after editing updates.
+    Because I write my Literate Source with help from the MOLLY.pl script (see below how to 
+    include it in the file and set it up), every "heading" in HTML (i.e.  h1,  h2  etc. )
+    automatically becomes a .b. folding subsection ./b. of the document I see in the browser,
+    and every code section is automatically formatted with line numbers and a frame.
+
+    ./li. .li. When I think ("globally"), I look at the formatted, immediately updating document
+    in the browser, keeping open only the sections relevant to my thinking.
+    When I edit, I refer to the line numbers, and avoid navigating "blindly" in the programming
+    editor, stressing my memory. I edit "locally".
+
+    ./li. .li. Automatically created folding documents allow me a number of techniques and
+    uses impossible previously with flat "literate programming" files.
+
+    ./li. .li. I tangle the created code either directly with "notangle" tools from "noweb", or
+    by running "MyProject.tangle", which is a link to "MyProject.weave", the Literate Source file
+    turned into a perl script by inclusion of the MOLLY.pl into it in the first lines of the file.
+./ol.
+
+See details about this setup and possible uses of it below.
+
+
+.br.
+#-------------------------------------------------------------------
+{{{3 .h3. Set up a Literate Source file and project ./h3.
+#--------------------------------------------------------
+
+
+
+#--------------------------------------------------------
+.h4. Prerequisites: "noweb" tools By Norman Ramsey ./h4.
+#--------------------------------------------------------
+
+    The first version of the script uses a "pass-through" tangler, i.e. delegates actual tangling to 
+    the "notangle" utility from the "noweb" suite.
+
+    Please obtain and install it. .b. .i. Make sure the tangler is in your path ./i. ./b.
+     .a. http://www.cs.tufts.edu/~nr/noweb ./a.
+
+    Any version will do, e.g. the one based on shell and awk. I created the MOLLY script to work with
+    the overall markup of the "noweb" tools. It means your project file(s) can be directly processed
+    with "noweb" tools. MOLLY is just an alternative weaver which creates folding HTML documents 
+    on the fly.
+
+
+#------------------------------
+.h4. Setting up the file ./h4.
+#------------------------------
+
+
+    I aimed at simplifying and eliminating unnecessary steps, and wanted to automate some others.
+    Therefore practical work with MOLLY.pl looks like this:
+
+    .ol. .li. .b. .i. Your Literate Source file must be "mollified" ./i. ./b., i.e. you have to add an invocation
+    of MOLLY.pl in the first lines of it. Think of it as a template. You will write your Literate Source text
+    right after these initial lines.  The minimal template is this:
+
+<<minimal MOLLY template>>=
+    #!/full/path/to/perl
+    do /full/path/to/script/MOLLY.pl
+
+    # delete first space in the next line
+    __DATA__
+
+
+    <h1> And here I start My Project </h1>
+    Your Literate Source file can be typed here
+
+    <h2> Subsection </h2>
+    level 0-9 of subsections are allowed now.
+
+    Each subsection will be automatically created as "folding". Javascript must be
+    enabled in your browser to use this functionality
+@
+
+    The perl invocaton and the "__DATA__"  line must start .x. at the first position ./x.
+
+    You do not need any extra perl modules  as pre-requsites, the script uses core perl.  
+
+    Full template will also set configuration variables between calling the perl interpreter and
+    the inclusion of the MOLLY.pl script, which adjust its behaviour.
+
+    Save this under some name, e.g. MyProject.txt. This turns your Literate Source file into
+    a perl script
+
+    ./li. .li. .b. .i. Make it executable. ./i. ./b. 
+	.pre. chmod 755 MyProject.txt ./pre.
+
+    ./li. .li.  .b. .i. The script behaves according to its name extension ./i. ./b.
+    The script will produce HTML-formatted documentation, if its name ends with "weave" 
+    (default - or whatever you selected when setting configuration variables in the "mollification"
+    template). Invoked under any different name (default) it will "tangle", i.e. create machine code.
+    So,  name or rename your LSFile "MyProject.weave" and link it to "MyProject.tangle" (or whatever):
+    .pre.
+	mv MyProject.txt MyProject.weave
+	ln -s MyProject.weave MyProject.tangle ./pre.
+
+    Now if you run MyProject.weave, it will dump HTML-formatted documentation of your work to STDOUT
+	.pre. ./MyProject.weave > MyProject-formatted.foldingdocument.html ./pre.
+    It you run MyProject.tangle, it will dump machine code from your Literate Source file to STDOUT.
+	.pre. ./MyProject.tangle > MyProject-runnable.script.pl ./pre.
+    ( Of course, tangling is independent of the language you program in )
+
+    For example, if you develop in perl, you can run the resulting script like this:
+	.pre. ./MyProject.tangle | perl [perl options here] - ./pre.
+
+    Additionally, as the markup is the same as that of "noweb" tools. one can use them directly
+    on the My.Project.weave file, with all of their flexibility and extra options.
+
+    However the idea was even to avoid running some of these commands after each change in
+    the file and to avoid saving the weaved docs: STDOUT can be picked up by your local web
+    server as CGI, and you will have an HTML-formatted and which is more important, .i. folding ./i.
+    document in your browser by simply reloading the page (usually with Ctrt+R or a mouse click)
+
+    ./li. .li. Now, .b. .i.  the only other step  is to run a local web server ./i. ./b. 
+    (on localhost, any tiny very simple httpd will do), and tell it to treat "*.weave" as valid cgi 
+    file extension. (Alternatively, I can set "weaving" to files that end in '*.cgi" or "*.pl" etc. 
+    in the configuration part of my MOLLY template)
+
+    One of the simplest WWW servers for such use could be "thttpd", and I will provide you with its
+    minimal configuration file below.
+    ./li. ./ol.
+
+
+#---------------------------------------------------
+.h4. Markup of code and documentation sections ./h4.
+#----------------------------------------------------
+
+First, 
+    .ul. .li.  code sections begin with "< <name of the section> >="
+    in the first position in the line and end with "@"  in the first position
+
+    References to other code sections are done with "< <name of the ref sect> >"
+    inside the code sections
+
+    The rest is "documentation chunks" which must be marked up with some formatting tags.
+
+    ./li. .li. .i. [ no spaces between the double angle brackets - I used spaces as escapes here ] ./i.
+
+    ./li. .li. I do not insert examples here, as the file you are reading provides them ad nauseam.
+    ./li. ./ul.
+
+    THIS IS THE BASIC MARKUP OF THE LITERATE SOURCE FILE, as used by the "noweb" tools.
+
+    Secondly, how do we format the documentation sections?
+    .ul. .li. In the simplest case, with straight HTML markup (default)
+
+    ./li. .li. If a simple subsection is added to the MOLLY.pl script to process it, in any
+    markup lingo of your choice (e.g. "wiki") 
+    
+    Currently I provide a "dotHTML" formatting subsection as an example. It implements
+    a few of the most common HTML tags but with "dots" around them, in place of angle brackets 
+    "<" and ">" (which is faster, as one does not need to switch register, so is less prone 
+    to typos). See below for more detailed explanations
+    ./li. ./ul.
+    
+    .b. .i. The only difference ./i. ./b. from the truly "raw" HTML is that except in "pre" sections the MOLLY.pl script will 
+    add automatic <br> tags at the end of each line of your Literate Source file.
+
+
+
+#--------------------------------
+.h4. Tangling from LSFile ./h4.
+#--------------------------------
+
+    .ol. .li. Usually only one file needs to be tangled constantly, the file the developer
+    is working on.  It's easiest to do by using the "default root", which is a code chunk
+    called "*". When you run 
+    .pre. MyProject.tangle > source.pl ./pre. 
+    MOLLY will pass the command to "notangle" from Ramsey's "noweb" tools, and print code
+    chunks starting from the one named "*". Therefore, I drag along the default root to
+    wherever I am editing now and reassigning to it the chunk I need to tangle currently.
+    I usually keep the pointer subsection at the top of the Literate Source file. See 
+    "THE CHUNK TO TANGLE BY DEFAULT" in the file you are reading as an example of this
+    technique.
+
+    This is the task for which MOLLY quick "pass-through tangling" is designed.
+
+    ./li. .li. If, however, you need to tangle out non-"*" root, you might need to run
+    "notangle" directly on your MyProject.weave. This is the most flexible way.
+
+    ./li. .li. If you need to tangle out many source files, then probably the easiest way
+    to arrange it is through many invocations of "notangle" in a makefile.
+    Include "Makefile" subsection into your Literate Source file and create a target that
+    combines several "notangle -R ... " commands in it.
+    Assing default root "*" to the Makefile, then run "MyProject.tangle > Makefile" to create
+    it and next run "make targetname" to tangle (and compile, run etc) many files included
+    into your Literate Source project file.
+    ./li. ./ol.
+
+.br.
+
+#------------------------------------------------
+.h4. Sample minimal configuration of thttpd ./h4.
+#------------------------------------------------
+
+"THTTPD" home is .a. http://www.acme.com/software/thttpd/ ./a. 
+
+From the distro README:
+.ul. thttpd is a simple, small, portable, fast, and secure HTTP server. 
+.b. Simple: ./b. It handles only the minimum necessary to implement HTTP/1.1. Well, maybe a 
+little more than the minimum. 
+.b. Small: ./b.  See the comparison chart. It also has a very small run-time size, since it 
+does not fork and is very careful about memory allocation. 
+.b. Portable: ./b.  It compiles cleanly on most any Unix-like OS, specifically including FreeBSD, 
+SunOS 4, Solaris 2, BSD/OS, Linux, OSF. 
+.b. Fast:  ./b.  In typical use it's about as fast as the best full-featured servers (Apache, 
+NCSA, Netscape). Under extreme load it's much faster. 
+.b. Secure: ./b.  It goes to great lengths to protect the web server machine against attacks and 
+breakins from other sites. 
+
+It also has one extremely useful feature (URL-traffic-based throttling) that no other server 
+currently has. Plus, it supports IPv6 out of the box, no patching required.
+./ul.
+
+Its compilation is very quick. Its configuration is simpler than that of Apache. 
+
+Supposing I'd like to point my browser at "http://localhost:8000/path/to/MyProject.weave"
+Then the minimal configuration will look something like this:
+
+
+<<minimal thttpd configuration>>=
+#
+host=localhost
+port=8000
+dir=/my/home/00trash/tmp/literate.perl/WORKDIR
+data_dir=/my/home/00trash/tmp/literate.perl/WORKDIR
+#chroot
+
+# extensions understood as valid "cgi" scripts:
+#cgipat=/**.cgi|/**.weave|/**.pl
+#cgipat=/**.tangle
+cgipat=/**.weave
+
+#logfile=/my/home/00trash/tmp/literate.perl/WWW.server/thttpd.log
+logfile=/dev/null
+
+#pidfile=./thttpd.pid
+pidfile=/home/vedmed/00trash/tmp/literate.perl/WWW.server/thttpd.pid
+
+# uncomment this to be able to link from anywhere to your web server document dir 
+# (unsecure, for local development only)
+nosymlink
+#
+@
+.b. NOTE ./b. that "nosymlink" schizophrenically .i. allows ./i. symbolic links in spite of what
+thttpd documentation tells you
+
+The script to start thttpd (it will detach and run as a daemon) is something like this:
+
+<<run.thttpd.sh>>=
+#!/bin/sh
+PROJECT_ADMIN_DIR="/my/home/00trash/tmp/literate.perl/WWW.server";
+#./thttpd -p 8000 -h localhost -C ./thttpd.config
+#$PROJECT_ADMIN_DIR/thttpd -nos -C $PROJECT_ADMIN_DIR/thttpd.config
+$PROJECT_ADMIN_DIR/thttpd -C $PROJECT_ADMIN_DIR/thttpd.config
+@
+
+
+#------------------------------------------------
+.h4. "Mollification" - full template ./h4.
+#------------------------------------------------
+Should be self-explanatory. May add to this section later.
+Uncomment to set, otherwise defaults apply.
+
+<<full MOLLY template>>=
+#!/usr/bin/perl
+
+# print TOC? 1:0
+#$print_toc=1;	# default is to print
+
+# keep TOC expanded? "block":"none"
+#$toc_expanded="block";	# default is to unfold
+
+# keep Chunks Index expanded? "block":"none"
+#$ind_expanded="none";	# default is to keep folded
+
+# number lines in code sections? 1 : else
+#$line_numbering = 1;	# default is to number
+
+# what is the file extention to weave it? (perms must allow execution!)
+# e.g. "scriptname.weave" or "scriptname.cgi" etc.
+#$weave_extension = "weave";	# default is "weave"
+
+# what is the file extention to tangle it? (perms must allow execution!)
+# e.g. "scriptname.tangle",  "scriptname.pl" etc.
+#$tangle_extension = "tangle";	# default is "tangle"
+
+
+# how are doc sections marked? "dotHTML":"rawHTML"
+# $weave_markup = "rawHTML"; # default is "rawHTML"
+
+
+# old name of the module
+#do "LPM-0.53.ffpl" ;
+
+do "MOLLY.pl";
+exit;
+
+# delete the space before the __DATA__ marker
+ __DATA__
+#---------------start of script-------------
+
+@
+
+.b. "__DATA__" must start at the first position in its line ./b.
+
+}}}3
+
+#-----------------------------------------------------------------------
+{{{3 .h3. Create Literate Source file -- markup of documentation chunks ./h3.
+#-------------------------------
+
+#-----------------------
+.h4. Markup ./h4. 
+#-----------------------
+
+.ol. .li. The default is to use ordinary 'html' markup in the document sections
+The only difference from "true raw" HTML is that MOLLY adds automatic 
+<br> linebreaks unless lines are inside the <pre>..</pre> sections
+The script also cuts out vim folding marks -- { { { number ... } } } number
+-- without spaces  and "#------------" lines.
+
+
+./li. .li. Any "markdown" or "wiki"-style markup can be added to MOLLY. Another reasonable
+suggestion could be a simple translator from basic TeX markup etc.
+Some of this functionality is unnecessary to reimplement, as "noweb" or third-party 
+filters can be run on the document after MOLLY weaving or from inside MOLLY.
+
+./li. .li. As an example of a simple markup which can be done with regular expressions
+I added  "dotHTML", which is several most basic HTML tags inside "dots" instead
+of angle brackets.
+
+Dots do not require switcing the keyboard register, and therefore I can speed up
+typing and avoid annoying repeating typos.
+
+Please see the "dotHTML" subsection below where the source of MOLLY is listed.
+
+Currently implemented tags are (write them inside "dots", not "<..>"):
+.ul. <br> <p> 
+<s> - </s>
+<pre> - ..
+<b> - </b>
+<i> - ..
+<ul> - ..
+<ol> - ..
+<li> - ..
+
+Special marks are dot-<-dot and dot->-dot (no dashes, like ". < ." 
+without spaces) which are needed if the tag includes some options or
+is not among the tags "dotHTML" understands already.
+These will be converted to single < and > respectively.
+This is clumsy, but for quick sample and to speed up typing I found
+it sufficient. So far.
+
+
+And there are two special, non-HTML marks I introduced for convenience.
+(a) dot-x-dot ... dot-/x-dot .i.on one line only ./i. will .x. format the phrase ./x. as spaced
+(b) dot-a-dot http://some/URL dot-/a-dot will create a hyperlink .a. http://some/URL ./a. 
+
+./ul.
+
+etc. I add them as I go, whenever I need them for my current document.
+
+This formatting also adds <br> linebreaks unless lines are inside the 
+<pre>..</pre> sections.
+"dotHTML" also cuts out vim folding marks 
+.pre. { { { number ... } } } number ./pre.
+without spaces, and  comment lines with dashes
+.pre. "#------------" ./pre.
+
+
+./li. ./ol.
+
+
+#------------------------------
+.h4. Markup and Escaping ./h4.
+#------------------------------
+
+As clumsiness in inserting "dot-tags" in the previous subsection proves, a problem of 
+escaping exists with any markup languages.
+
+This is not resolved cleanly by MOLLY (at least for now).
+In particular, a difficulty exists with double angle brackets (< < ... > >) which make "notangle"
+stumble, wherever in the document it finds them. As a result, I usually use "spaces" to break
+the bad symbols. For example, this document is written in "dotHTML" notation (not "rawHTML"), so
+in explanations I could write the escaped dot-tags as ". b . asdasf . /b ."
+
+Another side of the same problem is that browsers .i. do ./i. interpret HTML tags even inside the
+<pre>...</pre> (which is insane). Therefore if your code processes some HTML (e.g. in regular 
+expressions), the formatted document in your browser may substitute/spoil the code.
+I solved this problem only in part for now.
+
+Clean escaping in MOLLY still needs work.
+
+}}}3
+
+#-------------------------------------------------------------------------------
+{{{3 .h3. Read and Search inside a Folding Literate Source file ./h3.
+#------------------------------------------------------
+
+
+
+#----------------------------------------------------------------------
+.h4. Opening many relevant subsections together, TOC highlighting ./h4.
+#----------------------------------------------------------------------
+
+One advantage of the folding format is that - in contrast to most other tools - it allows
+    the programmer to open .i. many ./i. relevant sections from any parts of the file .i. at the 
+    same time ./i.
+
+    This can be done by "walking" the Literate Source file, as its sections and subsections are a 
+    kind of TOC of themselves.
+    This can be done from the TOC section as well. The open sections get a highlighted background,
+    and highlighting appears irrespective of whether the section was opened from the TOC or in the
+    body of the text.
+
+
+
+#------------------------------------
+.h4. TOC and Code Chunks Index ./h4.
+#------------------------------------
+
+Traditional literate programming tools create extensive indeces of variables and code chunks.
+
+    The approach in this script is as follows:
+
+    Index of all code chunks in your LSFile exists (unless a configuration opton in the 
+    template tells MOLLY to skip it) right under TOC. Click on teh line to expand it, and then use
+    TOC section numbers to click open the sections which contain or define the chunks you need.
+
+    Remember that .i. all parent sections ./i. above the needed one must be open for you to see 
+    the innermost subsection in your browser. This is easy to control through TOC highlighting, and
+    as an additional indicator, the slider on your web browser will visibly jerk and shorten when 
+    new sections will become visible in the browser window.
+
+    It's also convenient to keep some inner subsections open, but click closed the topmost section to
+    quickly hide and unhide larger pieces of code (e.g.complete files which live inside the Literate
+    Source File when it is used as a common Project file for many source files, test files, makefile(s)
+    etc.
+
+
+
+#------------------------------------------------
+.h4. Searching for symbols, chunks, phrases ./h4.
+#------------------------------------------------
+
+Web browsers "search" functions  will work on open sections only, at least that's the behaviour of
+    Opera and Mozilla browsers.
+    This means that instead of creating exhaustive indeces of symbols, which clutter program text, 
+    especially when they display as HTML links in the output of Weaver tools, one can ensure only the
+    interesting subsections are open and then search using the built-in browser function. It usually
+    highlights the results and iterates over the found items, which is a nice behaviour.
+
+    To search in the whole of the LSFile, simply click on the "expand all" under any of the subsections,
+    and then again use the browser search function.
+
+
+
+#--------------------------------------------------------------
+.h4. Keeping some sections of the LSFile permanently open ./h4.
+#--------------------------------------------------------------
+
+The behaviour of folding sections in the mollified LSFile is as follows:
+    .ul. .li. If you click on the .b. "expand all" ./b. link anywhere in the document, all folding 
+    sections in the body (not TOC/Index) will open. The limitation is 10000 objects per document,
+    hardcoded.
+    ./li. .li. If you click on .b. "collapse all" ./b., all folding sections in the body will fold. 
+    The limit is 10k objects per document
+    ./li. .li. If you .b. reload the document ./b. in your browser ("Ctrl-R" or an icon click), the
+    document will be shown with sections open or closed .b. as marked ./b. in the document itself.
+    ./li. ./ul.
+
+    The markup is simple: if you'd like a section to stay open upon load/reload,  add a "+" before
+    "h" in the opening  heading tag:
+    .pre. <+h1>, or <+h2>, ... ./pre.
+
+    This is important when you work on a section or many sections of your LIterate Source file for
+    a longer period and could not click them open in teh browser time and time again, after each 
+    minor code change when you reload the "project.weave" in your browser to see the updates.
+
+    Such changes - adding or deleting a "+" - can often be done with one command in a programming editor.
+    For example, to open the whole subthread in vim, issue a range command, sth like
+    .pre. 1024,1150s/<h/<+h/ ./pre. (i.e. substitute between lines 1024 and 1150 of your Literate Source file)
+
+    Another suggestion is, when you, for example, work with several program files inside your LIterate
+    Source (project) file, you might keep subthreads marked open, while changing only the topmost 
+    heading to show/hide the whole of that file/subthread code and notes.
+
+    Even when you handpick the sections to keep open, I found, this arrangement suits me well, at least
+    for medium-sized LSFiles up to several thousand lines long.
+    I also use folding inside "vim", and so line ranges are visible at one glance: "z-a" to collapse the
+    vim fold, and then see the range and issue the range command.
+
+    .i. Note ./i. 
+	.ul. Use of folding inside your programming editor .x. is not a substitute ./x. for reading 
+	a well-laid out formatted document in the browser. Vim folding is still "blind" and  navigation
+	inside such a file still has to rely on your memory of the full layout. This is a burden one 
+	wishes to escape when programming, to be able to dedicate attention to thinking and
+	programming while avoiding unnecessary "housekeeping" tasks. Short-term memory of humans
+	is very small, and switching between remembering where things are and doing programming
+	becomes exhausting when your program exceeds a thousand lines or so.
+
+	MOLLY numbers lines in the code sections by default, making jumps from reading in your browser
+	to editing a particular line in your editor painless. I could also put it like this: I view
+	the file globally in my browser as a folding document when I am thinking, while editing 
+	"locally" in a programming editor, without thinking about the overall layout of the file.
+
+	./ul.
+
+    MOLLY.pl is written to filter out vim folding markups ( {{{number ... }}}number ) and t hose will not
+    show on your web page.
+
+
+#--------------------------------------------
+.h4. TOC/Index unfolding and collapsing ./h4.
+#--------------------------------------------
+
+    The TOC and Index at the top of the document can be kept folded or expanded upon initial load
+    depending on the configuration variables in the "mollifying" template you add at the top of 
+    your Literate Project file. Please see the subsection titled '"Mollification" - full template' above
+    Of course, those subsections can always be opened/closed manually at any time
+
+#--------------------------
+.h4. Use for printing ./h4.
+#--------------------------
+
+Unfolding only the needed sections also seems to work well with printing from the browser window.
+    You can therefore avoid picking certain pages manually from "print preview". You'll print only
+    the visible part(s) - i.e. the open sections and the topmost folded section names, which do not
+    take place if your document is marked in a sane way, and rather help the reader to orient himself
+    while looking at the printout.
+
+    Just remember to check the font size in the "print preview" when preparing to print for the first 
+    time.
+
+
+
+#--------------------------------------
+.h4. Text browsers and JavaScript ./h4.
+#--------------------------------------
+
+Web page folding seems to work well with text-only www browsers, such as  "lynx" or 'w3m': they do not 
+understand javascript folding, and so display the whole document.
+
+Here's an example invocation with w3m:
+.pre.  ./MOLLY.weave | w3m -T text/html  ./pre.
+.i. Note ./i.MOLLY does not issue HTTP headers, and this may affect browser behaviour. The web server
+ and/or browser may add them or not, or ignore them or not. I might need to correct that.
+
+If JavaScript in your GUI browser is turned off, you'll see only the sections marked in the body
+of the Literate Source file as open.
+
+
+}}}3
+
+#------------------------------------------------------------------------------------------
+{{{3 .h3. Work with Folding LSFiles - suggested uses ./h3.
+#-----------------------------------------------------------
+.i. .b.  section unfinished; an outline of major points for now ./b. ./i.
+
+.ol. .li. Literate Programming proper.
+
+    Emphasis on note-taking rather than producing a polished "essay" or "documentation"
+	
+    Traditional Literate Programming texts place much emphasis on the fact that it is a means of 
+    providing .i. documentation ./i. (albeit with source code, and reflecting the thinking rather
+    than machine-imposed order).
+    Knuth first thought of LP as a documentation tool, then upgraded it to a "programming paradigm",
+    but insisted on writing programs "like literary essays".
+
+    However I would like to suggest placing emphasis on NOT documenting and NOT producing 
+    polished code or an essay in thinking. The first use of this programming technique is 
+    to  .i. keep a full log of your thinking ./i. irrespective of how polished or stupid it is.
+
+    This is most precious. When you first attack a problem, several directions might come to mind,
+    but once you began to work out one of then in detail, everything else is lost. This is the
+    way human mind works. Keeping even briefest notes is more valuable than attempting to produce
+    polished exposition.
+
+    Psychological restrain people feel when they are compelled to prepare something for other people
+    is probably the third major hurdle to wide spreading of L.P. (the first two were flat file 
+    structure and formatting languages which doubled the effort of programming and debugging).
+
+    My MOLLY Literate Source file is a log of my thinking, trials and experiments. I might later offer
+    a cleaned version to other people, but I do not give a damn about them in the beginning.
+
+    Non-folding L.P. source files could not accomodate inclusion of old versions, test files, bad
+    versions and skeletons without polutting the file to the degree of becoming unusable.
+
+    Folding version of L.P. source allows one to relegate bad trials into subsections  nicely folded
+    out of the way by merely adding a single header line.
+
+    When creating documentation, I could double the content of some sections, by copy-pasting the
+    "cleaned" versions, and then save a version with the original snippets bypassed, which is
+    easy and mechanical with tools like "gema", "awk" or "perl", just put a code word like
+    "scrap" in the beginning and end of those sections you'd like to avoid.
+
+    This ability to bypass marked sections when weaving, by the way, might be incorporated as an
+    option into a future version of MOLLY, to produce both 'clean' and 'dirty' versions of the
+   formatted Literate Source doc from one file.
+
+./li. .li. Use as a combined Project file
+    .ul. .li. to include tests and snippets that implement skeleton functionality to
+    be embedded into the main program
+    ./li. .li. to include versioning and changes in the way  that does not break what
+    has been working so far (there was even a special term for that as a programming 
+    principle). Keep the old version, put it into a subsection, and rename the chunk
+    to bypass it. The newer version of the piece of code that is being reworked will
+    get the old chunk name to be included into the chain to tangle out.
+    ./li. .li. To keep a makefile (split, to which I can add lines from many places in
+    my Literate Source as I grow it) together with source file(s)
+    ./li. .li. To keep several source files related logically in teh same Literate Source file.
+    ./li. ./ul.
+
+    .i. Folding meta-files ./i. could be used for larger projects, in which 
+    the meta-file, a folding document, would describe teh topmost level layout of the 
+    project, and contain ordinary HTML links to partial Folding Literate Sourcefiles, which
+    will keep all the junk as described above.
+
+    In any case, the use of Folding Literate Source files would considerably simplify tracking
+    of the project files in a version control system.
+
+./li. .li. Use for system administration etc. - as a single file to keep many sysadmin scripts, 
+    descriptions of conventions and procedures, bugs and changes in the system .b. .i. in one place ./i. ./b.
+    from which any of the included source (or texts, if they are kept in the "source chunks") 
+    can be obtained easily with a single command.
+    ALSO: combine LIterate Source project file with a makefile as a simple means to keep 
+    one-command tangling of multiple targets.
+
+    This Literate Source can live in a central place (e.g. root home) and be under version control.
+    The tangled pieces, config files or scripts could be copied to files on one or many machines.
+
+./li. .li. Use for non-programming tasks:
+    .ul. .li. as a note-keeper. E.g. I kept job listings and followi-up info in a folding
+   MOLLY file and found it quite convenient. 
+    ./li. .li. as an outliner for general purpose texts.
+    ./li. .li. for keeping documentation, books etc. I keep documentation for a number of
+    software tools (e.g. "awk", "newlisp", "monotone") in folding format. It .i. is ./i. helpful.
+    ./li. .li. for editorial work on larger texts. The text itself will become "code chunks", 
+    and editorial remarks and meta-thinking will remain as "documentation" in a Literate 
+    Source file.
+    ./li. ./ul.
+
+./li. ./ol.
+
+
+.h4. scrap ./h4.
+(a) //CGI and CL invocations - compared to "noweb"
+    // dotHTML tagging; alternative tagging, translations
+    // alternative tanglers and pass-through tangler; makefile problem
+
+(b) ideas - how to incorporate tests; how to keep a single project file;
+how to set up dummy plugs and alternatives (i.e. to develop without destroying
+the old working version)
+Maybe: for distribution of a lot of small scripts (admin etc), the  way I used
+Makefiles?
+
+(c) It's possible even to do development in smallest chunks -- and later (e.g. for
+outside clients or for higher-level documentation, etc.) to consolidate the tiny fractured 
+bits and pieces, with plenty of alternatives, dummies, plugs and trials etc. etc.
+How? - by tangling those from some certain level and copy-pasting the result into the
+Literate Project File.
+One could even keep the actual development fractions in a subsection, while retaining
+higher-level and cleaner view in higher level sections. I do not care about doubling the
+text at all.
+
+.b.suggestion from a Slashdot 2002 discussion ./b.(see ref above) about style or approach:
+do not document what the code does (which is redundant, as can be seen from the code itself),
+document rather WHY it does it (what's the purpose or the idea).
+
+.b. Also ./b. use this file itself as an example of all illustrated techniques.
+
+Use .b."mollify"./b. as  a technical term (insert MOLLY.pl invocation into the LitProject file)
+
+}}}3
+
+}}}2
+
+
+
+#-------------------------------------------------------
+{{{2 .h2. Literate source of the script ./h2.
+#-------------------------------------------------------
+
+#----------------------------------------------
+{{{3 .h3. Bugs, status, changes ./h3.
+#----------------------------------------------
+
+#-------------------------------
+.h4. versions - CHANGES ./h4.
+#-------------------------------
+
+Current version:
+.ul..li. creates folding documents on the fly..
+./li..li. ..based on dotHTML or rawHTML markup 
+(i.e. either to create new docs or convert existing HTML into folding format);
+./li..li. and generates dynamically TOC and code chunks index;
+./li..li. ties collapsing/expandind of sections with TOC highlighting;
+./li..li. .. and provides pass-through tangling with "noweb".
+./li../ul.
+
+This script is a test of the concept (LitProg+folding+dynamic web formatting)
+Options for future versions --  3 ideas for now:
+.ul..li. add a built-in tangler (while retaining the possibility to tangle
+through an external tool, such as "notangle" with all its options and filters).
+
+./li..li. .x.create a fully self-contained./x. folding web-based .x.weaver./x.
+("Lilit") (plus possibly a built-in tangler).
+This can be done in newlisp (www.newlisp.org), which has a built-in httpd
+and allows creation of 250k+(size of script) standalone executables on all
+major platforms (unix/linux, windows mac).
+
+./li..li. maybe - .x.add "views" (a la Leo views)./x. and maybe editing of single
+subsections (in a pop-up term window with a running editor).
+This - as I see it now - may/will involve storing each subsection in its 
+own little file and dynamically concatenating them both for dynamic weaving
+and for tangling ( keep a third name, some "scriptname.src" for dumping the
+full file to STDOUT?? )
+This can be done dynamically: a huge project file will be displayed fully
+collapsed, and then only the sections marked open will be dumped to the web
+browser dynamically.
+The whole thingy can be kept either as a bunch of section-files in a subdir,
+or (and/or) in a tar file (gzipped or not, indexed or not).
+
+.i.How to do it./i.
+/* Basically, to manage sectionfiles I'd have to code as if those are comments
+to a blog entry (and dynamic gathering of them is the same, too. Should be
+rather obvious and possibly quite easy*/
+This 'views_enabled' mode will switch to sect-files in a ./.molly/ and will
+add dynamic links to each section: "edit section" (in an external editor);
+"update Literate Source Project file". And the script will start to check the
+subdir and dynamically reconstruct its HTML output in this mode.
+Same must be true for the "tangler" pre-filter, too - it will reconstruct
+the whole before passing it to the "notangle" utility.
+
+./li..li. Is it possible to do .x."promoting/demoting"  of branches??./x.
+Is it possible in the view-enabled weaver?
+
+./li..li. .x.add "web tangle mode"./x., in which MOLLY will dump coloured diff
+of the subsections (or the whole file if not too large), of the current version,
+tangled via the browser form versus a file on disk.
+(I do it all the time firing fldiff after each tangle - would be convenient to
+have the functionality before tangling to disk (with file renaming etc), just
+by reloading a page in a browser.
+Will need to allow saving files (or some branch of chunks) from the browser, then.
+
+Do I underuse .x. Vim ./x. ? - it does have .b. some "diff" mode ./b. for side-to-side
+display. Just open 2 files, current and prev. vers. and toggle btw one-file
+view and edit or side-by-side coloured diff ???
+
+.i.How to do it./i.
+.. by first (poss) checking that the files are not identical, and then by
+filtering into "diff":
+.pre. MOLLY.tangle|diff -y -w --left-column xxz - |less ./pre.
+Just wrap it into html-body-pre tags and colour if there's something in the 
+right half (not necessary, really)
+./li. ./ul.
+
+.b. Maybe ./b.  have the .x. "composite document" ./x. (or "fragmented document") 
+option for .x. the second-level ./x. meta-management .x. of project files ./x.
+I.e. one project could be split into many file-sections, and MOLLY weaver will 
+assemble them into the doc.
+OR: I maintain logically consistent pieces in medium-size project files, and
+keep a meta-project file with the split option enabled.
+The "edit" links from it will pop up gvim or another editor of choice with
+the full piece in it.
+While viewing will present it all as if one LIterate Source project file.
+I'll need only to mark the pieces in the TOC, possibly, as a separate doc,
+and -- .b. how will I treat TOC compilation then ? ./b.
+
+.b. Maybe ./b. - if I find an ASCII script (ascii art from commands and 
+descriptions), I could automatically generate .x. ascii-art "maps" ./x. 
+of the chunks ??
+
+
+.b. introduce horizontal/vertical layouts? ./b. 
+I.e. TOC and Chunks Index either on top of the file or on the left of it for
+"wide screens", like those on notebooks ??
+Changes are in  "Print out the resulting page" (currently line 3359)
+ - plus options, of course
+
+Note: will require gluing TOC or the body to stick at the top, not simple table
+cells, which will center and resize depending on relative cell content sizes.
+May require separate scrolling for the two panes?
+
+OR: .b. TOC/Index in a floating window? ./b. -- should be easy, just  name the
+output windows.
+
+
+
+#----------------
+.h4.TO DO current./h4.
+#----------------
+
+.b.1. Problem of double diamonds in doc chunks ./b.
+.ul.
+    change the pass-through tangler to isolate the "notangle" from docs sections???
+    (will squash the prob of double angle brackets in documentation chunks)
+
+    OR - introduce a sort of escape?? Because sol 1 would clobber correct line numbering??
+    But I do not number lines in the default pass-through invocation..
+    The standalone will be affected, anyway.
+
+    I could add regex conversion to hexadecimals in the pass-through tangler.
+    However it would still break the "notangle" when run standalone.
+
+    I could collect command-line options in case of "scriptname.tangle" invocation
+    and pass them to "notangle" - that could be a sort of solution.
+./ul.
+
+2. Change logic of "weave-tangle" ("main despatcher"), as it is stupidly convoluted 
+and ugly now
+
+3 and 8. (++) rawHTML mode, done
+
+4. (++-) see below in "done"
+
+5. .b. BUG of sorts ./b.
+the "lt" and "gt" escapes in the code chunks right above ("tangle me with filtering") are not 
+displayed correctly  by the web weaver: the browser displays them as real angle brackets.
+
+6. .s.TMLize the error message in the main despatcher (if "I am a module", print it as
+an html file). Otherwise it won't look good in the browser. ./s. 
+.b. NOT NEEDED ./b. as "tangling" is done from CL only
+
+7. Add another mode - if file ext is "src" - "scriptname.src" - do not pass to "notangle", but
+dump the pre-filtered source to STDOUT.
+May be needed in some cases, who knows?? - i.e. to escape special symbols, such as double-<'s 
+etc in documentation chunks.
+Ordinarily, this is not needed and the file can be processed by "notangle" directly.
+This step is needed to tangle some non-default pieces or to use some extra tangling options.
+
+9 (++). DATA or ---start of script-- to filter?? - done
+
+10. Add "expand subthread" ?? - to open only the current branch of the L.T.File?
+
+11. Add auto-href creation (i.e. posting a URL with minimal markup must create a valid
+    HTML link with URL as the name of it.
+
+12 (+--). and checking 
+qwer qwer .x.spacing./x. of one word and .i..x.of  many  on  the  same line./x../i. asdf asd  
+SO: to do word boundaries properly.
+DONE although not very cleanly. The tag will break across several lines
+
+13. Add a full set of HTML escapes to "dotHTML" and "rawHTML" ?
+
+
+#----------------
+.h4.DONE ./h4.
+#----------------
+
+.b. 1. Adding TOC open/collapsed section indication ./b.
+Changes must be made in:
+"weave me" ==> "JS script functions" && "stylesheet"
+// as expl in the ref section below 
+
+AND in
+"Accumulate the result" ==> "process section headings"
+// the actual invocation "onmousedown"
+
+
+.b. 2. Synchronize TOC and sections ./b.
+I have done highlighting; now two more steps:
+    .ul. (a) make body sections run "toggleCombined" rather that directly
+    open/close the "div"s/sections - to highlight the TOC at the moment
+    of change
+    (b) make TOC bg. highlighting recognize the "+" signs in the html headings
+    markup.
+    ./ul.
+This is not difficult, just needs a little attention.
+
+To do (b) NEED to rewrite 
+.pre. <div id="$section_num" style="display:$fold_state">  ./pre.
+in line appr. 370 to add inline javascript invocation of expandDiv
+
+3. see 8.
+Add "pass-through" direct HTML dummy encoder (plus a switch btw rawHTML and dotHTML)
+Explain  the user can expand the script in any way he wishes (e.g. with a "wiki" syntax)
+
+(++-)4. I still need to do at least a .b. stub in tangler ./b. to do some pre-filtering before
+calling "notangle".
+E.g. I might want to reassign the double-< and double-> or other symbols for some esoteric
+languages, or filter out escapes from documentation chunks for the notangle not to choke.
+
+NO SWITCH yet to select from pre-tangle filters or built-in tangler.
+
+(++) 8. Weaving -- "dotHTML" versus "rawHTML".
+Version MOLLY-0.62-BAD.pl is incorrect. It's "dot" markup is OK, but for "raw" to work 
+.i. regexps must be changed ./i. in the main filtering "if - elsif - else", as headers
+will too be in angle brackets, not in dots.
+
+.b. May be a good idea to extract those regexps ./b. and assign them to vars, as now
+they are coded in, bad.
+
+9. See "accumulate result in a buffer"
+Should I make the "----start of script--" line unnecessary (relying on __DAT A__ ) ??
+Or =- both? or no "data" (as it throws off editors highlighting) ???
+.b. set to react to DATA not "start of script"./b.
+
+
+.b. Bug with setting default for $print_toc fixed./b. --  must check for "defined", the perl operator
+xx?aa:bb checks for 0 or non-0, and so if the var equals 0 it will never set it to 0.
+Changed and tested.
+Maybe should use "yes" and "no" instead of "1" and "0"?
+
+
+}}}3
+
+
+
+
+
+
+
+.h3. The script layout and idea ./h3. 
+.. are very simple.
+
+.b.1. ./b. It is possible to include an invocation of a  perl script with 
+.pre. "do script.pl" or "use script.pl"  ./pre.
+as the first lines in a Literate Source file.  This turns the source into a standalone perl script. 
+If we write the script to process the L.Source file itself ($0 in perl parlance) then the script can do 
+weaving and tangling of it. The output, which is formatted documentation (which was "weaved" from L.P.) 
+or the sources usable by a computer ("tangled") can be  saved in a file, as with traditional "literate 
+programming" tools. But which is more convenient, the formatted documentation can be  picked up by a web  
+server, and thus allow us to see work in progress immediately and automatically. 
+
+When I think, I prefer to look at the formatted document, and when I change, I do it "locally" in a good
+programming editor (such as "vim"). Even with vim folding the difference in perception is enormous.
+
+.b. 2. ./b.I see three advantages to such an arrangement:  
+.ul..li.first, web markup is ubiquitous today, and it is quite sufficient for most publishing needs. 
+So Literate Programming with HTML will free us from a tie to TeX which so negatively affected 
+perception of L.P. by the masses of programmers. The markup becomes very, very simple. 
+
+This eliminates a source of one major complaint about the traditional L.P. - that the programmer has 
+to maintain not one, but two "programming languages" while working with LP, the target one
+and the formatting one. This - the complaint goes - becomes a source of errors from an additional layer 
+of programming in addition to writing the code itself. It taxes the programmer's mind rather than relieving
+it.
+
+In fact, simple HTML is almost self-correcting, as wrong markup becomes immediately obvious in the 
+browser. 
+
+./li. .li. secondly, this eliminates "weaving" as a separate step during development, but more
+importantly, such an arrangement allows a programmer to think about his program while looking
+at a .i.folding./i. document, in which only relevant sections are open.
+
+I perceive .i. folding ./i. as a major advantage
+
+With .i.folding./i. the Literate Source file becomes manageable even for really large texts. This in turn
+allows the programmer to keep .i. many files ./i. inside the LPSource, including test snippets, the makefile,
+preserve old versions of parts of the source etc. etc.
+Literate Source file is painlessely turned into a Project File, one file, from which anything can be
+easily generated.
+It is this one file that my version control system must track now. For really large projects, we can keep
+a meta-file (also in the folding format) with largish partial files as links, corresponding to logical 
+pieces of the project, which will open in the browser as automatically weaved Literate Source Files.
+
+I attempted to explain this at length in introductory sections above.
+./li../ul.
+
+.b.3. ./b. The script that programs this functionality can assemble all pieces as buffered strings in RAM: today's 
+machines routinely contain RAM in Gigabytes, therefore processing in memory a very large source or 
+project file  in Megabytes, even in tens of Megabytes is not a problem. 
+
+.b.4. ./b. How the script works overall
+
+After figuring out how it was invoked, the script:
+.ul..li. .b.when it is supposed to weave./b., scans into memory the Literate Source file, marked up in "noweb" 
+notation (and its document sections marked with raw HTML or in "dotHTML") doing necessary substitutions 
+and conversions along the way.
+Then the buffered string thus formed and several auxilliary buffers (for document TOC and Index 
+sections) are printed out to STDOUT. They can be redirected into files, if LPSource, now also an executable
+script itself, is run from command line, or they can be picked up by a local personal web server that is
+used by the developer, which  should recognize the LPSource as a valid CGI script
+
+After any changes in the script, the user can reload the page in his web browser and immediately see the
+changes.
+
+./li..li. .b.If invoked to tangle./b. the source of the program, this version of the script will refer the 
+actual  tangling to the "notangle" utility from "noweb" suite of tools by Ramsey.
+./li../ul.
+.b.5. ./b. .x. A future version ./x. of the script may be made completely self-contained, i.e. include a mini-web 
+server as well as a folding weaver and a tangler.
+
+
+
+#------------------------------------------------------
+{{{3 .h3. MOLLY.pl - top of the script ./h3.
+#------------------------------------------------------
+
+<<MOLLY.pl module>>=
+#!/usr/bin/perl
+
+#---------------------------------------------------------------------------------    
+#----------------------Script proper----------------------------------------------
+
+
+<<general settings>>
+<<main despatcher>>
+<<tangle me>>
+<<weave me>>
+
+# END OF SCRIPT
+@
+
+
+#-------------------------------
+{{{4 .h4. general settings ./h4.
+#-------------------------------
+
+
+Some internal script parameters are set here.
+E.g. "noweb" tangler gets confused if it finds double angle brackets
+anywhere, so sometimes it's possible to fool it by setting a var in the
+perl script like this:
+
+<<general settings>>=
+  # need to fool the noweb "notangle" utility, switch markup modes etc.
+  $lt = "<";
+  $gt = ">";
+  $lt_esc = "&lt;";
+  $gt_esc = "&gt;";
+  $dash = "-";
+  $dot = "\.";
+@
+
+But more importantly:
+There are a number of parameters that can be set from the literate source file
+at the very top before loading the module with "do MOLLY.pl" (or "use MOLLY.pl").
+These are assigned defaults here. You can refer to this portion of the script
+to find out what parameters are settable in your document template and expand the
+tunings if you modify MOLLY.pl
+
+<<general settings>>=
+
+  # ----- GENERAL settings -----
+  
+  # am I a module? 1:0
+  $i_am_module = 1;
+
+  # print toc? 1:0
+  $print_toc = 1 unless defined $print_toc;
+    
+  # keep TOC expanded on initial load? "block":"none"
+  $toc_expanded = $toc_expanded || "block";
+
+  # keep TOC expanded in initial load? "block":"none"
+  $ind_expanded = $ind_expanded || "none";
+@
+
+The script will behave differently depending on its own name. One "major" name
+can be used with others existing as soft links (although an "thttpd" lightweight
+web server insisted on a hard link in one case).
+The modes are detected by file extensions, which are set here.
+'Weaving' = creating a formatted HTML documentation file on STDOUT
+'Tangling' = creating the program/script source on STDOUT
+
+<<general settings>>=
+  # what is the file extention to weave it? (perms must allow execution!)
+  # e.g. "scriptname.weave" or "scriptname.cgi" etc.
+  $weave_extension = $weave_extension || "weave";	# default is "weave"
+
+    # what is the file extention to tangle it? (perms must allow execution!)
+    # e.g. "scriptname.tangle",  "scriptname.pl" etc.
+    $tangle_extension = $tangle_extension || "tangle";	# default is "tangle"
+
+
+
+  # tangle? Or run? (perms must allow execution)
+  $tangle_me = 1;
+
+      # -- not implemented yet --
+      #
+      #$run_me = 0;
+      # what interpreter to run the tangle output with?
+      #$run_me_with="/usr/bin/perl";
+
+
+# number lines ? 1 : else
+$line_numbering = 1;
+@
+
+The document sections ("chunks") can be marked with actual HTML tags ("rawHTML") or
+with a smaller number of the same tags in "dots" in place of "angle brackets", i.e.
+dot-br-dot, not open.angle-br-closing.angle
+This is selected here:
+
+<<general settings>>=
+# how are doc sections marked? "dotHTML":"rawHTML"
+$weave_markup = $weave_markup || "rawHTML"; # default is "rawHTML"
+
+    if ($weave_markup eq "dotHTML") {
+	$tag_open_symbol = $dot;	# this will take care of default
+	$tag_close_symbol = $dot;	# when no var is set in the Lit Src file
+    }
+    elsif ($weave_markup eq "rawHTML") { 
+	$tag_open_symbol = $lt;
+	$tag_close_symbol = $gt;
+    } #fi
+
+@
+
+It would make sense to add a few more markups to the program, i.e. some "wiki" many use,
+and some TeX basic tags for automatic translation, if the doc is tagged as a TeX file.
+
+In more detail dotHTML is explained in its own section
+
+}}}4
+
+
+
+#-------------------------------
+{{{4 .h4. main despatcher ./h4.
+#-------------------------------
+
+The script figures out how it was invoked and then starts either a tangler
+or a weaver, or fails with a usage line.
+
+If the script name ends in "weave" (e.g. script.weave), it will be weaved to STDOUT.
+If the name ends in "tangle", the source starting from the default chunk < <*> >
+(without spaces) will be dumped to STDOUT:
+
+<<main despatcher>>=
+<<main despatcher kludgy>>
+@
+
+{{{5 .h5. With tanglediffs as an option ./h5.
+.b.To add "tangled diffs"./b.  through a broser - i.e. output of 
+.pre.  MOLLY.tangle | diff -y -w --left-column xxz - |less ./pre.
+
+1. To colour the script must hard-set "width":
+.pre. diff -W130 ......... # 130 is the default ./pre.
+The separation line runs at < width/2 (e.g. at pos 63 if W=130, at 87 if W=190 etc
+So I can recognize "changed" lines to colour if length($line) >= Width/2 ?? (or strictly more)
+But figuring out at which pos the separation line runs without hardcoding W is not obvious to me.
+
+Another alternative might be to use an external code colourizer, such as vim ??
+
+
+
+2. I'll have to redo the despatcher's logic:
+.ul. check REQUEST_METHOD if it si GET, then weave for "xx.weave" extensions, 
+do tanglediffs for the "scriptname.tangle" extension, and do real tangle if 
+REQUEST_METHOD is not set.
+The tanglediffs will be controlled by cgi query string (i.e. disassemble and
+match QUERY_STRING).
+The tanglediffs will present a form to select a disk file to tanglediff against;
+subsequent views of output can be done by reloading the page in a browser.
+./ul.
+
+<<main despatcher with tanglediffs>>=
+;
+
+@
+
+{{{6 .h6. a skeleton script to test this snippet ./h6.
+To test: 
+.ol..li.save as test.weave, hard link to test.tangle and test.pl
+./li..li. and set thttpd.conf to treat x.tangle as cgi
+./li../ol.
+
+<<tanglediff test 1>>=
+#!/usr/bin/perl
+
+if ( $0 =~ m!\.tangle$! ) { 
+    if ($ENV{'REQUEST_METHOD'}){ goto TANGLEDIFF_ME }
+    else { goto TANGLE_ME; }
+}
+elsif ( $0 =~ m!\.weave$! ) {
+    goto WEAVE_ME
+}
+else {
+    #output error message and usage 
+    exit;
+}
+
+TANGLE_ME:
+    print "I am being tangled\n";
+    exit;
+
+TANGLEDIFF_ME:
+    #disassemble and check the query string here
+    #and accordingly do a primitive protocol:
+	# output file selection form of none
+	# show the diff if selected, e.g. 
+	#   "script.tangle?filename_on_disk_to_tanglediff_against"
+    
+    #debug:
+    print "I am in a tanglediffer\n";
+    exit;
+
+WEAVE_ME:
+    print "I am in a weaver\n";
+    exit;
+
+@
+
+.b.also./b. where there were "weaver" and "tangler" before, I'll have one more "tanglediff"
+subsection below to set the "diff" invocation and dumping its output.
+
+.i.Question for the tanglediffe./i.r - should I have an option to directly dump the result 
+of tangling into a browser, or is it unnecessary?
+
+.i. NOTE ./i. the tanglediffer and tangler may share some pre-processing part needed for
+clean tangling. Then the separation will be different:
+the tangle-tanglediff switch will live inside TANGLE_ME
+
+.b..i.NOTE 2./i../b. Should I simplify it even more? -- rather than making distinction by the name
+extension and forcing the user to create hard links and reconfigure the web server (imposs.
+if it is not a local server, but say an html-served subdir in his home dir) -- why don't I
+.i.start the mode from a hyperlink./i. ??
+The mode will be identified from the QUERY_STRING (or CL options), and the code providing
+it is of course still inside MOLLY.pl.
+
+}}}6
+
+
+{{{6 .h6. With wavediff and tanglediff?? ./h6.
+I could also do "weavediff" and "tanglediff" for ease of checking in the browser.
+
+.ul.    .x.weavediff./x. - checked, looks bad: huge and not well-readable after a few changes.
+    Main prob: executing "weave" produces HTML, so I'll need to execute the other file on
+    disk too, or save HTMLs, both are cumbersome options
+    SO: no "weavediff"
+./ul.
+
+In that case the despatcher will be different:
+
+<<tanglediff.test2.pl>>=
+#!/usr/bin/perl
+
+$weave_extension = "weave";
+$tangle_extension = "tangle";
+
+
+# -- a call for the weaver --
+if ( $0 =~ m!\.$weave_extension$! ) {
+
+    # --- a call from CGI ---
+    if ($ENV{'REQUEST_METHOD'}){
+
+	print "\nFIRST OF ALL, THIS IS A CALL TO WEAVER\n";
+
+	#pull and process QUERY_STRING to weave or tanglediff
+	
+	if ( $ENV{'QUERY_STRING'} eq "" ) {
+
+	    print "<html><body>\n";
+	    print "a CGI call for weaving<br>\n";
+	    print "</body></html";
+	}
+
+
+	elsif ( $ENV{'QUERY_STRING'} eq "diff") {
+	    print "here I should output the file selection form for tangle-diff\n"
+	}
+	elsif ($ENV{'QUERY_STRING'} =~ m!^diff&(.*)$! ) {
+
+	    # check the supposed filename is an allowed alphanumeric:
+	    # convert spaces into underscores and check for match to "\w+"
+	    print "a call from CGI for a diff with some file.. going to check if it exists..\n";
+
+	    # for the test - just get the file
+	    # /if the file with such a name exists, of course/
+	    if (-f $1) {
+
+		# then run the piped command like
+		# scriptname.tangle | diff -y -w --left-column xxz -
+		print "here tanglediff pipe will be with the given file\n"
+
+	    } # fi rung the tanglediff pipe
+	} # fi this is CGI GET args for tanglediffing
+	else {
+	    print "a call from CGI to the weaver -- with unknown arguments<br>\n";
+	}
+
+    } # this was a call from CGI
+
+    # --- a call from CL ---
+    else {
+	#process command-line args
+	# to weave or weavediff or tanglediff
+	print "this is a call from CL\n";
+	print " arg1 is $ARGV[0] -- arg2 is $ARGV[1]\n";
+	print "The same 3 options will apply: weave, ask for selection and tanglediff\n";
+    } # esle, fi -- this was a call from command line
+}
+
+# -- a call for the tangler -- 
+elsif ( $0 =~ m!\.$tangle_extension$! ) {
+
+    # do direct tangling
+    # will not execute in the browser, as the web server
+    # does not allow it?? -- or filter on REQUEST_METHOD, too?
+    print "a CL call for tangling\n";
+
+}
+
+# -- a call for other extensions --
+else {
+    #print usage
+    print "a call with an unknown extension or a call to 'tangle' from under CGI\n";
+    print "Not allowed, printing usage..\n";
+}
+
+@
+
+
+.b. So ./b. this one seems to be Ok, although I still dislike its cludginess. I'd like a
+better options processing skeleton script.
+
+}}}6
+
+}}}5
+
+
+
+{{{5 .h5. "Main despatcher kludgy" - first version - no tanglediffs ./h5.
+
+.i. To add here: ./i.
+command line options parsing??
+Error/usage message should be html-ized too??
+
+<<main despatcher kludgy>>=
+  # -- MAIN DESPATCHER ----
+
+  # check if $i_am_module and set filenames to $0 - or 
+  # process CL options otherwise
+
+  # (temp) - 2 options, to weave and to tangle in module mode:
+  #
+  if ( $0 =~ m!\w+\.$weave_extension$! ) { goto WEAVE_ME }
+  elsif ( $tangle_me) {goto TANGLE_ME}
+  else {
+  print <<end_of_print;
+
+	USAGE:
+	Not set to tangle.
+	Set variables at the beginning of the script properly.  
+
+end_of_print
+  }
+@
+
+}}}5
+
+}}}4
+
+}}}3
+
+
+
+#---------------------------------
+{{{3 .h3. Tangler ./h3.
+#---------------------------------
+
+This version of the script does not include a built-in tangler, and therefore
+if you set "$tangle_me" to 1 in the settings, the script will pass ithe request through
+the "notangle" utility of the "noweb" Literate Programming tool to tangle starting with 
+.i.the default chunk < <*> >./i.   and without other options passed. I only set "notangle" 
+below to preserve the tabs in case you are tangling Makefiles.
+
+So, when the script is invoked as "script.tangle" (which can be a link or a soft
+link to something like "script.weave", it's "real" name), it will dump the source
+to STDOUT, very convenient for development.
+
+I usually move the root chunk < <*> > along inside the LIterate Source project
+file and assign it to the test script or the part I am working on. The Literate Source
+project file includes several actual source files usually. By the way, it's quite
+nice to be able to keep all partial tests that you do before including those into
+the target program all in one place, your common project file.
+
+To tangle with more specific options, run "notangle" directly on your "mollified"
+literate source file, e.g.
+.pre.notangle -R my_root_chunk -L script.weave ./pre.
+
+Later other modes of operation may be incorporated here.
+
+#---------------------------------------
+{{{4 .h4. pass-through tangler ./h4.
+#---------------------------------------
+
+Passes the request to "notangle" from the "noweb" literate tools suite.
+
+<<tangle me>>=
+<<tangle me with filtering>>
+@
+
+
+<<tangle me straight>>=
+
+
+TANGLE_ME:
+
+	open TANGLE_PIPE, "| notangle -t4 -";
+
+	open MYSELF, "<$0";
+	while  (<MYSELF>) {
+	    # filter here
+	    # filter here and
+	print TANGLE_PIPE $_;
+	}
+
+	close TANGLE_PIPE;
+	close MYSELF;
+exit;
+
+@
+
+Pre-filtering might need to bo done. E.g. "notangle" gets confused by double angle brackets
+even when those are inside the document chunks.
+Therefore I could escape those before passing them to the tangler.
+
+This of course is kind of stupid, as running 'notangle' without this pre-filter will still
+break it, e.g.
+if I want to do it from command-line with some special options or for a non-root chunk,
+
+This is not a full solution in itself. Consider it as a template for pre-filtering, sort of.
+
+<<tangle me with filtering>>=
+
+
+TANGLE_ME:
+
+	open TANGLE_PIPE, "| notangle -t4 -";
+
+	open MYSELF, "<$0";
+	while  (<MYSELF>) {
+
+	    if ( m!^(goto)?<\<(.*)>\>=! ... m!^@\s*$! ) { # -- CODE CHUNKS -- 
+		print TANGLE_PIPE $_;
+	    }
+	    else {  # -- DOC CHUNKS /and beginning of file, irrelevant / --
+
+		# filter double angle brackets that confuse "notangle"
+		s/<</$lt_esc$lt_esc/g;
+		s/>>/$gt_esc$gt_esc/g;
+		print TANGLE_PIPE $_;
+	    }
+
+	} # elihw
+
+	close TANGLE_PIPE;
+	close MYSELF;
+exit;
+
+@
+
+.b. BUG of sorts ./b.
+the "lt" and "gt" escapes in the code chunks right above ("tangle me with filtering") are not 
+displayed correctly  by the web weaver: the browser displays them as real angle brackets.
+.s.I could avoid this  by using $lt and $gt perl vars defined in "general settings" for exactly
+cases like this../s.
+I .i.cannot./i. avoid this without setting another couple of perl vars: $gt_esc = "& gt;" etc. ...
+
+I do have lines with the same problem in the "dotHTML formatter" chunk as well.
+
+
+
+.b. Immediate execution of the script ./b.
+It did not work exactly, but then I did not try it for real -- if it is needed and if your
+language supports taking input from STDIN, it may be possible also to immediately run your
+script skipping the stage of "tangling-into-a-file" before running.
+To be added (possibly).
+
+}}}4
+
+
+#-----------------------------------------------------------
+{{{4 .h4. Tests and snippets for a built-in tangler ./h4.
+#-----------------------------------------------------------
+
+.h5. 1. Use MD5 for chunk titles? ./h5.
+Chunk names are free phrases in a human lang. I need poss. to make a hash of contents with
+the title as  the key. A phrase is not good for that, so could I use MD5 hashes of the titles
+instead??
+
+PErl will require a module then:
+
+<<md5 hashing from perl>>=
+#!/usr/bin/perl
+# Functional style
+ use Digest::MD5 qw(md5 md5_hex md5_base64);
+
+ #$digest = md5($data);
+ #$digest = md5_hex($data);
+ #$digest = md5_base64($data);
+
+ # my test:
+ $digest1 = md5_base64("md5 hashing from perl");
+ $digest2 = md5_base64("Chunk names are free phrases in a human lang. I need poss. to make a hash 
+    of contents with the title as  the key. A phrase is not good for that, so could I use MD5 
+    hashes of the title");
+ print "$digest1\n$digest2\n";
+@
+
+#------------------------------------
+.h5. 2. First pass of tangling ./h5.
+#------------------------------------
+
+.pre.Cut out code chunks; 
+create hash; 
+..concatting parts of the same chunk. ./pre.
+
+I will get here if I am "scriptname.tangle" and $builtin_tangler = 1
+
+<<built-in tangler skeleton>>=
+#!/usr/bin/perl
+    use Digest::MD5 qw(md5_base64);
+
+    $use_builtin_tangler = 1;
+    unless ($use_builtin_tangler) {print "not set to tangle in the options\n"; exit}
+
+    <<first pass of tangling - accumulate in RAM>>
+    <<second pass of tangling - print out>>
+@
+
+.b. .i. note 1 ./i. ./b.
+The following works with implicit understanting of the correct sequencing of the symbols in the
+Literate SOurce file. If those are mangled, results are not guaranteed. 
+I mean, no check is done to complain in case "< <  blabla > >=" and "@" do not follow each other
+or if those nest etc.
+
+.b. .i. note 2 ./i. ./b.
+Besides accumulating code, I also need to do indeces (also hashes)?
+One idea is to have immediate access to "parent roots", because I foresee 3 modes of tangling:
+.ul. .li.the default chunk "*"
+./li..li.the specified chunk
+./li..li.and "all root chunks" to kind of "check out the whole project" from the Literate Source
+./li../ul.
+If I do not maintain the 3 modes and tangle from the "*" specified in the LitSource file, I won't
+need the indeces, I think.
+
+<<first pass of tangling - accumulate in RAM>>=
+    open LITSOURCE, "< $ARGV[$1]" || die "could not open the file to tangle\n";
+
+    $chunk_beg_pattern = "^<\<(.*)>\>=";
+    $chunk_end_pattern = "^@\s*$";
+    $chunk_ref_pattern = "<\<(.*?)>\>[^=]"; # can be used several times in a line
+
+    %code_chunks_buf = (); # accumulating chunks bodies
+    %code_chunks_index = (); # like "goto" stack per chunk
+
+while (<LITSOURCE>) {
+
+    if ( m!$chunk_beg_pattern! .. m!$chunk_end_pattern! ) { # -- CODE CHUNKS -- 
+
+	if ( $_ =~ m!$chunk_beg_pattern! ) {
+	    # form md5 and push into the hash-stack
+	    $title_hash = md5_base64($1);
+	    }
+	elsif ( $_ =~ m!$chunk_end_pattern! )  {
+	    # end of code chunk
+	    }
+	elsif ( $_ =~ m!$chunk_ref_pattern! ) {
+	    # form and push "goto" and "cont" into the hash-stack
+	    }
+	else { # chunk body: accumulate
+	    $code_chunks_buf{$title_hash} .= $_;
+	    }
+    } #fi
+
+
+} #eliwh
+@
+
+Now all code chunks, concatenated if they have the same name, are in RAM (inside %title_hash), 
+I can do the second pass and unravel them.
+
+
+
+
+.b. 3. Second pass of tangling ./b.
+#-----------------------------------
+
+Let's do tangling  from "*" only in this skeleton version
+
+The chunks now are in RAM as a string; I need to match < < chunk refs > > and continue right
+after processing them.
+Seems it can be done with a regexp which marks the place of its last match.
+
+err.. multiline matching; only-once + continuation -- the regexp options needed -- ??
+
+Secondly, it creates a recursive function.
+
+<<second pass of tangling - print out>>=
+# second pass - tangling from %code_chunks_buf using %code_chunks_index for directions
+
+$default_root = md5_base64("*");
+
+    # bullshit
+    #$code_chunks_buf{$default_root} =~ m!!;
+
+@
+.b. ...STOP... ./b.
+
+
+
+
+#--------------------------------------
+.h5. 4. Another idea for tangling ./h5.
+#--------------------------------------
+
+Basically, I should create more chunks in $code_chunks_buf than the number of those 
+existing in reality.
+
+The idea is to split them at each < <  chunk ref > > to print out without parsing 
+the string at all.
+Then all I need is a parent-child index, that's all??
+
+The parent-child index must be able to keep multiple offspring then (in case some 
+chunk is reused, say if it is a func used in several contexts.
+
+
+
+
+.b. 5. One more idea ./b. 
+#---------------------------
+if I cannot iterate strings lazily, why not iterate over the file twice?
+Operators which work on the files are by their nature lazy both in perl and in newlisp.
+I.e. first pass - get offsets, form the "goto-index" hash, second pass - unravel.
+
+
+#--------------------------------------------------------
+.h5. 6. Lazy iteration over strings in a memory buf ./h5.
+#--------------------------------------------------------
+
+..seems possible after all, check 
+.a.http://localhost:8000/perl.docs/perlretut-perldoc.perl.org.weave ./a.
+as a cumbersome combination of "g" option, "pos()" function and \G ancor
+see "global matching" subsection in the above doc (under "using regexp in Perl")
+
+
+HEre's a snippet that seems to work:
+
+<<matchstring2.pl>>=
+#!/usr/bin/perl
+
+#------JUST a string to test the regexps on ------------
+$string = <<end_of_string;
+bla-bla-bla /leaving it out/
+end_of_string
+
+#---------------end of string--------------
+
+=head
+# first test, bad:
+# match-prematch work, but on the WHOLE string. BAD:
+  while ( $string =~ m!<\<(.*?)>\>[^=]!gc) {
+    print "\n\n---PREMATCH---\n$`\n\n";
+    print "MATCH\n$1\n\n";
+    }
+=cut
+
+
+# --HERE'S ANOTHER IDEA--
+# the use of \G ancor and poss the pos() function
+#pos($string) = 0;
+while ( $string =~ m!\G(.*?)<\<(.*?)>\>!gs) {
+  
+  $off = length($2);
+  $position = pos($string);
+  #pos($string) = $position + $off;
+  print "\n\t---title---\n$2 of length $off at $position \n\t----after----\n$1\n========\n";
+
+}
+
+# ONE PROBLEM:
+# last piece, post-chunk ?? OR not a prob when reading from a file??
+
+
+# Looks like this can solve the prob of parsing a code chunk with included < <references> >
+#	when hitting a match:
+#		- append $1 to the chunk buffer
+#		- get md5, push it into the index
+#		- form an md5 for the continuation and start that new chunk
+#		- .. and push "goto" this continuation into the prev chunk index
+#
+# Do this linearly on all cut out code chunks of the Literate Source file (appending those 
+# with the same names)
+# and print out from memory on pass 2 according to the goto index.
+#
+# Should preserve all offsets as well.
+#
+#---------------------------------------------------
+@
+}}}4
+
+
+}}}3
+
+
+
+#--------------------------------
+{{{3 .h3. Weaver ./h3.
+#--------------------------------
+
+
+The idea of the weaver is simple, again.
+
+<<weave me>>=
+
+
+WEAVE_ME:
+
+#1. Set formatting strings for weaver
+<<set formatting strings for weaver>>
+
+#2. accumulate result in a buffer
+<<accumulate result in a buffer>>
+
+#3. print out the TOC, the Chunks Index, the output buffer and close the page.
+<<print out>>
+@
+
+
+#---------------------------------------------------------------
+{{{4 .h4. How formatting is done in the weaver ./h4.
+#-------------------------------------------------------------
+
+.b.1 The first formatting element ./b.  that is  part of the .i. function ./i. of the script
+rather than formatting decorations is the
+.pre. frameset - legend - /legend - /frameset ./pre.
+which create the distinctive look of the documents generated by MOLLY. I do not wish to
+change them (although strictly speaking they are not obligatory).
+
+What can be changed is the Stylesheet (a part of the script, it has its own subsection), so
+other people could play with fonts and colors and margins and such by throwing in a simple
+switch and copying their alternative stylesheet into the script.
+
+I do not wish to use external files for any configuration, as the whole idea of MOLLY is to
+be a single self-contained script, which does not require any "installation" of many files to
+many places.
+
+.b.2  Secondly,./b. the "actual working test.html" subsection below probably explains best how
+.b. text folding and background highlighting ./b. which is tied to it (i.e. a TOC click will open the 
+section + highlight; and click on the section in the body of the doc will toggle it + highlight 
+the TOC line ) work.
+
+Actual implementation is spread between several subsections - they are
+coded in in the hard way, as I do not expect them to change ever, they are a functional element
+not a changeable "skin" or decoration.
+.ul..li. vars, JS and styles are set in the weaver "set formatting strings for weaver" subsections;
+./li..li. invocations can be seen in "accumulate the result", esp in the "section headings"
+./li..li. and more are applied in the "print out the result"
+./li../ul.
+
+Some of the vars are set to pieces of formatting strings in the beginning, and later variables
+in them are interpolated with "executable" regexs ( the "e" flag at the end of the regex) - see 
+"process section headings"
+
+
+#---------------------------------------
+{{{5 .h5. actual working test.html ./h5. 
+#---------------------------------------
+
+Here's the actual script that was used to test the JS folding and
+tying of folding to the TOC section highlighting:
+
+
+<<test.html>>=
+
+<html>
+<head>
+
+
+<style type="text/css">
+
+
+.unhilited {background-color:white}
+.hilited {background-color:yellow; text-decoration:underline}
+</style>
+
+
+<script type="text/javascript">
+
+    function setHilite(evt) {
+	evt = (evt) ? evt : ((window.event) ? window.event : null);
+	if (evt) {
+	    var elem = (evt.srcElement) ? evt.srcElement : evt.target;
+	    elem.className = "hilited";
+	}
+    }
+
+
+function setUnHilite(evt) {
+    evt = (evt) ? evt : ((window.event) ? window.event : null);
+	if (evt) {
+    	    var elem = (evt.srcElement) ? evt.srcElement : evt.target;
+    	    elem.className = "unhilited";
+	}
+}
+
+function toggleDiv(divid) {
+var el = document.getElementById(divid);
+el.style.display = (el.style.display == 'block') ? 'none' : 'block';
+}
+
+function toggleCombined(divid){
+    if(document.getElementById(divid).style.display == 'none'){
+      document.getElementById(divid).style.display = 'block';
+	document.getElementById("toc"+divid).className="hilited";
+    }
+    
+    else{
+      document.getElementById(divid).style.display = 'none';
+	document.getElementById("toc"+divid).className="unhilited";
+    }
+}
+
+
+function expandDiv(divid){
+	document.getElementById("toc"+divid).className="hilited";
+}
+
+
+
+</script>
+</head>
+
+<body >
+<h2>Here's the tested element</h2>
+Here is some ordinary text<br>
+<span class="unhilited" onmouseover="setHilite(event)" 
+    onmouseout="setUnHilite(event)"> 
+    <a href="javascript:;" onmousedown="toggleDiv(15);"><b> process section headings </b></a><br>
+    and this is some potentially hot spot text.</span>
+
+<div id=15>
+    .. and this is the text<br>
+    that should be hidden/collapsed
+
+</div>
+
+
+<h2>Here's the tested element 0</h2>
+HHHHere is some ordinary text<br>
+<a href="javascript:;" onmousedown="toggleCombined(13);" id="toc13">
+    <b> process section headings </b></a><br>
+
+<div id=13 ><script language=javascript> document.getElementById("toc"+13).className='hilited';</script>
+    .. and this is the text<br>
+    that should be hidden/collapsed
+
+</div>
+
+
+
+
+<h2>Here's the tested element 1</h2>
+HHHHere is some ordinary text<br>
+<a href="javascript:;" onmousedown="toggleCombined(14);" id="toc14">
+    <script language=javascript> document.getElementById("toc"+14).className='hilited';</script>
+    <b> process section headings </b></a><br>
+
+<div id=14 >
+    .. and this is the text<br>
+    that should be hidden/collapsed
+
+</div>
+
+
+<h2>Here's the tested element 2</h2>
+HHHHere is some ordinary text<br>
+<span  id="toc16"> 
+    <a href="javascript:;" onmousedown="toggleCombined(16);"><b> process section headings </b></a><br>
+    and this is some potentially hot spot text.</span>
+
+<div id=16>
+    .. and this is the text<br>
+    that should be hidden/collapsed
+
+</div>
+
+
+
+</body>
+</html>
+
+@
+
+}}}5
+
+
+#----------------------------------------------------------------
+{{{5 .h5. changing text style - the basic JS recipy ./h5.
+#-----------------------------------------------------------------
+
+I used this snippet for a start then reworked it into the "working test script" below.
+
+.ul. .pre.
+11.8.2 Solution
+First, define two style sheet rules, each with a different class selector. Then design 
+an event handler for the element to change the element's className property to the desired 
+class selector's identifier: 
+
+		<style type="text/css">
+		.unhilited {background-color:white}
+		.hilited {background-color:yellow; text-decoration:underline}
+		</style>
+		...
+		<script type="text/javascript">
+		function setHilite(evt) {
+			evt = (evt) ? evt : ((window.event) ? window.event : null);
+			if (evt) {
+				var elem = (evt.srcElement) ? evt.srcElement : evt.target;
+				elem.className = "hilited";
+			}
+		}
+		function setUnHilite(evt) {
+			evt = (evt) ? evt : ((window.event) ? window.event : null);
+			if (evt) {
+				var elem = (evt.srcElement) ? evt.srcElement : evt.target;
+				elem.className = "unhilited";
+			}
+		}
+		...
+		<span class="unhilited" onmouseover="setHilite(event)" 
+			onmouseout="setUnHilite(event)">Some potentially hot spot text.</span>
+
+Adjusting the className property of an element as shown here is a more stable approach 
+for early versions of Netscape 6 instead of manipulating styleSheet objects and their 
+properties. It is perhaps the most widely used and supported way to implement dynamic styles. 
+./pre. ./ul.
+
+If I enclose one "onmousedown" inside another, JScript will most probably not pass it into the inner one.
+So I should add:
+(a) the TOC line IDs ?? Like "toc.1", "toc.2" etc
+(b) keep a separate func, not "toggleDiv", but something else like "toggleTOCandDIV", and run 2 things
+from there ??
+
+.b. So, 2 tests: enclosing and if not, then rewriting the collapsing JS func ./b.
+
+}}}5
+
+#--------------------------------------------------
+ .h5. Reference - Javascript and DOM ./h5.
+#--------------------------------------------------
+
+
+I'll need some javascript and DOM reference for further work;
+
+a/ http://w3schools.com/htmldom/dom_reference.asp  -- ref from W3C
+b/ http://w3schools.com/htmldom/default.asp -- might also be useful
+c/ http://www.howtocreate.co.uk/tutorials/javascript/domcss --javascript tutorial (not necessarily best) 
+d/ http://www.pageresource.com/dhtml/ryan/part4-1.html - another tutorial
+
+
+}}}4
+
+
+#------------------------------------------------------------
+{{{4 .h4. set formatting strings for weaver ./h4.
+#------------------------------------------------------------
+
+<<set formatting strings for weaver>>=
+
+  #----SETTING FORMATTING STRINGS-----------
+  
+$html_head = <<head_end;  
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" /> 
+
+<<JS script functions>>
+<<stylesheet>>
+
+</head>
+head_end
+
+$html_body_table = "<center><table class='outertable'><tr><td>";
+$html_body_table_end = "\n</td></tr></table></center></body></html>\n";
+
+
+	
+
+$folding_section_start1_str = <<'fold_sect_start_1_xxx';
+	<fieldset><legend><a href="javascript:;" onmousedown="toggleCombined('$section_num');">
+fold_sect_start_1_xxx
+
+
+$folding_section_start2_str = <<'fold_sect_start_2_xxx';
+</a></legend></fieldset>
+<p>
+<div id="$section_num" style="display:$fold_state"> $highlight_state  
+<ul>
+
+fold_sect_start_2_xxx
+
+
+$folding_section_end_str = <<'folding_section_end_xxx';
+</ul>
+<p>
+<br>
+<i><font size=-1>
+<a href="javascript:;"onmousedown="toggleCombined('$section_num_prev');">
+Close the subsection</a></font>
+</i> -- <i><font size=-1>
+<a href="javascript:;" onmousedown="showAll();">
+expand all</a> -- 
+<a href="javascript:;" onmousedown="hideAll();">
+collapse all</a>
+</font></i>
+
+<p>
+</div>
+
+folding_section_end_xxx
+
+
+$code_frameset_start_pre = "<pre><fieldset class='codefieldset'><legend class='codelegend'>";
+$code_frameset_start_post = "=</legend>";
+$code_frameset_end = "</fieldset></pre>\n";
+
+
+
+
+@
+
+#----------------------------------------
+{{{5 .h5. JS functions ./h5.
+#----------------------------------------
+
+<<JS script functions>>=
+<script language="javascript">
+
+
+function toggleDiv(divid) {
+var el = document.getElementById(divid);
+el.style.display = (el.style.display == 'block') ? 'none' : 'block';
+}
+
+
+function toggleCombined(divid){
+    if(document.getElementById(divid).style.display == 'none'){
+      document.getElementById(divid).style.display = 'block';
+	document.getElementById("toc"+divid).className="hilited";
+    }
+    else{
+      document.getElementById(divid).style.display = 'none';
+	document.getElementById("toc"+divid).className="unhilited";
+    }
+}
+
+
+function showAll(){
+for(i=1; i <= 10000; i++){
+    document.getElementById(i).style.display = 'block';
+    document.getElementById("toc"+i).className="hilited";
+    };
+}
+
+function hideAll(){
+for(i=1; i <= 10000; i++){
+    document.getElementById(i).style.display = 'none';
+    document.getElementById("toc"+i).className="unhilited";
+    };
+}
+
+</script>
+@
+
+}}}5
+
+#--------------------------------------
+{{{5 .h5. Stylesheet ./h5.
+#--------------------------------------
+
+<<stylesheet>>=
+<style type="text/css" media="screen">
+
+
+BODY {
+	FONT-SIZE: 10pt;
+	<!--FONT-FAMILY: sans-serif -->
+	background: #f0f0f0;
+	}
+FIELDSET {
+	BORDER-RIGHT: #000000 1px solid; 
+	BORDER-TOP: #000000 1px solid; 
+	BORDER-LEFT: #000000 1px solid; 
+	BORDER-BOTTOM: #000000 1px solid; 
+	PADDING-RIGHT: 5px; 
+	PADDING-LEFT: 5px; 
+	PADDING-BOTTOM: 2px; 
+	PADDING-TOP: 5px;
+	MARGIN-BOTTOM: 1px; 
+	background: #f5f5f5; 
+	color: #000000;
+	}
+LEGEND {
+	BORDER-RIGHT: #a9a9a9 1px solid; 
+	BORDER-BOTTOM: #a9a9a9 1px solid;
+	BORDER-TOP: #a9a9a9 1px solid; 
+	BORDER-LEFT: #a9a9a9 1px solid; 
+	PADDING-RIGHT: 20px; 
+	PADDING-LEFT: 20px; 
+	PADDING-BOTTOM: 5px; 
+	PADDING-TOP: 5px; 
+	FONT-WEIGHT: bold;  
+	BACKGROUND: #fdfdfd; 
+	color: #000000;
+	}
+PRE	{
+        PADDING-LEFT: 20px; 
+        PADDING-RIGHT: 5px; 
+        padding-top: 0px; 
+        padding-bottom: 6px;
+        MARGIN-BOTTOM: 1px; 
+        BORDER-TOP: #a9a9a9 0px solid;
+        BORDER-RIGHT: #a9a9a9 0px solid; 
+        BORDER-LEFT: #a9a9a9 0px solid;
+        BORDER-BOTTOM: #a9a9a9 0px solid;        
+	background: #fefefe;
+	}
+
+
+.tocfieldset {
+	background: #ffffff; 
+	color: #000000;
+	}
+
+.codefieldset {
+	BORDER-RIGHT: #000 1px solid; 
+	BORDER-TOP: #000 1px solid; 
+	BORDER-LEFT: #000 1px solid; 
+	BORDER-BOTTOM: #000 1px solid; 
+	background: #ffffff; 
+	color: #000;
+	MARGIN-BOTTOM: 1px; 
+	PADDING-LEFT: 15px; 
+	PADDING-RIGHT: 5px; 
+	PADDING-BOTTOM: 10px; 
+	PADDING-TOP: 1px;
+	}
+.codelegend {
+	BORDER-RIGHT: #777 1px solid; 
+	BORDER-TOP: #777 1px solid; 
+	BORDER-LEFT: #777 1px solid; 
+	BORDER-BOTTOM: #777 1px solid
+	PADDING-RIGHT: 10px; 
+	PADDING-LEFT: 10px; 
+	PADDING-TOP: 2px; 
+	PADDING-BOTTOM: 2px; 
+	background: #ffffff; 
+	color: #00b;
+	FONT-WEIGHT: bold;  
+	/font-variant: small-caps;
+	/font-style: italic;
+	}
+
+
+
+.chunkref {
+        color: #00b;	
+        background: #f6f6f6;
+        /font-style: italic;
+        font-weight: bold;
+        /font-variant: small-caps;
+	}
+
+
+.outertable {
+	width: 99%; 
+	cellpadding: 25; 
+	background: #ffffff; 
+	border: 1px solid;
+	}
+
+.hl	{
+	 ;
+        PADDING-LEFT: 5px; PADDING-RIGHT: 5px; 
+        padding-top: 5px; padding-bottom: 5px;
+        MARGIN-BOTTOM: 1px; 
+        BORDER-TOP: #a9a9a9 0px solid;
+        BORDER-RIGHT: #a9a9a9 0px solid; 
+        BORDER-LEFT: #a9a9a9 0px solid;
+        BORDER-BOTTOM: #a9a9a9 0px solid;        
+        background: #f5f5f5;	
+        width: 70%;
+	}
+
+.hl-wide {
+	 ;
+        PADDING-LEFT: 5px; 
+        PADDING-RIGHT: 5px; 
+        padding-top: 15px; 
+        padding-bottom: 15px;
+        MARGIN-BOTTOM: 1px; 
+        BORDER-TOP: #a9a9a9 0px solid;
+        BORDER-RIGHT: #a9a9a9 0px solid; 
+        BORDER-LEFT: #a9a9a9 0px solid;
+        BORDER-BOTTOM: #a9a9a9 0px solid;        
+        background: #fbfbfb;	
+	}
+
+.lnum {
+
+	color: #a0a0a0;
+	/background: #fbfbfb;
+	}
+
+.unhilited {background-color:white}
+.hilited {background-color:#c0c0ff}
+
+
+</STYLE>
+@
+
+}}}5
+
+
+}}}4
+
+
+#------------------------------------------------
+{{{4 .h4. Accumulate the result ./h4.
+#------------------------------------------------
+
+Some of the vars may be unused later (run perl -wc to check?)
+
+<<accumulate result in a buffer>>=
+#2. accumulate result in a buffer
+
+
+# vars for the main loop over lines of the target file
+
+ $chunkbuf = ''; # collects whole formatted project file in memory
+ $tocbuf = "";	# will accumulate TOC contents, i.e. small
+ @indbuf = ();  # accumulates index of code chunks, small
+ #%indbuf = ();
+ @headings = ();	# the stack for nested subsections numbers/ids
+
+ $section_num = 0;
+ $section_num_prev = 0;
+ $section_level = 0;
+ $prev_section_level = $section_level;
+ $line_counter = 0;
+ $in_pre_tag = 0;
+@
+
+
+The logic is this: (a) all project files, unless they are machine-generated code, are
+much below the sizes of RAM on modern machines. So I accumulate in memoru (in a string
+$chunkbuf) a copy of the whole file, with necessary transformations and formatting.
+
+Only 3 distinctions need to be made while iterating over hte lines of the Literate Source
+file, between section headings, chunks of code and the lines from the body of documentation
+chunks.
+
+<<accumulate result in a buffer>>=
+
+open FF, "< $0";
+
+
+while (<FF>) {
+
+   $line_counter++;
+
+    # cut out the MOLLY.pl invocation itself, the top of the Lit src file
+    #if ( m%^#-+\s*?start of script% ... m%^xxxxxxxxxxxx% ) {  
+    if ( m%^__DATA__% ... m%^xxxxxxxxxxxx% ) {
+    s!^__DATA__\s*$!!;
+
+
+
+<<process code chunks>>
+<<process section headings>>
+<<body HTML formatters>>
+
+
+	# debug
+	#print "---- $_";
+
+   } # fi "start of script"
+
+} #elihw over the whole input file
+
+	
+
+
+ foreach (@headings)  {
+
+	($section_level, $section_num_prev) = split /-/, $_;
+	$folding_section_end = $folding_section_end_str;
+	$folding_section_end =~ s!(\$section_num_prev)!$1!ee;
+	$chunkbuf .= $folding_section_end; 
+
+	};
+
+@
+
+
+
+
+
+#-----------------------------------------------
+{{{5 .h5. process code chunks ./h5.
+#-----------------------------------------------
+
+"goto" is from an old version of this script, with perl-specific options, I'll delete it
+later.
+
+I use perl range operator to cut out the code section between < < chunkname > > and the
+closing "at" symbol, as is required in "noweb".
+This is a use of the "range" operator inside another "while" loop over each line of the
+Lit Source file, and they work together, the range just flips some status var ("in" - "out")
+while the outside loop continues over the lines.
+
+Once the section name is extracted with a regexp, the index buffer (indbuf) is formed and
+updated.
+Then "fieldset" formatting is written around the code chunk and line numbering (if set
+in an option var) is written too
+
+<<process code chunks>>=
+
+	if ( m!^(goto)?<\<(.*)>\>=! ... m!^@\s*$! ) { # -- CODE CHUNKS -- 
+		$chunk_title = $2;
+
+		s/</&lt;/g;	# escape <
+		s/>/&gt;/g;	# escape >
+
+		if (m!(&lt;&lt;(.+?)&gt;&gt);(=)?!) 
+		  {
+		  $reference = $1;
+		  $ind_str = "&lt;&lt;$2&gt;&gt; $section_num";
+		  if (defined $3) {$ind_str .= "<sub>def</sub>"}
+		  else { s!$reference!<font class='chunkref'>$reference</font>! }
+
+		  unshift @indbuf, $ind_str;
+
+		} # fi - chunks index accumulation
+
+		# simple fieldset frames around code snippets
+		s!^(goto)?&lt;&lt;(.+)&gt;&gt;=!$code_frameset_start_pre$1&lt;&lt;$2&gt;&gt;$code_frameset_start_post!;
+		s!^@\s*$!$code_frameset_end!;
+
+		if ( $line_numbering ) { 
+		$chunkbuf .= "<font class='lnum'>" . $line_counter . "</font>   " . $_;
+		}
+		else{
+		$chunkbuf .= $_;
+		}
+
+	} # fi code chunks
+@
+
+}}}5
+
+
+#----------------------------------------------------
+{{{5 .h5. process section headings ./h5.
+#----------------------------------------------------
+
+This is where folding sectons are created.
+The more complicated logic is needed to .i.close./i. the sections properly, when subsections
+are included (i.e. creating a step and forming the "close subsection" at the end in the correct
+place.
+
+1. Several formats were possible for collapsing sections, I chose the one you can observe while
+reading the weaved document: subsections are completely enclosed by their supersections;
+once a child subsection is initiated, the parent subsection cannot continue its body after
+the end of the child.
+I.e. once you started 12.2.1 inside your 12.2, you cannot write into 12.2 after 12.2.1 is finished, 
+but you can add 12.2.2, 12.2.3, 12.2.2.1 - etc. - inside the enclosing section.
+
+The logic was tested first in an external skeleton script.
+
+2. I may need to disassemble this code to create "view mode" for my script - see "versions - 
+CHANGES" subsection
+
+
+<<process section headings>>=
+
+	# -- SECTION HEADINGS 
+   #elsif ( m!\.(\+)?h(\d)\.(.*?)\./h\d\.! ) {	# old version, no "rawHTML" enabled yet
+   elsif ( m!$tag_open_symbol(\+)?h(\d)$tag_close_symbol(.*?)$tag_open_symbol/h\d$tag_close_symbol! ) {	
+
+
+
+	# -- using split vars for substitution to avoid
+	#	regexps and need to keep old state --	
+
+	$section_num_prev = $section_num;
+	$section_num = $section_num + 1;
+
+
+		#default for fold state in "settings" ??
+		if ($1 eq "+") {
+		    $fold_state="block";
+		    $highlight_state = qq!  <script language=javascript> 
+		    document.getElementById("toc"+ $section_num).className='hilited';
+		    </script> !;
+		} 
+		else {
+		    $fold_state="none";
+		    $highlight_state = "";
+		};
+		$section_level = $2;
+		$section_title = $3;
+
+
+	
+
+	
+
+	$folding_section_start1 = $folding_section_start1_str;
+	$folding_section_start2 = $folding_section_start2_str;
+	$folding_section_end = $folding_section_end_str;
+
+
+	$folding_section_start1 =~ s!(\$section_num)!$1!ee;
+	$folding_section_start2 =~ s!(\$section_num)!$1!ee;
+	$folding_section_start2 =~ s!(\$fold_state)!$1!ee;
+	$folding_section_start2 =~ s!(\$highlight_state)!$1!ee;
+	$folding_section_end =~ s!(\$section_num_prev)!$1!ee;
+
+
+	$section_id = $section_level . '-' . $section_num;
+
+
+	# finish previous subsection if not the first section in the file
+	# ..and deal with nesting of sections according to their "depth level"
+
+	# this is NOT the first section:
+	if ( exists $headings[0] ){
+
+		($prev_section_level, $prev_section_num)  = split /-/, $headings[0];
+
+		if ($section_level == $prev_section_level){
+
+		# close prev, start new
+		$chunkbuf .= $folding_section_end;
+		shift @headings;
+		
+		}
+
+		elsif($section_level < $prev_section_level){
+		
+		  # close a bunch of them, in a loop -- THEN start a new one.
+		  do  {
+			($prev_section_level, $section_num_prev) = split /-/, shift @headings;
+			
+			$folding_section_end = $folding_section_end_str;
+			$folding_section_end =~ s!(\$section_num_prev)!$1!ee;
+			$chunkbuf .= $folding_section_end;
+
+		   } while ( $section_level < $prev_section_level );
+		}
+	} # fi not the first section
+
+
+	# common operations		
+	unshift @headings, $section_id ;
+	$chunkbuf .= $folding_section_start1;
+	$chunkbuf .= $section_title; 
+	$chunkbuf .= $folding_section_start2;
+
+	$toc_indent = "&nbsp;" x ($section_level * 7);
+	#$toc_indent = "&nbsp;" x (($section_level-1) * 7 );
+	#$tocbuf .= "\n<p>\n" if ( $section_level == 1 ); 
+	$tocbuf .= $toc_indent . 
+		"<i>" . $section_num . "</i>" .
+		qq/&nbsp;<a href="javascript:;" onmousedown="toggleCombined(/ .  
+		$section_num . 
+		qq/);" id="toc/ . $section_num .
+		qq/"><b>/ .
+		$section_title . 
+		"</b></a><br>\n";
+
+   } #; fisle: end elif headings
+
+	
+
+@
+
+}}}5
+
+#---------------------------------------------------------
+{{{5 .h5. dotHTML formatter and rawHTML ./h5.
+#---------------------------------------------------------
+
+It is primitive, and I add needed markup "on the fly", as and when I need it.
+The idea is to eliminate angle brackets in html tags, which I cannot type without errors
+when typing fast, and substitute those with simple "dots", which do not requre switching
+keyboard registers.
+
+This formatting also has problems with escapes.
+
+Whether it's the fault of HTML standards or their implementation, web browsers continue to
+react to html formatting .b.even inside the "pre" tags./b., which is obviously insane.
+Therefore if your code chunks contain any HTML tags (e.g. processed by your code), you'll
+need to escape them to display correctly.
+And if you use sth like "& g t ;" in your code, the web page will also lie to you.
+This is insane, and there is no good quick solution, one would have to use lengthy escape
+tables etc. etc.
+
+This prototype script fails in some (unimportant to me)  cases.
+dotHTML markup would also fail if your programming language uses dot-symbol-dot sequences
+Mine do not.
+
+The formatter is pretty straightforward, but sequencing of regexps is important.
+One also needs to remember that once escaped, angle brackets are non-existent any more, 
+and so the subsequent regexps must match on "& l t ;" not on the angle bracket in some
+cases.
+
+
+<<body HTML formatters>>=
+
+	elsif( $weave_markup eq "dotHTML" ) {	# dotHTML formatter here
+
+	      s/^=begin.*$//;	# - eliminate perl escaping, start
+	      s/^=cut.*$//;		# - eliminate perl escaping, end
+   	      #s/^{{{\d+(.*)$/$1/;	# - eliminate vim folding markup, start 
+					# - dummy, as it is killed in "headings" processing 
+	      s/^}}}\d+//;	# - eliminate vim folding markup, end
+
+		s/</&lt;/g;	# escape <
+		s/>/&gt;/g;	# escape >
+
+
+	      # Paragraphs and line breaks are automatic now:
+	      # ... unless we are dealing with the "preformat" tag
+		#--note! that ranges do not work here
+		$in_pre_tag = 1 if (m!\.pre\.!);
+		$in_pre_tag = 0 if (m!\./pre\.!);;
+
+		s/\.(\/?)pre\./<$1pre>/g;
+
+	    unless ($in_pre_tag) {
+	    (m/^\s*$/) and s/$_/<p>\n/
+	    or s/\n/<br>\n/;
+	    }
+@
+
+Now the regexps to cut out "#--------" lines and substitute "dot-notation" with angle brackets:
+
+<<body HTML formatters>>=
+	      # originally I separated header from the body with such a line
+	      #s/^#-----.*/starting the table here/;
+	      s/^#-----.*//;
+
+
+		# add more here
+
+		s/\.(\/?)b\./<$1b>/g;
+		s/\.(\/?)i\./<$1i>/g;
+		s/\.(\/?)ul\./<$1ul>/g;
+		s/\.(\/?)li\./<$1li>/g;
+		s/\.(\/?)ol\./<$1ol>/g;
+		s/\.(\/?)s\./<$1s>/g;
+		s/\.(\/?)div\./<$1div>/g;
+		s/\.br\./<br>/g;
+		s/\.p\./<p>/g;
+
+
+		s/\.(\/?)tab\./<$1ul>/g;	# "tabbing" with "ul"
+
+
+		# this is some bullshit ???
+		s/\.hr\./<hr /g;
+		s/\.\/hr\./>/g;
+
+		s!\.a\.(.+?)\.\/a\.!<a href=$1>$1</a>!g;
+
+		# rudimentary &nbsp; s p a c i n g &nbsp (one word only)
+		#s!\.x\.(.+?)\./x\.!join " ","&nbsp;&nbsp;",(split //, $1),"&nbsp;&nbsp;"!eg;
+
+		# slightly better spacing (phrases, too):
+		# although redundant  with more work than is needed
+		if ( m!(\.x\.)(.+?)(\./x\.)!g) {
+		    s!(\.x\.)(.+?)(\./x\.)!join " _ ", $1, (split / /, $2), $3!eg;
+		    s!\.x\.(.+?)\./x\.!join " ", (split //, $1)!eg;
+		    s!  _  ! &nbsp; !g;
+		}
+@
+
+.b. BUG! ./b. This URL breaks my "ancor" dot-tags: 
+     .pre. http://www.cs.tufts.edu/~nr/noweb ./pre.
+.b. Got it ./b. The substitutions above must explicitly use "slash" for the closing HTML tag
+in the regexps - otherwise they match stuff like ".cs." inside URLs
+
+If an HTML tag is not in the above chunk, either add it or write with the two following generic
+tags (slow and not nice on your fingers, though). You might need to use them also when your HTML
+tag conntains some options, and so is not of generic simple type.
+
+<<body HTML formatters>>=
+		# generic for all tags with options
+		s!\.&lt;\. !<!g;
+		s! \.&gt;\.!>!g;
+
+
+		$chunkbuf .= $_;
+
+	}
+@
+
+
+.b. rawHTML formatter./b.
+Raw HTML formatting can be done - either because it is non-restricted, compared to the stripped-down
+"dotHTML" of my invention, or because it allows one to convert existing HTML documentation into the
+folding format.
+I.e. if you have a longish manual in which section headings are marked with HTML h1, h2, h3, ... tags,
+you can convert it in 3 simple steps:
+.ul. .li. delete opening and closing "html" and "head" "body" tags at the very top and bottom of your 
+document
+./li. .li. put perl invocation as the first line
+./li. .li. set up markup mode in a variable: "$weave_markup = "rawHTML";" and "mollify" the document,
+putting  "do MOLLY.pl" and DATA marker
+./li. ./ul.
+and if there are no interfering div section etc. - no complicated markup inside the headings, you'll get
+an automatically generated folding HTML document.
+
+If you do, it is sometimes easy to clean headings with a few regexps in a good editor like Vim
+
+It is very convenient and I keep large manuals as folding HTML documents.
+
+
+<<body HTML formatters>>=
+	elsif( $weave_markup eq "rawHTML" ) {	# if the doc chunks marked up with real HTML
+		s!^#-----.*!!;
+
+
+	      # Paragraphs and line breaks are automatic now:
+	      # ... unless we are dealing with the "preformat" tag
+		#--note! that ranges do not work here
+		$in_pre_tag = 1 if (m!<pre>!);
+		$in_pre_tag = 0 if (m!</pre>!);;
+
+
+		unless ($in_pre_tag) {
+		(m/^\s*$/) and s/$_/<p>\n/
+		or s/\n/<br>\n/;
+		}
+
+
+		$chunkbuf .= $_;
+	} # esle -- for rest of the body
+
+
+
+@
+
+{{{6 .h6. test of &nbsp;&nbsp; s p a c i n g &nbsp;&nbsp; regexp ./h6.
+
+1. Hell, the thing is multiple sp /sp markups on one line. I need to iterate over
+each separately and then put them in their right places, hedging with "nbsp"-ces each word.
+
+2. The invocation is OK for $str_sp, but for boundaries of the string and word boundaries, 
+they must be hedged too
+
+3. Could subst spaces-betwen-words to sth like _ (space-underscore-space) as placeholders,
+then subst them into nbspx2 in a following regexp
+
+4. This tagging can be done cleanly and span severl lines if I do it in a different place - 
+not while still reading the Literate Source file line by line, .x.but later./x. when
+$chunkbuf is completely formed in RAM.
+
+
+<<spacing.pl>>=
+#!/usr/bin/perl
+#
+$str = $ARGV[0];
+$str_sp = $ARGV[0];
+#print "string is $str\n";
+
+    # "sp" dot-markup to intersperse spaces: the basic formula
+    #$spaced_str =~ s!(asdf)!join " ", (split //, $1)!eg;
+    #
+    
+    # -- idea 3 from above: this works but is cumbersome --
+    #$str_sp =~ s!(\.x\.)(.+?)(\./x\.)!join " _ ", $1, (split / /, $2), $3!eg;
+    #$str_sp =~ s!\.x\.(.+?)\./x\.!join " ", (split //, $1)!eg;
+    #$str_sp =~ s! _ ! &nbsp;&nbsp; !g;
+
+    # -- first get the matching string in "if", then massage it:
+    if ($str_sp =~ m!(\.x\.)(.+?)(\./x\.)!g) {
+	$str_sp =~ s!(\.x\.)(.+?)(\./x\.)!join " _ ", $1, (split / /, $2), $3!eg;
+        $str_sp =~ s!\.x\.(.+?)\./x\.!join " ", (split //, $1)!eg;
+	$str_sp =~ s!  _  ! &nbsp; !g;
+    }
+
+    #print "\nthe string is $str\n";
+    print "\nthe str_sp is $str_sp\n\n";
+@
+
+}}}6	    
+
+}}}5
+
+}}}4
+
+
+#-------------------------------------------------------
+{{{4 .h4. Print out the resulting page ./h4.
+#-------------------------------------------------------
+
+Page and the outer formatting table:
+
+<<print out>>=
+
+  # begin the page:
+  print "<html>  $html_head <body>  $html_body_table \n";
+
+  # print out the TOC, the Chunks Index, the output buffer and close the page.
+
+@
+
+Next print the short instructions section (collapsible) at the top:
+
+<<print out>>=
+
+print <<end_of_print;
+<p><fieldset class='tocfieldset'><legend><b>TABLE OF CONTENTS: outline of the document structure</b></legend>
+
+<ul>
+<p>
+<br>
+<div class='hl' align=center>
+<a href="javascript:;" onmousedown="toggleDiv('tochowto');">
+<b>HOW TO USE THE FOLDING DOCUMENT [expand/collapse]</b></a>
+</div>
+<div id='tochowto' style='display:none' style='background:#ffffff'> 
+<p>
+<ul>
+<li><b>Collapsing is necessary when</b> you work on some code and must exclude 
+<br>irrelevant sections of the rest of the literate project file. This 
+<br>greatly helps to clear thinking by eliminating a general feeling of 
+<br>being in a maze of code and unnecessary "housekeeping" tasks.
+<br>One can say that there is a limited "buffer capacity" in the human
+<br>mind, and relieving it of the need to remember where things are in a 
+<br>larger file, at which other points one must fill in values or adjust
+<br>invocation etc. <i>immediately makes the user "more intelligent"</i>
+</li><li><b>To toggle</b> a section open/closed, click on the corresponding link
+<br>Remember to open <i>all sections above it</i> for it to become visible.
+</li><li><b>To restore the default view</b> reload the page in the browser.
+</li><li>
+<b>To keep some sections open</b> upon each reload - 
+<br>e.g. you work on the code, update it constantly and cannot reopen it 
+<br>again and again - mark their sections in the source file with a plus, 
+<br>i.e. write the opening tag (only)  as +h2, +h3 (in &lt; &gt;  or in dots
+<br>for dotHTML). Again, all sections above must be marked open too. 
+<p><b>Note that</b> "expand all" and "collapse all" disregard these settings.
+<br>Reload the page after using those options to again view the text according 
+<br>to your preferences.
+</li><li>
+<b> To use the Index </b>, click on the numbered sections in the TOC above
+<br>(opening them; use highlighting as a guide; when sections are visible,
+<br>the slider on your browser window  will shorten too), or "expand all", 
+<br>and then use your browser's Find function to highlight all chunk name 
+<br>instances in the visible text
+</li><li>
+<b>To search for variables etc.</b>, "expand all" text - or manually 
+<br>expand needed sections - and then use your browser's Find function to 
+<br>highlight all and jump between the found items.
+<p></li>
+
+</div> 
+<p>
+<br>
+<p>
+<div class='hl' align=center>
+<!--i><font size=-3> expand all -- collapse all</font></i-->
+<a href="javascript:;" onmousedown="toggleDiv('tocmain');">
+<b>TABLE OF CONTENTS [expand/collapse]</b></a>
+</div>
+
+<div id='tocmain' style='display:$toc_expanded' style='background:#ffffff'> 
+<p>
+<br>
+<p>
+end_of_print
+
+@
+
+Table of Contents from the formed "tocbuf":
+
+<<print out>>=
+
+ print "$tocbuf" if $print_toc;
+ #print "$tocbuf";
+
+print "</div>\n";
+
+@
+
+Start the "Index of code chunks", collapsible:
+
+<<print out>>=
+
+print <<end_of_print;
+<p>
+<br>
+<p>
+<!--fieldset><legend-->
+<div class='hl' align=center>
+<a href="javascript:;" onmousedown="toggleDiv('indbuf');">
+<b>INDEX of Code Chunks [expand/collapse]</b></a>
+</div>
+<!--/legend></fieldset-->
+<p>
+<div id='indbuf' style='display:$ind_expanded' style='background:#ffffff'> 
+<ul>
+<p>
+<b>"Def" subscript</b> means the chunk is defined, while a bare number means 
+<br>the chunk is being used in the given section.
+<p>
+end_of_print
+
+@
+
+
+Index of code chunks; calculated in this snippet:
+
+<<print out>>=
+
+	 $ind_outbuf = '';
+	 $prev_ch_name = '';
+
+	 #for (sort @indbuf){ print $_, "<br>";}
+
+	 for (sort @indbuf){
+
+	   ($ch_name, $closing_bracket, $ref_num) = split /&gt;/, $_; 
+		#/ - for editor colouring bug
+
+	    if ( $ch_name eq $prev_ch_name ){ 
+	      $ind_outbuf .= " <b>" . $ref_num . "</b> ";
+	    }
+	    else{
+	      print  $ind_outbuf, "<br>\n"; 
+	      $ch_namestr = $ch_name;
+	      $ch_namestr =~ s!&lt;&lt;!!;
+	      $ind_outbuf = 
+	      	"<b>&lt;&lt;</b><font class='chunkref'>" . 
+	      	$ch_namestr . 
+	      	"</font><b>&gt;&gt;</b> -- <b>" . 
+	      	$ref_num . 
+	      	"</b> ";
+	    }
+	    $prev_ch_name = $ch_name;
+
+	 }; # rof - forming the code chunks index
+
+	print $ind_outbuf, "<br>\n";
+
+@
+
+
+"expand all" and "collapse all" at the end of the TOC/Chunk Index section 
+at the top of the page:
+
+<<print out>>=
+
+  # The "expand all" "collapse all" control
+
+print <<end_of_print;
+</div>\n<p>
+<br>
+<p><div class='hl' align=center><i>
+<a href="javascript:;" onmousedown="showAll();">
+expand all</a> -- 
+<a href="javascript:;" onmousedown="hideAll();">
+collapse all</a>
+</i></div><p>
+end_of_print
+
+
+ print "</ul></fieldset><p>\n<br>";
+
+@
+
+
+
+..and the document itself, formed earlier in the "chunkbuf" string in memory:
+
+<<print out>>=
+
+# The FULL OUTPUT, the file body:
+ 	print $chunkbuf;
+
+@
+
+Close the HTML formatting tags at the end of the page:
+
+<<print out>>=
+
+# close the page
+	print $html_body_table_end;
+	
+exit;
+
+#--- END OF SCRIPT ---
+
+@
+
+End of the project file
+
+}}}4
+
+}}}3
+
+}}}2
+
+}}}1
+
+
