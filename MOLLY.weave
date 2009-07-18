@@ -25,9 +25,6 @@
  $weave_markup = "dotHTML"; # default is "rawHTML"
 
 
-# old name of the module
-#do "LPM-0.53.ffpl" ;
-
 do "MOLLY.pl";
 exit;
 __DATA__
@@ -60,6 +57,10 @@ This is a small perl script that implements a new type of "weaver" for Literate 
 (b) usage information and 
 (c) the annotated literate source of the script
 
+
+.br.
+If you are not familiar with concepts behind LIterate Programming, please read an introductory
+article, e.g. .a. http://en.wikipedia.org/wiki/Literate_Programming ./a.
 
 
 .br.
@@ -103,7 +104,8 @@ This script is a "weaver", and a "pass-through" tangler for use with "noweb" too
 
 Starting from some version it also includes a  simple built-in tangler.
 
-I called the script "Molly" because I think of it as a "MOdule for LIterate programming".
+I called the script "Molly" because I think of it as a "MO-dule for LI-terate programming".
+
 
 
 .br.
