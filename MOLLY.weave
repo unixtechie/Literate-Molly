@@ -34,9 +34,9 @@ __DATA__
 MOLLY is licensed under GNU Public License version 3. .<. /center .>.
 
 
-#-----------------------------------------
-{{{1 .+h1. MOLLY.pl module ./h1.
-#-----------------------------------------
+#--------------------------------------------------
+{{{1 .+h1. MOLLY MODULE ./h1.
+#--------------------------------------------------
 
 .b. What is it? ./b.
 This is a small perl script that implements a new type of "weaver" for Literate Programming, which:
@@ -65,7 +65,7 @@ article, e.g. .a. http://en.wikipedia.org/wiki/Literate_Programming ./a.
 
 .br.
 #------------------------------------------------------------
-{{{2 .h2. --THE CHUNK TO TANGLE BY DEFAULT -- ./h2.
+{{{2 .h2. ---- THE CHUNK TO TANGLE BY  DEFAULT ---- ./h2.
 #------------------------------------------------------------
 
 
@@ -88,11 +88,14 @@ article, e.g. .a. http://en.wikipedia.org/wiki/Literate_Programming ./a.
 
 
 
-#--------------------------------------------
-{{{2 .h2. How to use MOLLY.pl ./h2.
+#-------------------------------------------------------
+{{{2 .+h2. ---- HOW TO USE MOLLY.pl ---- ./h2.
 #--------------------------------------------
 
-.b. What is MOLLY.pl ? ./b.
+#----------------------------
+.h3. What is MOLLY.pl ? ./h3.
+#----------------------------
+
 Traditionally literate programming tools include two major ones, one to "tangle" (i.e. create
 machine code from a Literate Source file), and another one to "weave" (formatted 
 documentation from the same LSFile).
@@ -109,15 +112,29 @@ I called the script "Molly" because I think of it as a "MO-dule for LI-terate pr
 
 
 .br.
-.b. My workflow - literate programming with Molly ./b.
-.ol.
-    .li. I run a web server on localhost:8000, for myself only. My development directory is under
-    the web server - or is linked to the web server document tree.
+#--------------------------------------------------------
+.+h3. My workflow - literate programming with Molly ./h3.
+#--------------------------------------------------------
 
-    ./li. .li. I write my Literate Source file in a vim editor. I mark up the documentation section
-    (i.e. not code) with most basic HTML tags (e.g. <h2>, <b>, <ul> ...). 
-    The code sections live between "< < section name > > =" and "@" (in the first
-    position in the line), as is required by "noweb" literate programming tools.
+ .<. img src=eeerotate.jpg align=right hspace=5 width=200 border=2 .>.
+.i. .b. A prerequisite of sorts ./b.
+Use a vertically rotated screen (with an external keyboard and mouse on
+a notebook) or a large  enough screen to see a vertically positioned A4
+sheet of paper to obtain full advantages of outlining and folding 
+Psychologically, the more we see, the more "clever" we are. Stop reading
+compicated documents through a slit: with mental perception crippled, 
+you'll just jump between fragments, and never truly "get" them in whole. ./i. .b. >>> ./b.
+.ol.
+    .li. I run a web server on localhost:8000, for myself only. My
+    development directory is under the web server - or is linked to
+    the web server document tree.
+
+    ./li. .li. I write my Literate Source file in a vim editor. I mark up
+    the documentation section (i.e. not code) with most basic HTML tags
+    (e.g. <h2>, <b>, <ul> ...). 
+    The code sections live between "< < section name > > =" and "@" 
+    (in the first position in the line), as is required by "noweb"
+    literate programming tools.
 
     ./li. .li. I view my file in a web browser, and reload the page after editing updates.
     Because I write my Literate Source with help from the MOLLY.pl script (see below how to 
@@ -800,8 +817,8 @@ Use .b."mollify"./b. as  a technical term (insert MOLLY.pl invocation into the L
 
 
 
-#-------------------------------------------------------
-{{{2 .h2. Literate source of the script ./h2.
+#------------------------------------------------------------------
+{{{2 .+h2. ---- LITERATE SOURCE OF THE SCRIPT ---- ./h2.
 #-------------------------------------------------------
 
 #----------------------------------------------
@@ -809,7 +826,7 @@ Use .b."mollify"./b. as  a technical term (insert MOLLY.pl invocation into the L
 #----------------------------------------------
 
 #-------------------------------
-.h4. versions - CHANGES ./h4.
+.h4. versions - changes ./h4.
 #-------------------------------
 
 Current version:
@@ -911,7 +928,7 @@ output windows.
 
 
 #----------------
-.h4.TO DO current./h4.
+.h4.Todo -  current./h4.
 #----------------
 
 .b.1. Problem of double diamonds in doc chunks ./b.
@@ -968,7 +985,7 @@ DONE although not very cleanly. The tag will break across several lines
 
 
 #----------------
-.h4.DONE ./h4.
+.h4.Done ./h4.
 #----------------
 
 .b. 1. Adding TOC open/collapsed section indication ./b.
@@ -1029,12 +1046,10 @@ Maybe should use "yes" and "no" instead of "1" and "0"?
 }}}3
 
 
+#-----------------------------------------
+{{{3 .h3. The script layout and idea ./h3.
+#-----------------------------------------
 
-
-
-
-
-.h3. The script layout and idea ./h3. 
 .. are very simple.
 
 .b.1. ./b. It is possible to include an invocation of a  perl script with 
@@ -1104,6 +1119,8 @@ actual  tangling to the "notangle" utility from "noweb" suite of tools by Ramsey
 ./li../ul.
 .b.5. ./b. .x. A future version ./x. of the script may be made completely self-contained, i.e. include a mini-web 
 server as well as a folding weaver and a tangler.
+
+}}}3
 
 
 
@@ -1593,7 +1610,7 @@ To be added (possibly).
 
 
 #-----------------------------------------------------------
-{{{4 .h4. Tests and snippets for a built-in tangler ./h4.
+{{{4 .+h4. Tests and snippets for a built-in tangler ./h4.
 #-----------------------------------------------------------
 
 .h5. 1. Use MD5 for chunk titles? ./h5.
@@ -1621,7 +1638,7 @@ PErl will require a module then:
 @
 
 #------------------------------------
-.h5. 2. First pass of tangling ./h5.
+.+h5. 2. First pass of tangling ./h5.
 #------------------------------------
 
 .pre.Cut out code chunks; 
@@ -1748,7 +1765,7 @@ I.e. first pass - get offsets, form the "goto-index" hash, second pass - unravel
 
 
 #--------------------------------------------------------
-.h5. 6. Lazy iteration over strings in a memory buf ./h5.
+.+h5. 6. Lazy iteration over strings in a memory buf ./h5.
 #--------------------------------------------------------
 
 ..seems possible after all, check 
@@ -1791,25 +1808,25 @@ while ( $string =~ m!\G(.*?)<\<(.*?)>\>!gs) {
 
 }
 
-# ONE PROBLEM:
-# last piece, post-chunk ?? OR not a prob when reading from a file??
-
-
-# Looks like this can solve the prob of parsing a code chunk with included < <references> >
-#	when hitting a match:
-#		- append $1 to the chunk buffer
-#		- get md5, push it into the index
-#		- form an md5 for the continuation and start that new chunk
-#		- .. and push "goto" this continuation into the prev chunk index
-#
-# Do this linearly on all cut out code chunks of the Literate Source file (appending those 
-# with the same names)
-# and print out from memory on pass 2 according to the goto index.
-#
-# Should preserve all offsets as well.
-#
-#---------------------------------------------------
 @
+
+ ONE PROBLEM:
+ last piece, post-chunk ?? OR not a prob when reading from a file??
+
+ Looks like this can solve the prob of parsing a code chunk with included < <references> >
+when hitting a match:
+.ul.		- append $1 to the chunk buffer
+		- get md5, push it into the index
+		- form an md5 for the continuation and start that new chunk
+		- .. and push "goto" this continuation into the prev chunk index
+./ul.
+ Do this linearly on all cut out code chunks of the Literate Source file (appending those 
+ with the same names)
+ and print out from memory on pass 2 according to the goto index.
+
+ Should preserve all offsets as well.
+
+
 }}}4
 
 
