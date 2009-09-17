@@ -382,6 +382,7 @@ while (<FF>) {
 	if ( m!^(goto)?<\<(.*)>\>=! ... m!^@\s*$! ) { # -- CODE CHUNKS -- 
 		$chunk_title = $2;
 
+		s/&/&amp;/g;	# escape &
 		s/</&lt;/g;	# escape <
 		s/>/&gt;/g;	# escape >
 
@@ -490,8 +491,14 @@ while (<FF>) {
 	# common operations		
 	unshift @headings, $section_id ;
 	$chunkbuf .= $folding_section_start1;
-	$chunkbuf .= $section_title; 
+	$chunkbuf .= "<font class='lnum'><i>(" . $section_num . ")</i></font>" . "&nbsp;" . $section_title .
+	    "</a>&nbsp;<a><font class='lnum' size=-1><sub><i>(line " .
+	    $line_counter . ")</i></sub></font>"; 
 	$chunkbuf .= $folding_section_start2;
+
+	#$chunkbuf .= "\n" . "<font class='lnum'><i>------ line " . $line_counter . 
+	#	    " ------</i></font><br>\n";
+
 
 	$toc_indent = "&nbsp;" x ($section_level * 7);
 	#$toc_indent = "&nbsp;" x (($section_level-1) * 7 );
@@ -502,8 +509,9 @@ while (<FF>) {
 		$section_num . 
 		qq/);" id="toc/ . $section_num .
 		qq/"><b>/ .
-		$section_title . 
-		"</b></a><br>\n";
+		$section_title . "</a>&nbsp;<a><font class='lnum' size=-1><i>(line " .
+		    $line_counter . ")</i></font>" .
+		    "</b></a><br>\n";
 
    } #; fisle: end elif headings
 
@@ -518,6 +526,7 @@ while (<FF>) {
 					# - dummy, as it is killed in "headings" processing 
 	      s/^}}}\d+//;	# - eliminate vim folding markup, end
 
+		s/&/&amp;/g;	# escape &
 		s/</&lt;/g;	# escape <
 		s/>/&gt;/g;	# escape >
 
