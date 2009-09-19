@@ -76,7 +76,7 @@ article, such as the one below or .a. http://en.wikipedia.org/wiki/Literate_Prog
 #------------------------------------------------------------
 
 
-<<*-dis>>=
+<<*>>=
 <<MOLLY.pl module>>
 @
 
@@ -108,7 +108,7 @@ article, such as the one below or .a. http://en.wikipedia.org/wiki/Literate_Prog
 {{{2 .h2. History and concepts. "Management of thinking" ./h2.
 #--------------------------------------------------------------
 
-{{{3 .+h3. What is Literate Programming? ./h3.
+{{{3 .h3. What is Literate Programming? ./h3.
 
 .b. .i. This is a techinique for "management of thinking", which has nothing to do with programming. ./i. ./b.
 
@@ -321,7 +321,7 @@ else {
 
 
 #-------------------------------------------------------
-{{{2 .h2. ---- HOW TO USE MOLLY.pl ---- ./h2.
+{{{2 .+h2. ---- HOW TO USE MOLLY.pl ---- ./h2.
 #-------------------------------------------------------
 
 #----------------------------
@@ -345,7 +345,7 @@ I called the script "Molly" because I think of it as a "MO-dule for LI-terate pr
 
 .br.
 #--------------------------------------------------------
-.h3. My workflow - literate programming with Molly ./h3.
+.+h3. My workflow - literate programming with Molly ./h3.
 #--------------------------------------------------------
 
  .<. img src=eeerotate.jpg align=right hspace=5 width=200 border=2 .>.
@@ -1060,23 +1060,6 @@ Use .b."mollify"./b. as  a technical term (insert MOLLY.pl invocation into the L
 #------------------------------------------------------------------
 {{{2 .+h2. ---- LITERATE SOURCE OF THE SCRIPT ---- ./h2.
 #-------------------------------------------------------
-
-
-#--------------------------------
-{{{3 .+h3. Local Reference ./h3.
-#--------------------------------
-
-.b. VIM regexp to highlight literate code sections only: ./b.
-.pre. ^<<.*>>=\_.\{-1,}\n^@/e ./pre.
-.. and vice versa, highlight text, leave only code unhighlighted:
-.pre. ^@\_.\{-1,}\n^<<.*>>=/e ./pre.
-
-
-
-
-
-}}}3
-
 
 
 #----------------------------------------------
@@ -1821,7 +1804,7 @@ end_of_print
 
 
 #---------------------------------
-{{{3 .+h3. Tangler ./h3.
+{{{3 .h3. Tangler ./h3.
 #---------------------------------
 
     This version of the script does not include a built-in tangler, and therefore
@@ -1847,7 +1830,7 @@ end_of_print
     Later other modes of operation may be incorporated here.
 
 
-<<*>>=
+<<*-dis>>=
 <<check strings expansion>>
 
 @
@@ -1950,18 +1933,18 @@ exit;
 
 
 #-----------------------------------------------------------
-{{{4 .+h4. Built-in tangler ./h4.
+{{{4 .h4. Built-in tangler ./h4.
 #-----------------------------------------------------------
 
 
 #------------------------------------------------------
-.+h5. tangler around "tsort" and string expansion ./h5.
+.h5. tangler around "tsort" and string expansion ./h5.
 #------------------------------------------------------
 
 
 
 #-------------------------------------
-{{{6 .+h6. Main tangler framework ./h6.
+{{{6 .h6. Main tangler framework ./h6.
 #-------------------------------------
 
 {{{7 .h7. Generalities ./h7.
