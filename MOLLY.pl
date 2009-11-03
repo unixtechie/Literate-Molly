@@ -62,6 +62,12 @@ $weave_markup = $weave_markup || "rawHTML"; # default is "rawHTML"
 	$tag_close_symbol = $gt;
     } #fi
 
+
+# enable MathML interpretation? 1 : 0
+$enable_ASCIIMathML = $enable_ASCIIMathML || 0;
+# If enabled, set the path; default is local in current dir
+$path_to_ASCIIMathML = $path_to_ASCIIMathML || "ASCIIMathML.js";
+
   # -- MAIN DESPATCHER ----
 
   # check if $i_am_module and set filenames to $0 - or 
@@ -114,13 +120,22 @@ WEAVE_ME:
 
   #----SETTING FORMATTING STRINGS-----------
   
-$html_head = <<head_end;  
+$html_head = <<head_end_1;  
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" /> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+
+head_end_1
+
+#switch on ASCIIMathML.js library if enabled in template options:
+if ($enable_ASCIIMathML) {
+$html_head .= "\n" . qq(<script type="text/javascript" src="$path_to_ASCIIMathML"></script>) . "\n";
+    }
+
+$html_head .= <<head_end;
+
 
 <script language="javascript">
-
 
 function toggleDiv(divid) {
 var el = document.getElementById(divid);
@@ -559,7 +574,7 @@ while (<FF>) {
 		s/\.(\/?)div\./<$1div>/g;
 		s/\.br\./<br>/g;
 		s/\.p\./<p>/g;
-
+		s/\.sp\./&nbsp;/g;
 
 		s/\.(\/?)tab\./<$1ul>/g;	# "tabbing" with "ul"
 
@@ -580,6 +595,8 @@ while (<FF>) {
 		    s!\.x\.(.+?)\./x\.!join " ", (split //, $1)!eg;
 		    s!  _  ! &nbsp; !g;
 		}
+
+
 		# generic for all tags with options
 		s!\.&lt;\. !<!g;
 		s! \.&gt;\.!>!g;
@@ -590,6 +607,10 @@ while (<FF>) {
 	}
 	elsif( $weave_markup eq "rawHTML" ) {	# if the doc chunks marked up with real HTML
 		s!^#-----.*!!;
+
+	      #s/^{{{\d+(.*)$/$1/;	# - eliminate vim folding markup, start 
+					# - dummy, as it's killed in "headings" processing 
+	      s/^}}}\d+//;	# - eliminate vim folding markup, end
 
 
 	      # Paragraphs and line breaks are automatic now:

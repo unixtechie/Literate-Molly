@@ -1,0 +1,73 @@
+#!/usr/bin/perl
+
+#-------------------------------------
+# -------TOC and INDEX behaviour------
+
+# print TOC? 1:0
+#$print_toc=1;  # default is to print
+
+# should we keep TOC expanded? "block":"none"
+#$toc_expanded="block"; # default is to unfold
+
+# should we keep Chunks Index expanded? "block":"none"
+#$ind_expanded="none";  # default is to keep folded
+
+
+# should we number lines in code sections? 1 : else
+#$line_numbering = 1;   # default is to number
+
+
+#-------------------------------------
+#---------MathML options--------------
+
+# should we enable MathML via ASCIIMathML.js library? 1:0
+#$enable_ASCIIMathML = 0; #default is to disable as it slows Molly down a lot
+#$enable_ASCIIMathML = 1;
+
+# If yes, what is the full path to the lib?
+# CAN BE: (a) local "/full/path/from/root/to/ASCIIMathML.js" or 
+# (b) in current dir "ASCIIMathML.js" or
+# (c) on the web, e.g. on the original site of the library:
+#$path_to_ASCIIMathML = "http://www1.chapman.edu/~jipsen/mathml/ASCIIMathML.js";
+#$path_to_ASCIIMathML = "ASCIIMathML.js"; # default is in current dir
+
+
+#-------------------------------------
+#--------Document Markup lang---------
+
+# how are doc sections marked? "dotHTML":"rawHTML"
+#$weave_markup = "rawHTML"; # default is "rawHTML"
+
+
+#--------------------------------------
+#---------File extensions setting------
+ 
+# what is the file extention to weave it? (perms must allow execution!)
+# e.g. "scriptname.weave" or "scriptname.cgi" etc.
+#$weave_extension = "weave";    # default is "weave"
+
+# what is the file extention to tangle it? (perms must allow execution!)
+# e.g. "scriptname.tangle",  "scriptname.pl" etc.
+#$tangle_extension = "tangle";  # default is "tangle"
+
+#--------------------------------------
+#---------invocation of MOLLY.pl-------
+
+# make sure to provide correct and full path to the script here
+# (default is "current directory"):
+do "MOLLY.pl";
+exit;
+
+# delete the space before the __DATA__ marker
+__DATA__
+#---------------start of script-------------
+
+<h1> MY PROJECT </h1>
+
+The main idea for my new project is ..
+
+<h2> Subsection 1 </h2>
+
+Here I explain things that come first
+................................
+

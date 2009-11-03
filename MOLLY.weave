@@ -1,17 +1,47 @@
 #!/usr/bin/perl
 
+#-------------------------------------
+# -------TOC and INDEX behaviour------
+
 # print TOC? 1:0
 #$print_toc=1;	# default is to print
 
-# keep TOC expanded? "block":"none"
-#$toc_expanded="block";	# default is to unfold
+# should we keep TOC expanded? "block":"none"
+$toc_expanded="none";	# default is to unfold
 
-# keep Chunks Index expanded? "block":"none"
+# should we keep Chunks Index expanded? "block":"none"
 #$ind_expanded="none";	# default is to keep folded
 
-# number lines in code sections? 1 : else
+
+# should we number lines in code sections? 1 : else
 #$line_numbering = 1;	# default is to number
 
+
+#-------------------------------------
+#---------MathML options--------------
+
+# should we enable MathML via ASCIIMathML.js library? 1:0
+#$enable_ASCIIMathML = 0; #default is to disable as it slows Molly down a lot
+#$enable_ASCIIMathML = 1;
+
+# If yes, what is the full path to the lib?
+# CAN BE: (a) local "/full/path/from/root/to/ASCIIMathML.js" or 
+# (b) in current dir "ASCIIMathML.js" or
+# (c) on the web, e.g. on the original site of the library:
+#$path_to_ASCIIMathML = "http://www1.chapman.edu/~jipsen/mathml/ASCIIMathML.js";
+#$path_to_ASCIIMathML = "ASCIIMathML.js"; # default is in current dir
+
+
+#-------------------------------------
+#--------Document Markup lang---------
+
+# how are doc sections marked? "dotHTML":"rawHTML"
+ $weave_markup = "dotHTML"; # default is "rawHTML"
+
+
+#--------------------------------------
+#---------File extensions setting------
+ 
 # what is the file extention to weave it? (perms must allow execution!)
 # e.g. "scriptname.weave" or "scriptname.cgi" etc.
 #$weave_extension = "weave";	# default is "weave"
@@ -20,11 +50,8 @@
 # e.g. "scriptname.tangle",  "scriptname.pl" etc.
 #$tangle_extension = "tangle";	# default is "tangle"
 
-
-# how are doc sections marked? "dotHTML":"rawHTML"
- $weave_markup = "dotHTML"; # default is "rawHTML"
-
-
+#--------------------------------------
+#---------invocation of MOLLY.pl-------
 do "MOLLY.pl";
 exit;
 __DATA__
@@ -53,9 +80,11 @@ perl script that implements a new type of "weaver" for Literate Programming, whi
     ./li. .li. creates .i.folding./i. documents./li. ./ul.
 .b.Why?./b.
     .ul..li. This greatly simplifies markup, ridding it of TeX entanglement and reducing it 
-    to basic HTML tagging. No more "writing and debugging two programs in place of one". 
-    ./li..li. while folding, as already stated, allows the programmer to apply a number of
-    code management techiniques not possible before with flat Literate Programming source 
+    to basic HTML tagging. Inputting mathematical formulae is still possible with MathML.
+    No more one needs to be "writing and debugging two programs in place of one", a
+    common complaint about the use of WEB-like lit.prog. tools based strictly on (La)TeX.
+    ./li..li. ...while folding, as already stated, allows the programmer to apply a number of code
+    management techiniques not possible before with flat Literate Programming source 
     files. ./li../ul.
 
 
@@ -72,7 +101,7 @@ article, such as the one below or .a. http://en.wikipedia.org/wiki/Literate_Prog
 
 .br.
 #------------------------------------------------------------------
-{{{2 .h2. ---- THE CHUNK TO TANGLE BY  DEFAULT ---- ./h2.
+{{{2 .h2. THE CHUNK TO TANGLE BY  DEFAULT ./h2.
 #------------------------------------------------------------
 
 
@@ -103,14 +132,137 @@ article, such as the one below or .a. http://en.wikipedia.org/wiki/Literate_Prog
 }}}2
 
 
-
-#-----------------------------------------------------------------------
-{{{2 .h2. History and concepts. "Management of thinking" ./h2.
+#-------------------------------------------------------------------------------------
+{{{2 .h2. PART I ----------- History and concepts. "Management of thinking" ------------ ./h2.
 #--------------------------------------------------------------
 
 {{{3 .h3. What is Literate Programming? ./h3.
 
 .b. .i. This is a techinique for "management of thinking", which has nothing to do with programming. ./i. ./b.
+
+
+
+#---------------------------------------------------------
+{{{4 .h4. My example from ru_perl (in Russian) ./h4.
+#---------------------------------------------------------
+
+И, наконец, третье объяснение что значит писать 'на ЛП'.
+Если бы целью вашей была не программа, а роман или статья-эссе, то "писать на ЛП"
+означало бы писать примерно так:
+
+
+.ul.
+    < <quote> >=
+    A HISTORICAL CURIOSITY
+    this is a < <story> > that was used
+    by Emperor Friedrich II when he replied
+    to < <ambassadors> > of France, famously:
+    "bla-bla-bla.
+    < <quote_continued> >"
+    @
+
+    < <story> >=
+    histoical quote that first surfaced in a lesser-known Austrian publication in 1843
+    @
+
+    < <ambassadors> >=
+    Earl Marra and Count Swiepolski
+    @
+
+    < <quote_continued> >=
+    Hrrrrrr mbrruaghhhrch
+    awwrraghrtps
+    pst pst pst.
+    @
+./ul.
+
+
+И на самом деле так можно писать любые тексты, например журналистскую статью, в которой 
+есть некая последовательная мысль, а отдельные куски или неизвестные сразу факты 
+разрабатываются и добавляются позже.
+
+ЛП - метод организации мыслей и придания тексту структуры на мета-уровне, на основе неких 
+фраз, скрывающих за собой любой "оконечный код" или любые подобые абстракции.
+
+Пре-процессор их автоматически подставит и развернет все в нужной последовательности
+
+
+Кстати как видите в последнем примере ВООБЩЕ НЕТ НИ ОДНОГО КОММЕНТАРИЯ, и вместе с тем это 
+"программа на ЛП": она написана на "псевдокоде", т.е. с использованием макро, которые 
+становятся точными операторами мета-языка.
+
+Т.е. ЛП в нормальном случае связан с текстом (который объясняет концепции и идеи кода), 
+но сама техника введения макро вместо кропотливых кусков чтобы теми кусками заняться в 
+их очередь и избавить мозг от нагрузки по ведению учета и контроля тысячи мыслей -- то 
+есть для того, чтобы в конечном счете СТАТЬ УМНЕЕ за счет механизма абстрагирования -- 
+эта техника возможна и совершенно без комментариев.
+
+Которые почему-то все настаивают есть не заметки в помощь программисту, а некая "документация" 
+якобы для посторонних людей.
+
+Нет, запись мыслей ПОМОЖЕТ и будет служить документацией идей, да. Но создается это не для 
+васи, а для себя в момент программирования.
+
+
+.b. ... continued in a next commentary: ./b.
+
+Цитата о "людях, которые умеют хорошо писать" очень глупа потому что ПОХЕРУ хорошо ли 
+программист пишет или так себе: он пишет для себя в помощь мыслям.
+
+Чтобы стало понятнее, возьмем последний литературный пример. Он был без комментариев. Если 
+теперь "восстановить" те реалистические комментарии, которые там могли бы появиться в процессе,
+это выглядело бы примерно так:
+
+.ul.
+    Анекдот пойдет в эпиграф третьего раздела (? - или в основной текст?)
+
+    < <quote> >=
+    A HISTORICAL CURIOSITY
+    this is a < <story> > that was used
+    by Emperor Friedrich II when he replied
+    to < <ambassadors> > of France, famously:
+    "bla-bla-bla.
+    < <quote_continued> >"
+    @
+
+
+    Уточнить дату и обстоятельства:
+    < <story> >=
+    histoical quote that first surfaced in a lesser-known Austrian publication in 1843
+    @
+
+    Нужны имена; если нет, выдумать: публика дура и любит "точность"
+    < <ambassadors> >=
+    Earl Marra and Count Swiepolski
+    @
+
+    Кажется цитата была в моих архивах: сделать поиск на хррр? пст?
+    Брал её из гугла; вспомнить еще какие-то слова
+    < <quote_continued> >=
+    Hrrrrrr mbrruaghhhrch
+    awwrraghrtps
+    pst pst pst.
+    @
+./ul.
+
+.. ну а заполненные позже куски составят уже полный чистый текст, который НЕ НАДО лазить править 
+руками.
+
+То есть в момент написания мы отодвинули массу соображений, которые занимают весьма 
+ограниченные ресурсы мозга (всего-то до 7, говорят, элементов в краткосрочной памяти) и 
+необходимости решать и увязывать детали.
+
+Мы стали "умнее" за счет того, что убрали, отодвинули куски деятельнопсти, заменив их на 
+время фразами-абстракциями.
+
+Вот в чем суть.
+
+}}}4
+
+
+#-----------------------------------------------------------
+{{{4 .h4. Invented example (an urban legend) - unfinished ./h4.
+#-----------------------------------------------------------
 
 Let's suppose you are an editor of some local newspaper which wants to kick up sales.
 So one day you get an email that says:
@@ -149,6 +301,10 @@ Then after collecting the materials  the editor produces a skeleton for the arti
 <<throw in some stats and end on a grand note>>
 @
 
+
+.b. .i. ... unfinished ... ./i. ./b.
+
+}}}4
 
 
 }}}3
@@ -319,33 +475,13 @@ else {
 }}}2	    
 
 
-
+#------------------------------------------------------------------------------
+{{{2 .+h2. PART II ------------ HOW TO USE MOLLY.pl ------------ ./h2.
 #-------------------------------------------------------
-{{{2 .+h2. ---- HOW TO USE MOLLY.pl ---- ./h2.
-#-------------------------------------------------------
-
-#----------------------------
-.h3. What is MOLLY.pl ? ./h3.
-#----------------------------
-
-Traditionally literate programming tools include two major ones, one to "tangle" (i.e. create
-machine code from a Literate Source file), and another one to "weave" (formatted 
-documentation from the same LSFile).
-The developer is supposed to run the tangler after each change to be able to re-run (or recompile)
-the code.
-
-This script is a "weaver", and a "pass-through" tangler for use with "noweb" tools by Norman Ramsey,
-(by default it passes tangling to the the "notangle" utility).
-
-Starting from some version it also includes a  simple built-in tangler.
-
-I called the script "Molly" because I think of it as a "MO-dule for LI-terate programming".
 
 
-
-.br.
 #--------------------------------------------------------
-.+h3. My workflow - literate programming with Molly ./h3.
+{{{3 .h3. My workflow - literate programming with Molly ./h3.
 #--------------------------------------------------------
 
  .<. img src=eeerotate.jpg align=right hspace=5 width=200 border=2 .>.
@@ -393,7 +529,7 @@ from an X terminal window. Most modern video cards support this.
 ./ol.
 
 See details about this setup and possible uses of it below.
-
+}}}3
 
 .br.
 #-------------------------------------------------------------------
@@ -432,9 +568,9 @@ See details about this setup and possible uses of it below.
 
 <<minimal MOLLY template>>=
     #!/full/path/to/perl
-    do /full/path/to/script/MOLLY.pl
-
-    # delete first space in the next line
+    do "/full/path/to/script/MOLLY.pl";
+    exit;
+    # delete first space(s) in the next line
     __DATA__
 
 
@@ -497,6 +633,95 @@ See details about this setup and possible uses of it below.
     ./li. ./ol.
 
 
+
+#------------------------------------------------
+.h4. "Mollification" - full configuration template ./h4.
+#------------------------------------------------
+Should be self-explanatory. May add to this section later.
+Uncomment to set, otherwise defaults apply.
+
+
+<<full MOLLY template>>=
+#!/usr/bin/perl
+
+#-------------------------------------
+# -------TOC and INDEX behaviour------
+
+# print TOC? 1:0
+#$print_toc=1;	# default is to print
+
+# should we keep TOC expanded? "block":"none"
+#$toc_expanded="block";	# default is to unfold
+
+# should we keep Chunks Index expanded? "block":"none"
+#$ind_expanded="none";	# default is to keep folded
+
+
+# should we number lines in code sections? 1 : else
+#$line_numbering = 1;	# default is to number
+
+
+#-------------------------------------
+#---------MathML options--------------
+
+# should we enable MathML via ASCIIMathML.js library? 1:0
+#$enable_ASCIIMathML = 0; #default is to disable as it slows Molly down a lot
+#$enable_ASCIIMathML = 1;
+
+# If yes, what is the full path to the lib?
+# CAN BE: (a) local "/full/path/from/root/to/ASCIIMathML.js" or 
+# (b) in current dir "ASCIIMathML.js" or
+# (c) on the web, e.g. on the original site of the library:
+#$path_to_ASCIIMathML = "http://www1.chapman.edu/~jipsen/mathml/ASCIIMathML.js";
+#$path_to_ASCIIMathML = "ASCIIMathML.js"; # default is in current dir
+
+
+#-------------------------------------
+#--------Document Markup lang---------
+
+# how are doc sections marked? "dotHTML":"rawHTML"
+#$weave_markup = "rawHTML"; # default is "rawHTML"
+
+
+#--------------------------------------
+#---------File extensions setting------
+ 
+# what is the file extention to weave it? (perms must allow execution!)
+# e.g. "scriptname.weave" or "scriptname.cgi" etc.
+#$weave_extension = "weave";	# default is "weave"
+
+# what is the file extention to tangle it? (perms must allow execution!)
+# e.g. "scriptname.tangle",  "scriptname.pl" etc.
+#$tangle_extension = "tangle";	# default is "tangle"
+
+#--------------------------------------
+#---------invocation of MOLLY.pl-------
+
+# make sure to provide correct and full path to the script here
+# (default is "current directory"):
+do "MOLLY.pl";
+exit;
+
+# delete the space before the __DATA__ marker
+ __DATA__
+#---------------start of script-------------
+
+<h1> MY PROJECT </h1>
+
+The main idea for my new project is ..
+
+<h2> Subsection 1 </h2>
+
+Here I explain things that come first
+................................
+
+@
+
+.b. "__DATA__" must start at the first position in its line ./b.
+
+
+
+
 #---------------------------------------------------
 .h4. Markup of code and documentation sections ./h4.
 #----------------------------------------------------
@@ -504,20 +729,24 @@ See details about this setup and possible uses of it below.
 First, 
     .ul. .li.  code sections begin with "< <name of the section> >="
     in the first position in the line and end with "@"  in the first position
-
-    References to other code sections are done with "< <name of the ref sect> >"
+    .i. no spaces between the double angle brackets - I used spaces as escapes here ./i.
+    
+    ./li. .li. References to other code sections are done with "< <name of the ref sect> >"
     inside the code sections
 
-    The rest is "documentation chunks" which must be marked up with some formatting tags.
+    ./li. .li. The rest is "documentation chunks" which must be marked up with some formatting
+    tags.
 
-    ./li. .li. .i. [ no spaces between the double angle brackets - I used spaces as escapes here ] ./i.
+     I do not insert examples here, as the file you are reading provides them ad nauseam.
+     
 
-    ./li. .li. I do not insert examples here, as the file you are reading provides them ad nauseam.
-    ./li. ./ul.
+    THIS IS THE BASIC MARKUP OF THE LITERATE SOURCE FILE, as used by the 
+    "noweb" tools.
+    ./ul.
 
-    THIS IS THE BASIC MARKUP OF THE LITERATE SOURCE FILE, as used by the "noweb" tools.
 
     Secondly, how do we format the documentation sections?
+
     .ul. .li. In the simplest case, with straight HTML markup (default)
 
     ./li. .li. If a simple subsection is added to the MOLLY.pl script to process it, in any
@@ -631,55 +860,6 @@ PROJECT_ADMIN_DIR="/my/home/00trash/tmp/literate.perl/WWW.server";
 $PROJECT_ADMIN_DIR/thttpd -C $PROJECT_ADMIN_DIR/thttpd.config
 @
 
-
-#------------------------------------------------
-.h4. "Mollification" - full template ./h4.
-#------------------------------------------------
-Should be self-explanatory. May add to this section later.
-Uncomment to set, otherwise defaults apply.
-
-<<full MOLLY template>>=
-#!/usr/bin/perl
-
-# print TOC? 1:0
-#$print_toc=1;	# default is to print
-
-# keep TOC expanded? "block":"none"
-#$toc_expanded="block";	# default is to unfold
-
-# keep Chunks Index expanded? "block":"none"
-#$ind_expanded="none";	# default is to keep folded
-
-# number lines in code sections? 1 : else
-#$line_numbering = 1;	# default is to number
-
-# what is the file extention to weave it? (perms must allow execution!)
-# e.g. "scriptname.weave" or "scriptname.cgi" etc.
-#$weave_extension = "weave";	# default is "weave"
-
-# what is the file extention to tangle it? (perms must allow execution!)
-# e.g. "scriptname.tangle",  "scriptname.pl" etc.
-#$tangle_extension = "tangle";	# default is "tangle"
-
-
-# how are doc sections marked? "dotHTML":"rawHTML"
-# $weave_markup = "rawHTML"; # default is "rawHTML"
-
-
-# old name of the module
-#do "LPM-0.53.ffpl" ;
-
-do "MOLLY.pl";
-exit;
-
-# delete the space before the __DATA__ marker
- __DATA__
-#---------------start of script-------------
-
-@
-
-.b. "__DATA__" must start at the first position in its line ./b.
-
 }}}3
 
 #-----------------------------------------------------------------------
@@ -690,19 +870,19 @@ exit;
 .h4. Markup ./h4. 
 #-----------------------
 
-.ol. .li. The default is to use ordinary 'html' markup in the document sections
+.ol. .li. The default is to use .b. ordinary 'html' markup ./b. in the document sections
 The only difference from "true raw" HTML is that MOLLY adds automatic 
 <br> linebreaks unless lines are inside the <pre>..</pre> sections
 The script also cuts out vim folding marks -- { { { number ... } } } number
 -- without spaces  and "#------------" lines.
 
 
-./li. .li. Any "markdown" or "wiki"-style markup can be added to MOLLY. Another reasonable
-suggestion could be a simple translator from basic TeX markup etc.
+./li. .li. .b. Any "markdown" or "wiki"-style markup can be added ./b. to MOLLY. Another 
+reasonable suggestion could be a simple translator from basic TeX markup etc.
 Some of this functionality is unnecessary to reimplement, as "noweb" or third-party 
 filters can be run on the document after MOLLY weaving or from inside MOLLY.
 
-./li. .li. As an example of a simple markup which can be done with regular expressions
+./li. .li. As an .b. example of a simple markup ./b. which can be done with regular expressions
 I added  "dotHTML", which is several most basic HTML tags inside "dots" instead
 of angle brackets.
 
@@ -712,13 +892,7 @@ typing and avoid annoying repeating typos.
 Please see the "dotHTML" subsection below where the source of MOLLY is listed.
 
 Currently implemented tags are (write them inside "dots", not "<..>"):
-.ul. <br> <p> 
-<s> - </s>
-<pre> - ..
-<b> - </b>
-<i> - ..
-<ul> - ..
-<ol> - ..
+.ul. <br> <p>  <s> - </s> <pre> - .. <b> - </b> <i> - .. <ul> - .. <ol> - ..
 <li> - ..
 
 Special marks are dot-<-dot and dot->-dot (no dashes, like ". < ." 
@@ -729,10 +903,10 @@ This is clumsy, but for quick sample and to speed up typing I found
 it sufficient. So far.
 
 
-And there are two special, non-HTML marks I introduced for convenience.
+And there are three special, non-HTML marks I introduced for convenience.
 (a) dot-x-dot ... dot-/x-dot .i.on one line only ./i. will .x. format the phrase ./x. as spaced
 (b) dot-a-dot http://some/URL dot-/a-dot will create a hyperlink .a. http://some/URL ./a. 
-
+(c) dot-sp-dot - creates a space
 ./ul.
 
 etc. I add them as I go, whenever I need them for my current document.
@@ -752,21 +926,107 @@ without spaces, and  comment lines with dashes
 .h4. Markup and Escaping ./h4.
 #------------------------------
 
-As clumsiness in inserting "dot-tags" in the previous subsection proves, a problem of 
-escaping exists with any markup languages.
+Escaping in files marked in multiple ways is a big source of all kinds of errors.
+Currently Molly should be able to take care of most cases.
 
-This is not resolved cleanly by MOLLY (at least for now).
-In particular, a difficulty exists with double angle brackets (< < ... > >) which make "notangle"
-stumble, wherever in the document it finds them. As a result, I usually use "spaces" to break
-the bad symbols. For example, this document is written in "dotHTML" notation (not "rawHTML"), so
-in explanations I could write the escaped dot-tags as ". b . asdasf . /b ."
+Exceptions include:
 
-Another side of the same problem is that browsers .i. do ./i. interpret HTML tags even inside the
-<pre>...</pre> (which is insane). Therefore if your code processes some HTML (e.g. in regular 
-expressions), the formatted document in your browser may substitute/spoil the code.
-I solved this problem only in part for now.
+1.  double angle brackets ("< <" and "> >" without spaces in between) and the "at" sign.
+Those confuse the "notangle" tool from Ramsey's "noweb". While Molly treats
+double angle brackets and "at" as a switch between documentation and a code chunk .i. only
+if those are in the first position in the line ./i., "noweb" stumbles.
 
-Clean escaping in MOLLY still needs work.
+If you tangle through Molly (by running "my_project.tangle > source.code"), Molly will
+filter these out. If you run "notangle" directly on the project file ("notangle -R'some 
+root chunk' my_project.weave > source.code"), it will fail.
+
+Therefore in this file I always .b. use extra white space btw angle brackets as an escape ./b.
+
+2. If you enabled the use of ASCIIMathML.js library to display mathematical exressions in
+you document, then .b. double backticks ./b. on both sides of any expression will be 
+processed by the library. (It also processes everything between "a m a t h" and
+"e n d a m a t h" tags - no spaces btw letters - in you file).
+Make sure that your target programming language or any future "markdown" you are going to 
+add to Molly does not use these signs at all -- or re-edit the javascript library to
+substitute all inclusions of double backticks to sth else.
+
+}}}3
+
+#------------------------------------------------------------------------------
+{{{3 .h3. Mathematical Formulae - MathML inside Mollified Literate source files ./h3.
+#------------------------------------------------------------------------------
+
+.i. The most common reason users put forward for the continued use of (La)TeX in this day 
+is its facility in dealing with mathematical notation. However today much .b. simpler HTML ./b. 
+(which is often further reduced to "markdown" level) if .b. used with MathML ./b. can cover 
+most of such uses ./i.
+
+1. To enable MathML one needs to use a compliant browser. Currently MathML is built in
+Firefox, or it can be enabled in Internet Explorer with a (free) plugin.
+Support for MathML inside Opera is incomplete.
+
+2. To enable MathML while dinamically creating the folding-html file, I use an LGPLed
+Javascript library called "ASCIIMathML.js" from 
+.a. http://www1.chapman.edu/~jipsen/mathml/asciimath.html ./a.
+(a home page), while only the library itself can be copied from
+.a. http://www1.chapman.edu/~jipsen/mathml/ASCIIMathML.js ./a.
+
+3. I had to change escape symbols in the library not to conflict with programming
+symbols - now it's double backticks instead of single ones -- and change config option
+enabling "preservation of $ and $$"
+Therefore a copy of modified library is distributed with the Molly script.
+The default location is in the same directory as the Molly.pl.
+
+4. The use of MathML must be enabled in the "mollifying" template at the top of your
+Literate Project file, and the path to the ASCIIMathML.js added. See the config. 
+template subsection.
+
+
+5. This javascript library allows a user to type math formulas in ASCII notation
+and possibly with LaTeX constants.
+
+The interpreted parts of the text must be either:
+(a) .b. between "a m a t h" ...... "e n d a m a t h" tags (no brackets). ./b. The script then
+tries to differentiate between ordinary text and math expressions and renders the latter
+dynamically as MathML - which is then displayed by your browser.
+
+If it gets confused (e.g. because you used underscores somewhere), you can 
+(b) .b. escape (the math expressions only) with DOUBLE BACKTICKS around them. ./b.
+
+
+Some examples, quite intuitive:
+.ul.
+Let's try some interesting formulas: 
+.pre.``E=m c^2`` ./pre. ``E=m c^2``
+
+and .pre. ``e^(i pi)=-1`` ./pre. ``e^(i pi)=-1``
+
+and .pre. ``AA x in CC (sin^2x+cos^2x=1)`` ./pre. ``AA x in CC (sin^2x+cos^2x=1)``
+and one more: .pre. ``sum_(i=1)^n i^3=((n(n+1))/2)^2`` ./pre. ``sum_(i=1)^n i^3=((n(n+1))/2)^2``
+./ul.
+
+.i. NOTE ./i. If you hover with your mouse over some interpreted expression, a baloon
+will appear showing the original ASCII markup for the expression. Very nice.
+
+.i. NOTE 2 ./i. the "pre" (preformat) "/pre" HTML tags prevent the library from
+rendering the expressions and can be used as a quick escape tool when you are writing
+your page.
+
+6.  ASCIIMathML Markup - reference 
+
+The full set of ASCII coding conventions for the library can be found on its
+home page.
+.a. http://www1.chapman.edu/~jipsen/mathml/asciimathsyntax.html ./a.
+
+There are 2 pages there, the first describes the syntax, and the second one shows allowed 
+LaTex escapes.
+
+The easiest way to see the ascii code and to use any interpreted page as a reference is to
+hover your mouse over an interpreted math symbol or expression. In about a second a baloon 
+appears  with the ascii source in it.
+
+There is an on-line tutorial in the use of ASCII math notation  for the library at
+.a. http://www.wjagray.co.uk/maths/ASCIIMathTutorial.html ./a.
 
 }}}3
 
@@ -789,46 +1049,6 @@ One advantage of the folding format is that - in contrast to most other tools - 
     This can be done from the TOC section as well. The open sections get a highlighted background,
     and highlighting appears irrespective of whether the section was opened from the TOC or in the
     body of the text.
-
-
-
-#------------------------------------
-.h4. TOC and Code Chunks Index ./h4.
-#------------------------------------
-
-Traditional literate programming tools create extensive indeces of variables and code chunks.
-
-    The approach in this script is as follows:
-
-    Index of all code chunks in your LSFile exists (unless a configuration opton in the 
-    template tells MOLLY to skip it) right under TOC. Click on teh line to expand it, and then use
-    TOC section numbers to click open the sections which contain or define the chunks you need.
-
-    Remember that .i. all parent sections ./i. above the needed one must be open for you to see 
-    the innermost subsection in your browser. This is easy to control through TOC highlighting, and
-    as an additional indicator, the slider on your web browser will visibly jerk and shorten when 
-    new sections will become visible in the browser window.
-
-    It's also convenient to keep some inner subsections open, but click closed the topmost section to
-    quickly hide and unhide larger pieces of code (e.g.complete files which live inside the Literate
-    Source File when it is used as a common Project file for many source files, test files, makefile(s)
-    etc.
-
-
-
-#------------------------------------------------
-.h4. Searching for symbols, chunks, phrases ./h4.
-#------------------------------------------------
-
-Web browsers "search" functions  will work on open sections only, at least that's the behaviour of
-    Opera and Mozilla browsers.
-    This means that instead of creating exhaustive indeces of symbols, which clutter program text, 
-    especially when they display as HTML links in the output of Weaver tools, one can ensure only the
-    interesting subsections are open and then search using the built-in browser function. It usually
-    highlights the results and iterates over the found items, which is a nice behaviour.
-
-    To search in the whole of the LSFile, simply click on the "expand all" under any of the subsections,
-    and then again use the browser search function.
 
 
 
@@ -883,8 +1103,50 @@ The behaviour of folding sections in the mollified LSFile is as follows:
 
 	./ul.
 
-    MOLLY.pl is written to filter out vim folding markups ( {{{number ... }}}number ) and t hose will not
-    show on your web page.
+    MOLLY.pl is written to filter out vim folding markups ( {{{number ... }}}number ) and those 
+    will not show on your web page.
+
+
+
+
+#------------------------------------
+.h4. TOC and Code Chunks Index ./h4.
+#------------------------------------
+
+Traditional literate programming tools create extensive indeces of variables and code chunks.
+
+    The approach in this script is as follows:
+
+    Index of all code chunks in your LSFile exists (unless a configuration opton in the 
+    template tells MOLLY to skip it) right under TOC. Click on teh line to expand it, and then use
+    TOC section numbers to click open the sections which contain or define the chunks you need.
+
+    Remember that .i. all parent sections ./i. above the needed one must be open for you to see 
+    the innermost subsection in your browser. This is easy to control through TOC highlighting, and
+    as an additional indicator, the slider on your web browser will visibly jerk and shorten when 
+    new sections will become visible in the browser window.
+
+    It's also convenient to keep some inner subsections open, but click closed the topmost section to
+    quickly hide and unhide larger pieces of code (e.g.complete files which live inside the Literate
+    Source File when it is used as a common Project file for many source files, test files, makefile(s)
+    etc.
+
+
+
+#------------------------------------------------
+.h4. Searching for symbols, chunks, phrases ./h4.
+#------------------------------------------------
+
+Web browsers "search" functions  will work on open sections only, at least that's the behaviour of
+    Opera and Mozilla browsers.
+    This means that instead of creating exhaustive indeces of symbols, which clutter program text, 
+    especially when they display as HTML links in the output of Weaver tools, one can ensure only the
+    interesting subsections are open and then search using the built-in browser function. It usually
+    highlights the results and iterates over the found items, which is a nice behaviour.
+
+    To search in the whole of the LSFile, simply click on the "expand all" under any of the subsections,
+    and then again use the browser search function.
+
 
 
 #--------------------------------------------
@@ -1056,10 +1318,28 @@ Use .b."mollify"./b. as  a technical term (insert MOLLY.pl invocation into the L
 }}}2
 
 
-
 #------------------------------------------------------------------
-{{{2 .+h2. ---- LITERATE SOURCE OF THE SCRIPT ---- ./h2.
+{{{2 .h2. PART III ------------ LITERATE SOURCE OF THE SCRIPT ------------ ./h2.
 #-------------------------------------------------------
+
+
+#----------------------------------------
+{{{3 .h3. Local Reference ./h3.
+#--------------------------------
+
+.b. VIM regexp to highlight literate code sections only: ./b.
+.i. HAD TO spoil it because "notangle" complained about double diamonds 
+"in documentation chunk", bastard ./i.
+.pre. ^< <.*> >=\_.\{-1,}\n^@/e ./pre.
+.. and vice versa, highlight text, leave only code unhighlighted:
+.pre. ^@\_.\{-1,}\n^< <.*> >=/e ./pre.
+
+
+
+
+
+}}}3
+
 
 
 #----------------------------------------------
@@ -1067,7 +1347,7 @@ Use .b."mollify"./b. as  a technical term (insert MOLLY.pl invocation into the L
 #----------------------------------------------
 
 #-------------------------------
-{{{4 .h4. versions - changes ./h4.
+{{{4 .h4. versions - changes - ideas ./h4.
 #-------------------------------
 
 Current version:
@@ -1081,8 +1361,16 @@ Current version:
     ./li../ul.
 
     This script is a test of the concept (LitProg+folding+dynamic web formatting)
+
+
+#--------------------------------
+{{{5 .h5. first ideas ./h5.
+#--------------------------------
+    
+
     Options for future versions --  3 ideas for now:
-    .ul..li. add a built-in tangler (while retaining the possibility to tangle
+    .ul.
+    .li. add a built-in tangler (while retaining the possibility to tangle
     through an external tool, such as "notangle" with all its options and filters).
 
     ./li..li. .x.create a fully self-contained./x. folding web-based .x.weaver./x.
@@ -1170,16 +1458,15 @@ Current version:
     right half (not necessary, really)
 
 ./li. .li. .b. context diffs and sections editing ./b.   
-    
-
-    
-
-    
 ./li. ./ul.
 
+}}}5
 
 
 
+#-----------------------------------
+{{{5 .h5. more ideas ./h5.
+#-----------------------------------
 
 .b. More ideas: ./b.
 
@@ -1217,6 +1504,123 @@ OR: .b. TOC/Index in a floating window? ./b. -- should be easy, just  name the
     and refer to them from other parts of the document??
     // no jumps from the TOC? or with a separate 'jump' icon? //
     // no jumps to closed sections will work anyway, then what to do? //
+
+}}}5
+
+
+
+
+#-------------------------------------------
+{{{5 .h5.  CONTRACT PROGRAMMING and Molly?? ./h5.
+#-------------------------------------------
+
+possibly add conditional tangling to produce a contract-assertion-littereted prog during
+development and debugging --
+versus a "clean" copy -- ???
+
+.b. OR ./b. just keep an "assertion-full" skeleton  by using a simple "rename" or a 
+meta-chunk which is a dispatcher??
+.pre. [chunk_to_do_sth]=
+ code code code code
+ [another_chunk_ref]
+ more code more code
+ @
+./pre.
+...NO, I cannot do that without conditional tangling
+...or - do it in the target language using a "lazy and" for conditionals:
+(and (debug_assert_flag) (block .....with some code.....))
+
+.b. Well, this is what I can do: ./b.
+.pre.
+< < main code chunk > > =
+if ($DEBUG) {
+< < pre-chunk assertions and if-checks > >
+} # fi DEBUG
+
+# main chunk code goes here
+
+if ($DEBUG) {
+< < post-chunk assertions and if-checks >>
+} # fi DEBUG
+#end of chunk here @
+./pre.
+
+Then I'll be able to produce debug code by tangling:
+.pre. notangle -R"some root" project.weave ./pre.
+and the "clean code" without assertion checks I'll get from it
+by simply filtering with
+.pre. perl -ne 'print unless m!^if ($DEBUG) {! .. m!^\} # fi DEBUG!' tangled.code \
+> clean.distribution.code ./pre.
+
+Should be easy enough ;))
+
+}}}5
+
+
+
+
+#----------------
+.h4.Done ./h4.
+#----------------
+
+.b. 1. Adding TOC open/collapsed section indication ./b.
+Changes must be made in:
+"weave me" ==> "JS script functions" && "stylesheet"
+// as expl in the ref section below 
+
+AND in
+"Accumulate the result" ==> "process section headings"
+// the actual invocation "onmousedown"
+
+
+.b. 2. Synchronize TOC and sections ./b.
+I have done highlighting; now two more steps:
+    .ul. (a) make body sections run "toggleCombined" rather that directly
+    open/close the "div"s/sections - to highlight the TOC at the moment
+    of change
+    (b) make TOC bg. highlighting recognize the "+" signs in the html headings
+    markup.
+    ./ul.
+This is not difficult, just needs a little attention.
+
+To do (b) NEED to rewrite 
+.pre. <div id="$section_num" style="display:$fold_state">  ./pre.
+in line appr. 370 to add inline javascript invocation of expandDiv
+
+3. see 8.
+Add "pass-through" direct HTML dummy encoder (plus a switch btw rawHTML and dotHTML)
+Explain  the user can expand the script in any way he wishes (e.g. with a "wiki" syntax)
+
+(++-)4. I still need to do at least a .b. stub in tangler ./b. to do some pre-filtering before
+calling "notangle".
+E.g. I might want to reassign the double-< and double-> or other symbols for some esoteric
+languages, or filter out escapes from documentation chunks for the notangle not to choke.
+
+NO SWITCH yet to select from pre-tangle filters or built-in tangler.
+
+(++) 8. Weaving -- "dotHTML" versus "rawHTML".
+Version MOLLY-0.62-BAD.pl is incorrect. It's "dot" markup is OK, but for "raw" to work 
+.i. regexps must be changed ./i. in the main filtering "if - elsif - else", as headers
+will too be in angle brackets, not in dots.
+
+.b. May be a good idea to extract those regexps ./b. and assign them to vars, as now
+they are coded in, bad.
+
+9. See "accumulate result in a buffer"
+Should I make the "----start of script--" line unnecessary (relying on __DAT A__ ) ??
+Or =- both? or no "data" (as it throws off editors highlighting) ???
+.b. set to react to DATA not "start of script"./b.
+
+
+.b. Bug with setting default for $print_toc fixed./b. --  must check for "defined", the perl operator
+xx?aa:bb checks for 0 or non-0, and so if the var equals 0 it will never set it to 0.
+Changed and tested.
+Maybe should use "yes" and "no" instead of "1" and "0"?
+
+
+
+
+
 
 }}}4
 
@@ -1278,70 +1682,15 @@ DONE although not very cleanly. The tag will break across several lines
 13. Add a full set of HTML escapes to "dotHTML" and "rawHTML" ?
 
 
-#----------------
-.h4.Done ./h4.
-#----------------
 
-.b. 1. Adding TOC open/collapsed section indication ./b.
-Changes must be made in:
-"weave me" ==> "JS script functions" && "stylesheet"
-// as expl in the ref section below 
-
-AND in
-"Accumulate the result" ==> "process section headings"
-// the actual invocation "onmousedown"
-
-
-.b. 2. Synchronize TOC and sections ./b.
-I have done highlighting; now two more steps:
-    .ul. (a) make body sections run "toggleCombined" rather that directly
-    open/close the "div"s/sections - to highlight the TOC at the moment
-    of change
-    (b) make TOC bg. highlighting recognize the "+" signs in the html headings
-    markup.
-    ./ul.
-This is not difficult, just needs a little attention.
-
-To do (b) NEED to rewrite 
-.pre. <div id="$section_num" style="display:$fold_state">  ./pre.
-in line appr. 370 to add inline javascript invocation of expandDiv
-
-3. see 8.
-Add "pass-through" direct HTML dummy encoder (plus a switch btw rawHTML and dotHTML)
-Explain  the user can expand the script in any way he wishes (e.g. with a "wiki" syntax)
-
-(++-)4. I still need to do at least a .b. stub in tangler ./b. to do some pre-filtering before
-calling "notangle".
-E.g. I might want to reassign the double-< and double-> or other symbols for some esoteric
-languages, or filter out escapes from documentation chunks for the notangle not to choke.
-
-NO SWITCH yet to select from pre-tangle filters or built-in tangler.
-
-(++) 8. Weaving -- "dotHTML" versus "rawHTML".
-Version MOLLY-0.62-BAD.pl is incorrect. It's "dot" markup is OK, but for "raw" to work 
-.i. regexps must be changed ./i. in the main filtering "if - elsif - else", as headers
-will too be in angle brackets, not in dots.
-
-.b. May be a good idea to extract those regexps ./b. and assign them to vars, as now
-they are coded in, bad.
-
-9. See "accumulate result in a buffer"
-Should I make the "----start of script--" line unnecessary (relying on __DAT A__ ) ??
-Or =- both? or no "data" (as it throws off editors highlighting) ???
-.b. set to react to DATA not "start of script"./b.
-
-
-.b. Bug with setting default for $print_toc fixed./b. --  must check for "defined", the perl operator
-xx?aa:bb checks for 0 or non-0, and so if the var equals 0 it will never set it to 0.
-Changed and tested.
-Maybe should use "yes" and "no" instead of "1" and "0"?
 
 }}}4
 
 }}}3
 
 
-#-----------------------------------------
+
+#-------------------------------------------------------------------
 {{{3 .h3. PRELIMINARIES: The script layout and idea ./h3.
 #-----------------------------------------
 
@@ -1416,7 +1765,6 @@ actual  tangling to the "notangle" utility from "noweb" suite of tools by Ramsey
 server as well as a folding weaver and a tangler.
 
 }}}3
-
 
 
 #------------------------------------------------------
@@ -1537,6 +1885,22 @@ $weave_markup = $weave_markup || "rawHTML"; # default is "rawHTML"
     } #fi
 
 @
+
+
+Do we need to enable MathML functionality? If "yes", set the path to the js library
+"ASCIIMathML.js" and enable the switch.
+This slows down interpretation of the file on reload drastically (from nothing to
+3 seconds with 4-5 example formulas), so for sfw development usually this should be off.
+
+<<general settings>>=
+
+# enable MathML interpretation? 1 : 0
+$enable_ASCIIMathML = $enable_ASCIIMathML || 0;
+# If enabled, set the path; default is local in current dir
+$path_to_ASCIIMathML = $path_to_ASCIIMathML || "ASCIIMathML.js";
+
+@
+
 
 It would make sense to add a few more markups to the program, i.e. some "wiki" many use,
 and some TeX basic tags for automatic translation, if the doc is tagged as a TeX file.
@@ -1802,9 +2166,8 @@ end_of_print
 }}}3
 
 
-
 #---------------------------------
-{{{3 .h3. Tangler ./h3.
+{{{3 .h3. TANGLER ./h3.
 #---------------------------------
 
     This version of the script does not include a built-in tangler, and therefore
@@ -1829,11 +2192,6 @@ end_of_print
 
     Later other modes of operation may be incorporated here.
 
-
-<<*-dis>>=
-<<check strings expansion>>
-
-@
 
 
 
@@ -1992,6 +2350,46 @@ routinely comes to 1-2 GiB, this is not a problem at all
 
 }}}7
 
+
+{{{7 .h7. Results of tests ./h7.
+
+.b. First impression ./b. - even manually the "eval prebuilt string" does not seem
+to work. Either the approach is not valid (what I missed in my primitive tests), or
+I think of it in an overcomplicated way, and in fact it's much simpler...
+
+.i. Looks like ./i. "eval"-ed code does not come to the current "namespace" or sth:
+it evals and remains there. I.e. eval'ed vars are not available later from the calling
+namespace.
+
+
+.b. Second look and impression ./b.
+My third version (not '..-ONE' or '..-TWO') drops accumulation of strings and just
+creates a direct, unquoted value in %code_chunk_splinters_raw
+This all works fine - substituting .b. one level only ./b. of the variables.
+Second level vars are broken, even when all values are inside the hash assembled in full.
+
+.i. .b. this is wrong ./b. ./i. as the following test shows:
+
+<<perl auto-expansion of embedded vars>>=
+
+$hash{'a'} = "hehehe";
+$hash{'b'} = "hihihi" . $hash{'a'} . '-end_b-';
+$hash{'c'} = "hahaha" . $hash{'b'} . '-end_c-';
+$hash{'d'} = "ohhoho" . $hash{'c'} . '-end_d-';
+
+
+print "$hash{'d'}\n";
+
+@
+
+It produces the expected output:
+.pre. ohhohohahahahihihihehehe-end_b--end_c--end_d- ./pre.
+
+}}}7
+
+
+
+
 {{{7 .h7. Main, outline ./h7.
 
 
@@ -2001,10 +2399,11 @@ The standalone test tangler script
 
 
 <<check strings expansion>>=
-#!/usr/bin/perl -w
+#!/usr/bin/perl 
 
     $default_target = '*';
-
+    #$default_target = 'chunk 1';
+    #$default_target = 'MOLLY.pl module';
     <<tsort sub in perl>>
 
     open LITSOURCE, "< $ARGV[0]" || die "could not open the file to tangle\n";
@@ -2061,55 +2460,60 @@ The standalone test tangler script
 
 <<check strings expansion>>=
 
-for $i (keys %code_chunk_splinters_raw){
+    #for $i (keys %code_chunk_splinters_raw){
+    #
+    #    #debug: - print chunks content --  seems OK
+    #    print "for key $i the content is\n", $code_chunk_splinters_raw{$i}, "\n-----------\n";
+    #
+    #}
 
-    #debug: - print chunks content --  seems OK
-    print "for key $i the content is\n", $code_chunk_splinters_raw{$i}, "\n-----------\n";
 
-}
-
-
-    # debug: print topo-sorted chunk names -- seems OK
+# debug: print topo-sorted chunk names -- seems OK
 for my $i (topological_sort( @parents_list )){ 
-
-    #print "$i\n";
-
+  print "\n-------CHUNK IS [ $i ] --------\n";
+  print $code_chunk_splinters_raw{$i}, "\n------- end of chunk --------\n\n";
 };
 
 
     # debug: this does not work now
     # Complains the "eval" in else is on an empty string
-for my $i (topological_sort( @parents_list )){ 
-    
-    $output_line .= $code_chunk_splinters_raw{$i};
+    #for my $i (topological_sort( @parents_list )){ 
+    #    
+    #    print "\n---- [$i] -----\n";
+	#$output_line .= eval ( $code_chunk_splinters_raw{$i} );
+	#$code_chunk_splinters_raw{$i}
+    #   $out =  $code_chunk_splinters_raw{$i}; 
+    #    print "..and output line now is..\n$out\n......\n\n";
+    #}
 
-}
+    #print "\n\n$output_line\n\n";
 
-$output_line .= q(print $code_chunk_splinters_raw{'*'};);
-eval $output_line;
-
- print "\n====one======\n",
- eval($code_chunk_splinters_raw{'ref2'}),
- "\n====two======\n",
- eval($code_chunk_splinters_raw{'chunk 1'}),
-"\n------three------\n",
- eval($code_chunk_splinters_raw{'*'}),
- "\n=============\n";
-
-print eval ( $code_chunk_splinters_raw{$default_target} ), "\n";
-
+    #$output_line .= q(print $code_chunk_splinters_raw{'*'};);
+    #eval $output_line;
 
 @
 
-.b. First impression ./b. - even manually the "eval prebuilt string" does not seem
-to work. Either the approach is not valid (what I missed in my primitive tests), or
-I think of it in an overcomplicated way, and in fact it's much simpler...
+Seems Perl can do (corectly) only one level of embedded vars expansion.
+Let's try to cheat it this way - by doing exactly one level at each step,
+in the topo-sort order:
 
-.i. Looks like ./i. "eval"-ed code does not come to the current "namespace" or sth:
-it evals and remains there. I.e. eval'ed vars are not available later from the calling
-namespace.
+<<check strings expansion>>=
+%out_expanded_chunks = ();
+for my $i (topological_sort( @parents_list )){ 
+    $out_expanded_chunks{$i} = $code_chunk_splinters_raw{$i};
+}    
+    
+#print $code_chunk_splinters_raw{$default_target}, "\n";
+print $out_expanded_chunks{$default_target}, "\n";
+@
+
+This is very wasteful, and may take several times the size of the tangled
+code in memory for the %out_expanded_chunks buffer.
+
 
 }}}7
+
+
 
 {{{7 .h7. Processing particular sections ./h7.
 
@@ -2123,9 +2527,19 @@ namespace.
     separate treatment
 
 .b. Version two - rewrite ./b. 
-.s. Nothing needs t be done sith the first line, can keep it as a NOP, actually. ./s.
+.s. Nothing needs t be done with the first line, can keep it as a NOP, actually. ./s.
 
-<<process chunk title - tangler -TWO>>=
+
+
+<<process chunk title - tangler>>=
+
+    $current_chunk_name = $1;
+    $code_chunk_splinters_raw{$current_chunk_name} .= " ";
+
+@
+
+
+<<process chunk title - tangler - TWO>>=
 
     $current_chunk_name = $1;
     $code_chunk_splinters_raw{$current_chunk_name} .= "" . " q( " ;
@@ -2133,7 +2547,7 @@ namespace.
 @
 
 
-<<process chunk title - tangler>>=
+<<process chunk title - tangler - ONE>>=
     # placeholder
     $current_chunk_name = $1;
     unless (defined $code_chunk_splinters_raw{$current_chunk_name} ) {
@@ -2148,12 +2562,20 @@ namespace.
 
     ..then append the closing symbols of the quoted string, poss. reset some vars.
 
+<<process end of code chunk - tangler>>=
+
+    $code_chunk_splinters_raw{$current_chunk_name} .= " ";
+@
+
+
+
+
 <<process end of code chunk - tangler - TWO>>=
 
     $code_chunk_splinters_raw{$current_chunk_name} .= ' );' . "\n";
 @
 
-<<process end of code chunk - tangler>>=
+<<process end of code chunk - tangler - ONE>>=
     # placeholder
     $code_chunk_splinters_raw{$current_chunk_name} .= ' );' . "\n";
 
@@ -2170,6 +2592,12 @@ namespace.
     (b) I did not "chomp" the line, so the "\n" should be present
 
 <<process chunk body - tangler>>=
+
+    $code_chunk_splinters_raw{$current_chunk_name} .=  $_;
+
+@
+
+<<process chunk body - tangler - ONE>>=
 
 $code_chunk_splinters_raw{$current_chunk_name} .= $_;
 
@@ -2194,6 +2622,23 @@ $code_chunk_splinters_raw{$current_chunk_name} .= $_;
     .pre. $current_chunk =  $current_chunk-1 . $chunk_ref . $current_chunk_2 ./pre. 
     in buffer_string_2
 
+<<process chunk ref - tangler>>=
+
+    $chunk_ref_name = $1;
+    $code_chunk_splinters_raw{$current_chunk_name} .= " " . 
+	$code_chunk_splinters_raw{$chunk_ref_name} . " ";
+
+    unshift @parents_list, ($current_chunk_name, $chunk_ref_name);
+
+@
+
+.b. This does not seem to be correct ./b. as there is no .i. interpolation ./i. if I simply
+insert the reference in the main text.
+OK that I generate the parents list, but .i. interpolation ./i. must happen
+   
+
+------------------------------------
+
 <<process chunk ref - tangler - TWO>>=
 
     $chunk_ref_name = $1;
@@ -2206,7 +2651,7 @@ $code_chunk_splinters_raw{$current_chunk_name} .= $_;
 @
 
 
-<<process chunk ref - tangler>>=
+<<process chunk ref - tangler - ONE>>=
     # placeholder
     $chunk_ref_name = $1;
 
@@ -2218,6 +2663,7 @@ $code_chunk_splinters_raw{$current_chunk_name} .= $_;
 
     unshift @parents_list, ($current_chunk_name, $chunk_ref_name);
 @
+
 
 }}}7
 
@@ -2665,7 +3111,7 @@ while ( $string =~ m!\G(.*?)<\<(.*?)>\>!gs) {
 
 
 #--------------------------------
-{{{3 .h3. Weaver ./h3.
+{{{3 .h3. WEAVER ./h3.
 #--------------------------------
 
 
@@ -2930,10 +3376,19 @@ d/ http://www.pageresource.com/dhtml/ryan/part4-1.html - another tutorial
 
   #----SETTING FORMATTING STRINGS-----------
   
-$html_head = <<head_end;  
+$html_head = <<head_end_1;  
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" /> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+
+head_end_1
+
+#switch on ASCIIMathML.js library if enabled in template options:
+if ($enable_ASCIIMathML) {
+$html_head .= "\n" . qq(<script type="text/javascript" src="$path_to_ASCIIMathML"></script>) . "\n";
+    }
+
+$html_head .= <<head_end;
 
 <<JS script functions>>
 <<stylesheet>>
@@ -2994,9 +3449,18 @@ $code_frameset_end = "</fieldset></pre>\n";
 {{{5 .h5. JS functions ./h5.
 #----------------------------------------
 
-<<JS script functions>>=
-<script language="javascript">
+In my attempts to insert ASCIIMathML.js, I have tried some variations of
+math sections markup (with "a m a t h" -- "e n d a m a t h" words and
+with backquotes) -- but the stinking lib insists on garbling my file, as
+sth triggers it on earlier.
 
+So a next step is to change regexps inside the Javascript lib and forse it
+to sane markups. Probably by adding ancoring the key word to the beginning
+of the line and/or insisting that it is there alone.
+
+<<JS script functions>>=
+
+<script language="javascript">
 
 function toggleDiv(divid) {
 var el = document.getElementById(divid);
@@ -3541,7 +4005,7 @@ Now the regexps to cut out "#--------" lines and substitute "dot-notation" with 
 		s/\.(\/?)div\./<$1div>/g;
 		s/\.br\./<br>/g;
 		s/\.p\./<p>/g;
-
+		s/\.sp\./&nbsp;/g;
 
 		s/\.(\/?)tab\./<$1ul>/g;	# "tabbing" with "ul"
 
@@ -3574,6 +4038,8 @@ tags (slow and not nice on your fingers, though). You might need to use them als
 tag conntains some options, and so is not of generic simple type.
 
 <<body HTML formatters>>=
+
+
 		# generic for all tags with options
 		s!\.&lt;\. !<!g;
 		s! \.&gt;\.!>!g;
@@ -3608,6 +4074,10 @@ It is very convenient and I keep large manuals as folding HTML documents.
 <<body HTML formatters>>=
 	elsif( $weave_markup eq "rawHTML" ) {	# if the doc chunks marked up with real HTML
 		s!^#-----.*!!;
+
+	      #s/^{{{\d+(.*)$/$1/;	# - eliminate vim folding markup, start 
+					# - dummy, as it's killed in "headings" processing 
+	      s/^}}}\d+//;	# - eliminate vim folding markup, end
 
 
 	      # Paragraphs and line breaks are automatic now:
@@ -3890,8 +4360,127 @@ End of the project file
 }}}3
 
 
-#------------------------------------------------------
-{{{3 .h3. ADD-ON: Context diffs and sections editing ./h3.   
+
+#-------------------------------------------------------------
+{{{3 .h3. ADD-ON: example of additional markup - dotHTML - change unfinished./h3.
+#-------------------------------------------------------------
+
+.i. This subsection is a good example of the "out-of-order" processing that is
+enabled in Literate Programming. Pieces for this subsection come from different
+parts of the script and are laid out logically rather than in the order imposed
+by the machine ./i.
+
+.b. .i. Notes ./i. ./b.
+.ul.
+Implementation of a simple "dotHTML" markup  in which angle brackets are substituted
+with dots for some of the commonest HTML tags (to speed up typing and eliminate typos).
+
+To add your own markup, such as "wiki" or one of the "markdowns", copy this section
+and adjust contents. The idea is that MOLLY iterates over documentation sections
+line by line, so your filter can use regular expressions for a line-by-line processing
+of the documentation chunk text.
+
+Make sure your new "markdown" does not interfere with the 3 major escapes used in 
+the "mollified" Literate Source file: the double angle brackets and the "at" symbol
+(imposed by "noweb" tools markup) and the double backticks ( MathML interpretation
+if you enable it) plus words "a m a t h" and "e n d a m a t h" without spaces btw letters.
+./ul.
+
+
+.b. .i. ...unfinished... ./i. ./b.
+
+}}}3
+
+
+#-------------------------------------------------------------
+{{{3 .h3. ADD-ON: MathML inside Molly -- OK ./h3.
+#-------------------------------------------------------------
+.ul.
+.i. STATUS ./i. - Ok, but may be brittle if escapes (double backticks)
+get in conflict with the target prog language or some "markdown" 
+introduced later into Molly.
+
+Also - may have lost LaTex functionality because of my need to
+preserve $ for programming language use.
+
+.b. WILL NEED TO DISTRIBUTE THE MODIFIED LIBRARY NOW with Molly ./b.
+
+./ul.
+
+.b. MathML and Molly -- inclusion of ASCIIMathML.js ./b.
+
+Let's test if it works by adding some formulae here:
+.b. I changed the ASCIIMathML.js to use .i. double backticks ./i. as escapes ./b.
+So strings wrapped in double-backticks or chunks of text with formulae inside
+"a m a t h" .... "e n d a m a t h" are the only ones that should be interpreted.
+
+NOTE: they appear in blue, so errors, if the math lib picks up other parts of 
+your LitProg file unnecessarily and mangles them, one could see it with
+"expand all" and checking for blue insertions.
+
+NOTE 2: the math lib stops working between the "pre" - "/pre" tags
+
+NOTE 3: Rolling the mouse over the interpreted formula will display
+a baloon with the ascii coding of the expression (very convenient)
+
+.ul.
+Let's try some interesting formulas: ``E=m c^2``
+and ``e^(i pi)=-1`` 
+and ``AA x in CC (sin^2x+cos^2x=1)`` 
+and one more: ``sum_(i=1)^n i^3=((n(n+1))/2)^2``
+
+(add your own -- note that text-tokens are only recognized if separated by spaces)
+./ul.
+OK, here we are - in between 2 math sections
+
+.ul.
+
+amath
+Example: Solving the quadratic equation.
+Suppose a x^2+b x+c=0 and a!=0. We first divide by \a to get x^2+b/a x+c/a=0. 
+
+Then we complete the square and obtain x^2+b/a x+(b/(2a))^2-(b/(2a))^2+c/a=0. 
+The first three terms factor to give (x+b/(2a))^2=(b^2)/(4a^2)-c/a.
+Now we take square roots on both sides and get x+b/(2a)=+-sqrt((b^2)/(4a^2)-c/a).
+
+Finally we move the b/(2a) to the right and simplify to get 
+the two solutions: x_(1,2)=(-b+-sqrt(b^2-4a c))/(2a) 
+endamath
+
+./ul.
+
+..and now let's check some LaTeX constants:
+.ul.
+.pre. \int .sp. \oint .sp. \partial .sp. \nabla ./pre. 
+``\int`` .sp. ``\oint`` .sp. ``\partial`` .sp. ``\nabla``
+.pre. \pm .sp. \emptyset .sp. \infty .sp. \aleph ./pre.
+``\pm`` .sp. ``\emptyset`` .sp. ``\infty`` .sp. ``\aleph`` 
+.pre. |\ldots| .sp. |\cdots| ./pre.
+``|\ldots|`` .sp. ``|\cdots|`` 
+.pre. |\ | .sp. |\quad| .sp. \diamond ./pre.
+.sp. ``|\ |`` .sp. ``|\quad|`` .sp. ``\diamond`` 
+./ul. 
+
+.i. .b. end of math test ./b. ./i.
+
+.s. .b. A BIG PROBLEM ./b. is that the rest of the file IS STILL PROCESSED
+by the stupid script (!!)
+So it garbles code sections etc. creating pseudo subscripts
+The "automatic math" recognition is not there 
+POSSIBLE SOLUTION:
+(a) fall back on "backticks" or (b) filter and feed only math subsections
+to the stupid library?? Is it possible? - it's happening on the client side.
+So, not.
+
+.b. Moved the math section down ./b. - still the whole file is garbled, and
+all underscores converted into subscripts etc.
+./s. ---- sort of solved for now
+
+}}}3
+
+
+#---------------------------------------------------------------------------------------
+{{{3 .h3. ADD-ON: Context diffs and sections editing -- not implemented ./h3.
 #------------------------------------------------------
 
 

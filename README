@@ -1,4 +1,6 @@
 
+WHAT IS MOLLY?
+
 Files in this repository relate to "MOLLY", a MO-dule for LI-terate programming.
 Technically, it is a "weaver" which can create "folding html" documents on the fly,
 working either from command line or as CGI under a developer's personal web server.
@@ -8,13 +10,33 @@ The module is a simple script written in core perl, no extra modules are needed.
 Full use for Literate Programming will require installing "noweb" tools by Norman
 Ramsey (see documentation). At least for now ;))
 
+MOLLY also allows for the use of MathML (via a great third-party javascript library),
+i.e.  mathematical expressions typed in a simple ASCII notation will be turned
+into fully-formatted MathML output to get displayed by Firefox (or other
+MathML-aware browsers) on the fly.
+
+THE FILES IN THE PROJECT:
+
+"MOLLY.html" is the extracted folding html documentation for the project.
+Get and read it first. Make user JavaScript is enabled in your browser.
+"eeerotate.jpg" is an illustration for the file.
+
 "MOLLY.weave" is a literate source file for the project, one main project file
 which includes all documentation and code, tests, todo and bugs subsections etc.
 
-"MOLLY.pl" is the extracted perl module.
-"MOLLY.html" is the extracted folding html documentation for the project.
+"MOLLY.pl" is the pre-extracted perl module.
 
-Please, get MOLLY.html first and read it. Make sure JavaScript is enabled in your 
-browser.
+"ASCIIMathML.js" is a slightly modified JavaScript library that enables
+MathML inside your weaved HTML file. If you wish to use MathML in the project, 
+get it as well AND enable the switches in the header of your template file.
+
+"new_project_template.weave" is a skeleton file to copy and use when you
+start a new project. Rename it preserving the file extension (or set a new
+file extension in config at the top of it -- see MOLLY documentation)
+It can be solf-linked to another name, "new_project_template.tangle" if
+you also wish to tangle through MOLLY for speed during development
+
+Please, get MOLLY.html first and read it. Again, make sure JavaScript is
+enabled in your  browser.
 
 The script is licensed under GPL version 3
