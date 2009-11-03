@@ -7,7 +7,7 @@
 #$print_toc=1;	# default is to print
 
 # should we keep TOC expanded? "block":"none"
-$toc_expanded="none";	# default is to unfold
+#$toc_expanded="none";	# default is to unfold
 
 # should we keep Chunks Index expanded? "block":"none"
 #$ind_expanded="none";	# default is to keep folded
@@ -22,7 +22,7 @@ $toc_expanded="none";	# default is to unfold
 
 # should we enable MathML via ASCIIMathML.js library? 1:0
 #$enable_ASCIIMathML = 0; #default is to disable as it slows Molly down a lot
-#$enable_ASCIIMathML = 1;
+$enable_ASCIIMathML = 1;
 
 # If yes, what is the full path to the lib?
 # CAN BE: (a) local "/full/path/from/root/to/ASCIIMathML.js" or 
@@ -55,7 +55,12 @@ $toc_expanded="none";	# default is to unfold
 do "MOLLY.pl";
 exit;
 __DATA__
-#---------------start of script-------------
+#-----------------------start of script---------------------------
+#-----------------------------------------------------------------
+#-----------------------------------------------------------------
+
+
+
 
 .<. center .>. .b. Licensing ./b.
 MOLLY is licensed under GNU Public License version 3. .<. /center .>.
@@ -959,47 +964,51 @@ substitute all inclusions of double backticks to sth else.
 .i. The most common reason users put forward for the continued use of (La)TeX in this day 
 is its facility in dealing with mathematical notation. However today much .b. simpler HTML ./b. 
 (which is often further reduced to "markdown" level) if .b. used with MathML ./b. can cover 
-most of such uses ./i.
+most of such needs./i.
 
-1. To enable MathML one needs to use a compliant browser. Currently MathML is built in
+.b. 1 ./b.. To enable MathML one needs to use a compliant browser. Currently MathML is built in
 Firefox, or it can be enabled in Internet Explorer with a (free) plugin.
 Support for MathML inside Opera is incomplete.
 
-2. To enable MathML while dinamically creating the folding-html file, I use an LGPLed
+.b. 2 ./b.. To enable MathML while dynamically creating the folding-html file, I use an LGPLed
 Javascript library called "ASCIIMathML.js" from 
 .a. http://www1.chapman.edu/~jipsen/mathml/asciimath.html ./a.
-(a home page), while only the library itself can be copied from
+(the home page), while only the library itself can be copied from
 .a. http://www1.chapman.edu/~jipsen/mathml/ASCIIMathML.js ./a.
 
-3. I had to change escape symbols in the library not to conflict with programming
+.b. 3 ./b.. I had to .b. change escape symbols ./b. in the library not to conflict with programming
 symbols - now it's double backticks instead of single ones -- and change config option
 enabling "preservation of $ and $$"
 Therefore a copy of modified library is distributed with the Molly script.
-The default location is in the same directory as the Molly.pl.
+The default location for Molly to work with is in the same directory as the Molly.pl.
+Adjust configuration as needed at the top of your script.
 
-4. The use of MathML must be enabled in the "mollifying" template at the top of your
+.b. 4 ./b.. The use of MathML must be .b. enabled in the "mollifying" template ./b. at the top of your
 Literate Project file, and the path to the ASCIIMathML.js added. See the config. 
-template subsection.
+template subsection above
 
 
-5. This javascript library allows a user to type math formulas in ASCII notation
-and possibly with LaTeX constants.
+.b. 5 ./b.. This javascript library allows a user .b. to type math formulas in simple calculator-
+like ASCII notation with LaTeX constants ./b. if needed.
 
 The interpreted parts of the text must be either:
-(a) .b. between "a m a t h" ...... "e n d a m a t h" tags (no brackets). ./b. The script then
+
+(a) .b. .i. between "a m a t h" ...... "e n d a m a t h" tags (no brackets). ./i. ./b. The script then
 tries to differentiate between ordinary text and math expressions and renders the latter
 dynamically as MathML - which is then displayed by your browser.
 
-If it gets confused (e.g. because you used underscores somewhere), you can 
-(b) .b. escape (the math expressions only) with DOUBLE BACKTICKS around them. ./b.
+If it gets confused etc. (e.g. because you used underscores somewhere), you can 
+
+(b) .i. .b. escape (the math expressions only) with DOUBLE BACKTICKS around them. ./b. ./i.
 
 
-Some examples, quite intuitive:
+
+.br.
+.b. 6 . Some examples ./b. 
+..are quite intuitive:
 .ul.
 Let's try some interesting formulas: 
-.pre.``E=m c^2`` ./pre. ``E=m c^2``
-
-and .pre. ``e^(i pi)=-1`` ./pre. ``e^(i pi)=-1``
+.pre.``E=m c^2`` ./pre. ``E=m c^2`` and .pre. ``e^(i pi)=-1`` ./pre. ``e^(i pi)=-1``
 
 and .pre. ``AA x in CC (sin^2x+cos^2x=1)`` ./pre. ``AA x in CC (sin^2x+cos^2x=1)``
 and one more: .pre. ``sum_(i=1)^n i^3=((n(n+1))/2)^2`` ./pre. ``sum_(i=1)^n i^3=((n(n+1))/2)^2``
@@ -1012,7 +1021,7 @@ will appear showing the original ASCII markup for the expression. Very nice.
 rendering the expressions and can be used as a quick escape tool when you are writing
 your page.
 
-6.  ASCIIMathML Markup - reference 
+.b. 7 .  ASCIIMathML Markup - reference ./b. 
 
 The full set of ASCII coding conventions for the library can be found on its
 home page.
@@ -1027,6 +1036,44 @@ appears  with the ascii source in it.
 
 There is an on-line tutorial in the use of ASCII math notation  for the library at
 .a. http://www.wjagray.co.uk/maths/ASCIIMathTutorial.html ./a.
+and .a. http://www.wjagray.co.uk/maths/ASCIIMathMLinfo.html ./a.
+
+.b. One more URL ./b.
+"an on-line ASCIIMathEditor" is here
+.a. http://www1.chapman.edu/~jipsen/mathml/asciimatheditor/ ./a.
+Works in my case (firefox on Linux) if I save the page ("full page") and use it from
+local files. Could immediately see what I am typing, next copy and paste expressions
+into my target file.
+Useful. Just delete the spy from google, "the urchin tracker" from the page ;)) .
+
+
+.b. 8 . To distribute your HTML-weaved folding files with MathML notation ./b.
+afterwards you'll have to provide a copy of the JavaScript library with the weaved html 
+file, as well as any images you might have used there.
+This can be done by creating .b. *.mht archives ./b. from them.
+
+Note that because I had to modify escapes in the library for it not to clobber single 
+backticks and $ symbols, so common in programming, one has to provide a copy of the 
+modified lib with your HTML work.  You cannot simply link to any copy ot ASCIIMathML.js 
+found on the Net.
+
+Internet Explorer has built-in support for *.mht (as it is a MSoft standard).
+For Firefox the problem is solved easily by installing either
+"UnMHT" add-on: .a. http://www.unmht.org/unmht/en_index.html ./a.
+or "MAF" add-on: .a. http://maf.mozdev.org/ ./a.
+
+(MAF is a Mozilla zip-comression of page or several with all images etc into one
+    archive file; MHT is a base64-encoded concatenation of elements of a page
+    and its images, scripts etc.)
+
+So: (a) weave an HTML file from Molly
+    (b) open it in IE or Firefox with MHT add-on, and 
+    (c) save it as one file.
+
+This will allow you to distribute your MathML marked files with included images, plots
+etc. in a convenient manner.
+If you are strictly Firefox-based, you can also use the open zip-based MAF format.
+
 
 }}}3
 
@@ -4159,7 +4206,8 @@ Page and the outer formatting table:
 <<print out>>=
 
   # begin the page:
-  print "<html>  $html_head <body>  $html_body_table \n";
+  #print '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">', "\n";
+  print "<html>\n  $html_head\n <body>  $html_body_table \n";
 
   # print out the TOC, the Chunks Index, the output buffer and close the page.
 
@@ -4393,9 +4441,9 @@ if you enable it) plus words "a m a t h" and "e n d a m a t h" without spaces bt
 
 
 #-------------------------------------------------------------
-{{{3 .h3. ADD-ON: MathML inside Molly -- OK ./h3.
+{{{3 .h3. ADD-ON: MathML inside Molly -- tests OK ./h3.
 #-------------------------------------------------------------
-.ul.
+
 .i. STATUS ./i. - Ok, but may be brittle if escapes (double backticks)
 get in conflict with the target prog language or some "markdown" 
 introduced later into Molly.
@@ -4405,9 +4453,11 @@ preserve $ for programming language use.
 
 .b. WILL NEED TO DISTRIBUTE THE MODIFIED LIBRARY NOW with Molly ./b.
 
-./ul.
 
-.b. MathML and Molly -- inclusion of ASCIIMathML.js ./b.
+
+#--------------------------------------------------------------------------
+.h4. MathML and Molly -- inclusion of ASCIIMathML.js -- testing - OK./h4.
+#--------------------------------------------------------------------------
 
 Let's test if it works by adding some formulae here:
 .b. I changed the ASCIIMathML.js to use .i. double backticks ./i. as escapes ./b.
@@ -4463,7 +4513,11 @@ endamath
 
 .i. .b. end of math test ./b. ./i.
 
-.s. .b. A BIG PROBLEM ./b. is that the rest of the file IS STILL PROCESSED
+#------------------------------------
+.h4. Two problems - solved ./h4.
+#------------------------------------
+
+.s. .b. 1.  A BIG PROBLEM ./b. is that the rest of the file IS STILL PROCESSED
 by the stupid script (!!)
 So it garbles code sections etc. creating pseudo subscripts
 The "automatic math" recognition is not there 
@@ -4475,6 +4529,67 @@ So, not.
 .b. Moved the math section down ./b. - still the whole file is garbled, and
 all underscores converted into subscripts etc.
 ./s. ---- sort of solved for now
+
+.b. 2. a bug? ./b.. I wrote:
+.ul. NOTE also that once pages have been rendered dynamically they can be saved
+as HTML from your browser and then distributed - no library is needed any more.
+The created page remains self-sufficient HTML, and if your browser knows how to display
+MathML, the formatting will be preserved. If not, the browser will fall back to what
+you typed in ASCII, (which is also often readable, but..).
+./ul.
+
+.b. Seems like a bug in my Firefox ./b. - it cannot see any previously rendered pages
+after saving-reopening them, js library or no library.
+
+.b. Tried ./b. to embed the lib into MOLLY.pl - succeeded after cleaning out all
+C-style comments (/* ....*/) 
+The generated html file loaded -- in 8-10-.. seconds -- and rendered MathML inside
+Firefox.
+However saving caused THE SAME RESULT - it was not reloadable, readable after saving
+from Firefox.
+A bug with Firefox, it looks like ;(((((
+
+..Undid all changes now, should be as before, the lib is external.
+
+.b. Checked agains a "torture page" from mozilla ./b.
+.a. http://www.mozilla.org/projects/mathml/demo/texvsmml.xhtml ./a.
+saves and displays OK. Is it the library then??!
+
+.i. one more page about installing math fonts  on Linux etc (oldish) ./i.
+.a. http://groups.csail.mit.edu/mac/projects/intelligent-book/mathml/ ./a.
+
+.b. ANYWAY when the HTML doc is saved from "MOLLY.weave" and is accompanied with
+a copy of the library, it all works OK in Firefox, however ./b.
+Just do not mix the "single-backquoted" default copies of the ASCIIMathML.js library
+and our customized ones. Use the correct version for your markup.
+
+.b. note on lib versions and distribution./b. 
+correct it in the template. Referring to the copy of the lib on its
+home site will get WRONG lib for my "double-backticks" markup. It will work OK for 
+a m a t h tags though. But will garble any included code with $'s (such as shell or
+perl or php or ........)
+Make available your own copy of the lib, that is the idea.
+
+"Opera" browser when it creates an *.mht archive out of the weaved HTML doc does
+correctly include a base64-encode copy of the custom lib from the same dir.
+So my hope that one could distribute the stuff in one piece seems justified.
+I cannot view *.mht on Linux (as Opera fails MathML, and Firefox ignores the format),
+but I can distribute it as such for IExplorers with a MathML player plugin installed,
+hopefully.
+
+Q. Does Firefox on Windows understand *..mht ??
+A. Check .a. http://www.unmht.org/unmht/en_index.html ./a.
+.b. .i. Problem solved by installing UnMHT firefox add-on ./i. ./b.
+.a. http://www.unmht.org/unmht/en_index.html ./a.
+Now it can open weaved MathML files + custom library, save them as one "multipart
+file", reopen correctly, and also reopen the *.mht created blindly by Opera.
+
+So this is how it can/should be used for now.
+
+.b. P.S. ./b. One more relevant Mozilla add-on is MAF ("Mozilla Archive files, zipped archives
+of pages and their elements)
+.a. http://maf.mozdev.org/ ./a.
+
 
 }}}3
 
