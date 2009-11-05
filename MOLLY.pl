@@ -66,7 +66,7 @@ $weave_markup = $weave_markup || "rawHTML"; # default is "rawHTML"
 # enable MathML interpretation? 1 : 0
 $enable_ASCIIMathML = $enable_ASCIIMathML || 0;
 # If enabled, set the path; default is local in current dir
-$path_to_ASCIIMathML = $path_to_ASCIIMathML || "ASCIIMathML.js";
+$path_to_ASCIIMathML = $path_to_ASCIIMathML || "ASCIIMathML_with_modified_escapes.js";
 
   # -- MAIN DESPATCHER ----
 
@@ -656,7 +656,8 @@ while (<FF>) {
 #3. print out the TOC, the Chunks Index, the output buffer and close the page.
 
   # begin the page:
-  print "<html>  $html_head <body>  $html_body_table \n";
+  #print '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">', "\n";
+  print "<html>\n  $html_head\n <body>  $html_body_table \n";
 
   # print out the TOC, the Chunks Index, the output buffer and close the page.
 
