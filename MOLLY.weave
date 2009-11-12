@@ -109,8 +109,11 @@ article, such as the one below or .a. http://en.wikipedia.org/wiki/Literate_Prog
 {{{2 .h2. THE CHUNK TO TANGLE BY  DEFAULT ./h2.
 #------------------------------------------------------------
 
-
 <<*>>=
+<<seek-peek tangler>>
+@
+
+<<*-dis>>=
 <<MOLLY.pl module>>
 @
 
@@ -136,6 +139,7 @@ article, such as the one below or .a. http://en.wikipedia.org/wiki/Literate_Prog
 
 }}}2
 
+.h2. ./h2.
 
 #-------------------------------------------------------------------------------------
 {{{2 .h2. PART I ----------- History and concepts. "Management of thinking" ------------ ./h2.
@@ -479,6 +483,7 @@ else {
 
 }}}2	    
 
+.h2. ./h2.
 
 #------------------------------------------------------------------------------
 {{{2 .+h2. PART II ------------ HOW TO USE MOLLY.pl ------------ ./h2.
@@ -486,7 +491,7 @@ else {
 
 
 #--------------------------------------------------------
-{{{3 .h3. My workflow - literate programming with Molly ./h3.
+{{{3 .+h3. My workflow - literate programming with Molly ./h3.
 #--------------------------------------------------------
 
  .<. img src=eeerotate.jpg align=right hspace=5 width=200 border=2 .>.
@@ -1472,6 +1477,8 @@ Use .b."mollify"./b. as  a technical term (insert MOLLY.pl invocation into the L
 }}}2
 
 
+.h2. ./h2.
+
 #------------------------------------------------------------------
 {{{2 .h2. PART III ------------ LITERATE SOURCE OF THE SCRIPT ------------ ./h2.
 #-------------------------------------------------------
@@ -1501,7 +1508,7 @@ Use .b."mollify"./b. as  a technical term (insert MOLLY.pl invocation into the L
 #----------------------------------------------
 
 #-------------------------------
-{{{4 .h4. versions - changes - ideas ./h4.
+{{{4 .h4. Ideas - versions - changes./h4.
 #-------------------------------
 
 Current version:
@@ -1710,6 +1717,31 @@ Should be easy enough ;))
 
 }}}5
 
+#-------------------------------------------
+{{{5 .h5. Editor highlighting, Perl POD and Literate Markup ./h5.
+#-------------------------------------------
+
+The editor highlighting and literate marks  - is .i. bullshit ./i.
+The way I danced around it in Molly is half-insane.
+
+.b. SO: the solution might be ./b. to configure POD marks as 
+alternative literate markup boundaries, and/or filter the shit
+substituting for the real ones in the "pass-through tangler".
+Will be Ok at least for quick development, won't it?
+
+The namess of the POD sections are the names of literate chunks, then.
+
+I coould try "=pod Name of the Chunk"
+as simple PODs stand for nothing
+
+	(a) need empty lines around all POD markers
+	(b) =pod is ignored unless there is a =meaningful_mark
+	before
+	(c) =pod SOME TEXT -- text is ignored
+
+So, I could use it, it seems? OR: is there any sense in that??
+
+}}}5
 
 
 
@@ -1920,6 +1952,8 @@ server as well as a folding weaver and a tangler.
 
 }}}3
 
+
+.h3. ./h3.
 
 #------------------------------------------------------
 {{{3 .h3. MOLLY.pl - top of the script ./h3.
@@ -2215,7 +2249,7 @@ if ( $0 =~ m!\.$weave_extension$! ) {
 
 	    print "<html><body>\n";
 	    print "a CGI call for weaving<br>\n";
-	    print "</body></html";
+	    print "</body></html>";
 	}
 
 
@@ -2320,6 +2354,8 @@ end_of_print
 }}}3
 
 
+.h3. ./h3.
+
 #---------------------------------
 {{{3 .h3. TANGLER ./h3.
 #---------------------------------
@@ -2350,7 +2386,7 @@ end_of_print
 
 
 #---------------------------------------
-{{{4 .h4. pass-through tangler ./h4.
+{{{4 .h4. pass-through tangler (for "noweb" by Ramsey), default now ./h4.
 #---------------------------------------
 
     Passes the request to "notangle" from the "noweb" literate tools suite.
@@ -2442,389 +2478,600 @@ exit;
 }}}4
 
 
-
-
-#-----------------------------------------------------------
-{{{4 .h4. Built-in tangler ./h4.
-#-----------------------------------------------------------
-
-
 #------------------------------------------------------
-.h5. tangler around "tsort" and string expansion ./h5.
+{{{4 .h4. seek-peek tangler (working) ./h4.
 #------------------------------------------------------
 
 
-
-#-------------------------------------
-{{{6 .h6. Main tangler framework ./h6.
-#-------------------------------------
-
-{{{7 .h7. Generalities ./h7.
-
-This version is line-by-line, not "strings in memory" (another option/version
-to test next, possibly)
-
-Need to test 3 things:
-    .ol. .li. name of a chunk equal to a multiword string -- DONE
-    ./li. .li. need to eval the strings -- DONE
-    ./li. .li. regexp to pick up pieces of a line cleanly -- START with ONE ref per line
-    ./li. .li. \n during line-by-line appending needed??
-    ./li. ./ol.
-
-.b. OK, philosophy ./b.
-    Perl allows one to have multi-word strings with "line noise" symbols .i. as variable names ./i.
-    and as the names of the keys of a hash.
-    Therefore, I am not going to rename the code chunks at all: I'll keep the literal text of the
-    chunk as the value of a var, whose name is its title (a free-flowing phrase, too).
-    I'll keep a hash like that, too.
-    I will next interpolate the literal text of the code chunk interspersed with 
-    .pre. "'some code text' . $name_of_another_chunk . 'some more text'" ./pre.
-    with "eval" when printing the chunk finally out - and that will give me the sought outcome,
-    the properly re-arranged text of the whole program.
-
-    Now, for this interpolation to happen, perl must know values/definitions of all included vars
-    before it attempts the final "eval".
-    That will be done with the "topological sort" thingy, which will help me to form another
-    string, of the raw splinters without any refs in them.
-
-    The final output then will be
-    .pre. eval($raw_splinters);
-    print eval($name_of_my_root_chunk); ./pre.
-
-    .i. It is quite possible ./i. to do tangling with a half dozen other methods, but I think this
-    monstrocity will save me some coding: I relegate all unravelling and interpolation to the
-    language interpreter. 
-    Let the box work, and me relax. Laziness is the supreme virtue ;))))
+#------------------------------------------------------
+{{{5 .h5. seek-peek tangler (preliminaries, about) ./h5.
+#------------------------------------------------------
 
 
-.b. .i. Memory usage ./i. ./b. will be equal to the size of all program chunks in a given Literate
-Source project file (plus whatever perl adds on its own internally) -- maybe double of that because
-of interpolation, but with single project files in 10MiB are a rarity, while computer RAM is now
-routinely comes to 1-2 GiB, this is not a problem at all
+<b>The idea is to:</b>
 
-}}}7
+(a) run first pass over the file collecting a list of 
+	chunk addresses
 
-
-{{{7 .h7. Results of tests ./h7.
-
-.b. First impression ./b. - even manually the "eval prebuilt string" does not seem
-to work. Either the approach is not valid (what I missed in my primitive tests), or
-I think of it in an overcomplicated way, and in fact it's much simpler...
-
-.i. Looks like ./i. "eval"-ed code does not come to the current "namespace" or sth:
-it evals and remains there. I.e. eval'ed vars are not available later from the calling
-namespace.
-
-
-.b. Second look and impression ./b.
-My third version (not '..-ONE' or '..-TWO') drops accumulation of strings and just
-creates a direct, unquoted value in %code_chunk_splinters_raw
-This all works fine - substituting .b. one level only ./b. of the variables.
-Second level vars are broken, even when all values are inside the hash assembled in full.
-
-.i. .b. this is wrong ./b. ./i. as the following test shows:
-
-<<perl auto-expansion of embedded vars>>=
-
-$hash{'a'} = "hehehe";
-$hash{'b'} = "hihihi" . $hash{'a'} . '-end_b-';
-$hash{'c'} = "hahaha" . $hash{'b'} . '-end_c-';
-$hash{'d'} = "ohhoho" . $hash{'c'} . '-end_d-';
+(b) run second pass recursively, already knowing where to read the
+	bits and pieces from 
+	
+(c) Filters could apply to some chunks for:
+	/weaving/
+	* feeding the text to a markdown lang
+	* cutting sth out for a math processor 
+		(e.g. mimeTeX, or to ASCIIMathML.js)
+		/tangling/
+	* for conditional tangling of certain chunks
+	(e.g. those whose names start with DEBUG, negative
+	or the opposint, CLEAN, for a positive filtering)
+		
+This type of tangler should be fine working across <b>several literate source
+files</b>, the only requirement is that their chunk namespace should be
+flat (unique names across your whole project). 
+It can be managed by prepending the chunk names by their file IDs, for
+example.
+/* command line option to get several files and their processing is
+not implemented yet */
 
 
-print "$hash{'d'}\n";
+		
+{{{6 <h6> Geany carpings NOTES</h6>
+<b>NOTES on Geany -- offtopic</b>
+	* Geany loses bookmarks	when the proj is closed/reopened
+	* has no "folding at my marks"
+		This can be worked around, sorts of (perl POD dummy marks
+		will work), BUT then there is no way to "fold all", so
+		for largish files the feature is useless
+	  Geany loses the state of folding when closed/reopened.
+	* and has no "address range" operators (only by manual selection)
+	* If my mark is under a folded section, jumping consequentially
+		(the only way Molly knows how) will reopen all of them,
+		bringing utility of folding to nil
+	  Solution could be "named marks" ?? And a command to list them all.
+
+}}}6	  
+
+#-----------------
+{{{6<h6>Makefile</h6>
+#-----------------
+
+a small informal test for now; to be expanded to:
+    - "make" --> "help"
+    - "make target" -> for tests, tangling out parts of the project etc
+
+
+
+<<Makefile>>=
+
+all: tangle  perl-check run compare
+#-
+
+tangle:
+	./zz-seek-peek.tangle > zz.pl;
+#-
+
+perl-check:
+	perl -c zz.pl;
+#-
+
+
+run:
+	perl zz.pl zyy-test.litsource.txt >test.out;
+#-	
+
+compare:
+		fldiff zyy-test.litsource.txt test.out;
+#-
+
+ 
+@
+
+=cut
+
+}}}6
+
+#-----------------
+{{{6 <h6>todo</h6>
+#-----------------
+Now, the next step is to fix the trailing line with @
+
+<b> HOW: </b>
+I'll "tell" on each line and use as my end-of-splinter address
+the one from the previous line (i.e. just before the last line, 
+which contains the trailing rubbish).
+
+}}}6
+
+}}}5
+
+#-----------------
+{{{5 <h5>The code</h5>
+#-----------------
+
+<<seek-peek tangler>>=
+#!/usr/bin/perl 
+#use strict;
+    
+    open LITSOURCE, "< $ARGV[0]" || die "could not open the file to tangle\n";
+
+	<<pass 1>>
+	<<pass 2 and print>>
+	<<main: call the sub>>
+
+    close LITSOURCE;
 
 @
 
-It produces the expected output:
-.pre. ohhohohahahahihihihehehe-end_b--end_c--end_d- ./pre.
+"pass 1" goes through the file collecting addresses.
+
+Then "pass 2" sets a recursive sub to "untangle" the chunks with
+their included references.
+
+The "main" sets the root chunk and calls the sub
+
+I'll add command-line and CGI arguments processing later.
+
+<<main: call the sub>>=
+
+	#~ $root_chunk = "chunk 1";
+	#~ $root_chunk = "DEBUG print one reference";
+	$root_chunk = "*";
+
+	print_chunk($root_chunk); 
+
+@
+
+
+#------------------
+{{{6 <h6> PAss 1 </h6>
+#-------------------
+
+declare and initialize some vars
+
+<<pass 1>>=
+
+	<<declarations and initializations>>
+	<<while-loop and peek file ofsets>>
+
+@
+
+<<declarations and initializations>>=
+
+    my $chunk_beg_pattern = q(^<\<(.*)>\>=);
+    my $chunk_end_pattern = q(^@\s.*$);
+    my $chunk_ref_pattern = q(<\<(.*?)>\>[^=]); # can be used several times in a line
+
+    my $current_chunk_name = "";
+	my $current_chunk_start_foff = ""; # "foff" is a "file offset"
+	my %file_offsets_hash = ();
+    
+    my $line_num = 0;
+	my $previous_line_foff = 0; # "foff" is a "file offset"
+
+@
+
+
+<b>Main loop</b>
+Need to collect chunk addresses (with "tell"), and keep a hash of lists
+with addresses of all chunk continuations (if any)
+
+I'll need to push them in, and in pass 2 I'll pop them (i.e. destroy on reading), 
+and so ensure all of a split chunk is read.
+
+I see no way to keep a "list of lists", such as 
+	((chunk_1_start, chunk__1_end), (chunk_2_start, chunk_2_end))
+So, it'll be an ugly hash of references to lists (of differing lengths).
+
+<b>Anyway,</b> to deal with references to chunks from inside chunks I 
+should probably insert ("ref" "referred_chunk_name") into my 
+%file_offsets_hash during the first pass -  this pair is different from
+numeric beg-end offset pairs, and I'll start recursively teh printout of
+the chunk referred to when I detect it, in the second printing half of
+processing.
+
+
+
+#------------------
+{{{7 <h7> Ref: perl operators </h7>
+#-------------------
+
+<b>---Perl operators----</b>
+	
+<b>pos</b>
+
+<ul>
+3253   while ( $string =~ m!\G(.*?)<\<(.*?)>\>!gs) {
+3254     
+3255     $off = length($2);
+3256     $position = pos($string);
+3257     #pos($string) = $position + $off;
+3258     print "\n\t---title---\n$2 of length $off at $position \n\t----after----\n$1\n========\n";
+3259   
+3260   }
+</ul>
+
+<b>tell filehandle</b> (if omitted, the last file read)
+		
+<b>seek FILEHANDLE,POSITION,WHENCE </b>
+Sets FILEHANDLE's position, just like the fseek call of stdio . 
+FILEHANDLE may be an expression whose value gives the name of the filehandle. 
+The values for WHENCE are 0 to set the new position in bytes to POSITION,
+	
+<b>read FROM_FILEHANDLE, IN_SCALAR_BUFER_VAR_OR_STREM, LENGTH_IN_BYTES_OR_CHARS</b>
+There <b>may be problems</b> if FH is opened in non-bytes mode, or if some pragma is used
+
+-------------------
 
 }}}7
 
+#------------------
+{{{7 <h7> PAss 1: main while-loop and foffs</h7>
+#-------------------
 
 
+<i> A loop over the doc starts here </i>
+Process inside doc sections:
 
-{{{7 .h7. Main, outline ./h7.
+<<while-loop and peek file ofsets>>=
 
-
-The standalone test tangler script
-
-.b. (1) Pass 1: collect the info ./b.
-
-
-<<check strings expansion>>=
-#!/usr/bin/perl 
-
-    $default_target = '*';
-    #$default_target = 'chunk 1';
-    #$default_target = 'MOLLY.pl module';
-    <<tsort sub in perl>>
-
-    open LITSOURCE, "< $ARGV[0]" || die "could not open the file to tangle\n";
-
-    $chunk_beg_pattern = q(^<\<(.*)>\>=);
-    $chunk_end_pattern = q(^@\s*$);
-    $chunk_ref_pattern = q(<\<(.*?)>\>[^=]); # can be used several times in a line
-
-
-    $beg_ref_quote = q(\n . ${');
-    $end_ref_quote = q('} . \n);
-
-    #%code_chunks_buf = (); # accumulating chunks bodies
-    #%code_chunks_index = (); # like "goto" stack per chunk
-
-    %code_chunk_splinters_raw = ();
-    @parents_list = ();
-
-    $line_num = 0;
-
-  while (<LITSOURCE>) {
-
+ while (<LITSOURCE>) {
     $line_num++;
 
-    if ( m!$chunk_beg_pattern! .. m!$chunk_end_pattern! ) { # -- CODE CHUNKS -- 
+	# --- CODE CHUNKS -- not inside documentation section
+    if ( m!$chunk_beg_pattern! .. m!$chunk_end_pattern! ) {
 
-	if ( $_ =~ m!$chunk_beg_pattern! ) {
-	    <<process chunk title - tangler>>
-	}
-	elsif ( $_ =~ m!$chunk_end_pattern! )  {
-	    <<process end of code chunk - tangler>>
-	    }
-	elsif ( $_ =~ m!$chunk_ref_pattern! ) {
-	    <<process chunk ref - tangler>>
-	}
-	else { # chunk body: accumulate
-	    <<process chunk body - tangler>>
-	    }
+	<<chunk beginning>>
+	<<chunk ending>>
+	<<chunk reference>>
+	<<chunk body>>
+
+
     } #fi
 
+	$previous_line_foff = tell LITSOURCE;
 
   } #eliwh
 
 @
 
-
-...next, after we've collected the string, let's .b. 
-(2) topo-sort them and print out ./b.
-
-    /* debug: just print out, first of all */
-    /* debug2: print out hte topo-sorted sequence */
-    /* debug3: eval all toposorted until Target; print out the Target */
+<b>A later adjustement, actually to rid of the last line trash</b>
+	I'll do "tell" on each line and use as my end-of-splinter address
+	the one from the previous line (i.e. just before the last line, 
+	which contains the trailing rubbish). See the last var in the loop.
 
 
-<<check strings expansion>>=
+<b>First, the chunk body</b> 
+It closes the "if" opened in "chunk beginning", The rest of then are
+"elsif" clauses. 
 
-    #for $i (keys %code_chunk_splinters_raw){
-    #
-    #    #debug: - print chunks content --  seems OK
-    #    print "for key $i the content is\n", $code_chunk_splinters_raw{$i}, "\n-----------\n";
-    #
-    #}
+There's nothing to do here in pass 1; just here not to leave it
+implicit and hidden
 
+<<chunk body>>=
 
-# debug: print topo-sorted chunk names -- seems OK
-for my $i (topological_sort( @parents_list )){ 
-  print "\n-------CHUNK IS [ $i ] --------\n";
-  print $code_chunk_splinters_raw{$i}, "\n------- end of chunk --------\n\n";
-};
+        else { # chunk body
 
-
-    # debug: this does not work now
-    # Complains the "eval" in else is on an empty string
-    #for my $i (topological_sort( @parents_list )){ 
-    #    
-    #    print "\n---- [$i] -----\n";
-	#$output_line .= eval ( $code_chunk_splinters_raw{$i} );
-	#$code_chunk_splinters_raw{$i}
-    #   $out =  $code_chunk_splinters_raw{$i}; 
-    #    print "..and output line now is..\n$out\n......\n\n";
-    #}
-
-    #print "\n\n$output_line\n\n";
-
-    #$output_line .= q(print $code_chunk_splinters_raw{'*'};);
-    #eval $output_line;
-
-@
-
-Seems Perl can do (corectly) only one level of embedded vars expansion.
-Let's try to cheat it this way - by doing exactly one level at each step,
-in the topo-sort order:
-
-<<check strings expansion>>=
-%out_expanded_chunks = ();
-for my $i (topological_sort( @parents_list )){ 
-    $out_expanded_chunks{$i} = $code_chunk_splinters_raw{$i};
-}    
-    
-#print $code_chunk_splinters_raw{$default_target}, "\n";
-print $out_expanded_chunks{$default_target}, "\n";
-@
-
-This is very wasteful, and may take several times the size of the tangled
-code in memory for the %out_expanded_chunks buffer.
-
-
-}}}7
-
-
-
-{{{7 .h7. Processing particular sections ./h7.
-
-.b. We got the first line of a chunk, its title ./b.
-    # form the name and push into the hash-stack
-    # ..after checking it's not a continuation of an already def-d chunk
-    #   $current_chunk_title_ref = ${$1};
-
-    ?? - what happens in the "else" when I do not hit the "unless" clause ??
-    !! - .b. logical ERROR ./b. - a continued chunk (another 'installment') requires 
-    separate treatment
-
-.b. Version two - rewrite ./b. 
-.s. Nothing needs t be done with the first line, can keep it as a NOP, actually. ./s.
-
-
-
-<<process chunk title - tangler>>=
-
-    $current_chunk_name = $1;
-    $code_chunk_splinters_raw{$current_chunk_name} .= " ";
+	    ; # nop; here just not to hide an implicit case
+	    #~ print "."; # debug: show dots for lines 
+            }
 
 @
 
 
-<<process chunk title - tangler - TWO>>=
+<b>Next, match for a first line of a new chunk</b> (which can continue
+some previous splinters of the same chunk in the LitSource file)
 
-    $current_chunk_name = $1;
-    $code_chunk_splinters_raw{$current_chunk_name} .= "" . " q( " ;
+If a chunk begins (or continues) here, 
+	- set the current chunk name
+	-pick up its "peeked" offset in  the file 
+	- and push it in the hash of f_offs under the current chunk name
 
-@
+Hmm.. The perl "tell" gives the position after the read line, I understand.
+No adjustment is needed for the beginning chunk match, and it'll eliminate
+the title from the later output.
 
+<<chunk beginning>>=
 
-<<process chunk title - tangler - ONE>>=
-    # placeholder
-    $current_chunk_name = $1;
-    unless (defined $code_chunk_splinters_raw{$current_chunk_name} ) {
-	$code_chunk_splinters_raw{$current_chunk_name} =  "\n" . q(  $output_text{') . 
-	$current_chunk_name . q('} ) . "= q( "
-    };
+        if ( $_ =~ m!$chunk_beg_pattern! ) {
+	    $current_chunk_name = $1;
+	    $current_chunk_start_foff = tell LITSOURCE;
 
+	    push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_start_foff;
+	    #~ print "[***debug: I am chunk $1 -- I start at $current_chunk_start_foff***]\n";
 
-@
-
-.b. Secondly, if the chunk ended ./b.
-
-    ..then append the closing symbols of the quoted string, poss. reset some vars.
-
-<<process end of code chunk - tangler>>=
-
-    $code_chunk_splinters_raw{$current_chunk_name} .= " ";
-@
-
-
-
-
-<<process end of code chunk - tangler - TWO>>=
-
-    $code_chunk_splinters_raw{$current_chunk_name} .= ' );' . "\n";
-@
-
-<<process end of code chunk - tangler - ONE>>=
-    # placeholder
-    $code_chunk_splinters_raw{$current_chunk_name} .= ' );' . "\n";
-
+        }
 
 @
 
 
-.b. If it is raw code ./b.
- 
-    no refs to other chunks - i.e. if it's a pure code body line,
-    then just append it
+<b>If a chunk ends,</b> peek its end offset in the file ("f_off") Actually, not to pick
+up the closing "at" signs, get the previous line's told offset.
 
-    (a) mm.. do I need to quote and append??? Or is it OK already??
-    (b) I did not "chomp" the line, so the "\n" should be present
+.. and push it in the hash of lists
+Plus - set $current_chunk_name=""; # just in case
 
-<<process chunk body - tangler>>=
+<<chunk ending>>=
 
-    $code_chunk_splinters_raw{$current_chunk_name} .=  $_;
+        elsif ( $_ =~ m!$chunk_end_pattern! )  {
 
-@
+	    $current_chunk_end_foff = $previous_line_foff;
+	    push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_end_foff;
+	    #~ print "[+++debug: $current_chunk_name ends at off $current_chunk_end_foff++++]\n\n";
 
-<<process chunk body - tangler - ONE>>=
-
-$code_chunk_splinters_raw{$current_chunk_name} .= $_;
-
-@
-
-
-
-.b. Now: if we got a chunk ref ./b.
-    # 1. (a) append the pre-ref string to the curr_chunk_namevar
-    #   (b) .. concat the ref_chunk_namevar to it
-    #   (c) .. and concat the rest of the line
-    # 2. ...and make sure the $ref_chunk_namevar string is defined before
-    #   this chunk is processed -- for the strings based subst. and expansion.
-    #   - i.e. (a) push (parent, child) pair into a list to be topo-sorted later.
-    #   and (b) append to ..
-
-    Ok, here's a small hitch: I'd better keep bare string defs, without refs, in a
-    separate string buffer, and the composite ones in a second one.
-
-    So I'd need to generate consequtive names current_chunk-1, current_chunk-2 etc. 
-    and keep their defs in buffer_string_1, while the composite name like
-    .pre. $current_chunk =  $current_chunk-1 . $chunk_ref . $current_chunk_2 ./pre. 
-    in buffer_string_2
-
-<<process chunk ref - tangler>>=
-
-    $chunk_ref_name = $1;
-    $code_chunk_splinters_raw{$current_chunk_name} .= " " . 
-	$code_chunk_splinters_raw{$chunk_ref_name} . " ";
-
-    unshift @parents_list, ($current_chunk_name, $chunk_ref_name);
+		$current_chunk_name = "";
+            }
 
 @
 
-.b. This does not seem to be correct ./b. as there is no .i. interpolation ./i. if I simply
-insert the reference in the main text.
-OK that I generate the parents list, but .i. interpolation ./i. must happen
-   
+<b>Ok, so we put the foffs  in the (beg, end) order</b>.
+Now, "pop" will get them in the pop1 -> (end), then pop2 -> beg order
+While  shift_first -> beg, shift_second -> end. This will be the right one
+for later tangling.
 
-------------------------------------
 
-<<process chunk ref - tangler - TWO>>=
+<b>Now, the chunk refs </b>
 
-    $chunk_ref_name = $1;
-    $code_chunk_splinters_raw{$current_chunk_name} .= q( \) . ) . "\n" . 
-	q( . $code_chunk_splinters_raw{') . $chunk_ref_name . q('} . ) . "\n q(" ;
+If we get a reference, regex-split the line 
+	- set the end offset of the current chunk
+	- push it in the hash of lists
+	- figure the offset after the chunk ref
+	- push it into the hash of lists using the current chunkname
+	- IMPORTANT COMPLICATION
+		deal with the case when several chunk refs on the same
+		line are present;
+		do <i>not</i> do it for the first version of the script.
 
-    unshift @parents_list, ($current_chunk_name, $chunk_ref_name);
+for many matches on a line - 
+Here we'll have to use the \G ancor and pos and make a global regex math --
+    or repeat them in a loop until the line with matches is exhausted
 
+<<chunk reference>>=
+
+	<<chunk reference - single ref on its own line>>
+
+@
+
+This one implements the basic idea (tested, works):
+
+<<chunk reference - single ref on its own line>>=
+
+	elsif ( $_ =~ m!$chunk_ref_pattern!g ) {
+
+	# simplest case: one match on its own line
+		# DEBUG printouts:
+		#~ $match_position_in_line = pos($_);
+		#~ print "\t**chunk ref $1 at pos $match_position_in_line in line**\n";
+
+	# mark the foffs of the chunk so far
+	$current_chunk_ref_foff = $previous_line_foff;
+	push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_ref_foff;
+	
+	#~ print "\t..while in the file I am at offset $current_chunk_ref_foff..\n"; 
+	# push special strings "ref" and "this chunk name" into the main hash.
+	# That's how we'll know to call another chunk recursively.
+	
+	push @{$file_offsets_hash{$current_chunk_name}}, "ref";
+	push @{$file_offsets_hash{$current_chunk_name}}, $1;
+
+	#.. and push the offset again, to serve as a start of the next chunk splinter. 
+	push @{$file_offsets_hash{$current_chunk_name}}, (tell LITSOURCE);
+
+	} # fisle
+	
+@
+
+<i> OK, so it lies there in the ("ref", "namestring") order</i>
+
+<b>Note</b> another better ref processor is in a subsection below.
+I'll switch when it's tested.
+
+
+#------------------
+{{{8 <h8> multiple refs on the same line</h8>
+#-------------------
+
+<b>For many chunk references on a line, potentially</b>
+
+This is a snippet showing how it can be treated:
+
+.b. NOTE ./b. I had to stick in "\" or Ramsey's "notangle" wouldn't work 
+
+<pre>
+
+#~ Nope, they use it inside "while" 
+#~ OK, this is how it will work in the script:
+#~ /the while loop is over the line that contained at least 
+#~ one ref; the loop body includes pushes into the hash/
+
+	$line = "asdfas asd <\<qewrqw>> opiopiopi <\<2345>> asdasdf";
+	$llen = length $line;
+	print "the original line:: [$line] -- of length $llen\n";
+
+
+	while ($line =~ m!(.*?)<\<(.*?)>>!g) {
+		print "$1 -- $2\n";
+		$ancor_off  = pos $line;
+
+		print "ancor position is $ancor_off\n";
+
+		
+		
+	}
+
+	print "THE LAST PART IS  ", (substr $line, $ancor_off), "\n";
+
+</pre>
+
+And this is its output:
+
+<pre>
+the original line:: [asdfas asd <\<qewrqw>> opiopiopi <\<2345>> asdasdf] -- of length 48
+asdfas asd  -- qewrqw
+ancor position is 21
+ opiopiopi  -- 2345
+ancor position is 40
+THE LAST PART IS   asdasdf
+</pre>
+
+<b>Now, I'll do "one ref inside text" first</b>, then wrap it into a 'while'
+loop
+
+First, I'll need to change the regexp pattern:
+<<declarations and initializations>>=
+@
+
+<<chunk reference - single ref inside other text>>=
+
+	elsif ( $_ =~ m!$chunk_ref_pattern!g ) {
+
+	# simplest case: one match on its own line
+		# DEBUG printouts:
+		#~ $match_position_in_line = pos($_);
+		#~ print "\t**chunk ref $1 at pos $match_position_in_line in line**\n";
+
+	# mark the foffs of the chunk so far
+	$current_chunk_ref_foff = $previous_line_foff;
+	push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_ref_foff;
+	
+	#~ print "\t..while in the file I am at offset $current_chunk_ref_foff..\n"; 
+	# push special strings "ref" and "this chunk name" into the main hash.
+	# That's how we'll know to call another chunk recursively.
+	
+	push @{$file_offsets_hash{$current_chunk_name}}, "ref";
+	push @{$file_offsets_hash{$current_chunk_name}}, $1;
+
+	#.. and push the offset again, to serve as a start of the next chunk splinter. 
+	push @{$file_offsets_hash{$current_chunk_name}}, (tell LITSOURCE);
+
+	} # fisle
+	
+@
+
+
+}}}8
+
+
+}}}7 
+
+}}}6 
+
+#---------------------
+{{{6 <h6> pass 2 and print </h6>
+#---------------------
+
+OK, now we have a hash of refs with pairs ("ref", "ref_chunkname") interspersed
+where there were references included.
+	- start from the given root
+	- (shift, shift) the beg_f_off, end_f_off
+	- print out the file verbatim
+	...
+	  IF there WAS a ref, RECURSE on the new chunk name
+That should be it
+
+<<pass 2 and print>>=
+
+	<<sub: tangle recursively>>
 
 @
 
 
-<<process chunk ref - tangler - ONE>>=
-    # placeholder
-    $chunk_ref_name = $1;
+Now - the RECURSIVE PRINTOUT untangling from the default/given root.
+--seek, then "read" into some $buf, which then is printed--
 
-    #$code_chunk_splinters_raw{$current_chunk_name} .= "\n" . q( . ${') . $chunk_ref_name . 
-    #   q('} . ) . "\n";
+    (a) if the pair got from the hash of lists is digits, print out 
+    (b) if the first is a specia string "ref", get the ref name from
+    the second item in the pair and go there recursively
 
-    $code_chunk_splinters_raw{$current_chunk_name} .= q(\) . ) . "\n" . 
-	q( . $code_chunk_splinters_raw{') . $chunk_ref_name . q('} . ) . "\n q(";
+<<sub: tangle recursively>>=
 
-    unshift @parents_list, ($current_chunk_name, $chunk_ref_name);
+ sub print_chunk {
+	    my $chunk_being_printed = pop @_;
+	    #~ print "\n---- printing chunk $chunk_being_printed --------\n";
+	
+	# iterate over splinters of a chunk, which are foff pairs
+	while (@{$file_offsets_hash{$chunk_being_printed}}) {
+
+		<<the meat>>
+
+	 } # elihw
+	
+	 return 1;
+	} # bus -- ends the recursive sub
+
 @
 
+If the pair we get from the main hash of offsets is not
+a real number, but string "ref" and the string-name of the referenced
+chunk, do a recursive call to the same function to unravel
+
+<<the meat>>=
+
+    my $snippet_position = shift @{$file_offsets_hash{$chunk_being_printed}};
+    my $snippet_end = shift @{$file_offsets_hash{$chunk_being_printed}};
+
+	#~ print "DEBUG GOT: beg $snippet_position -- end $snippet_end\n";
+
+	if ($snippet_position eq "ref") {
+	
+	#~ print "got a ref $snippet_position here\n";
+	print_chunk($snippet_end);
+	
+	}
+	else { # .. print it here
+    seek LITSOURCE, $snippet_position,  0;
+    read LITSOURCE, $buffer_out, ($snippet_end - $snippet_position);
+    print $buffer_out;
+	}
+
+@
+
+
+
+#---------------------
+{{{7 <h7> two debug chunks</h7>
+#---------------------
+
+
+<<DEBUG print out full hash>>=
+
+	for $k (keys %file_offsets_hash) {
+		#~ print @{$file_offsets_hash{$k}}, "\n";
+
+	 while (scalar @{$file_offsets_hash{$k}}){
+		print "beg $k foff - ", shift @{$file_offsets_hash{$k}};
+		print " -- end foff - ", shift @{$file_offsets_hash{$k}}, "\n";
+		}
+	}
+@
+
+<<DEBUG check hash keys>>=
+
+ #~ for $k (keys  %file_offsets_hash){
+	#~ print $k, "\n";
+	#~ }
+
+@
 
 }}}7
 
 }}}6
 
+/* end of script litsource file */
+
+}}}5
+
+}}}4
+
+
+#-----------------------------------------------------------
+{{{4 .h4. Tsort tangler - bad idea - useful leftover bits and pieces ./h4.
+#-----------------------------------------------------------
+
+.i. .b. -- Code deleted - was bad idea in general -- ./b. ./i.
+
 #------------------------------
-{{{6 .h6. Topological Sort ./h6.
+{{{5 .h5. Topological Sort ./h5.
 #------------------------------
 
 
@@ -2905,10 +3152,10 @@ for my $i (topological_sort( @parents_list )){ print "$i\n";};
 
 @
 
-}}}6
+}}}5
 
 #-----------------------------------------------------------------------------
-{{{6 .h6. Strange var and hash key names plus string interpolation ./h6.
+{{{5 .h5. Strange var and hash key names plus string interpolation ./h5.
 #-----------------------------------------------------------------------------
 
     For reference for the main tangler script below. This script has been tested and
@@ -2986,10 +3233,7 @@ Script output (from 1,2):
     ./pre.
 -------------------------------------
 
-}}}6
-
 }}}5
-
 
 #--------------------------------------------
 {{{5 .h5. Scrap pieces for tangler ./h5.
@@ -3262,7 +3506,7 @@ while ( $string =~ m!\G(.*?)<\<(.*?)>\>!gs) {
 
 }}}3
 
-
+.h3. ./h3.
 
 #--------------------------------
 {{{3 .h3. WEAVER ./h3.
@@ -4515,6 +4759,7 @@ End of the project file
 }}}3
 
 
+.h3. ./h3.
 
 #-------------------------------------------------------------
 {{{3 .h3. ADD-ON: example of additional markup - dotHTML - change unfinished./h3.
@@ -4546,6 +4791,7 @@ if you enable it) plus words "a m a t h" and "e n d a m a t h" without spaces bt
 
 }}}3
 
+.h3. ./h3.
 
 #-------------------------------------------------------------
 {{{3 .h3. ADD-ON: ASCIIMathML and LaTeXMathML inside Molly  ./h3.
@@ -4735,22 +4981,22 @@ suggests those elemens are simply missing in definitions.
 
  The idea is to use recurrent relations for anomalous branching
 coefficients based on the summation over the special set of vectors 
-``\Gamma_{\frak{a}\subset \frak{g}}``  called ````fan''. We
+``\Gamma_{\fr ak{a}\subset \fr ak{g}}``  called ````fan''. We
 need to introduce some notations. Let's consider the reduction of the
-representation of the affine Lie algebra ``\mathfrak{g}`` to 
-representations of affine Lie algebra ``\mathfrak{a}``. By
-``\pi_{\mathfrak{a}}`` we denote the projection of the root space
-``\frak{h}_{\frak{g}}^{\ast } to \frak{h}_{\frak{a}}^{\ast }``. The
-set ``\Gamma_{\frak{a}\subset \frak{g}}``  is introduced as the
+representation of the affine Lie algebra ``\math \fr ak{g}`` to 
+representations of affine Lie algebra ``\math \fr ak{a}``. By
+``\pi_{\math \fr ak{a}}`` we denote the projection of the root space
+``\fr ak{h}_{\fr ak{g}}^{\ast } to \fr ak{h}_{\fr ak{a}}^{\ast }``. The
+set ``\Gamma_{\fr ak{a}\subset \fr ak{g}}``  is introduced as the
 combination of projection of positive roots ``\Delta^{+}`` of algebra
-``\frak{g}`` using formulae:
+``\fr ak{g}`` using formulae:
 
 .b. .i. The above paragraph is OK ./i. ./b.
 The following is rendered incompletely:
 
 {eq:7}
 
- ``\prod_{\alpha \in \left( \pi _{\frak{a}}\circ \Delta ^{+}\right) }\left( 1-e^{-\alpha }\right) ^{\mathrm{{mult}\left( \alpha \right) -{mult}}_{\frak{a% }}\mathrm{\left( \alpha \right) }}=-\sum_{\gamma \in \Phi _{\frak{a}\subset \frak{g}}}s\left( \gamma \right) e^{-\gamma }``.  
+ ``\prod_{\alpha \in \left( \pi _{\fr ak{a}}\circ \Delta ^{+}\right) }\left( 1-e^{-\alpha }\right) ^{\mathrm{{mult}\left( \alpha \right) -{mult}}_{\fr ak{a% }}\mathrm{\left( \alpha \right) }}=-\sum_{\gamma \in \Phi _{\fr ak{a}\subset \fr ak{g}}}s\left( \gamma \right) e^{-\gamma }``.  
 
  {{{5
 
@@ -4865,6 +5111,7 @@ of pages and their elements)
 
 }}}3
 
+.h3. ./h3.
 
 #---------------------------------------------------------------------------------------
 {{{3 .h3. ADD-ON: Context diffs and sections editing -- not implemented ./h3.
