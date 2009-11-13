@@ -37,21 +37,18 @@
     $tangle_extension = $tangle_extension || "tangle";	# default is "tangle"
 
 
+    #When tangling, should I use the built-in tangler? 0:1
+    # (if 0, the "pass-through" tangling will call "notangle"
+    # from Ramsey's "noweb" tools, must be installed and in your path)
+    # use_builtin_tangler = 0; # default for now is to use external "notangle"
+    $use_builtin_tangler = $use_builtin_tangler || 0; 
 
-  # tangle? Or run? (perms must allow execution)
-  $tangle_me = 1;
+    # Actually, let's always do it and disallow unsetting
+    # number lines ? 1 : else
+    $line_numbering = 1;
 
-      # -- not implemented yet --
-      #
-      #$run_me = 0;
-      # what interpreter to run the tangle output with?
-      #$run_me_with="/usr/bin/perl";
-
-
-# number lines ? 1 : else
-$line_numbering = 1;
-# how are doc sections marked? "dotHTML":"rawHTML"
-$weave_markup = $weave_markup || "rawHTML"; # default is "rawHTML"
+    # how are doc sections marked? "dotHTML":"rawHTML"
+    $weave_markup = $weave_markup || "rawHTML"; # default is "rawHTML"
 
     if ($weave_markup eq "dotHTML") {
 	$tag_open_symbol = $dot;	# this will take care of default
@@ -63,10 +60,10 @@ $weave_markup = $weave_markup || "rawHTML"; # default is "rawHTML"
     } #fi
 
 
-# enable MathML interpretation? 1 : 0
-$enable_ASCIIMathML = $enable_ASCIIMathML || 0;
-# If enabled, set the path; default is local in current dir
-$path_to_ASCIIMathML = $path_to_ASCIIMathML || "ASCIIMathML_with_modified_escapes.js";
+    # enable MathML interpretation? 1 : 0
+    $enable_ASCIIMathML = $enable_ASCIIMathML || 0;
+    # If enabled, set the path; default is local in current dir
+    $path_to_ASCIIMathML = $path_to_ASCIIMathML || "ASCIIMathML_with_modified_escapes.js";
 
   # -- MAIN DESPATCHER ----
 
@@ -76,41 +73,166 @@ $path_to_ASCIIMathML = $path_to_ASCIIMathML || "ASCIIMathML_with_modified_escape
   # (temp) - 2 options, to weave and to tangle in module mode:
   #
   if ( $0 =~ m!\w+\.$weave_extension$! ) { goto WEAVE_ME }
-  elsif ( $tangle_me) {goto TANGLE_ME}
+  elsif ( $0 =~ m!\w+\.$tangle_extension$! )  {goto TANGLE_ME}
   else {
   print <<end_of_print;
 
 	USAGE:
-	Not set to tangle.
-	Set variables at the beginning of the script properly.  
+	Not set to tangle (wrong file extension).
+	Set config variables at the top of the script.  
 
 end_of_print
   }
 
-
 TANGLE_ME:
 
-	open TANGLE_PIPE, "| notangle -t4 -";
+    open LITSOURCE, "<$0";
 
-	open MYSELF, "<$0";
-	while  (<MYSELF>) {
+  if ( $use_builtin_tangler ) {
 
-	    if ( m!^(goto)?<\<(.*)>\>=! ... m!^@\s*$! ) { # -- CODE CHUNKS -- 
+
+
+    my $chunk_beg_pattern = q(^<\<(.*)>\>=);
+    my $chunk_end_pattern = q(^@\s.*$);
+    my $chunk_ref_pattern = q(<\<(.*?)>\>[^=]); # can be used several times in a line
+
+    my $current_chunk_name = "";
+	my $current_chunk_start_foff = ""; # "foff" is a "file offset"
+	my %file_offsets_hash = ();
+    
+    my $line_num = 0;
+	my $previous_line_foff = 0; # "foff" is a "file offset"
+
+
+ while (<LITSOURCE>) {
+    $line_num++;
+
+	# --- CODE CHUNKS -- not inside documentation section
+    if ( m!$chunk_beg_pattern! .. m!$chunk_end_pattern! ) {
+
+
+        if ( $_ =~ m!$chunk_beg_pattern! ) {
+	    $current_chunk_name = $1;
+	    $current_chunk_start_foff = tell LITSOURCE;
+
+	    push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_start_foff;
+	    #~ print "[***debug: I am chunk $1 -- I start at $current_chunk_start_foff***]\n";
+
+        }
+
+
+        elsif ( $_ =~ m!$chunk_end_pattern! )  {
+
+	    $current_chunk_end_foff = $previous_line_foff;
+	    push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_end_foff;
+	    #~ print "[+++debug: $current_chunk_name ends at off $current_chunk_end_foff++++]\n\n";
+
+		$current_chunk_name = "";
+            }
+
+
+
+	elsif ( $_ =~ m!$chunk_ref_pattern!g ) {
+
+	# simplest case: one match on its own line
+		# DEBUG printouts:
+		#~ $match_position_in_line = pos($_);
+		#~ print "\t**chunk ref $1 at pos $match_position_in_line in line**\n";
+
+	# mark the foffs of the chunk so far
+	$current_chunk_ref_foff = $previous_line_foff;
+	push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_ref_foff;
+	
+	#~ print "\t..while in the file I am at offset $current_chunk_ref_foff..\n"; 
+	# push special strings "ref" and "this chunk name" into the main hash.
+	# That's how we'll know to call another chunk recursively.
+	
+	push @{$file_offsets_hash{$current_chunk_name}}, "ref";
+	push @{$file_offsets_hash{$current_chunk_name}}, $1;
+
+	#.. and push the offset again, to serve as a start of the next chunk splinter. 
+	push @{$file_offsets_hash{$current_chunk_name}}, (tell LITSOURCE);
+
+	} # fisle
+	
+
+
+        else { # chunk body
+
+	    ; # nop; here just not to hide an implicit case
+	    #~ print "."; # debug: show dots for lines 
+            }
+
+
+
+    } #fi
+
+	$previous_line_foff = tell LITSOURCE;
+
+  } #eliwh
+
+
+
+
+ sub print_chunk {
+	    my $chunk_being_printed = pop @_;
+	    #~ print "\n---- printing chunk $chunk_being_printed --------\n";
+	
+	# iterate over splinters of a chunk, which are foff pairs
+	while (@{$file_offsets_hash{$chunk_being_printed}}) {
+
+
+    my $snippet_position = shift @{$file_offsets_hash{$chunk_being_printed}};
+    my $snippet_end = shift @{$file_offsets_hash{$chunk_being_printed}};
+
+	#~ print "DEBUG GOT: beg $snippet_position -- end $snippet_end\n";
+
+	if ($snippet_position eq "ref") {
+	
+	#~ print "got a ref $snippet_position here\n";
+	print_chunk($snippet_end);
+	
+	}
+	else { # .. print it here
+    seek LITSOURCE, $snippet_position,  0;
+    read LITSOURCE, $buffer_out, ($snippet_end - $snippet_position);
+    print $buffer_out;
+	}
+
+
+	 } # elihw
+	
+	 return 1;
+	} # bus -- ends the recursive sub
+
+
+
+	#~ $root_chunk = "chunk 1";
+	#~ $root_chunk = "DEBUG print one reference";
+	$root_chunk = "*";
+
+	print_chunk($root_chunk); 
+
+
+  } 
+  else { # pass to "notangle" from "noweb" tools by Ramsey
+
+    open TANGLE_PIPE, "| notangle -t4 -";
+
+    while  (<LITSOURCE>) {
+
+	    if ( m!^<\<(.*)>\>=! ... m!^@\s*$! ) { # -- CODE CHUNKS ONLY -- 
 		print TANGLE_PIPE $_;
 	    }
-	    else {  # -- DOC CHUNKS /and beginning of file, irrelevant / --
 
-		# filter double angle brackets that confuse "notangle"
-		s/<</$lt_esc$lt_esc/g;
-		s/>>/$gt_esc$gt_esc/g;
-		print TANGLE_PIPE $_;
-	    }
+    } # elihw
 
-	} # elihw
+    close TANGLE_PIPE;
 
-	close TANGLE_PIPE;
-	close MYSELF;
-exit;
+  } #; esle, pass-through clause end
+
+    close LITSOURCE;
+ exit;
 
 
 
