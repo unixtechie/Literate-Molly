@@ -131,10 +131,10 @@ MOLLY is licensed under GNU Public License version 3. .<. /center .>.
 .b. LP as "management of thinking" ./b. 
 
     If you never heard of Literate Programming, please read something like the Wikipedia
-    article .a. http://en.wikipedia.org/wiki.Literate_programming ./a.
+    article .a. http://en.wikipedia.org/wiki/Literate_programming ./a.
     and then something like documentation to Norman Ramsey's "noweb" tools and his old
     but excellent article (linked from the site) on the subject.
-    .a. http://www.eecs.harvard.edu/nr/noweb ./a.
+    .a. http://www.cs.tufts.edu/~nr/noweb ./a.
 
     .b. .i. L.P. is a technique for "management of thinking" that helps to relieve short-term memory
     of "housekeeping" tasks when creating complicated texts and "splits levels" for 'global thinking"
