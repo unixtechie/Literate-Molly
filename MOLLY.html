@@ -5194,7 +5194,7 @@ CHANGES" subsection<br>
 <font class='lnum'>3354</font>   
 <font class='lnum'>3355</font>   	# -- SECTION HEADINGS 
 <font class='lnum'>3356</font>      #elsif ( m!\.(\+)?h(\d)\.(.*?)\./h\d\.! ) {	# old version, no "rawHTML" enabled yet
-<font class='lnum'>3357</font>      elsif ( m!$tag_open_symbol(\+)?h(\d)$tag_close_symbol(.*?)$tag_open_symbol/h\d$tag_close_symbol! ) {	
+<font class='lnum'>3357</font>      elsif ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/h\d{1,2}$tag_close_symbol! ) {	
 <font class='lnum'>3358</font>   
 <font class='lnum'>3359</font>   
 <font class='lnum'>3360</font>   

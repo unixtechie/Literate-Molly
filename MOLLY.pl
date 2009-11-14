@@ -549,7 +549,7 @@ while (<FF>) {
 
 	# -- SECTION HEADINGS 
    #elsif ( m!\.(\+)?h(\d)\.(.*?)\./h\d\.! ) {	# old version, no "rawHTML" enabled yet
-   elsif ( m!$tag_open_symbol(\+)?h(\d)$tag_close_symbol(.*?)$tag_open_symbol/h\d$tag_close_symbol! ) {	
+   elsif ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/h\d{1,2}$tag_close_symbol! ) {	
 
 
 
