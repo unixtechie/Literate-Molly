@@ -90,129 +90,178 @@ TANGLE_ME:
 
   if ( $use_builtin_tangler ) {
 
-
-
-    my $chunk_beg_pattern = q(^<\<(.*)>\>=);
-    my $chunk_end_pattern = q(^@\s.*$);
-    my $chunk_ref_pattern = q(<\<(.*?)>\>[^=]); # can be used several times in a line
-
-    my $current_chunk_name = "";
-	my $current_chunk_start_foff = ""; # "foff" is a "file offset"
-	my %file_offsets_hash = ();
     
-    my $line_num = 0;
-	my $previous_line_foff = 0; # "foff" is a "file offset"
-
-
- while (<LITSOURCE>) {
-    $line_num++;
-
-	# --- CODE CHUNKS -- not inside documentation section
-    if ( m!$chunk_beg_pattern! .. m!$chunk_end_pattern! ) {
-
-
-        if ( $_ =~ m!$chunk_beg_pattern! ) {
-	    $current_chunk_name = $1;
-	    $current_chunk_start_foff = tell LITSOURCE;
-
-	    push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_start_foff;
-	    #~ print "[***debug: I am chunk $1 -- I start at $current_chunk_start_foff***]\n";
-
+    	
+     my $chunk_beg_pattern = q(^<\<(.*)>\>=);
+     my $chunk_end_pattern = q(^@\s.*$);
+     my $chunk_ref_pattern = q(<\<(.*?)>\>[^=]); # can be used several times in a line
+ 
+     my $current_chunk_name = "";
+ 	my $current_chunk_start_foff = ""; # "foff" is a "file offset"
+ 	my %file_offsets_hash = ();
+ 	my %left_margin_hash = ();
+ 
+     my $line_num = 0;
+ 	my $previous_line_foff = 0; # "foff" is a "file offset"
+ 
+    	
+  while (<LITSOURCE>) {
+     $line_num++;
+ 
+ 	# --- CODE CHUNKS -- not inside documentation section
+     if ( m!$chunk_beg_pattern! .. m!$chunk_end_pattern! ) {
+ 
+ 	
+     if ( $_ =~ m!$chunk_beg_pattern! ) {
+ 	$current_chunk_name = $1;
+ 	$current_chunk_start_foff = tell LITSOURCE;
+ 
+ 	push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_start_foff;
+ 	#~ print "[***debug: I am chunk $1 -- I start at $current_chunk_start_foff***]\n";
+ 	#~ print "----> chunk $1 line $. offset $current_chunk_start_foff\n";
+ 
+     }
+ 
+ 	
+     elsif ( $_ =~ m!$chunk_end_pattern! )  {
+ 
+ 	$current_chunk_end_foff = $previous_line_foff;
+ 	push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_end_foff;
+ 	#~ print "[+++debug: $current_chunk_name ends at off $current_chunk_end_foff++++]\n\n";
+ 	#~ print "\tline $. offset $current_chunk_end_foff<------\n";
+ 
+     	$current_chunk_name = "";
+     }
+ 
+ 	    
+     elsif ( $_ =~ m!$chunk_ref_pattern!g ) {
+    
+        my $line = $_;
+        my $current_foff_pos =  $previous_line_foff;
+        my $initial_margin = 0;
+    	my $homegrown_pos = 0;
+    
+        while ($line =~ m!(.*?)<\<(.*?)>\>!g) {
+    
+    	# "end" of prev pair
+    	push @{$file_offsets_hash{$current_chunk_name}}, 
+    	    $current_foff_pos + (length $1); 
+    
+    	#-------deal with pushing ("ref", "chunkname") pair -----
+    	# special id string for refs
+    	push @{$file_offsets_hash{$current_chunk_name}}, "ref";
+    	# name of reference
+    	push @{$file_offsets_hash{$current_chunk_name}}, $2; 
+    
+    	# -- next a special entry for refs: (left_margin)
+    	$initial_margin += (length $1);
+    	push @{$file_offsets_hash{$current_chunk_name}}, $initial_margin; 
+    
+    	my $homegrown_pos = (length $1) + (length $2) + 2*(length "<>");
+    	my $end_of_match_pos = $current_foff_pos + $homegrown_pos;
+    
+    	# "start" a new pair.. - ok, let's not use "pos" at all, if it fails
+    	push @{$file_offsets_hash{$current_chunk_name}}, $end_of_match_pos;
+    
+    	#  I'll need to reset current_foff_pos to the pos
+    	#   (or to the directly caclucalted offset, if I prefer that):
+    	$current_foff_pos = $end_of_match_pos; 
+    	$initial_margin += (length $2) + 2*( length "<>"); 	
+    
+        } # elihw
+    
+        # This is where chunk refs get an extra newline ?
+    
+     } # fisle
+    
+ 	
+     else { # chunk body
+ 
+ 	; # nop; here just not to hide an implicit case
+ 	#~ print "."; # debug: show dots for lines 
+     }
+ 
+ 
+ 
+     } #fi
+ 
+ 	$previous_line_foff = tell LITSOURCE;
+ 
+   } #eliwh
+ 
+    
+    	
+ # USAGE: print_chunk(name_of_chunk, left_margin, print_newline_flag)
+ 
+  sub print_chunk {
+ 
+  #defaults just in case - naa, will just mask errors with call args 
+  my $snippet_left_margin = 0;
+  my $snippet_print_newline_flag = 1;
+ 
+  (my $chunk_being_printed,
+     my $snippet_left_margin, 
+ 	  my $snippet_print_newline_flag, @rest) = @_; 
+ 
+  #~ print "\n---- printing chunk $chunk_being_printed --------\n";
+  #~ print "DEBUG: got left.m. $snippet_left_margin nl. flag $snippet_print_newline_flag \n";
+ 
+ 
+  # iterate over splinters of a chunk, which are foff pairs
+  for ( my $iterate_foffs = 0;
+ 	    exists $file_offsets_hash{$chunk_being_printed}[$iterate_foffs];)
+  {
+ 
+     my $snippet_position =  $file_offsets_hash{$chunk_being_printed}[$iterate_foffs++];
+     my $snippet_end = $file_offsets_hash{$chunk_being_printed}[$iterate_foffs++];
+     #~ print "debug got: beg $snippet_position -- end $snippet_end\n";
+ 
+     
+        if ($snippet_position eq "ref") {
+    
+    	my $snippet_left_margin_ref = 
+        	    $file_offsets_hash{$chunk_being_printed}[$iterate_foffs++];
+    	#~ print "DEBUG: got a ref $snippet_end here -- nl flag $snippet_print_newline_flag_ref\n";
+    
+    	# any call to a ref uncurs "print newline" flag of 0
+    	print_chunk($snippet_end, $snippet_left_margin_ref, 0);
+        
         }
-
-
-        elsif ( $_ =~ m!$chunk_end_pattern! )  {
-
-	    $current_chunk_end_foff = $previous_line_foff;
-	    push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_end_foff;
-	    #~ print "[+++debug: $current_chunk_name ends at off $current_chunk_end_foff++++]\n\n";
-
-		$current_chunk_name = "";
-            }
-
-
-
-	elsif ( $_ =~ m!$chunk_ref_pattern!g ) {
-
-	# simplest case: one match on its own line
-		# DEBUG printouts:
-		#~ $match_position_in_line = pos($_);
-		#~ print "\t**chunk ref $1 at pos $match_position_in_line in line**\n";
-
-	# mark the foffs of the chunk so far
-	$current_chunk_ref_foff = $previous_line_foff;
-	push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_ref_foff;
-	
-	#~ print "\t..while in the file I am at offset $current_chunk_ref_foff..\n"; 
-	# push special strings "ref" and "this chunk name" into the main hash.
-	# That's how we'll know to call another chunk recursively.
-	
-	push @{$file_offsets_hash{$current_chunk_name}}, "ref";
-	push @{$file_offsets_hash{$current_chunk_name}}, $1;
-
-	#.. and push the offset again, to serve as a start of the next chunk splinter. 
-	push @{$file_offsets_hash{$current_chunk_name}}, (tell LITSOURCE);
-
-	} # fisle
-	
-
-
-        else { # chunk body
-
-	    ; # nop; here just not to hide an implicit case
-	    #~ print "."; # debug: show dots for lines 
-            }
-
-
-
-    } #fi
-
-	$previous_line_foff = tell LITSOURCE;
-
-  } #eliwh
-
-
-
-
- sub print_chunk {
-	    my $chunk_being_printed = pop @_;
-	    #~ print "\n---- printing chunk $chunk_being_printed --------\n";
-	
-	# iterate over splinters of a chunk, which are foff pairs
-	while (@{$file_offsets_hash{$chunk_being_printed}}) {
-
-
-    my $snippet_position = shift @{$file_offsets_hash{$chunk_being_printed}};
-    my $snippet_end = shift @{$file_offsets_hash{$chunk_being_printed}};
-
-	#~ print "DEBUG GOT: beg $snippet_position -- end $snippet_end\n";
-
-	if ($snippet_position eq "ref") {
-	
-	#~ print "got a ref $snippet_position here\n";
-	print_chunk($snippet_end);
-	
-	}
-	else { # .. print it here
-    seek LITSOURCE, $snippet_position,  0;
-    read LITSOURCE, $buffer_out, ($snippet_end - $snippet_position);
-    print $buffer_out;
-	}
-
-
-	 } # elihw
-	
-	 return 1;
-	} # bus -- ends the recursive sub
-
-
-
-	#~ $root_chunk = "chunk 1";
-	#~ $root_chunk = "DEBUG print one reference";
-	$root_chunk = "*";
-
-	print_chunk($root_chunk); 
-
+        else { # .. print it here
+    	seek LITSOURCE, $snippet_position,  0;
+    	read LITSOURCE, $buffer_out, ($snippet_end - $snippet_position);
+    
+    	#----Newlines at the end of chunks and refs. 
+    	# only for the last splinter of a chunk, do newline control:
+    	if ( ((scalar @{$file_offsets_hash{$chunk_being_printed}}) - $iterate_foffs ) == 0 )
+    	{ 
+    		# works, but is suspicious logically:
+    		# maybe I just have not invented a counterexample yet, and
+    		# it's a trap waiting for its quarry
+    		$buffer_out =~ s!\n([\s]*)$!$1! unless ($snippet_print_newline_flag);
+    	}
+    
+    	#----Left indent/margin. Seems OK
+    
+    	$chunk_left_margin = " " x $snippet_left_margin;
+    	$buffer_out =~ s!(\n)!$1$chunk_left_margin!sg;
+    
+    	print $buffer_out;
+        }
+    
+ 
+  } # rof non-destructive
+ 	
+      return 1;
+     } # bus -- ends the recursive sub
+ 
+    
+    	#~ $root_chunk = "chunk 1";
+    	#~ $root_chunk = "DEBUG print one reference";
+    	$root_chunk = "*";
+    
+    	print_chunk($root_chunk); 
+    
 
   } 
   else { # pass to "notangle" from "noweb" tools by Ramsey
@@ -651,8 +700,8 @@ while (<FF>) {
 		    "</b></a><br>\n";
 
    } #; fisle: end elif headings
-
 	
+
 
 
 	elsif( $weave_markup eq "dotHTML" ) {	# dotHTML formatter here

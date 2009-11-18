@@ -133,7 +133,7 @@ MOLLY is licensed under GNU Public License version 3. .<. /center .>.
     If you never heard of Literate Programming, please read something like the Wikipedia
     article .a. http://en.wikipedia.org/wiki/Literate_programming ./a.
     and then something like documentation to Norman Ramsey's "noweb" tools and his old
-    but excellent article (linked from the site) on the subject.
+    but excellent article  on the subject (linked from the site).
     .a. http://www.cs.tufts.edu/~nr/noweb ./a.
 
     .b. .i. L.P. is a technique for "management of thinking" that helps to relieve short-term memory
@@ -148,17 +148,17 @@ MOLLY is licensed under GNU Public License version 3. .<. /center .>.
     time, psychologists tell us. Therefore, when faced with larger tasks, humans need to use a number
     of "aoivdance techniques" to dance around the limitation.
 
-    First, we constantly switch. E.g. I need to change my program. I remember the general outline of
-    it, so I use that to figure out where to go. On each evel I would probably remember details 
-    "inside" each of those larger blocks etc.
+    First, we constantly switch levels. E.g. I need to change my program. I remember the general
+    outline of it, so I use that to figure out where to go. On each evel I would probably remember
+    details "inside" each of those larger blocks etc.
 
-    In my experience a script or a program longer than, say 1000 to 1200 lines long becomes a major
+    In my experience a script or a program longer than, say 1000 to 1200 lines becomes a major
     problem unless special techniques are used to help one's attention.
 
     In programming, probably 90% of "chunking", i.e. division into procedures, or "objects" or
     "functions" are not needed for the machine. They are done .b. simply for the humans not
-    to lose the thread of their thinking. ./b. Whithout this obligatory subchunking things would
-    become totally unmanageable.
+    to lose the thread of their thinking. ./b. Whithout this things would become totally 
+    unmanageable.
 
     Here comes also the idea of "writing domain-specific languages": humans chunk lower-level
     operations into a new 'unit' or 'abstraction', then manipulate with higher-level abstractions
@@ -167,8 +167,8 @@ MOLLY is licensed under GNU Public License version 3. .<. /center .>.
     "Literate Programming" is not a programming-specific technique that allows us to create arbitrary
     systems of abstractions .i. with phrases in a human language ./i. - "in pseudocode" - while staying
     precise in our specification opf the final product. Everyone knows that explanation with
-    pseudocode are helpful - that was the way we learned of the subject in the first place. Most if
-    not all textbooks are written in this way.
+    pseudocode are helpful - that was the way we learned of the subject of programming in the first
+    place. Most if not all textbooks are written in this way.
 
     So L.P. .b. is an alternative to procedures and subroutines in the machine language ./b.
 
@@ -192,9 +192,9 @@ MOLLY is licensed under GNU Public License version 3. .<. /center .>.
     a human mind would not be able to keep the thread, it would have lost it, while  all the
     introduced paraphenalia is totally unnecessary for the machine execution.
 
-    Subroutines or functions are sometimes necessary: to create a recursive invocation the 
-    programmer uses the built-in ability of a function to push its current state on the stack
-    and then to automatically pick up where left upon returning.
+    Subroutines or functions are sometimes necessary. To give one example: to create a recursive
+    invocation the programmer uses the built-in ability of a function to push its current state
+    on the stack and then to automatically pick up where left upon returning.
     But probably 90% of all sub-dividing in programming is done just for the humans not to get
     lost in the sea of code.
 
@@ -223,8 +223,8 @@ MOLLY is licensed under GNU Public License version 3. .<. /center .>.
 	itself. Therefore, the first thing to blame L.P. for became "but I'd need to write - .i. and 
 	debug! ./i. - two programs at the same time, in TeX and in my own machine language.
 
-	Today when much, much simpler markup languages abound - "html" or even "markdown html"
-	or even "wiki" for the majority of uses that do not require typesetting complicated
+	Today when much, much simpler markup languages abound - "html" or even "markdown 
+	html" or even "wiki" for the majority of uses that do not require typesetting complicated
 	equations or graphs - this problem has long been solved.
 	You do not need to "debug" basic HTML markup - any error is displayed in your browser as a
 	distortion of the web page, I do not need to "debug" html when writing with my Molly script
@@ -275,10 +275,10 @@ MOLLY is licensed under GNU Public License version 3. .<. /center .>.
     connected pieces and does not allow a reader to see the forest for the trees and see 
     documentation of GNU libavl .a. http://adtinfo.org/libavl.html/ ./a. 
     It is not humanly possible to follow the train of thought from such a presentation: one has to
-    keep an internal mental map of the document BEFORE reading it and inability to see more than
+    keep an internal mental map of the document .i. before ./i. reading it and inability to see more than
     one snippet puts a stop to perception: once the snippet is left, one has to rely on memory of
     previously read pieces to relate things to each other.
-    Nor the split HTML, not the flat file format provide for human-friendly perception of code
+    Nor the split HTML, nor the flat file format provide for human-friendly perception of code
     unless it is  a small short self-contained piece.
     
 
@@ -289,7 +289,7 @@ MOLLY is licensed under GNU Public License version 3. .<. /center .>.
 
     A number of techniques becomes possible which have not been possible before in a flat file. 
     Snippets testing language constructs, doubling certain "chunks" while keeping a pointer in a
-    "dummy chunk" to preserve the previous working version of your program while experimenting
+    "linker chunk" to preserve the previous working version of your program while experimenting
     with a new one (previously one would have to use version control or rename files for that), 
     making collections of loosely related documents and script, each still obtainable through
     tangling, such as a collection of system administration policies, readmes, config files and 
@@ -305,8 +305,8 @@ MOLLY is licensed under GNU Public License version 3. .<. /center .>.
     "stupid" that might be and unload all "houskeeping" from your mind, to stop straining to
     remember where which change must go.
 
-    Such literate project files do become good documentation, it seems, even without much further
-    polishing, as polishing occurs naturally with developing and rewriting your program, however.
+    Such literate project files however do become good documentation, it seems, even without much
+    further polishing, as polishing occurs naturally with developing and rewriting your program.
 
 
 }}}2	    
@@ -1596,6 +1596,27 @@ So, I could use it, it seems? OR: is there any sense in that??
 #----------------
 
 
+#-------------------------------------------
+{{{5 .h5. for Tangling ./h5.
+#-------------------------------------------
+
+1. command-line options (for weaver, too?) to imitate "noweb" (?)
+Options: 
+    .ul. -to show all roots??
+    - mark refline nums and offsets of the Lit Source in the tangled code
+    - root to tangle 
+    - keep docs in comments (and/or Pod sections?? ./ul.
+
+2. ability   to tangle over several file. I.e.
+    .ul. I grow my LitSource for a while, then split it almost
+    mechanically, not making splinters self-contained
+    I then supply all splinter file names to "MOLLY.pl my.project-*.weave"
+    and it tangles them out, however my prog is going through the splinters.
+    ./ul.
+
+3. 
+
+
 }}}4
 
 
@@ -1945,6 +1966,12 @@ end_of_print
 {{{3 .h3. TANGLER ./h3.
 #---------------------------------
 
+#---------------------------------
+{{{4 .h4. Notes on; difference btw built-in and "notangle" ./h4.
+#---------------------------------
+
+
+
     This version of the script includes a built-in tangler. However if you set
     "$use_builtin_tangler" to 0 in the settings, the script will pass ithe request 
     through to the "notangle" utility of the "noweb" Literate Programming tool 
@@ -1957,16 +1984,33 @@ end_of_print
     It does not choke on double < < in text chunks, either.
 
     It is:
-   .ul. .li. more primitive (for now), 
-   ./li. .li. not so much tested, 
-   ./li. .li. can handle only one chunk ref alone on its line (for now) 
+   .ul. .li. not so much tested (but seem to handle example from "noweb" distribution
+    after those have been brought to "canonical form", i.e. .b. all code chunks
+    end with "@", no exceptions ./b. 
+    ./li. .li. can handle multiple refs on the same line surrounded by other text,
     ./li. .li. and tangles only the default chunk "*" (again, for now),  
     ./li. ./ul.
-    so you might want to use the Ramsey's tool. Just make sure your double 
-    angle brackets are broken by spaces "< <" or with actual escapes "<\<" 
-    even in doc chunks (and escape them in your code, too.
-    "Notangle" reacts to them NOT only at the beginning of the line, as my
-    tangler does, but everywhere and chokes if finds them.
+    so you might want to use the Ramsey's tool, at least to check the output.
+    Norman Ramsey's "noweb" has been around for more than 10 years and been used
+    on thousands of lines of other projects.
+    You will also have to run "notangle" for getting non-default-root ("*") chunks
+    until I have supplied command line processing.
+
+	.ul. .b.  1. Note./b. that for .b. "notangle" ./b. you have   to make sure your 
+	double angle brackets are broken by spaces "< <"  or with actual escapes 
+	"<\<" even in doc chunks (and escape them in your code, too. "Notangle" 
+	reacts to them NOT only at the beginning of the line, as my tangler does, 
+	but everywhere and chokes if finds them.
+
+	.b. 2.  Note./b. that the built-in tangler ./b. uses "noweb" markup, but it is 
+	.i. more restrictive ./i. in one sense: .b. all code chunks MUST end with "@"./b. 
+	    .pre.< <name of chunk> >=
+	    ......
+	    @ ./pre.
+	Norman Ramsey's convention was: .i. you are allowed not to close the code chunk
+	with "@" if the next code chunk is coming right after it ./i.
+	./ul.
+
 
     So, when the script is invoked as "script.tangle" (which can be a link or a soft
     link to something like "script.weave", it's "real" name), it will dump the source
@@ -1984,7 +2028,7 @@ end_of_print
 
     Later other modes of operation may be incorporated here.
 
-
+}}}4
 
 
 #---------------------------------------
@@ -1994,18 +2038,19 @@ end_of_print
     Passes the request to "notangle" from the "noweb" literate tools suite -
     OR starts the built-in tangler chunks.
 
-    1. Pre-filtering needs to be done. E.g. "notangle" gets confused by double angle brackets
-    even when those are inside the document chunks.
-    Therefore I will simply cut out document chunks altogether and not pass them to the tangler.
+    1. Pre-filtering needs to be done. E.g. "notangle" gets confused by double angle 
+    brackets even when those are inside the document chunks.
+    Therefore I will simply cut out document chunks altogether and not pass them to the
+    tangler.
 
     Test line (delete spaces to test): < < get it, choke on this, bastard > >
     < < or this> >=
 	or even this
     @
 
-    2. I explicitly insert 3 inner chunks of the "seek-peek" tangler as the outer part
-	of it will be used in command-line processing (I think).
-	So this preserves some universality. I think. ;)
+    2. I explicitly insert here 3 inner chunks of the "seek-peek" tangler as the 
+    outer part of it will be used in command-line processing (I think).
+    So this preserves some universality. I think. ;)
 
 <<tangle me>>=
 
@@ -2054,36 +2099,38 @@ TANGLE_ME:
 {{{4 .h4. seek-peek tangler (working) ./h4.
 #------------------------------------------------------
 
+#------------------------------------------------------
+{{{5 .h5. Advantages, limitations; escapes; the algorithm ./h5.
+#------------------------------------------------------
+
 .b. Advantages, limitations and escapes ./b.
 
-(a) The first version can only take care of one litprog chunk reference per line, and
-this ref cannot be surrounded by other text.
+(a) .s. The first version can only take care of one litprog chunk reference per line, and
+this ref cannot be surrounded by other text. ./s.
+Built-in tangler can handle multiple references per line surrounded by other text
 
 (b) However it does not clobber tabs, so you can tangle out Makefiles with it.
 
-(c) "notangle" by Ramsey is confused by < <  even inside documentation chunk, in any position.
+(c) Built-in tangler insists on ending every code block with an explicit "@"
+("notangle" allows to drop them if the next chunk is code, too)
+
+(d) "notangle" by Ramsey is confused by < <  even inside documentation chunk, in any position.
 My default "pass-through" tangler filters those out and treats as "real" only the dbl-angle
 bracketed stuff .i. in the first position in its line ./i.
 
 This 'seek-peek' tangler also filters out all of documentation chunks and looks only for 
 .b. dbl angles and the @ sign in the first position of the line ./b.
 
-(d) The used regexps ensure that if you have both opening and closing double brackets
+(e) The used regexps ensure that if you have both opening and closing double brackets
 somewhere in your code, the S-P tangler will get screwed.
 This and the first-positioned symbols are the only escapes one needs to observe as
 far as I understand.
 
-(d) The S-P tangler only reads files on disk, two times actually. So for now at least
+(f) The S-P tangler only reads files on disk, two times actually. So for now at least
 you cannot pipe into it. (It works roughly 3 times faster though and can potentially
 work across several litsource files (not implemented yet))
 
-
-#------------------------------------------------------
-{{{5 .h5. seek-peek tangler (preliminaries, about) ./h5.
-#------------------------------------------------------
-
-
-.b.The idea is to:./b.
+.b.The idea/algorithm is to:./b.
 
 (a) run a first pass over the file collecting a list of 
 	chunk offsets, or "addresses"
@@ -2100,15 +2147,16 @@ work across several litsource files (not implemented yet))
 	* for conditional tangling of certain chunks
 	(e.g. those whose names start with DEBUG, negative
 	or the opposint, CLEAN, for a positive filtering)
-		
+/none of the above are used now/	
+
 This type of tangler will not be able to get input via pipes,
 but - it should be fine working across .b.several literate source
 files./b., the only requirement is that their chunk namespace should be
 flat (unique names across your whole project). 
 It can be managed by prepending the chunk names by their file IDs, for
 example.
-/* command line option to get several files and their processing is
-not implemented yet */
+/* command line option to get several files and their processing by the 
+script are not implemented yet */
 
 
 #-----------------
@@ -2147,7 +2195,7 @@ compare:
 @
 
 
-za}}}6
+}}}6
 
 #-----------------
 {{{6 <h6>todo</h6>
@@ -2159,9 +2207,16 @@ I'll "tell" on each line and use as my end-of-splinter address
 the one from the previous line (i.e. just before the last line, 
 which contains the trailing rubbish).  ./s. -- DONE
 
-NEXT is many chunk refs on teh same line surrounded by other text/code
+.s. NEXT is many chunk refs on teh same line surrounded by other text/code ./s.
+--done--
 
 NEXT is command-line processing for tangling any given root
+
+NEXT is adding comments with line nums and offsets in teh original Lit Source
+into the tangled out code
+
+NEXT is "un-tangling", i.e. reimporting code, changed during testing back into
+LitSource (? possibly)
 
 NEXT possibly - processing over several files, which are mechanical splinters
 of the same Literate Project
@@ -2188,14 +2243,14 @@ of the same Literate Project
 
 @
 
-"pass 1" goes through the file collecting addresses.
+"pass 1" "goes through the file collecting addresses.
 
 Then "pass 2" sets a recursive sub to "untangle" the chunks with
 their included references.
 
 The "main" sets the root chunk and calls the sub
 
-I'll add command-line and CGI arguments processing later.
+I'll ' add command-line and CGI arguments processing later.
 
 <<main: call the sub>>=
 
@@ -2230,7 +2285,8 @@ declare and initialize some vars
     my $current_chunk_name = "";
 	my $current_chunk_start_foff = ""; # "foff" is a "file offset"
 	my %file_offsets_hash = ();
-    
+	my %left_margin_hash = ();
+
     my $line_num = 0;
 	my $previous_line_foff = 0; # "foff" is a "file offset"
 
@@ -2238,23 +2294,27 @@ declare and initialize some vars
 
 
 .b.Main loop./b.
-Need to collect chunk addresses (with "tell"), and keep a hash of lists
+Need to collect chunk addresses (with "tell"), and keep .i. a hash of lists./i.
 with addresses of all chunk continuations (if any)
+    .pre. (beg_offset, end_offset) ./pre.
 
-I'll need to push them in, and in pass 2 I'll pop them (i.e. destroy on reading), 
+I'll need to push them in, and in pass 2 I'll iterate over them, 
 and so ensure all of a split chunk is read.
 
-I see no way to keep a "list of lists", such as 
-	((chunk_1_start, chunk__1_end), (chunk_2_start, chunk_2_end))
-So, it'll be an ugly hash of references to lists (of differing lengths).
-
 .b.Anyway,./b. to deal with references to chunks from inside chunks I 
-should probably insert ("ref" "referred_chunk_name") into my 
-%file_offsets_hash during the first pass -  this pair is different from
-numeric beg-end offset pairs, and I'll start recursively teh printout of
-the chunk referred to when I detect it, in the second printing half of
-processing.
+will insert ("ref", "referred_chunk_name", left_indentation) into my 
+    .pre.%file_offsets_hash ./pre.
+during the first pass. This pair is different from numeric beg-end offset pairs,
+and I'll start a recursive printout of the chunk referred to when I detect it.
 
+I'll need to keep "left margin", the indent for the reference as a next value
+in the list/array, so it is
+    .ul..li.pairs (beg_chunk_offset, end_chunk_offset) for regular chunks
+    ./li..li. and a triple ("ref", name_of_referred_chnk, its_left_indent) for refs
+    ./li../ul.
+
+I might need to keep more information (e.g. "line numbers in the Literate Source),
+then those become quadruples and quintil.. whatever ;)
 
 
 #------------------
@@ -2290,8 +2350,10 @@ There .b.may be problems./b. if FH is opened in non-bytes mode, or if some pragm
 
 }}}7
 
+}}}6
+
 #------------------
-{{{7 <h7> PAss 1: main while-loop and foffs</h7>
+{{{6 <h6> Pass 1: main while-loop and foffs</h6>
 #-------------------
 
 
@@ -2321,9 +2383,10 @@ Process inside doc sections:
 @
 
 .b.A later adjustement, actually to rid of the last line trash./b.
-	I'll do "tell" on each line and use as my end-of-splinter address
-	the one from the previous line (i.e. just before the last line, 
-	which contains the trailing rubbish). See the last var in the loop.
+    "tell" gives addr .i. at the end of the matched line./i. So,
+    I'll have to use .i. offset from the previous match./i. to
+    rid of the current line rubbish - this is what the last
+    var assignement in the loop is about.
 
 
 .b.First, the chunk body./b. 
@@ -2335,11 +2398,11 @@ implicit and hidden
 
 <<chunk body>>=
 
-        else { # chunk body
+    else { # chunk body
 
-	    ; # nop; here just not to hide an implicit case
-	    #~ print "."; # debug: show dots for lines 
-            }
+	; # nop; here just not to hide an implicit case
+	#~ print "."; # debug: show dots for lines 
+    }
 
 @
 
@@ -2358,14 +2421,15 @@ the title from the later output.
 
 <<chunk beginning>>=
 
-        if ( $_ =~ m!$chunk_beg_pattern! ) {
-	    $current_chunk_name = $1;
-	    $current_chunk_start_foff = tell LITSOURCE;
+    if ( $_ =~ m!$chunk_beg_pattern! ) {
+	$current_chunk_name = $1;
+	$current_chunk_start_foff = tell LITSOURCE;
 
-	    push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_start_foff;
-	    #~ print "[***debug: I am chunk $1 -- I start at $current_chunk_start_foff***]\n";
+	push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_start_foff;
+	#~ print "[***debug: I am chunk $1 -- I start at $current_chunk_start_foff***]\n";
+	#~ print "----> chunk $1 line $. offset $current_chunk_start_foff\n";
 
-        }
+    }
 
 @
 
@@ -2378,14 +2442,15 @@ Plus - set $current_chunk_name=""; # just in case
 
 <<chunk ending>>=
 
-        elsif ( $_ =~ m!$chunk_end_pattern! )  {
+    elsif ( $_ =~ m!$chunk_end_pattern! )  {
 
-	    $current_chunk_end_foff = $previous_line_foff;
-	    push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_end_foff;
-	    #~ print "[+++debug: $current_chunk_name ends at off $current_chunk_end_foff++++]\n\n";
+	$current_chunk_end_foff = $previous_line_foff;
+	push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_end_foff;
+	#~ print "[+++debug: $current_chunk_name ends at off $current_chunk_end_foff++++]\n\n";
+	#~ print "\tline $. offset $current_chunk_end_foff<------\n";
 
-		$current_chunk_name = "";
-            }
+    	$current_chunk_name = "";
+    }
 
 @
 
@@ -2408,59 +2473,99 @@ If we get a reference, regex-split the line
 		do .i.not./i. do it for the first version of the script.
 
 for many matches on a line - 
-Here we'll have to use the \G ancor and pos and make a global regex math --
-    or repeat them in a loop until the line with matches is exhausted
+Here we'll have to match with continuation and repeat matching in a loop until the line 
+with matches is exhausted.
 
 <<chunk reference>>=
-
-	<<chunk reference - single ref on its own line>>
-
+    <<chunk reference - multiref inside other text>>
 @
 
-This one implements the basic idea (tested, works):
-
-<<chunk reference - single ref on its own line>>=
-
-	elsif ( $_ =~ m!$chunk_ref_pattern!g ) {
-
-	# simplest case: one match on its own line
-		# DEBUG printouts:
-		#~ $match_position_in_line = pos($_);
-		#~ print "\t**chunk ref $1 at pos $match_position_in_line in line**\n";
-
-	# mark the foffs of the chunk so far
-	$current_chunk_ref_foff = $previous_line_foff;
-	push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_ref_foff;
-	
-	#~ print "\t..while in the file I am at offset $current_chunk_ref_foff..\n"; 
-	# push special strings "ref" and "this chunk name" into the main hash.
-	# That's how we'll know to call another chunk recursively.
-	
-	push @{$file_offsets_hash{$current_chunk_name}}, "ref";
-	push @{$file_offsets_hash{$current_chunk_name}}, $1;
-
-	#.. and push the offset again, to serve as a start of the next chunk splinter. 
-	push @{$file_offsets_hash{$current_chunk_name}}, (tell LITSOURCE);
-
-	} # fisle
-	
-@
-
-.i. OK, so it lies there in the ("ref", "namestring") order./i.
-
-.b.Note./b. another better ref processor is in a subsection below.
-I'll switch when it's tested.
-
+}}}6
 
 #------------------
-{{{8 <h8> multiple refs on the same line</h8>
+{{{6 .h6. multiple refs on the same line./h6.
 #-------------------
 
-.b.For many chunk references on a line, potentially./b.
+
+.b. Multiple references on the same line surrounded by other text./b.
+
+First, I'll need to change the regexp pattern:
+mm.. I probably needn't. I'll get to it on a normal regexp, and use the
+multiref regexp only within
+The "chunk_ref_pattern" is set to q(<\<(.*?)>\>[^=])
+
+So, if I got (one, first) reference using a normal regex,
+start iterating on this line using a multi-match regex.
+'The rest of the line' can be got right after the while{} loop.
+I'll need to subtract
+.s."told offset" - "line length" + "pos-given offset"../s.
+I have $previous_line_foff
+
+.i. NOTE: "pos" does not work intuitively, so I do not use it below ./i.
+
+I'll write out logic later, after I have tested and adjusted it enough
+
+<<chunk reference - multiref inside other text>>=
+
+ elsif ( $_ =~ m!$chunk_ref_pattern!g ) {
+
+    my $line = $_;
+    my $current_foff_pos =  $previous_line_foff;
+    my $initial_margin = 0;
+	my $homegrown_pos = 0;
+
+    while ($line =~ m!(.*?)<\<(.*?)>\>!g) {
+
+	# "end" of prev pair
+	push @{$file_offsets_hash{$current_chunk_name}}, 
+	    $current_foff_pos + (length $1); 
+
+	#-------deal with pushing ("ref", "chunkname") pair -----
+	# special id string for refs
+	push @{$file_offsets_hash{$current_chunk_name}}, "ref";
+	# name of reference
+	push @{$file_offsets_hash{$current_chunk_name}}, $2; 
+
+	# -- next a special entry for refs: (left_margin)
+	$initial_margin += (length $1);
+	push @{$file_offsets_hash{$current_chunk_name}}, $initial_margin; 
+
+	my $homegrown_pos = (length $1) + (length $2) + 2*(length "<>");
+	my $end_of_match_pos = $current_foff_pos + $homegrown_pos;
+
+	# "start" a new pair.. - ok, let's not use "pos" at all, if it fails
+	push @{$file_offsets_hash{$current_chunk_name}}, $end_of_match_pos;
+
+	#  I'll need to reset current_foff_pos to the pos
+	#   (or to the directly caclucalted offset, if I prefer that):
+	$current_foff_pos = $end_of_match_pos; 
+	$initial_margin += (length $2) + 2*( length "<>"); 	
+
+    } # elihw
+
+    # This is where chunk refs get an extra newline ?
+
+ } # fisle
+
+@
+
+ .b.This works../b.
+
+  Handles Ramsey's test progs .b.when those are cleaned of an annoying
+ irregularity in his notation./b., i.e. when .b.all./b. prog chunks start
+ with title in dbl brackets and end with an "at" (exactly in the first
+ position on the line)
+
+.b. aligning printout./b.
+Need to save left margin (here) and apply it in the sub print_chunk below
+
+
+#-----------------------------
+{{{7 <h7> first test: how to iterate over regex, using pos</h7>
+#-----------------------------
+
 
 This is a snippet showing how it can be treated:
-
-.b. NOTE ./b. I had to stick in "\" or Ramsey's "notangle" wouldn't work 
 
 .pre.
 
@@ -2469,19 +2574,16 @@ This is a snippet showing how it can be treated:
 #~ /the while loop is over the line that contained at least 
 #~ one ref; the loop body includes pushes into the hash/
 
-	$line = "asdfas asd <\<qewrqw>> opiopiopi <\<2345>> asdasdf";
+	$line = "asdfas asd <<qewrqw>> opiopiopi <<2345>> asdasdf";
 	$llen = length $line;
 	print "the original line:: [$line] -- of length $llen\n";
 
 
-	while ($line =~ m!(.*?)<\<(.*?)>>!g) {
+	while ($line =~ m!(.*?)<<(.*?)>>!g) {
 		print "$1 -- $2\n";
 		$ancor_off  = pos $line;
 
 		print "ancor position is $ancor_off\n";
-
-		
-		
 	}
 
 	print "THE LAST PART IS  ", (substr $line, $ancor_off), "\n";
@@ -2491,7 +2593,7 @@ This is a snippet showing how it can be treated:
 And this is its output:
 
 .pre.
-the original line:: [asdfas asd <\<qewrqw>> opiopiopi <\<2345>> asdasdf] -- of length 48
+the original line:: [asdfas asd <<qewrqw>> opiopiopi <<2345>> asdasdf] -- of length 48
 asdfas asd  -- qewrqw
 ancor position is 21
  opiopiopi  -- 2345
@@ -2499,65 +2601,26 @@ ancor position is 40
 THE LAST PART IS   asdasdf
 ./pre.
 
-.b.Now, I'll do "one ref inside text" first./b., then wrap it into a 'while'
-loop
+}}}7
 
-First, I'll need to change the regexp pattern:
-<<declarations and initializations>>=
-@
-
-<<chunk reference - single ref inside other text>>=
-
-	elsif ( $_ =~ m!$chunk_ref_pattern!g ) {
-
-	# simplest case: one match on its own line
-		# DEBUG printouts:
-		#~ $match_position_in_line = pos($_);
-		#~ print "\t**chunk ref $1 at pos $match_position_in_line in line**\n";
-
-	# mark the foffs of the chunk so far
-	$current_chunk_ref_foff = $previous_line_foff;
-	push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_ref_foff;
-	
-	#~ print "\t..while in the file I am at offset $current_chunk_ref_foff..\n"; 
-	# push special strings "ref" and "this chunk name" into the main hash.
-	# That's how we'll know to call another chunk recursively.
-	
-	push @{$file_offsets_hash{$current_chunk_name}}, "ref";
-	push @{$file_offsets_hash{$current_chunk_name}}, $1;
-
-	#.. and push the offset again, to serve as a start of the next chunk splinter. 
-	push @{$file_offsets_hash{$current_chunk_name}}, (tell LITSOURCE);
-
-	} # fisle
-	
-@
-
-
-}}}8
-
-
-}}}7 
-
-}}}6 
+}}}6
 
 #---------------------
 {{{6 <h6> pass 2 and print </h6>
 #---------------------
 
-OK, now we have a hash of refs with pairs ("ref", "ref_chunkname") interspersed
-where there were references included.
-	- start from the given root
-	- (shift, shift) the beg_f_off, end_f_off
-	- print out the file verbatim
-	...
-	  IF there WAS a ref, RECURSE on the new chunk name
+OK, now we have a hash of pairs (beg_chunk_offset, end_chunk_offset) with triples 
+("ref", "ref_chunkname", left_indent) interspersed where there were references included.
+    - start from the given root
+    - iterate over subchunks of a given chunk - beg_f_off, end_f_off
+    - print out the file verbatim
+    ...
+      IF there WAS a ref, RECURSE on the new chunk name
+
 That should be it
 
 <<pass 2 and print>>=
-
-	<<sub: tangle recursively>>
-
+	<<sub: tangle recursively - nondestructive>>
 @
 
 
@@ -2568,49 +2631,94 @@ Now - the RECURSIVE PRINTOUT untangling from the default/given root.
     (b) if the first is a specia string "ref", get the ref name from
     the second item in the pair and go there recursively
 
-<<sub: tangle recursively>>=
+
+<<sub: tangle recursively - nondestructive>>=
+
+# USAGE: print_chunk(name_of_chunk, left_margin, print_newline_flag)
 
  sub print_chunk {
-	    my $chunk_being_printed = pop @_;
-	    #~ print "\n---- printing chunk $chunk_being_printed --------\n";
-	
-	# iterate over splinters of a chunk, which are foff pairs
-	while (@{$file_offsets_hash{$chunk_being_printed}}) {
 
-		<<the meat>>
+ #defaults just in case - naa, will just mask errors with call args 
+ my $snippet_left_margin = 0;
+ my $snippet_print_newline_flag = 1;
 
-	 } # elihw
+ (my $chunk_being_printed,
+    my $snippet_left_margin, 
+	  my $snippet_print_newline_flag, @rest) = @_; 
+
+ #~ print "\n---- printing chunk $chunk_being_printed --------\n";
+ #~ print "DEBUG: got left.m. $snippet_left_margin nl. flag $snippet_print_newline_flag \n";
+
+
+ # iterate over splinters of a chunk, which are foff pairs
+ for ( my $iterate_foffs = 0;
+	    exists $file_offsets_hash{$chunk_being_printed}[$iterate_foffs];)
+ {
+
+    my $snippet_position =  $file_offsets_hash{$chunk_being_printed}[$iterate_foffs++];
+    my $snippet_end = $file_offsets_hash{$chunk_being_printed}[$iterate_foffs++];
+    #~ print "debug got: beg $snippet_position -- end $snippet_end\n";
+
+    <<the meat>>
+
+ } # rof non-destructive
 	
-	 return 1;
-	} # bus -- ends the recursive sub
+     return 1;
+    } # bus -- ends the recursive sub
 
 @
 
-If the pair we get from the main hash of offsets is not
-a real number, but string "ref" and the string-name of the referenced
-chunk, do a recursive call to the same function to unravel
+ok, if we got a chunk ref in our array of pairs, then the next entry after it is 
+	(left_margin) 
+(that is my nano-protocol here ;)  ). I use these numbers to keep the 
+"printer state" before recursively calling this function for the referred 
+chunk.
 
 <<the meat>>=
 
-    my $snippet_position = shift @{$file_offsets_hash{$chunk_being_printed}};
-    my $snippet_end = shift @{$file_offsets_hash{$chunk_being_printed}};
+    if ($snippet_position eq "ref") {
 
-	#~ print "DEBUG GOT: beg $snippet_position -- end $snippet_end\n";
+	my $snippet_left_margin_ref = 
+    	    $file_offsets_hash{$chunk_being_printed}[$iterate_foffs++];
+	#~ print "DEBUG: got a ref $snippet_end here -- nl flag $snippet_print_newline_flag_ref\n";
 
-	if ($snippet_position eq "ref") {
-	
-	#~ print "got a ref $snippet_position here\n";
-	print_chunk($snippet_end);
-	
-	}
-	else { # .. print it here
-    seek LITSOURCE, $snippet_position,  0;
-    read LITSOURCE, $buffer_out, ($snippet_end - $snippet_position);
-    print $buffer_out;
-	}
-
+	# any call to a ref uncurs "print newline" flag of 0
+	print_chunk($snippet_end, $snippet_left_margin_ref, 0);
+    
+    }
 @
 
+if the next data you got from your list is pairs of offsets (beg, end), 
+print them out, observing (a) left margine this chunk is at, and
+(b) skipping newlines after a chunk (could be an in-lined ref) unless 
+this chunk is last in the referring line.
+
+For that I'll have to keep "a printer state" wth two flags for (a) and (b).
+
+<<the meat>>=
+    else { # .. print it here
+	seek LITSOURCE, $snippet_position,  0;
+	read LITSOURCE, $buffer_out, ($snippet_end - $snippet_position);
+
+	#----Newlines at the end of chunks and refs. 
+	# only for the last splinter of a chunk, do newline control:
+	if ( ((scalar @{$file_offsets_hash{$chunk_being_printed}}) - $iterate_foffs ) == 0 )
+	{ 
+		# works, but is suspicious logically:
+		# maybe I just have not invented a counterexample yet, and
+		# it's a trap waiting for its quarry
+		$buffer_out =~ s!\n([\s]*)$!$1! unless ($snippet_print_newline_flag);
+	}
+
+	#----Left indent/margin. Seems OK
+
+	$chunk_left_margin = " " x $snippet_left_margin;
+	$buffer_out =~ s!(\n)!$1$chunk_left_margin!sg;
+
+	print $buffer_out;
+    }
+
+@
 
 
 #---------------------
@@ -2640,15 +2748,17 @@ chunk, do a recursive call to the same function to unravel
 
 }}}7
 
+
 }}}6
 
-/* end of script litsource file */
+/* end of tangler part of script in the litsource file */
 
 }}}5
 
 }}}4
 
 }}}3
+
 
 .h3. ./h3.
 

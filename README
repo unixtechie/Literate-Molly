@@ -7,14 +7,17 @@ working either from command line or as CGI under a developer's personal web serv
 
 The module is a simple script written in core perl, no extra modules are needed.
 
-Full use for Literate Programming will require installing "noweb" tools by Norman
-Ramsey (see documentation). But it has a simple built-in tangler which can
-tangle itself out.
-
+Full and flexible tangling will require installing "noweb" tools by Norman
+Ramsey, with which Molly shares markup (see documentation). But Molly now also 
+includes a built-in fully-fledged tangler, which is capable of tangling the 
+"default root" embedded in the "mollified" Literate Source file. I'll add
+command-line processing for the full use of the built-in tangler at the next
+commit. The built-in tangler remains less tested than "notangle", however.
+ 
 MOLLY also allows for the use of MathML (via a great third-party javascript library),
-i.e.  mathematical expressions typed in a simple ASCII notation will be turned
-into fully-formatted MathML output to get displayed by Firefox, Opera (or other
-MathML-aware browsers) on the fly.
+i.e.  mathematical expressions typed in a simple ASCII notation and/or with
+LaTeX constants will be turned into MathML output to get displayed by Firefox, Opera
+(or other MathML-aware browsers) on the fly.
 
 THE FILES IN THE PROJECT:
 
