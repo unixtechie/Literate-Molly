@@ -314,7 +314,7 @@ MOLLY is licensed under GNU Public License version 3. .<. /center .>.
 .h2. ./h2.
 
 #------------------------------------------------------------------------------
-{{{2 .h2. PART II ------------ HOW TO USE MOLLY.pl ------------ ./h2.
+{{{2 .+h2. PART II ------------ HOW TO USE MOLLY.pl ------------ ./h2.
 #-------------------------------------------------------
 
 
@@ -1345,7 +1345,7 @@ Use .b."mollify"./b. as  a technical term (insert MOLLY.pl invocation into the L
 .h2. ./h2.
 
 #------------------------------------------------------------------
-{{{2 .+h2. PART III ------------ LITERATE SOURCE OF THE SCRIPT ------------ ./h2.
+{{{2 .h2. PART III ------------ LITERATE SOURCE OF THE SCRIPT ------------ ./h2.
 #-------------------------------------------------------
 
 
@@ -1952,7 +1952,7 @@ There later may be other versions of despatchers to take care of command-line in
 of Molly etc.
 
 #-------------------------------------------------------------------------
-{{{5 .+h5. "Main despatcher with CL" ./h5.
+{{{5 .h5. "Main despatcher with CL" ./h5.
 #-------------------------------------------------------------------------
 
 Adding command-line processing.
@@ -2296,7 +2296,7 @@ close LITSOURCE;
 
 
 #------------------------------------------------------
-{{{4 .+h4. seek-peek tangler (working) ./h4.
+{{{4 .h4. seek-peek tangler (working) ./h4.
 #------------------------------------------------------
 
 #------------------------------------------------------
@@ -2426,7 +2426,7 @@ of the same Literate Project
 }}}5
 
 #-----------------
-{{{5 <+h5>The code</h5>
+{{{5 <h5>The code</h5>
 #-----------------
 
 <<seek-peek tangler>>=
@@ -2682,7 +2682,7 @@ with matches is exhausted.
 }}}6
 
 #------------------
-{{{6 .+h6. multiple refs on the same line./h6.
+{{{6 .h6. multiple refs on the same line./h6.
 #-------------------
 
 
@@ -2805,7 +2805,7 @@ THE LAST PART IS   asdasdf
 }}}6
 
 #---------------------
-{{{6 <+h6> pass 2 and print </h6>
+{{{6 <h6> pass 2 and print </h6>
 #---------------------
 
 OK, now we have a hash of pairs (beg_chunk_offset, end_chunk_offset) with triples 
