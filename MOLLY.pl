@@ -65,33 +65,170 @@
     # If enabled, set the path; default is local in current dir
     $path_to_ASCIIMathML = $path_to_ASCIIMathML || "ASCIIMathML_with_modified_escapes.js";
 
-  # -- MAIN DESPATCHER ----
+  # -- MAIN DESPATCHER WITH CL----
+  use Getopt::Std;
 
-  # check if $i_am_module and set filenames to $0 - or 
-  # process CL options otherwise
+sub usage {
 
-  # (temp) - 2 options, to weave and to tangle in module mode:
-  #
-  if ( $0 =~ m!\w+\.$weave_extension$! ) { goto WEAVE_ME }
-  elsif ( $0 =~ m!\w+\.$tangle_extension$! )  {goto TANGLE_ME}
-  else {
-  print <<end_of_print;
+    print STDERR<<'end_of_usage';
 
-	USAGE:
-	Not set to tangle (wrong file extension).
-	Set config variables at the top of the script.  
+    USAGE: MOLLY.pl [options] [--] filename
 
-end_of_print
+	-h, or no filename
+		get this help message
+
+	-R "root_chunk_name", 
+		tangle starting from this chunk. if omitted, "*" is default.
+		
+
+    FOR INTERNALLY MOLLIFIED FILES:
+	shortcut invocation - depending on file extension. If run as script
+
+	"lit_prog_file.tangle" 
+		tangle to STDOUT, from default root "*" only. 
+	"lit_prog_file.weave" 
+		weave to STDOUT as folding HTML; usable under CGI
+	
+	/ OR: whatever extensions are set in the lit.source configuraton /
+
+end_of_usage
+
+ exit;
+}
+
+    # ---
+    # -1- shortcut invocations for "mollified" LitSrc file depending on its extension ---
+    #
+
+  if ( $0 =~ m!\w+\.$weave_extension$! ) { 
+
+	open LITSOURCE, "< $0" or die "could not open the target file\n";
+	goto WEAVE_ME;
+    }
+    elsif ( $0 =~ m!\w+\.$tangle_extension$! )  {
+
+	open LITSOURCE, "< $0" or die "could not open the target file\n";
+	goto TANGLE_ME;
   }
+
+    # ---
+    # -2- MOLLY.pl as applied to an external target file. --- 
+    # check if MOLLY.pl was called from CL or under CGI, and despatch accordingly.
+
+  else {
+
+    if (-t STDIN) { # running on interactive TTY
+	#print STDERR "$0 was called from command line..\n";
+
+	#getopts("hwu:l:d:R:", \%cl_args);
+	getopts("hR:", \%cl_args);
+
+	# -- print USAGE if not evoked correctly
+	if( (! defined $ARGV[0] ) or  ( $cl_args{h} ) ) { usage(); exit };
+
+	# -- does target file exist?
+	if ( -f $ARGV[0] ) {
+	    ; # nop, a debug printout
+	    #print STDERR "target file to operate on is $ARGV[0]\n";
+	}
+	else { 
+	    print STDERR "No target file found\n";
+	};
+
+
+	# -- process other args for tangling an external file from CL --
+	#	disabled for most of then now
+
+	if($cl_args{d}) { 
+	    #print STDERR "doc sections in coments; comment char is $cl_args{d}\n" 
+	    };
+
+	if($cl_args{l}) { 
+	    #print STDERR "will add reflines; comment char is $cl_args{l}\n" 
+	    };
+
+	if($cl_args{u}) { 
+	    #print STDERR "applying UN-tangling with script char is $cl_args{u}\n" 
+	    };
+
+
+	# -- getting the root chunk for tangling --
+	#
+	if($cl_args{R}) { 
+	    $root_chunk = $cl_args{R};
+	    print STDERR "tangling root chunk '$root_chunk'\n"
+       	};
+
+
+	# -- Final CL despatch, do it: --
+	
+	open LITSOURCE, "< $ARGV[0]" || die "could not open the file to tangle\n";
+
+	if($cl_args{w}) { 
+
+	    ; # nop, weaving is mangled at the moment	
+	    #print STDERR "weaving from CL, got $cl_args{w}\n"; 
+	    #goto WEAVE_ME;
+
+	}
+	else {
+	    
+	    goto SEEK_PEEK_TANGLER;
+
+    	} # fi - CL final despatch
+
+
+    exit; #redundant and unused
+    }
+
+
+    # -3- MOLLY.pl as a standalone script is called from CGI, nothing in here yet ---
+    #
+  elsif (defined $ENV{'REQUEST_METHOD'}) {
+
+	print "Content-Type: text/html; charset=utf-8\n\n";
+	print <<_XXX_;
+	<html><body>
+	<p>
+	<b>I was caled as CGI, but this invocation seems to be meaningless.</b><br>
+	Maybe you meant to "weave", but set a wrong file extension.<br>
+	Goodbye.<br>
+	<i>-- MOLLY.pl --</i>
+	<p>
+	</body></html>
+_XXX_
+
+  exit;
+
+  }
+
+  # -4- other cases ---
+  #
+  else {
+
+	print STDERR "MOLLY.pl: I do not know how I was called, exiting anyway\n";
+	exit;
+
+    }
+
+  exit;
+
+  } # fi, end of despatcher
+
+exit;    
+
 
 TANGLE_ME:
 
-    open LITSOURCE, "<$0";
+#open LITSOURCE, "<$0";
 
   if ( $use_builtin_tangler ) {
 
     
+    SEEK_PEEK_TANGLER:
+    
     	
+ 	
      my $chunk_beg_pattern = q(^<\<(.*)>\>=);
      my $chunk_end_pattern = q(^@\s.*$);
      my $chunk_ref_pattern = q(<\<(.*?)>\>[^=]); # can be used several times in a line
@@ -104,7 +241,7 @@ TANGLE_ME:
      my $line_num = 0;
  	my $previous_line_foff = 0; # "foff" is a "file offset"
  
-    	
+ 	
   while (<LITSOURCE>) {
      $line_num++;
  
@@ -189,8 +326,8 @@ TANGLE_ME:
  
    } #eliwh
  
-    
-    	
+ 
+    		
  # USAGE: print_chunk(name_of_chunk, left_margin, print_newline_flag)
  
   sub print_chunk {
@@ -203,8 +340,15 @@ TANGLE_ME:
      my $snippet_left_margin, 
  	  my $snippet_print_newline_flag, @rest) = @_; 
  
+ 
   #~ print "\n---- printing chunk $chunk_being_printed --------\n";
   #~ print "DEBUG: got left.m. $snippet_left_margin nl. flag $snippet_print_newline_flag \n";
+ 
+  # -- error mess. not to fail silently --
+  unless ( defined $file_offsets_hash{$chunk_being_printed} ) {
+     #print STDOUT "\t\nERROR: chunk $chunk_being_printed not found in file $ARGV[0]\n";
+     print STDERR "\n\tERROR: chunk $chunk_being_printed not found in file $ARGV[0]\n\n";
+  }
  
  
   # iterate over splinters of a chunk, which are foff pairs
@@ -255,12 +399,16 @@ TANGLE_ME:
       return 1;
      } # bus -- ends the recursive sub
  
+    	
+ 	#~ $root_chunk = "chunk 1";
+ 	#~ $root_chunk = "DEBUG print one reference";
+ 	$root_chunk = $root_chunk || "*";
+ 
+ 	print_chunk($root_chunk); 
+ 
     
-    	#~ $root_chunk = "chunk 1";
-    	#~ $root_chunk = "DEBUG print one reference";
-    	$root_chunk = "*";
-    
-    	print_chunk($root_chunk); 
+    close LITSOURCE;
+    exit;
     
 
   } 
@@ -280,7 +428,7 @@ TANGLE_ME:
 
   } #; esle, pass-through clause end
 
-    close LITSOURCE;
+close LITSOURCE;
  exit;
 
 
@@ -550,10 +698,8 @@ $code_frameset_end = "</fieldset></pre>\n";
  $line_counter = 0;
  $in_pre_tag = 0;
 
-open FF, "< $0";
 
-
-while (<FF>) {
+while (<LITSOURCE>) {
 
    $line_counter++;
 
@@ -976,9 +1122,16 @@ end_of_print
 # close the page
 	print $html_body_table_end;
 	
-exit;
 
 #--- END OF SCRIPT ---
 
+
+close LITSOURCE;
+exit;
+
+
+# just in case:
+close LITSOURCE;
+exit;
 
 # END OF SCRIPT

@@ -9,29 +9,27 @@ The module is a simple script written in core perl, no extra modules are needed.
 
 Full and flexible tangling will require installing "noweb" tools by Norman
 Ramsey, with which Molly shares markup (see documentation). But Molly now also 
-includes a built-in fully-fledged tangler, which is capable of tangling the 
-"default root" embedded in the "mollified" Literate Source file. I'll add
-command-line processing for the full use of the built-in tangler at the next
-commit. The built-in tangler remains less tested than "notangle", however.
+includes a built-in fully-fledged tangler, which is capable of tangling any
+root chunk in an external file when used from command line. 
  
 MOLLY also allows for the use of MathML (via a great third-party javascript library),
 i.e.  mathematical expressions typed in a simple ASCII notation and/or with
 LaTeX constants will be turned into MathML output to get displayed by Firefox, Opera
 (or other MathML-aware browsers) on the fly.
 
-THE FILES IN THE PROJECT:
+FILES IN THE PROJECT:
 
 "MOLLY.html" is the extracted folding html documentation for the project.
-Get and read it first. Make user JavaScript is enabled in your browser.
+Get and read it first. Make sure JavaScript is enabled in your browser.
 "eeerotate.jpg" is an illustration for the file.
 
 "MOLLY.weave" is a literate source file for the project, one main project file
 which includes all documentation and code, tests, todo and bugs subsections etc.
 
-"MOLLY.pl" is the pre-extracted perl module.
+"MOLLY.pl" is the pre-extracted perl module (i.e. weaver and tangler)
 
-"ASCIIMathML.js" is a slightly modified JavaScript library that enables
-MathML inside your weaved HTML file. If you wish to use MathML in the project, 
+"ASCIIMathML.js" is an excellent LGPLed  JavaScript library that enables
+MathML inside a weaved HTML file. If you wish to use MathML in the project, 
 get it as well AND enable the switches in the header of your template file.
 
 "new_project_template.weave" is a skeleton file to copy and use when you
