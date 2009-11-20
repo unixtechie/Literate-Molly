@@ -332,10 +332,6 @@ TANGLE_ME:
  
   sub print_chunk {
  
-  #defaults just in case - naa, will just mask errors with call args 
-  my $snippet_left_margin = 0;
-  my $snippet_print_newline_flag = 1;
- 
   (my $chunk_being_printed,
      my $snippet_left_margin, 
  	  my $snippet_print_newline_flag, @rest) = @_; 
@@ -404,7 +400,7 @@ TANGLE_ME:
  	#~ $root_chunk = "DEBUG print one reference";
  	$root_chunk = $root_chunk || "*";
  
- 	print_chunk($root_chunk); 
+ 	print_chunk($root_chunk, 0, 1); 
  
     
     close LITSOURCE;
@@ -1135,3 +1131,4 @@ close LITSOURCE;
 exit;
 
 # END OF SCRIPT
+

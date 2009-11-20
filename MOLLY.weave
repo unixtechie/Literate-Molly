@@ -2457,7 +2457,7 @@ I'll ' add command-line and CGI arguments processing later.
 	#~ $root_chunk = "DEBUG print one reference";
 	$root_chunk = $root_chunk || "*";
 
-	print_chunk($root_chunk); 
+	print_chunk($root_chunk, 0, 1); 
 
 @
 
@@ -2836,10 +2836,6 @@ Now - the RECURSIVE PRINTOUT untangling from the default/given root.
 # USAGE: print_chunk(name_of_chunk, left_margin, print_newline_flag)
 
  sub print_chunk {
-
- #defaults just in case - naa, will just mask errors with call args 
- my $snippet_left_margin = 0;
- my $snippet_print_newline_flag = 1;
 
  (my $chunk_being_printed,
     my $snippet_left_margin, 
