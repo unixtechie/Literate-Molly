@@ -121,9 +121,9 @@ MOLLY is licensed under GNU Public License version 3. .<. /center .>.
 
 .h2. ./h2.
 
-#------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------
 {{{2 .h2. PART 0 ----------- Краткое описание для русских пользователей ------------ ./h2.
-#------------------------------------------------------------------------------------------
+#--------------------------------------------------------------
 
 .b. 1. Что такое Molly? ./b. 
 
@@ -207,14 +207,13 @@ Yep, computer geeks are passionate souls. Программисты пассио�
 
 .i. .b. ..not finished yet.. раздел не завершен.. ./b../i.
 
-
 }}}2
 
 .h2. ./h2.
 
 #-------------------------------------------------------------------------------------
 {{{2 .h2. PART I ----------- Concepts. Controlling human attention.------------ ./h2.
-#--------------------------------------------------------------
+#-------------------------------------------------------------------------------------
 
 
 .b. LP as "management of thinking" ./b. 
@@ -3722,7 +3721,7 @@ This is just to quickly cut out the Molly perly template at the top.
 
 <<cut out the MOLLY.pl invocation at the top of LS file>>=
 
-    if ( ($line_counter == 1) && (m!^#.*perl!) ) {
+if ( ($line_counter == 1) && (m!^#.*perl!) ) {
 
 	# this is the mollifying template or some perl script.
 	
@@ -3749,7 +3748,7 @@ This is just to quickly cut out the Molly perly template at the top.
 
 	next;
 
-    } # fi cutting out MOLLY.pl template/config  if present in lit.source target file
+} # fi cutting out MOLLY.pl template/config  if present in lit.source target file
 
 @
 
@@ -3819,36 +3818,37 @@ in an option var) is written too
 
 <<process code chunks>>=
 
-	if ( m!^(goto)?<\<(.*)>\>=! ... m!^@\s*$! ) { # -- CODE CHUNKS -- 
-		$chunk_title = $2;
+if ( m!^<\<(.*)>\>=! ... m!^@\s*$! ) { # -- CODE CHUNKS -- 
+	$chunk_title = $2;
 
-		s/&/&amp;/g;	# escape &
-		s/</&lt;/g;	# escape <
-		s/>/&gt;/g;	# escape >
+	s/&/&amp;/g;	# escape &
+	s/</&lt;/g;	# escape <
+	s/>/&gt;/g;	# escape >
 
-		if (m!(&lt;&lt;(.+?)&gt;&gt);(=)?!) 
-		  {
-		  $reference = $1;
-		  $ind_str = "&lt;&lt;$2&gt;&gt; $section_num";
-		  if (defined $3) {$ind_str .= "<sub>def</sub>"}
-		  else { s!$reference!<font class='chunkref'>$reference</font>! }
+	if (m!(&lt;&lt;(.+?)&gt;&gt);(=)?!) 
+	  {
+	  $reference = $1;
+	  $ind_str = "&lt;&lt;$2&gt;&gt; $section_num";
+	  if (defined $3) {$ind_str .= "<sub>def</sub>"}
+	  else { s!$reference!<font class='chunkref'>$reference</font>! }
 
-		  unshift @indbuf, $ind_str;
+	  unshift @indbuf, $ind_str;
 
-		} # fi - chunks index accumulation
+	} # fi - chunks index accumulation
 
-		# simple fieldset frames around code snippets
-		s!^(goto)?&lt;&lt;(.+)&gt;&gt;=!$code_frameset_start_pre$1&lt;&lt;$2&gt;&gt;$code_frameset_start_post!;
-		s!^@\s*$!$code_frameset_end!;
+	# simple fieldset frames around code snippets
+	s!^(goto)?&lt;&lt;(.+)&gt;&gt;=!$code_frameset_start_pre$1&lt;&lt;$2&gt;&gt;$code_frameset_start_post!;
+	s!^@\s*$!$code_frameset_end!;
 
-		if ( $line_numbering ) { 
-		$chunkbuf .= "<font class='lnum'>" . $line_counter . "</font>   " . $_;
-		}
-		else{
-		$chunkbuf .= $_;
-		}
+	if ( $line_numbering ) { 
+	$chunkbuf .= "<font class='lnum'>" . $line_counter . "</font>   " . $_;
+	}
+	else{
+	$chunkbuf .= $_;
+	}
 
-	} # fi code chunks
+} # fi code chunks
+
 @
 
 }}}5
@@ -3878,9 +3878,9 @@ CHANGES" subsection
 
 <<process section headings>>=
 
-	# -- SECTION HEADINGS 
-   #elsif ( m!\.(\+)?h(\d)\.(.*?)\./h\d\.! ) {	# old version, no "rawHTML" enabled yet
-   elsif ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/h\d{1,2}$tag_close_symbol! ) {	
+# -- SECTION HEADINGS 
+#elsif ( m!\.(\+)?h(\d)\.(.*?)\./h\d\.! ) {	# old version, no "rawHTML" enabled yet
+elsif ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/h\d{1,2}$tag_close_symbol! ) {	
 
 
 
@@ -3981,7 +3981,7 @@ CHANGES" subsection
 		    $line_counter . ")</i></font>" .
 		    "</b></a><br>\n";
 
-   } #; fisle: end elif headings
+} #; fisle: end elif headings
 
 	
 
@@ -3989,135 +3989,34 @@ CHANGES" subsection
 
 }}}5
 
-#---------------------------------------------------------
-{{{5 .h5. dotHTML formatter and rawHTML ./h5.
-#---------------------------------------------------------
+#---------------------------------------------------------------------
+{{{5 .h5. Doc body formatters: rawHTML and others./h5.
+#--------------------------------------------------------------------
 
-It is primitive, and I add needed markup "on the fly", as and when I need it.
-The idea is to eliminate angle brackets in html tags, which I cannot type without errors
-when typing fast, and substitute those with simple "dots", which do not requre switching
-keyboard registers.
+The last "else" case is the documentation chunk body.
+It includes one default formatter, which is "rawHTML", and can include a number of other markups.
+That section should be made extensible by users.
 
-.s. This formatting also has problems with escapes.
-
-Whether it's the fault of HTML standards or their implementation, web browsers continue to
-react to html formatting .b.even inside the "pre" tags./b., which is obviously insane.
-Therefore if your code chunks contain any HTML tags (e.g. processed by your code), you'll
-need to escape them to display correctly.
-And if you use sth like "& g t ;" in your code, the web page will also lie to you.
-This is insane, and there is no good quick solution, one would have to use lengthy escape
-tables etc. etc. ./s.
-
-.ul. /* OFFTOPIC, ALSO: add < > and & escapes to the weaved code chunks -- for proper display */
-    --- DONE ---
-    These escapes exist in two places in the Weaver code:
-    "process code sections"  and "body HTML formatters"
-./ul.
-
-.br.
-This prototype script fails in some (unimportant to me)  cases.
-dotHTML markup would also fail if your programming language uses dot-symbol-dot sequences
-Mine do not.
-
-The formatter is pretty straightforward, but sequencing of regexps is important.
-One also needs to remember that once escaped, angle brackets are non-existent any more, 
-and so the subsequent regexps must match on "& l t ;" not on the angle bracket in some
-cases.
-
+So here we are:
 
 <<body HTML formatters>>=
 
-	elsif( $weave_markup eq "dotHTML" ) {	# dotHTML formatter here
+else { # this is the body of the doc section
 
-	      s/^=begin.*$//;	# - eliminate perl escaping, start
-	      s/^=cut.*$//;		# - eliminate perl escaping, end
-   	      #s/^{{{\d+(.*)$/$1/;	# - eliminate vim folding markup, start 
-					# - dummy, as it is killed in "headings" processing 
-	      s/^}}}\d+//;	# - eliminate vim folding markup, end
+<<rawHTML formatter>>
+<<other body formatters>>
 
-		s/&/&amp;/g;	# escape &
-		s/</&lt;/g;	# escape <
-		s/>/&gt;/g;	# escape >
+} # esle, fi -- end of selection of doc heading, end, or body inside 'while' over the file.
 
-
-	      # Paragraphs and line breaks are automatic now:
-	      # ... unless we are dealing with the "preformat" tag
-		#--note! that ranges do not work here
-		$in_pre_tag = 1 if (m!\.pre\.!);
-		$in_pre_tag = 0 if (m!\./pre\.!);;
-
-		s/\.(\/?)pre\./<$1pre>/g;
-
-	    unless ($in_pre_tag) {
-	    (m/^\s*$/) and s/$_/<p>\n/
-	    or s/\n/<br>\n/;
-	    }
 @
 
-Now the regexps to cut out "#--------" lines and substitute "dot-notation" with angle brackets:
+Now, the default formatter starts an "if" (selecting with a config variable $weave_markup),
+and all other selection clauses must implement "elsif" clauses. Those are not obligatory, 
+as "if" is extensible, of course.
 
-<<body HTML formatters>>=
-	      # originally I separated header from the body with such a line
-	      #s/^#-----.*/starting the table here/;
-	      s/^#-----.*//;
-
-
-		# add more here
-
-		s/\.(\/?)b\./<$1b>/g;
-		s/\.(\/?)i\./<$1i>/g;
-		s/\.(\/?)ul\./<$1ul>/g;
-		s/\.(\/?)li\./<$1li>/g;
-		s/\.(\/?)ol\./<$1ol>/g;
-		s/\.(\/?)s\./<$1s>/g;
-		s/\.(\/?)div\./<$1div>/g;
-		s/\.br\./<br>/g;
-		s/\.p\./<p>/g;
-		s/\.sp\./&nbsp;/g;
-
-		s/\.(\/?)tab\./<$1ul>/g;	# "tabbing" with "ul"
-
-
-		# this is some bullshit ???
-		s/\.hr\./<hr /g;
-		s/\.\/hr\./>/g;
-
-		s!\.a\.(.+?)\.\/a\.!<a href=$1>$1</a>!g;
-
-		# rudimentary &nbsp; s p a c i n g &nbsp (one word only)
-		#s!\.x\.(.+?)\./x\.!join " ","&nbsp;&nbsp;",(split //, $1),"&nbsp;&nbsp;"!eg;
-
-		# slightly better spacing (phrases, too):
-		# although redundant  with more work than is needed
-		if ( m!(\.x\.)(.+?)(\./x\.)!g) {
-		    s!(\.x\.)(.+?)(\./x\.)!join " _ ", $1, (split / /, $2), $3!eg;
-		    s!\.x\.(.+?)\./x\.!join " ", (split //, $1)!eg;
-		    s!  _  ! &nbsp; !g;
-		}
-@
-
-.b. BUG! ./b. This URL breaks my "ancor" dot-tags: 
-     .pre. http://www.cs.tufts.edu/~nr/noweb ./pre.
-.b. Got it ./b. The substitutions above must explicitly use "slash" for the closing HTML tag
-in the regexps - otherwise they match stuff like ".cs." inside URLs
-
-If an HTML tag is not in the above chunk, either add it or write with the two following generic
-tags (slow and not nice on your fingers, though). You might need to use them also when your HTML
-tag conntains some options, and so is not of generic simple type.
-
-<<body HTML formatters>>=
-
-
-		# generic for all tags with options
-		s!\.&lt;\. !<!g;
-		s! \.&gt;\.!>!g;
-
-
-		$chunkbuf .= $_;
-
-	}
-@
-
+For the convenience of the users who might wish to add other markups to Molly, all non-default
+sections are moved to the end to .b. ADD-ON: example of additional markup ./b. folding sections
+of this Literate Source file.
 
 .b. rawHTML formatter./b.
 Raw HTML formatting can be done - either because it is non-restricted, compared to the stripped-down
@@ -4139,8 +4038,8 @@ If you do, it is sometimes easy to clean headings with a few regexps in a good e
 It is very convenient and I keep large manuals as folding HTML documents.
 
 
-<<body HTML formatters>>=
-	elsif( $weave_markup eq "rawHTML" ) {	# if the doc chunks marked up with real HTML
+<<rawHTML formatter>>=
+	if( $weave_markup eq "rawHTML" ) {	# if the doc chunks marked up with real HTML
 		s!^#-----.*!!;
 
 	      #s/^{{{\d+(.*)$/$1/;	# - eliminate vim folding markup, start 
@@ -4160,58 +4059,12 @@ It is very convenient and I keep large manuals as folding HTML documents.
 		or s/\n/<br>\n/;
 		}
 
-
 		$chunkbuf .= $_;
-	} # esle -- for rest of the body
 
-
+	} # fi - default rawHTML formatter for body of doc chunks
 
 @
-
-{{{6 .h6. test of &nbsp;&nbsp; s p a c i n g &nbsp;&nbsp; regexp ./h6.
-
-1. Hell, the thing is multiple sp /sp markups on one line. I need to iterate over
-each separately and then put them in their right places, hedging with "nbsp"-ces each word.
-
-2. The invocation is OK for $str_sp, but for boundaries of the string and word boundaries, 
-they must be hedged too
-
-3. Could subst spaces-betwen-words to sth like _ (space-underscore-space) as placeholders,
-then subst them into nbspx2 in a following regexp
-
-4. This tagging can be done cleanly and span severl lines if I do it in a different place - 
-not while still reading the Literate Source file line by line, .x.but later./x. when
-$chunkbuf is completely formed in RAM.
-
-
-<<spacing.pl>>=
-#!/usr/bin/perl
-#
-$str = $ARGV[0];
-$str_sp = $ARGV[0];
-#print "string is $str\n";
-
-    # "sp" dot-markup to intersperse spaces: the basic formula
-    #$spaced_str =~ s!(asdf)!join " ", (split //, $1)!eg;
-    #
     
-    # -- idea 3 from above: this works but is cumbersome --
-    #$str_sp =~ s!(\.x\.)(.+?)(\./x\.)!join " _ ", $1, (split / /, $2), $3!eg;
-    #$str_sp =~ s!\.x\.(.+?)\./x\.!join " ", (split //, $1)!eg;
-    #$str_sp =~ s! _ ! &nbsp;&nbsp; !g;
-
-    # -- first get the matching string in "if", then massage it:
-    if ($str_sp =~ m!(\.x\.)(.+?)(\./x\.)!g) {
-	$str_sp =~ s!(\.x\.)(.+?)(\./x\.)!join " _ ", $1, (split / /, $2), $3!eg;
-        $str_sp =~ s!\.x\.(.+?)\./x\.!join " ", (split //, $1)!eg;
-	$str_sp =~ s!  _  ! &nbsp; !g;
-    }
-
-    #print "\nthe string is $str\n";
-    print "\nthe str_sp is $str_sp\n\n";
-@
-
-}}}6	    
 
 }}}5
 
@@ -4431,7 +4284,7 @@ End of the project file
 .h3. ./h3.
 
 #-------------------------------------------------------------
-{{{3 .h3. ADD-ON: example of additional markup - dotHTML - change unfinished./h3.
+{{{3 .h3. ADD-ON: example of additional markup - dotHTML./h3.
 #-------------------------------------------------------------
 
 .i. This subsection is a good example of the "out-of-order" processing that is
@@ -4439,7 +4292,60 @@ enabled in Literate Programming. Pieces for this subsection come from different
 parts of the script and are laid out logically rather than in the order imposed
 by the machine ./i.
 
-.b. .i. Notes ./i. ./b.
+
+.b. 1. the elsif clause ./b.The default "rawHTML" formatter opened an "if" clause, 
+matching on the configuration variable $weave_markup. 
+
+All other formatters (and this is extensible, of course) can be added here to the chunk
+below, and the actual implementation (in its own subsection, the regex line-by-line 
+filters/susbtitutions in the  doc chunk bodies, must be wrapped in the same two lines:
+
+<<my_new_markup - disabled - add to "other body formatters" below>>=
+
+	elsif( $weave_markup eq "name_of_your_markup" ) { # comment
+
+		#...........your line-by-line transforming.
+		#..........or filtering expressions here
+
+		#$chunkbuf .= $_;
+
+	} #fisle for name_of_your_markup
+
+@
+
+
+.b. The actual working example./b. below implements a "dotHTML" formatter (this very 
+file is marked with it rather than the default HTML).
+
+This is  my own kind of simple markdown for quick typing.  
+
+<<other body formatters>>=
+
+	<<dotHTML formatter>>
+	
+@
+
+
+.b. 2. Adding a new markup language involves  two more obligatory changes. ./b.
+
+You'll have to mention name of your new markup as an option to the user (no new vars 
+are necessary) in  the "mollifying template" in part II .b. "HOW TO USE MOLLY.pl" ./b.
+
+And you'll have to add that into the "template project file" distributed with MOLLY.pl ,
+again  for other people to know and notice.
+
+You might also add that new possible value for the config var  at the top of this very 
+LitSource document, although it has been marked in dotHTML already and is not 
+going to reform ;)) . You might want it because this file serves as the central example
+itself, and so some people might copy the config section from here to start their 
+own projects.
+
+
+#------------------------------------------
+{{{4 .h4. dotHTML formatter ./h4.
+#------------------------------------------
+
+.b. .i. .<. u .>. Note: .<. /u .>. ./i. ./b.
 .ul.
 Implementation of a simple "dotHTML" markup  in which angle brackets are substituted
 with dots for some of the commonest HTML tags (to speed up typing and eliminate typos).
@@ -4455,10 +4361,183 @@ the "mollified" Literate Source file: the double angle brackets and the "at" sym
 if you enable it) plus words "a m a t h" and "e n d a m a t h" without spaces btw letters.
 ./ul.
 
+.b. .i. ...original implementation notes below.. ./i. ./b.
 
-.b. .i. ...unfinished... ./i. ./b.
+It is quite simple, and I add needed markup "on the fly", as and when I need it.
+The idea is to eliminate angle brackets in html tags, which I cannot type without errors
+when typing fast, and substitute those with simple "dots", which do not requre switching
+keyboard registers.
+
+.s. This formatting also has problems with escapes.
+
+Whether it's the fault of HTML standards or their implementation, web browsers continue to
+react to html formatting .b.even inside the "pre" tags./b., which is obviously insane.
+Therefore if your code chunks contain any HTML tags (e.g. processed by your code), you'll
+need to escape them to display correctly.
+And if you use sth like "& g t ;" in your code, the web page will also lie to you.
+This is insane, and there is no good quick solution, one would have to use lengthy escape
+tables etc. etc. ./s.
+
+.ul. /* OFFTOPIC, ALSO: add < > and & escapes to the weaved code chunks -- for proper display */
+    --- DONE ---
+    These escapes exist in two places in the Weaver code:
+    "process code sections"  and "body HTML formatters"
+./ul.
+
+.br.
+This prototype script fails in some (unimportant to me)  cases.
+dotHTML markup would also fail if your programming language uses dot-symbol-dot sequences
+Mine do not.
+
+The formatter is pretty straightforward, but sequencing of regexps is important.
+One also needs to remember that once escaped, angle brackets are non-existent any more, 
+and so the subsequent regexps must match on "& l t ;" not on the angle bracket in some
+cases.
+
+<<dotHTML formatter>>=
+
+	elsif( $weave_markup eq "dotHTML" ) {	# dotHTML formatter here
+
+	      s/^=begin.*$//;	# - eliminate perl escaping, start
+	      s/^=cut.*$//;		# - eliminate perl escaping, end
+   	      #s/^{{{\d+(.*)$/$1/;	# - eliminate vim folding markup, start 
+					# - dummy, as it is killed in "headings" processing 
+	      s/^}}}\d+//;	# - eliminate vim folding markup, end
+
+		s/&/&amp;/g;	# escape &
+		s/</&lt;/g;	# escape <
+		s/>/&gt;/g;	# escape >
+
+
+	      # Paragraphs and line breaks are automatic now:
+	      # ... unless we are dealing with the "preformat" tag
+		#--note! that ranges do not work here
+		$in_pre_tag = 1 if (m!\.pre\.!);
+		$in_pre_tag = 0 if (m!\./pre\.!);;
+
+		s/\.(\/?)pre\./<$1pre>/g;
+
+	    unless ($in_pre_tag) {
+	    (m/^\s*$/) and s/$_/<p>\n/
+	    or s/\n/<br>\n/;
+	    }
+@
+
+Now the regexps to cut out "#--------" lines and substitute "dot-notation" with angle brackets:
+
+<<dotHTML formatter>>=
+
+	      # originally I separated header from the body with such a line
+	      #s/^#-----.*/starting the table here/;
+	      s/^#-----.*//;
+
+
+		# add more here
+
+		s/\.(\/?)b\./<$1b>/g;
+		s/\.(\/?)i\./<$1i>/g;
+		s/\.(\/?)ul\./<$1ul>/g;
+		s/\.(\/?)li\./<$1li>/g;
+		s/\.(\/?)ol\./<$1ol>/g;
+		s/\.(\/?)s\./<$1s>/g;
+		s/\.(\/?)div\./<$1div>/g;
+		s/\.br\./<br>/g;
+		s/\.p\./<p>/g;
+		s/\.sp\./&nbsp;/g;
+
+		s/\.(\/?)tab\./<$1ul>/g;	# "tabbing" with "ul"
+
+
+		# this is some bullshit ???
+		s/\.hr\./<hr /g;
+		s/\.\/hr\./>/g;
+
+		s!\.a\.(.+?)\.\/a\.!<a href=$1>$1</a>!g;
+
+		# rudimentary &nbsp; s p a c i n g &nbsp (one word only)
+		#s!\.x\.(.+?)\./x\.!join " ","&nbsp;&nbsp;",(split //, $1),"&nbsp;&nbsp;"!eg;
+
+		# slightly better spacing (phrases, too):
+		# although redundant  with more work than is needed
+		if ( m!(\.x\.)(.+?)(\./x\.)!g) {
+		    s!(\.x\.)(.+?)(\./x\.)!join " _ ", $1, (split / /, $2), $3!eg;
+		    s!\.x\.(.+?)\./x\.!join " ", (split //, $1)!eg;
+		    s!  _  ! &nbsp; !g;
+		} 
+@
+
+.b. BUG! ./b. This URL breaks my "ancor" dot-tags: 
+     .pre. http://www.cs.tufts.edu/~nr/noweb ./pre.
+.b. Got it ./b. The substitutions above must explicitly use "slash" for the closing HTML tag
+in the regexps - otherwise they match stuff like ".cs." inside URLs
+
+If an HTML tag is not in the above chunk, either add it or write with the two following generic
+tags (slow and not nice on your fingers, though). You might need to use them also when your HTML
+tag conntains some options, and so is not of generic simple type.
+
+<<dotHTML formatter>>=
+
+		# generic for all tags with options
+		s!\.&lt;\. !<!g;
+		s! \.&gt;\.!>!g;
+
+
+		$chunkbuf .= $_;
+
+	} # fisle - end of "dotHTML" body formatter
+
+@
+
+
+{{{5 .h5. test of &nbsp;&nbsp; s p a c i n g &nbsp;&nbsp; regexp ./h5.
+
+1. Hell, the thing is multiple sp /sp markups on one line. I need to iterate over
+each separately and then put them in their right places, hedging with "nbsp"-ces each word.
+
+2. The invocation is OK for $str_sp, but for boundaries of the string and word boundaries, 
+they must be hedged too
+
+3. Could subst spaces-betwen-words to sth like _ (space-underscore-space) as placeholders,
+then subst them into nbspx2 in a following regexp
+
+4. This tagging can be done cleanly and span severl lines if I do it in a different place - 
+not while still reading the Literate Source file line by line, .x.but later./x. when
+$chunkbuf is completely formed in RAM.
+
+
+<<spacing.pl>>=
+#!/usr/bin/perl
+#
+$str = $ARGV[0];
+$str_sp = $ARGV[0];
+#print "string is $str\n";
+
+    # "sp" dot-markup to intersperse spaces: the basic formula
+    #$spaced_str =~ s!(asdf)!join " ", (split //, $1)!eg;
+    #
+    
+    # -- idea 3 from above: this works but is cumbersome --
+    #$str_sp =~ s!(\.x\.)(.+?)(\./x\.)!join " _ ", $1, (split / /, $2), $3!eg;
+    #$str_sp =~ s!\.x\.(.+?)\./x\.!join " ", (split //, $1)!eg;
+    #$str_sp =~ s! _ ! &nbsp;&nbsp; !g;
+
+    # -- first get the matching string in "if", then massage it:
+    if ($str_sp =~ m!(\.x\.)(.+?)(\./x\.)!g) {
+	$str_sp =~ s!(\.x\.)(.+?)(\./x\.)!join " _ ", $1, (split / /, $2), $3!eg;
+        $str_sp =~ s!\.x\.(.+?)\./x\.!join " ", (split //, $1)!eg;
+	$str_sp =~ s!  _  ! &nbsp; !g;
+    }
+
+    #print "\nthe string is $str\n";
+    print "\nthe str_sp is $str_sp\n\n";
+@
+
+}}}5	
+
+}}}4
 
 }}}3
+
 
 
 #-------------------------------------------------------------
@@ -4469,7 +4548,7 @@ if you enable it) plus words "a m a t h" and "e n d a m a t h" without spaces bt
 get in conflict with the target prog language or some "markdown" 
 introduced later into Molly.
 
-Also - may have lost LaTex functionality because of my need to
+Also - need to double-backtick LaTeX snippets now  because of my need to
 preserve $ for programming language use.
 
 .b. WILL NEED TO DISTRIBUTE THE MODIFIED LIBRARY NOW with Molly ./b.

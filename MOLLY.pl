@@ -695,7 +695,7 @@ while (<LITSOURCE>) {
 $line_counter++;
 
 
-    if ( ($line_counter == 1) && (m!^#.*perl!) ) {
+if ( ($line_counter == 1) && (m!^#.*perl!) ) {
 
 	# this is the mollifying template or some perl script.
 	
@@ -722,44 +722,45 @@ $line_counter++;
 
 	next;
 
-    } # fi cutting out MOLLY.pl template/config  if present in lit.source target file
+} # fi cutting out MOLLY.pl template/config  if present in lit.source target file
 
 
 
-	if ( m!^(goto)?<\<(.*)>\>=! ... m!^@\s*$! ) { # -- CODE CHUNKS -- 
-		$chunk_title = $2;
+if ( m!^<\<(.*)>\>=! ... m!^@\s*$! ) { # -- CODE CHUNKS -- 
+	$chunk_title = $2;
 
-		s/&/&amp;/g;	# escape &
-		s/</&lt;/g;	# escape <
-		s/>/&gt;/g;	# escape >
+	s/&/&amp;/g;	# escape &
+	s/</&lt;/g;	# escape <
+	s/>/&gt;/g;	# escape >
 
-		if (m!(&lt;&lt;(.+?)&gt;&gt);(=)?!) 
-		  {
-		  $reference = $1;
-		  $ind_str = "&lt;&lt;$2&gt;&gt; $section_num";
-		  if (defined $3) {$ind_str .= "<sub>def</sub>"}
-		  else { s!$reference!<font class='chunkref'>$reference</font>! }
+	if (m!(&lt;&lt;(.+?)&gt;&gt);(=)?!) 
+	  {
+	  $reference = $1;
+	  $ind_str = "&lt;&lt;$2&gt;&gt; $section_num";
+	  if (defined $3) {$ind_str .= "<sub>def</sub>"}
+	  else { s!$reference!<font class='chunkref'>$reference</font>! }
 
-		  unshift @indbuf, $ind_str;
+	  unshift @indbuf, $ind_str;
 
-		} # fi - chunks index accumulation
+	} # fi - chunks index accumulation
 
-		# simple fieldset frames around code snippets
-		s!^(goto)?&lt;&lt;(.+)&gt;&gt;=!$code_frameset_start_pre$1&lt;&lt;$2&gt;&gt;$code_frameset_start_post!;
-		s!^@\s*$!$code_frameset_end!;
+	# simple fieldset frames around code snippets
+	s!^(goto)?&lt;&lt;(.+)&gt;&gt;=!$code_frameset_start_pre$1&lt;&lt;$2&gt;&gt;$code_frameset_start_post!;
+	s!^@\s*$!$code_frameset_end!;
 
-		if ( $line_numbering ) { 
-		$chunkbuf .= "<font class='lnum'>" . $line_counter . "</font>   " . $_;
-		}
-		else{
-		$chunkbuf .= $_;
-		}
+	if ( $line_numbering ) { 
+	$chunkbuf .= "<font class='lnum'>" . $line_counter . "</font>   " . $_;
+	}
+	else{
+	$chunkbuf .= $_;
+	}
 
-	} # fi code chunks
+} # fi code chunks
 
-	# -- SECTION HEADINGS 
-   #elsif ( m!\.(\+)?h(\d)\.(.*?)\./h\d\.! ) {	# old version, no "rawHTML" enabled yet
-   elsif ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/h\d{1,2}$tag_close_symbol! ) {	
+
+# -- SECTION HEADINGS 
+#elsif ( m!\.(\+)?h(\d)\.(.*?)\./h\d\.! ) {	# old version, no "rawHTML" enabled yet
+elsif ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/h\d{1,2}$tag_close_symbol! ) {	
 
 
 
@@ -860,84 +861,14 @@ $line_counter++;
 		    $line_counter . ")</i></font>" .
 		    "</b></a><br>\n";
 
-   } #; fisle: end elif headings
+} #; fisle: end elif headings
 	
 
 
 
-	elsif( $weave_markup eq "dotHTML" ) {	# dotHTML formatter here
+else { # this is the body of the doc section
 
-	      s/^=begin.*$//;	# - eliminate perl escaping, start
-	      s/^=cut.*$//;		# - eliminate perl escaping, end
-   	      #s/^{{{\d+(.*)$/$1/;	# - eliminate vim folding markup, start 
-					# - dummy, as it is killed in "headings" processing 
-	      s/^}}}\d+//;	# - eliminate vim folding markup, end
-
-		s/&/&amp;/g;	# escape &
-		s/</&lt;/g;	# escape <
-		s/>/&gt;/g;	# escape >
-
-
-	      # Paragraphs and line breaks are automatic now:
-	      # ... unless we are dealing with the "preformat" tag
-		#--note! that ranges do not work here
-		$in_pre_tag = 1 if (m!\.pre\.!);
-		$in_pre_tag = 0 if (m!\./pre\.!);;
-
-		s/\.(\/?)pre\./<$1pre>/g;
-
-	    unless ($in_pre_tag) {
-	    (m/^\s*$/) and s/$_/<p>\n/
-	    or s/\n/<br>\n/;
-	    }
-	      # originally I separated header from the body with such a line
-	      #s/^#-----.*/starting the table here/;
-	      s/^#-----.*//;
-
-
-		# add more here
-
-		s/\.(\/?)b\./<$1b>/g;
-		s/\.(\/?)i\./<$1i>/g;
-		s/\.(\/?)ul\./<$1ul>/g;
-		s/\.(\/?)li\./<$1li>/g;
-		s/\.(\/?)ol\./<$1ol>/g;
-		s/\.(\/?)s\./<$1s>/g;
-		s/\.(\/?)div\./<$1div>/g;
-		s/\.br\./<br>/g;
-		s/\.p\./<p>/g;
-		s/\.sp\./&nbsp;/g;
-
-		s/\.(\/?)tab\./<$1ul>/g;	# "tabbing" with "ul"
-
-
-		# this is some bullshit ???
-		s/\.hr\./<hr /g;
-		s/\.\/hr\./>/g;
-
-		s!\.a\.(.+?)\.\/a\.!<a href=$1>$1</a>!g;
-
-		# rudimentary &nbsp; s p a c i n g &nbsp (one word only)
-		#s!\.x\.(.+?)\./x\.!join " ","&nbsp;&nbsp;",(split //, $1),"&nbsp;&nbsp;"!eg;
-
-		# slightly better spacing (phrases, too):
-		# although redundant  with more work than is needed
-		if ( m!(\.x\.)(.+?)(\./x\.)!g) {
-		    s!(\.x\.)(.+?)(\./x\.)!join " _ ", $1, (split / /, $2), $3!eg;
-		    s!\.x\.(.+?)\./x\.!join " ", (split //, $1)!eg;
-		    s!  _  ! &nbsp; !g;
-		}
-
-
-		# generic for all tags with options
-		s!\.&lt;\. !<!g;
-		s! \.&gt;\.!>!g;
-
-
-		$chunkbuf .= $_;
-
-	}
-	elsif( $weave_markup eq "rawHTML" ) {	# if the doc chunks marked up with real HTML
+	if( $weave_markup eq "rawHTML" ) {	# if the doc chunks marked up with real HTML
 		s!^#-----.*!!;
 
 	      #s/^{{{\d+(.*)$/$1/;	# - eliminate vim folding markup, start 
@@ -957,11 +888,88 @@ $line_counter++;
 		or s/\n/<br>\n/;
 		}
 
-
 		$chunkbuf .= $_;
-	} # esle -- for rest of the body
+
+	} # fi - default rawHTML formatter for body of doc chunks
 
 
+	
+ 	elsif( $weave_markup eq "dotHTML" ) {	# dotHTML formatter here
+ 
+ 	      s/^=begin.*$//;	# - eliminate perl escaping, start
+ 	      s/^=cut.*$//;		# - eliminate perl escaping, end
+    	      #s/^{{{\d+(.*)$/$1/;	# - eliminate vim folding markup, start 
+ 					# - dummy, as it is killed in "headings" processing 
+ 	      s/^}}}\d+//;	# - eliminate vim folding markup, end
+ 
+ 		s/&/&amp;/g;	# escape &
+ 		s/</&lt;/g;	# escape <
+ 		s/>/&gt;/g;	# escape >
+ 
+ 
+ 	      # Paragraphs and line breaks are automatic now:
+ 	      # ... unless we are dealing with the "preformat" tag
+ 		#--note! that ranges do not work here
+ 		$in_pre_tag = 1 if (m!\.pre\.!);
+ 		$in_pre_tag = 0 if (m!\./pre\.!);;
+ 
+ 		s/\.(\/?)pre\./<$1pre>/g;
+ 
+ 	    unless ($in_pre_tag) {
+ 	    (m/^\s*$/) and s/$_/<p>\n/
+ 	    or s/\n/<br>\n/;
+ 	    }
+ 
+ 	      # originally I separated header from the body with such a line
+ 	      #s/^#-----.*/starting the table here/;
+ 	      s/^#-----.*//;
+ 
+ 
+ 		# add more here
+ 
+ 		s/\.(\/?)b\./<$1b>/g;
+ 		s/\.(\/?)i\./<$1i>/g;
+ 		s/\.(\/?)ul\./<$1ul>/g;
+ 		s/\.(\/?)li\./<$1li>/g;
+ 		s/\.(\/?)ol\./<$1ol>/g;
+ 		s/\.(\/?)s\./<$1s>/g;
+ 		s/\.(\/?)div\./<$1div>/g;
+ 		s/\.br\./<br>/g;
+ 		s/\.p\./<p>/g;
+ 		s/\.sp\./&nbsp;/g;
+ 
+ 		s/\.(\/?)tab\./<$1ul>/g;	# "tabbing" with "ul"
+ 
+ 
+ 		# this is some bullshit ???
+ 		s/\.hr\./<hr /g;
+ 		s/\.\/hr\./>/g;
+ 
+ 		s!\.a\.(.+?)\.\/a\.!<a href=$1>$1</a>!g;
+ 
+ 		# rudimentary &nbsp; s p a c i n g &nbsp (one word only)
+ 		#s!\.x\.(.+?)\./x\.!join " ","&nbsp;&nbsp;",(split //, $1),"&nbsp;&nbsp;"!eg;
+ 
+ 		# slightly better spacing (phrases, too):
+ 		# although redundant  with more work than is needed
+ 		if ( m!(\.x\.)(.+?)(\./x\.)!g) {
+ 		    s!(\.x\.)(.+?)(\./x\.)!join " _ ", $1, (split / /, $2), $3!eg;
+ 		    s!\.x\.(.+?)\./x\.!join " ", (split //, $1)!eg;
+ 		    s!  _  ! &nbsp; !g;
+ 		} 
+ 
+ 		# generic for all tags with options
+ 		s!\.&lt;\. !<!g;
+ 		s! \.&gt;\.!>!g;
+ 
+ 
+ 		$chunkbuf .= $_;
+ 
+ 	} # fisle - end of "dotHTML" body formatter
+ 	
+
+
+} # esle, fi -- end of selection of doc heading, end, or body inside 'while' over the file.
 
 
     # debug
