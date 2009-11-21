@@ -7,13 +7,12 @@ working either from command line or as CGI under a developer's personal web serv
 
 The module is a simple script written in core perl, no extra modules are needed.
 
-Full and flexible tangling will require installing "noweb" tools by Norman
-Ramsey, with which Molly shares markup (see documentation). But Molly now also 
-includes a built-in fully-fledged tangler, which is capable of tangling any
-root chunk in an external file when used from command line. 
+Molly is self-contained now, and includes both a tangler and weaver, but for
+flexible tangling you might wish to instal "noweb" tools by Norman Ramsey,
+with which Molly shares markup (see documentation). 
  
-MOLLY also allows for the use of MathML (via a great third-party javascript library),
-i.e.  mathematical expressions typed in a simple ASCII notation and/or with
+MOLLY also can directly use MathML (a great LGPLed third-party javascript
+library), i.e.  mathematical expressions typed in a simple ASCII notation and/or with
 LaTeX constants will be turned into MathML output to get displayed by Firefox, Opera
 (or other MathML-aware browsers) on the fly.
 

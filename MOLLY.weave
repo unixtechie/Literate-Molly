@@ -61,11 +61,9 @@ $use_builtin_tangler = 1;
 do "MOLLY.pl";
 exit;
 __DATA__
-#-----------------------start of script---------------------------
-#-----------------------------------------------------------------
-#-----------------------------------------------------------------}}}1
-
-
+#--------------start of script---------------------------
+#--------------------------------------------------------
+#-----------------------------------------------------}}}1
 
 .<. center .>. .b. Licensing ./b.
 MOLLY is licensed under GNU Public License version 3. .<. /center .>.
@@ -403,6 +401,37 @@ See details about this setup and possible uses of it below.
 
 
 #------------------------------
+.h4. Two ways to invoke Molly  ./h4.
+#------------------------------
+
+	Molly like any traditional Literate Programming tool can be used on its target files from
+	command line. So, to tangle to STDOUT, do:
+	.pre.	MOLLY,pl my_literate_source_file  # this will tangle out from "*" 
+	or MOLLY.pl -R 'root chunk name' my_literate_source_file ./pre.
+	and to weave to STDOUT
+	.pre.	MOLLY.pl -w my_literate_source_file ./pre.
+	
+	However,  another "shorthand" way to treat your LitSrc file, more convenient during
+	development is to include a short section with configuration parameters and a call to
+	Molly at the top of it. Your LitSrc file (which you make executable) becomes then a perl 
+	script that works on itself, choosing weaving or tangling according to its file extension.,
+	and you can do a Quick Weave and a Quick Tangle, correspondingly, by running from CL:
+	.pre.	./My_Lit_Src.weave > formatted_documentation.html
+	and ./My_Lit_Src.tangle > extracted_code ./pre.
+	(Quick Tangle tangles only from the "default root" chunk, "*").
+	
+	The main idea for this mode was to enable a quick use of it under a local web server:
+	the print to STDOUT is picked as CGI and can be immediately seen in your browser 
+	upon reload of the page ("Ctrl-R").
+	So a developer can  read a nicely formatted folding HTML document while he explores
+	and thinks, having an "eagle's eye view" of the whole code and concepts,  i.e. "to think
+	globally", and use line numbers to get to the right place in his editor, which
+	is no longer used for navigating code blindly (and have to keep in his mind the whole 
+	structure of his program, polluting and  maiming his thinking) , i.e. to "edit locally".
+	
+	The next section explains details of the setup.
+ 
+#------------------------------
 .h4. Setting up the file ./h4.
 #------------------------------
 
@@ -720,7 +749,7 @@ cgipat=/**.weave
 logfile=/dev/null
 
 #pidfile=./thttpd.pid
-pidfile=/home/vedmed/00trash/tmp/literate.perl/WWW.server/thttpd.pid
+pidfile=/my/home/00trash/tmp/literate.perl/WWW.server/thttpd.pid
 
 # uncomment this to be able to link from anywhere to your web server document dir 
 # (unsecure, for local development only)
@@ -1361,6 +1390,12 @@ Use .b."mollify"./b. as  a technical term (insert MOLLY.pl invocation into the L
 .pre. ^@\_.\{-1,}\n^< <.*> >=/e ./pre.
 
 
+.b. In SciTE, and works in geany, too. Poss. built into Scincilla ./b.
+the //{ and //} allow explicit folding marks in "languages like C etc"
+Seems to work in Perl. At least, I could correct/improve geany's folding
+by adding leading // to my vim closing fold marks, what does not afect vim.
+
+Should add that to the filtering expression in MOLLY
 
 
 
@@ -1846,17 +1881,14 @@ tunings if you modify MOLLY.pl
 
   # ----- GENERAL settings -----
   
-  # am I a module? 1:0
-  $i_am_module = 1;
-
-  # print toc? 1:0
-  $print_toc = 1 unless defined $print_toc;
-    
-  # keep TOC expanded on initial load? "block":"none"
-  $toc_expanded = $toc_expanded || "block";
-
-  # keep TOC expanded in initial load? "block":"none"
-  $ind_expanded = $ind_expanded || "none";
+	# print toc? 1:0
+	$print_toc = 1 unless defined $print_toc;
+	
+	# keep TOC expanded on initial load? "block":"none"
+	$toc_expanded = $toc_expanded || "block";
+	
+	# keep TOC expanded in initial load? "block":"none"
+	$ind_expanded = $ind_expanded || "none";
 @
 
 The script will behave differently depending on its own name. One "major" name
@@ -1867,24 +1899,24 @@ The modes are detected by file extensions, which are set here.
 'Tangling' = creating the program/script source on STDOUT
 
 <<general settings>>=
-  # what is the file extention to weave it? (perms must allow execution!)
-  # e.g. "scriptname.weave" or "scriptname.cgi" etc.
-  $weave_extension = $weave_extension || "weave";	# default is "weave"
+	# what is the file extention to weave it? (perms must allow execution!)
+	# e.g. "scriptname.weave" or "scriptname.cgi" etc.
+	$weave_extension = $weave_extension || "weave";	# default is "weave"
 
-    # what is the file extention to tangle it? (perms must allow execution!)
-    # e.g. "scriptname.tangle",  "scriptname.pl" etc.
-    $tangle_extension = $tangle_extension || "tangle";	# default is "tangle"
-
-
-    #When tangling, should I use the built-in tangler? 0:1
-    # (if 0, the "pass-through" tangling will call "notangle"
-    # from Ramsey's "noweb" tools, must be installed and in your path)
-    # use_builtin_tangler = 0; # default for now is to use external "notangle"
-    $use_builtin_tangler = $use_builtin_tangler || 0; 
-
-    # Actually, let's always do it and disallow unsetting
-    # number lines ? 1 : else
-    $line_numbering = 1;
+	# what is the file extention to tangle it? (perms must allow execution!)
+	# e.g. "scriptname.tangle",  "scriptname.pl" etc.
+	$tangle_extension = $tangle_extension || "tangle";	# default is "tangle"
+	
+	
+	#When tangling, should I use the built-in tangler? 0:1
+	# (if 0, the "pass-through" tangling will call "notangle"
+	# from Ramsey's "noweb" tools, must be installed and in your path)
+	# use_builtin_tangler = 0; # default for now is to use external "notangle"
+	$use_builtin_tangler = $use_builtin_tangler || 0; 
+	
+	# Actually, let's always do it and disallow unsetting
+	# number lines ? 1 : else
+	$line_numbering = 1;
 
 @
 
@@ -1894,17 +1926,17 @@ dot-br-dot, not open.angle-br-closing.angle
 This is selected here:
 
 <<general settings>>=
-    # how are doc sections marked? "dotHTML":"rawHTML"
-    $weave_markup = $weave_markup || "rawHTML"; # default is "rawHTML"
-
-    if ($weave_markup eq "dotHTML") {
+	# how are doc sections marked? "dotHTML":"rawHTML"
+	$weave_markup = $weave_markup || "rawHTML"; # default is "rawHTML"
+	
+	if ($weave_markup eq "dotHTML") {
 	$tag_open_symbol = $dot;	# this will take care of default
 	$tag_close_symbol = $dot;	# when no var is set in the Lit Src file
-    }
-    elsif ($weave_markup eq "rawHTML") { 
+	}
+	elsif ($weave_markup eq "rawHTML") { 
 	$tag_open_symbol = $lt;
 	$tag_close_symbol = $gt;
-    } #fi
+	} #fi
 
 @
 
@@ -1916,10 +1948,10 @@ This slows down interpretation of the file on reload drastically (from nothing t
 
 <<general settings>>=
 
-    # enable MathML interpretation? 1 : 0
-    $enable_ASCIIMathML = $enable_ASCIIMathML || 0;
-    # If enabled, set the path; default is local in current dir
-    $path_to_ASCIIMathML = $path_to_ASCIIMathML || "ASCIIMathML_with_modified_escapes.js";
+	# enable MathML interpretation? 1 : 0
+	$enable_ASCIIMathML = $enable_ASCIIMathML || 0;
+	# If enabled, set the path; default is local in current dir
+	$path_to_ASCIIMathML = $path_to_ASCIIMathML || "ASCIIMathML_with_modified_escapes.js";
 
 @
 
@@ -1967,41 +1999,14 @@ in the docs.
   # -- MAIN DESPATCHER WITH CL----
   use Getopt::Std;
 
-sub usage {
+<<sub print usage>>
 
-    print STDERR<<'end_of_usage';
 
-    USAGE: MOLLY.pl [options] [--] filename
-
-	-h, or no filename
-		get this help message
-
-	-R "root_chunk_name", 
-		tangle starting from this chunk. if omitted, "*" is default.
-		
-
-    FOR INTERNALLY MOLLIFIED FILES:
-	shortcut invocation - depending on file extension. If run as script
-
-	"lit_prog_file.tangle" 
-		tangle to STDOUT, from default root "*" only. 
-	"lit_prog_file.weave" 
-		weave to STDOUT as folding HTML; usable under CGI
-	
-	/ OR: whatever extensions are set in the lit.source configuraton /
-
-end_of_usage
-
- exit;
-}
-
-    # ---
-    # -1- shortcut invocations for "mollified" LitSrc file depending on its extension ---
-    #
+  # -1- shortcut invocations for "mollified" LitSrc file depending on its extension ---
 
   if ( $0 =~ m!\w+\.$weave_extension$! ) { 
 
-	open LITSOURCE, "< $0" or die "could not open the target file\n";
+	open LITSOURCE, "< $0" or die "\n\tcould not open the target file\n\n";
 	goto WEAVE_ME;
     }
     elsif ( $0 =~ m!\w+\.$tangle_extension$! )  {
@@ -2010,33 +2015,87 @@ end_of_usage
 	goto TANGLE_ME;
   }
 
-    # ---
-    # -2- MOLLY.pl as applied to an external target file. --- 
-    # check if MOLLY.pl was called from CL or under CGI, and despatch accordingly.
+  # -2- several cases for application of Molly to an external target file. --- 
+
+  elsif (-t STDIN) { 
+
+    <<running on interactive TTY>>
+
+    }
+
+  # -3- MOLLY.pl as a standalone script is called from CGI, nothing in here yet ---
+
+  elsif (defined $ENV{'REQUEST_METHOD'}) {
+
+<<write 'nothing here' html message>>
+
+  }
+
+  # -4- other cases ---
 
   else {
 
-    if (-t STDIN) { # running on interactive TTY
-	#print STDERR "$0 was called from command line..\n";
+	die "MOLLY.pl: I do not know how I was called, exiting anyway\n";
 
-	#getopts("hwu:l:d:R:", \%cl_args);
-	getopts("hR:", \%cl_args);
+  } # esle, fi - end of despatcher
 
-	# -- print USAGE if not evoked correctly
+exit;  # just in case
+  
+@
+
+
+#------------------------------
+{{{6 .h6. running on interactive TTY ./h6.
+#------------------------------
+
+
+<<running on interactive TTY>>=
+
+    #print STDERR "$0 was called from command line..\n";
+
+    #getopts("hwu:l:d:R:", \%cl_args);
+	getopts("hwR:", \%cl_args);
+
+    # -- print USAGE if not evoked correctly
 	if( (! defined $ARGV[0] ) or  ( $cl_args{h} ) ) { usage(); exit };
 
-	# -- does target file exist?
+    # -- does target file exist?
 	if ( -f $ARGV[0] ) {
 	    ; # nop, a debug printout
 	    #print STDERR "target file to operate on is $ARGV[0]\n";
 	}
 	else { 
-	    print STDERR "No target file found\n";
+	    die "\n\tERROR: No target file seem to exist\n\n";
 	};
 
 
-	# -- process other args for tangling an external file from CL --
-	#	disabled for most of then now
+    # -- Final CL despatch, do it: --
+	
+	open LITSOURCE, "< $ARGV[0]" || die "could not open the file to tangle\n";
+
+	if($cl_args{w}) { # this is weaving
+
+    	    #print STDERR "weaving from CL, got $cl_args{w}\n"; 
+
+    	    goto WEAVE_ME;
+
+	}
+
+	else { # this is tangling, default action, no opt
+
+    	    <<process args for tangling an external file from CL>>
+
+    	    goto SEEK_PEEK_TANGLER;
+
+    	} # fi - CL final despatch
+
+
+    exit; #redundant and unused
+
+@
+
+
+<<process args for tangling an external file from CL>>=
 
 	if($cl_args{d}) { 
 	    #print STDERR "doc sections in coments; comment char is $cl_args{d}\n" 
@@ -2050,42 +2109,26 @@ end_of_usage
 	    #print STDERR "applying UN-tangling with script char is $cl_args{u}\n" 
 	    };
 
-
 	# -- getting the root chunk for tangling --
-	#
 	if($cl_args{R}) { 
 	    $root_chunk = $cl_args{R};
 	    print STDERR "tangling root chunk '$root_chunk'\n"
-       	};
+	    };
+
+@
 
 
-	# -- Final CL despatch, do it: --
-	
-	open LITSOURCE, "< $ARGV[0]" || die "could not open the file to tangle\n";
 
-	if($cl_args{w}) { 
-
-	    ; # nop, weaving is mangled at the moment	
-	    #print STDERR "weaving from CL, got $cl_args{w}\n"; 
-	    #goto WEAVE_ME;
-
-	}
-	else {
-	    
-	    goto SEEK_PEEK_TANGLER;
-
-    	} # fi - CL final despatch
+}}}6
 
 
-    exit; #redundant and unused
-    }
+#------------------------------
+{{{6 .h6. write 'nothing here' html message ./h6.
+#------------------------------
 
+<<write 'nothing here' html message>>=
 
-    # -3- MOLLY.pl as a standalone script is called from CGI, nothing in here yet ---
-    #
-  elsif (defined $ENV{'REQUEST_METHOD'}) {
-
-	print "Content-Type: text/html; charset=utf-8\n\n";
+    print "Content-Type: text/html; charset=utf-8\n\n";
 	print <<_XXX_;
 	<html><body>
 	<p>
@@ -2099,25 +2142,60 @@ _XXX_
 
   exit;
 
-  }
-
-  # -4- other cases ---
-  #
-  else {
-
-	print STDERR "MOLLY.pl: I do not know how I was called, exiting anyway\n";
-	exit;
-
-    }
-
-  exit;
-
-  } # fi, end of despatcher
-
-exit;  
-  
 @
 
+}}}6
+
+
+#------------------------------
+{{{6 .h6. Sub Print Usage ./h6.
+#------------------------------
+
+
+<<sub print usage>>=
+
+sub usage {
+
+    print STDERR<<'end_of_usage';
+
+    USAGE: MOLLY.pl [options] [--] filename
+
+	-h, or no filename
+		get this help message
+
+
+	TANGLING Options:
+		Tangling mode is default, no special option to force needed.
+
+	-R "root_chunk_name", 
+		tangle starting from this chunk. if omitted, "*" is default.
+
+
+	WEAVING options:
+
+	-w,  weave from the external target file
+	    This option presupposes html-marked document sections,
+
+
+    FOR INTERNALLY MOLLIFIED FILES:
+	shortcut invocation - depending on file extension. If run as script
+
+	"lit_prog_file.tangle" 
+		tangles to STDOUT, from default root "*" only. 
+	"lit_prog_file.weave" 
+		weaves to STDOUT as folding HTML; usable under CGI
+	
+	/ OR: set your own extensions in your lit.source configuraton section /
+
+end_of_usage
+
+ exit;
+}
+
+@
+
+
+}}}6
 
 
 }}}5
@@ -2453,10 +2531,7 @@ I'll ' add command-line and CGI arguments processing later.
 
 <<main: call the sub>>=
 
-	#~ $root_chunk = "chunk 1";
-	#~ $root_chunk = "DEBUG print one reference";
 	$root_chunk = $root_chunk || "*";
-
 	print_chunk($root_chunk, 0, 1); 
 
 @
@@ -2477,16 +2552,15 @@ declare and initialize some vars
 
 <<declarations and initializations>>=
 
-    my $chunk_beg_pattern = q(^<\<(.*)>\>=);
-    my $chunk_end_pattern = q(^@\s.*$);
-    my $chunk_ref_pattern = q(<\<(.*?)>\>[^=]); # can be used several times in a line
-
-    my $current_chunk_name = "";
-	my $current_chunk_start_foff = ""; # "foff" is a "file offset"
+	my $chunk_beg_pattern = q(^<\<(.*)>\>=);
+	my $chunk_end_pattern = q(^@\s.*$);
+	my $chunk_ref_pattern = q(<\<(.*?)>\>[^=]); # can be used several times in a line
+	
+	my $current_chunk_name = "";
+	my $current_chunk_start_foff = 0;; # "foff" is a "file offset"
+	my $current_chunk_end_foff = 0;
 	my %file_offsets_hash = ();
-	my %left_margin_hash = ();
-
-    my $line_num = 0;
+	my $line_num = 0;
 	my $previous_line_foff = 0; # "foff" is a "file offset"
 
 @
@@ -2599,8 +2673,9 @@ implicit and hidden
 
     else { # chunk body
 
-	; # nop; here just not to hide an implicit case
-	#~ print "."; # debug: show dots for lines 
+		; # nop; here just not to hide an implicit case
+		#~ print "."; # debug: show dots for lines 
+
     }
 
 @
@@ -2625,7 +2700,6 @@ the title from the later output.
 	$current_chunk_start_foff = tell LITSOURCE;
 
 	push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_start_foff;
-	#~ print "[***debug: I am chunk $1 -- I start at $current_chunk_start_foff***]\n";
 	#~ print "----> chunk $1 line $. offset $current_chunk_start_foff\n";
 
     }
@@ -2645,7 +2719,6 @@ Plus - set $current_chunk_name=""; # just in case
 
 	$current_chunk_end_foff = $previous_line_foff;
 	push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_end_foff;
-	#~ print "[+++debug: $current_chunk_name ends at off $current_chunk_end_foff++++]\n\n";
 	#~ print "\tline $. offset $current_chunk_end_foff<------\n";
 
     	$current_chunk_name = "";
@@ -2847,8 +2920,7 @@ Now - the RECURSIVE PRINTOUT untangling from the default/given root.
 
  # -- error mess. not to fail silently --
  unless ( defined $file_offsets_hash{$chunk_being_printed} ) {
-    #print STDOUT "\t\nERROR: chunk $chunk_being_printed not found in file $ARGV[0]\n";
-    print STDERR "\n\tERROR: chunk $chunk_being_printed not found in file $ARGV[0]\n\n";
+    die "\n\tERROR: chunk $chunk_being_printed not found in file $ARGV[0]\n\n";
  }
 
 
@@ -2880,12 +2952,11 @@ chunk.
 
     if ($snippet_position eq "ref") {
 
-	my $snippet_left_margin_ref = 
-    	    $file_offsets_hash{$chunk_being_printed}[$iterate_foffs++];
-	#~ print "DEBUG: got a ref $snippet_end here -- nl flag $snippet_print_newline_flag_ref\n";
+		my $snippet_left_margin_ref = 
+				$file_offsets_hash{$chunk_being_printed}[$iterate_foffs++];
 
-	# any call to a ref uncurs "print newline" flag of 0
-	print_chunk($snippet_end, $snippet_left_margin_ref, 0);
+		# any call to a ref uncurs "print newline" flag of 0
+		print_chunk($snippet_end, $snippet_left_margin_ref, 0);
     
     }
 @
@@ -2908,7 +2979,7 @@ For that I'll have to keep "a printer state" wth two flags for (a) and (b).
 	{ 
 		# works, but is suspicious logically:
 		# maybe I just have not invented a counterexample yet, and
-		# it's a trap waiting for its quarry
+		# it's a trap waiting for its quarry. But it works
 		$buffer_out =~ s!\n([\s]*)$!$1! unless ($snippet_print_newline_flag);
 	}
 
@@ -3535,9 +3606,66 @@ Some of the vars may be unused later (run perl -wc to check?)
 @
 
 
-The logic is this: (a) all project files, unless they are machine-generated code, are
-much below the sizes of RAM on modern machines. So I accumulate in memoru (in a string
-$chunkbuf) a copy of the whole file, with necessary transformations and formatting.
+.b. 1. ./b. We can weave "mollified" files as well as use MOLLY.pl on external
+files from command line, which do not necessarily include the config and
+invocation of Molly at the top. 
+So, first let's get rid of that part of the file, if it exists.
+
+The idea is this.
+    .ul.
+    (a) not to clobber the overall "while" loop, do it inside it
+    (b) If the first line of the file is a perl invocation,
+	then check for "MOLLY.pl" call, then for _ _ D A T A _ _ line
+	then for first white line or sth
+	This cuts the "mollifier" part out.
+	OR - drop off letting out a scream "wrongly formatted file"
+    (c) for lines other than first, do regular processing
+    ./ul.
+
+This version of "mollified" template  will pass many
+perl scripts with DATA sections, will just print those sections.
+But I do not care at the moment.
+
+No attempt is done to filter any other files in non-lit.src format etc.
+This is just to quickly cut out the Molly perly template at the top.
+
+<<cut out the MOLLY.pl invocation at the top of LS file>>=
+
+    if ( ($line_counter == 1) && (m!^#.*perl!) ) {
+
+	# this is the mollifying template or some perl script.
+	
+	do {
+	    $_ = <LITSOURCE>;
+	    $line_counter++;
+	    if (eof LITSOURCE) {
+		print "\n\t--------ERROR: wrong target file format for weaving--------\n";
+		print "\tmay be a regular perl script, without a call for Molly\n\n";
+		exit;
+	    }
+	} until ( lc($_) =~ m!^do.*molly!) ;	
+	
+	# throw away lines until DATA, then process/weave normally
+	do {
+	    $_ = <LITSOURCE>;
+	    $line_counter++;
+	    if (eof LITSOURCE) {
+		print "\n\t--------ERROR: wrong target file format for weaving--------\n";
+		print "\tdid not find the  __DATA__ keyword  in first pos on its line\n\n";
+		exit;
+	    }
+	} until ( m!^__DATA__! ) ;
+
+	next;
+
+    } # fi cutting out MOLLY.pl template/config  if present in lit.source target file
+
+@
+
+.b. 2. The logic of processing is this: ./b.
+(a) all project files, unless they are machine-generated code, are much below the 
+sizes of RAM on modern machines. So I accumulate in memory (in a string $chunkbuf)
+a copy of the whole file, with necessary transformations and formatting on the fly.
 
 Only 3 distinctions need to be made while iterating over hte lines of the Literate Source
 file, between section headings, chunks of code and the lines from the body of documentation
@@ -3546,30 +3674,23 @@ chunks.
 <<accumulate result in a buffer>>=
 
 
+
 while (<LITSOURCE>) {
 
-   $line_counter++;
+$line_counter++;
 
-    # cut out the MOLLY.pl invocation itself, the top of the Lit src file
-    #if ( m%^#-+\s*?start of script% ... m%^xxxxxxxxxxxx% ) {  
-    if ( m%^__DATA__% ... m%^xxxxxxxxxxxx% ) {
-    s!^__DATA__\s*$!!;
-
-
+<<cut out the MOLLY.pl invocation at the top of LS file>>
 
 <<process code chunks>>
 <<process section headings>>
 <<body HTML formatters>>
 
+    # debug
+    #print "---- $_";
 
-	# debug
-	#print "---- $_";
-
-   } # fi "start of script"
 
 } #elihw over the whole input file
 
-	
 
 
  foreach (@headings)  {

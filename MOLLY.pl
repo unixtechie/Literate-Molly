@@ -17,56 +17,54 @@
 
   # ----- GENERAL settings -----
   
-  # am I a module? 1:0
-  $i_am_module = 1;
+	# print toc? 1:0
+	$print_toc = 1 unless defined $print_toc;
+	
+	# keep TOC expanded on initial load? "block":"none"
+	$toc_expanded = $toc_expanded || "block";
+	
+	# keep TOC expanded in initial load? "block":"none"
+	$ind_expanded = $ind_expanded || "none";
+	# what is the file extention to weave it? (perms must allow execution!)
+	# e.g. "scriptname.weave" or "scriptname.cgi" etc.
+	$weave_extension = $weave_extension || "weave";	# default is "weave"
 
-  # print toc? 1:0
-  $print_toc = 1 unless defined $print_toc;
-    
-  # keep TOC expanded on initial load? "block":"none"
-  $toc_expanded = $toc_expanded || "block";
+	# what is the file extention to tangle it? (perms must allow execution!)
+	# e.g. "scriptname.tangle",  "scriptname.pl" etc.
+	$tangle_extension = $tangle_extension || "tangle";	# default is "tangle"
+	
+	
+	#When tangling, should I use the built-in tangler? 0:1
+	# (if 0, the "pass-through" tangling will call "notangle"
+	# from Ramsey's "noweb" tools, must be installed and in your path)
+	# use_builtin_tangler = 0; # default for now is to use external "notangle"
+	$use_builtin_tangler = $use_builtin_tangler || 0; 
+	
+	# Actually, let's always do it and disallow unsetting
+	# number lines ? 1 : else
+	$line_numbering = 1;
 
-  # keep TOC expanded in initial load? "block":"none"
-  $ind_expanded = $ind_expanded || "none";
-  # what is the file extention to weave it? (perms must allow execution!)
-  # e.g. "scriptname.weave" or "scriptname.cgi" etc.
-  $weave_extension = $weave_extension || "weave";	# default is "weave"
-
-    # what is the file extention to tangle it? (perms must allow execution!)
-    # e.g. "scriptname.tangle",  "scriptname.pl" etc.
-    $tangle_extension = $tangle_extension || "tangle";	# default is "tangle"
-
-
-    #When tangling, should I use the built-in tangler? 0:1
-    # (if 0, the "pass-through" tangling will call "notangle"
-    # from Ramsey's "noweb" tools, must be installed and in your path)
-    # use_builtin_tangler = 0; # default for now is to use external "notangle"
-    $use_builtin_tangler = $use_builtin_tangler || 0; 
-
-    # Actually, let's always do it and disallow unsetting
-    # number lines ? 1 : else
-    $line_numbering = 1;
-
-    # how are doc sections marked? "dotHTML":"rawHTML"
-    $weave_markup = $weave_markup || "rawHTML"; # default is "rawHTML"
-
-    if ($weave_markup eq "dotHTML") {
+	# how are doc sections marked? "dotHTML":"rawHTML"
+	$weave_markup = $weave_markup || "rawHTML"; # default is "rawHTML"
+	
+	if ($weave_markup eq "dotHTML") {
 	$tag_open_symbol = $dot;	# this will take care of default
 	$tag_close_symbol = $dot;	# when no var is set in the Lit Src file
-    }
-    elsif ($weave_markup eq "rawHTML") { 
+	}
+	elsif ($weave_markup eq "rawHTML") { 
 	$tag_open_symbol = $lt;
 	$tag_close_symbol = $gt;
-    } #fi
+	} #fi
 
 
-    # enable MathML interpretation? 1 : 0
-    $enable_ASCIIMathML = $enable_ASCIIMathML || 0;
-    # If enabled, set the path; default is local in current dir
-    $path_to_ASCIIMathML = $path_to_ASCIIMathML || "ASCIIMathML_with_modified_escapes.js";
+	# enable MathML interpretation? 1 : 0
+	$enable_ASCIIMathML = $enable_ASCIIMathML || 0;
+	# If enabled, set the path; default is local in current dir
+	$path_to_ASCIIMathML = $path_to_ASCIIMathML || "ASCIIMathML_with_modified_escapes.js";
 
   # -- MAIN DESPATCHER WITH CL----
   use Getopt::Std;
+
 
 sub usage {
 
@@ -77,32 +75,42 @@ sub usage {
 	-h, or no filename
 		get this help message
 
+
+	TANGLING Options:
+		Tangling mode is default, no special option to force needed.
+
 	-R "root_chunk_name", 
 		tangle starting from this chunk. if omitted, "*" is default.
-		
+
+
+	WEAVING options:
+
+	-w,  weave from the external target file
+	    This option presupposes html-marked document sections,
+
 
     FOR INTERNALLY MOLLIFIED FILES:
 	shortcut invocation - depending on file extension. If run as script
 
 	"lit_prog_file.tangle" 
-		tangle to STDOUT, from default root "*" only. 
+		tangles to STDOUT, from default root "*" only. 
 	"lit_prog_file.weave" 
-		weave to STDOUT as folding HTML; usable under CGI
+		weaves to STDOUT as folding HTML; usable under CGI
 	
-	/ OR: whatever extensions are set in the lit.source configuraton /
+	/ OR: set your own extensions in your lit.source configuraton section /
 
 end_of_usage
 
  exit;
 }
 
-    # ---
-    # -1- shortcut invocations for "mollified" LitSrc file depending on its extension ---
-    #
+
+
+  # -1- shortcut invocations for "mollified" LitSrc file depending on its extension ---
 
   if ( $0 =~ m!\w+\.$weave_extension$! ) { 
 
-	open LITSOURCE, "< $0" or die "could not open the target file\n";
+	open LITSOURCE, "< $0" or die "\n\tcould not open the target file\n\n";
 	goto WEAVE_ME;
     }
     elsif ( $0 =~ m!\w+\.$tangle_extension$! )  {
@@ -111,82 +119,79 @@ end_of_usage
 	goto TANGLE_ME;
   }
 
-    # ---
-    # -2- MOLLY.pl as applied to an external target file. --- 
-    # check if MOLLY.pl was called from CL or under CGI, and despatch accordingly.
+  # -2- several cases for application of Molly to an external target file. --- 
 
-  else {
+  elsif (-t STDIN) { 
 
-    if (-t STDIN) { # running on interactive TTY
-	#print STDERR "$0 was called from command line..\n";
+    
+        #print STDERR "$0 was called from command line..\n";
+    
+        #getopts("hwu:l:d:R:", \%cl_args);
+    	getopts("hwR:", \%cl_args);
+    
+        # -- print USAGE if not evoked correctly
+    	if( (! defined $ARGV[0] ) or  ( $cl_args{h} ) ) { usage(); exit };
+    
+        # -- does target file exist?
+    	if ( -f $ARGV[0] ) {
+    	    ; # nop, a debug printout
+    	    #print STDERR "target file to operate on is $ARGV[0]\n";
+    	}
+    	else { 
+    	    die "\n\tERROR: No target file seem to exist\n\n";
+    	};
+    
+    
+        # -- Final CL despatch, do it: --
+    	
+    	open LITSOURCE, "< $ARGV[0]" || die "could not open the file to tangle\n";
+    
+    	if($cl_args{w}) { # this is weaving
+    
+        	    #print STDERR "weaving from CL, got $cl_args{w}\n"; 
+    
+        	    goto WEAVE_ME;
+    
+    	}
+    
+    	else { # this is tangling, default action, no opt
+    
+        	    
+         	if($cl_args{d}) { 
+         	    #print STDERR "doc sections in coments; comment char is $cl_args{d}\n" 
+         	    };
+         
+         	if($cl_args{l}) { 
+         	    #print STDERR "will add reflines; comment char is $cl_args{l}\n" 
+         	    };
+         
+         	if($cl_args{u}) { 
+         	    #print STDERR "applying UN-tangling with script char is $cl_args{u}\n" 
+         	    };
+         
+         	# -- getting the root chunk for tangling --
+         	if($cl_args{R}) { 
+         	    $root_chunk = $cl_args{R};
+         	    print STDERR "tangling root chunk '$root_chunk'\n"
+         	    };
+         
+    
+        	    goto SEEK_PEEK_TANGLER;
+    
+        	} # fi - CL final despatch
+    
+    
+        exit; #redundant and unused
+    
 
-	#getopts("hwu:l:d:R:", \%cl_args);
-	getopts("hR:", \%cl_args);
-
-	# -- print USAGE if not evoked correctly
-	if( (! defined $ARGV[0] ) or  ( $cl_args{h} ) ) { usage(); exit };
-
-	# -- does target file exist?
-	if ( -f $ARGV[0] ) {
-	    ; # nop, a debug printout
-	    #print STDERR "target file to operate on is $ARGV[0]\n";
-	}
-	else { 
-	    print STDERR "No target file found\n";
-	};
-
-
-	# -- process other args for tangling an external file from CL --
-	#	disabled for most of then now
-
-	if($cl_args{d}) { 
-	    #print STDERR "doc sections in coments; comment char is $cl_args{d}\n" 
-	    };
-
-	if($cl_args{l}) { 
-	    #print STDERR "will add reflines; comment char is $cl_args{l}\n" 
-	    };
-
-	if($cl_args{u}) { 
-	    #print STDERR "applying UN-tangling with script char is $cl_args{u}\n" 
-	    };
-
-
-	# -- getting the root chunk for tangling --
-	#
-	if($cl_args{R}) { 
-	    $root_chunk = $cl_args{R};
-	    print STDERR "tangling root chunk '$root_chunk'\n"
-       	};
-
-
-	# -- Final CL despatch, do it: --
-	
-	open LITSOURCE, "< $ARGV[0]" || die "could not open the file to tangle\n";
-
-	if($cl_args{w}) { 
-
-	    ; # nop, weaving is mangled at the moment	
-	    #print STDERR "weaving from CL, got $cl_args{w}\n"; 
-	    #goto WEAVE_ME;
-
-	}
-	else {
-	    
-	    goto SEEK_PEEK_TANGLER;
-
-    	} # fi - CL final despatch
-
-
-    exit; #redundant and unused
     }
 
+  # -3- MOLLY.pl as a standalone script is called from CGI, nothing in here yet ---
 
-    # -3- MOLLY.pl as a standalone script is called from CGI, nothing in here yet ---
-    #
   elsif (defined $ENV{'REQUEST_METHOD'}) {
 
-	print "Content-Type: text/html; charset=utf-8\n\n";
+
+    print "Content-Type: text/html; charset=utf-8\n\n";
 	print <<_XXX_;
 	<html><body>
 	<p>
@@ -200,22 +205,18 @@ _XXX_
 
   exit;
 
+
   }
 
   # -4- other cases ---
-  #
+
   else {
 
-	print STDERR "MOLLY.pl: I do not know how I was called, exiting anyway\n";
-	exit;
+	die "MOLLY.pl: I do not know how I was called, exiting anyway\n";
 
-    }
+  } # esle, fi - end of despatcher
 
-  exit;
-
-  } # fi, end of despatcher
-
-exit;    
+exit;  # just in case  
 
 
 TANGLE_ME:
@@ -229,16 +230,15 @@ TANGLE_ME:
     
     	
  	
-     my $chunk_beg_pattern = q(^<\<(.*)>\>=);
-     my $chunk_end_pattern = q(^@\s.*$);
-     my $chunk_ref_pattern = q(<\<(.*?)>\>[^=]); # can be used several times in a line
- 
-     my $current_chunk_name = "";
- 	my $current_chunk_start_foff = ""; # "foff" is a "file offset"
+ 	my $chunk_beg_pattern = q(^<\<(.*)>\>=);
+ 	my $chunk_end_pattern = q(^@\s.*$);
+ 	my $chunk_ref_pattern = q(<\<(.*?)>\>[^=]); # can be used several times in a line
+ 	
+ 	my $current_chunk_name = "";
+ 	my $current_chunk_start_foff = 0;; # "foff" is a "file offset"
+ 	my $current_chunk_end_foff = 0;
  	my %file_offsets_hash = ();
- 	my %left_margin_hash = ();
- 
-     my $line_num = 0;
+ 	my $line_num = 0;
  	my $previous_line_foff = 0; # "foff" is a "file offset"
  
  	
@@ -254,7 +254,6 @@ TANGLE_ME:
  	$current_chunk_start_foff = tell LITSOURCE;
  
  	push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_start_foff;
- 	#~ print "[***debug: I am chunk $1 -- I start at $current_chunk_start_foff***]\n";
  	#~ print "----> chunk $1 line $. offset $current_chunk_start_foff\n";
  
      }
@@ -264,7 +263,6 @@ TANGLE_ME:
  
  	$current_chunk_end_foff = $previous_line_foff;
  	push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_end_foff;
- 	#~ print "[+++debug: $current_chunk_name ends at off $current_chunk_end_foff++++]\n\n";
  	#~ print "\tline $. offset $current_chunk_end_foff<------\n";
  
      	$current_chunk_name = "";
@@ -314,8 +312,9 @@ TANGLE_ME:
  	
      else { # chunk body
  
- 	; # nop; here just not to hide an implicit case
- 	#~ print "."; # debug: show dots for lines 
+ 		; # nop; here just not to hide an implicit case
+ 		#~ print "."; # debug: show dots for lines 
+ 
      }
  
  
@@ -342,8 +341,7 @@ TANGLE_ME:
  
   # -- error mess. not to fail silently --
   unless ( defined $file_offsets_hash{$chunk_being_printed} ) {
-     #print STDOUT "\t\nERROR: chunk $chunk_being_printed not found in file $ARGV[0]\n";
-     print STDERR "\n\tERROR: chunk $chunk_being_printed not found in file $ARGV[0]\n\n";
+     die "\n\tERROR: chunk $chunk_being_printed not found in file $ARGV[0]\n\n";
   }
  
  
@@ -359,12 +357,11 @@ TANGLE_ME:
      
         if ($snippet_position eq "ref") {
     
-    	my $snippet_left_margin_ref = 
-        	    $file_offsets_hash{$chunk_being_printed}[$iterate_foffs++];
-    	#~ print "DEBUG: got a ref $snippet_end here -- nl flag $snippet_print_newline_flag_ref\n";
+    		my $snippet_left_margin_ref = 
+    				$file_offsets_hash{$chunk_being_printed}[$iterate_foffs++];
     
-    	# any call to a ref uncurs "print newline" flag of 0
-    	print_chunk($snippet_end, $snippet_left_margin_ref, 0);
+    		# any call to a ref uncurs "print newline" flag of 0
+    		print_chunk($snippet_end, $snippet_left_margin_ref, 0);
         
         }
         else { # .. print it here
@@ -377,7 +374,7 @@ TANGLE_ME:
     	{ 
     		# works, but is suspicious logically:
     		# maybe I just have not invented a counterexample yet, and
-    		# it's a trap waiting for its quarry
+    		# it's a trap waiting for its quarry. But it works
     		$buffer_out =~ s!\n([\s]*)$!$1! unless ($snippet_print_newline_flag);
     	}
     
@@ -396,10 +393,7 @@ TANGLE_ME:
      } # bus -- ends the recursive sub
  
     	
- 	#~ $root_chunk = "chunk 1";
- 	#~ $root_chunk = "DEBUG print one reference";
  	$root_chunk = $root_chunk || "*";
- 
  	print_chunk($root_chunk, 0, 1); 
  
     
@@ -695,15 +689,40 @@ $code_frameset_end = "</fieldset></pre>\n";
  $in_pre_tag = 0;
 
 
+
 while (<LITSOURCE>) {
 
-   $line_counter++;
+$line_counter++;
 
-    # cut out the MOLLY.pl invocation itself, the top of the Lit src file
-    #if ( m%^#-+\s*?start of script% ... m%^xxxxxxxxxxxx% ) {  
-    if ( m%^__DATA__% ... m%^xxxxxxxxxxxx% ) {
-    s!^__DATA__\s*$!!;
 
+    if ( ($line_counter == 1) && (m!^#.*perl!) ) {
+
+	# this is the mollifying template or some perl script.
+	
+	do {
+	    $_ = <LITSOURCE>;
+	    $line_counter++;
+	    if (eof LITSOURCE) {
+		print "\n\t--------ERROR: wrong target file format for weaving--------\n";
+		print "\tmay be a regular perl script, without a call for Molly\n\n";
+		exit;
+	    }
+	} until ( lc($_) =~ m!^do.*molly!) ;	
+	
+	# throw away lines until DATA, then process/weave normally
+	do {
+	    $_ = <LITSOURCE>;
+	    $line_counter++;
+	    if (eof LITSOURCE) {
+		print "\n\t--------ERROR: wrong target file format for weaving--------\n";
+		print "\tdid not find the  __DATA__ keyword  in first pos on its line\n\n";
+		exit;
+	    }
+	} until ( m!^__DATA__! ) ;
+
+	next;
+
+    } # fi cutting out MOLLY.pl template/config  if present in lit.source target file
 
 
 
@@ -945,15 +964,12 @@ while (<LITSOURCE>) {
 
 
 
+    # debug
+    #print "---- $_";
 
-	# debug
-	#print "---- $_";
-
-   } # fi "start of script"
 
 } #elihw over the whole input file
 
-	
 
 
  foreach (@headings)  {
