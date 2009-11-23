@@ -1,0 +1,176 @@
+#!/usr/bin/perl
+
+#-------------------------------------
+# -------TOC and INDEX behaviour------
+
+# print TOC? 1:0
+#$print_toc=1;	# default is to print
+
+# should we keep TOC expanded? "block":"none"
+#$toc_expanded="block";	# default is to unfold
+
+# should we keep Chunks Index expanded? "block":"none"
+#$ind_expanded="none";	# default is to keep folded
+
+
+# should we number lines in code sections? 1 : else
+#$line_numbering = 1;	# default is to number
+
+
+#-------------------------------------
+#---------MathML options--------------
+# should we enable MathML via ASCIIMathML.js or LaTeXMathML.js library? 1:0
+#$enable_ASCIIMathML = 0; #default is to disable as it slows Molly down a lot
+$enable_ASCIIMathML = 1;
+
+# If yes, what is the full path to the lib? Remember to get the one with proper
+# escapes for your work, default or modified (see documenation)
+# CAN BE: (a) local "/full/path/from/root/to/ASCIIMathML_with_modified_escapes.js" or 
+# (b) in current dir "ASCIIMathML_with_modified_escapes.js" or
+# (c) on the web, e.g. the original site of the library (unmodified) is:
+#$path_to_ASCIIMathML = "http://www1.chapman.edu/~jipsen/mathml/ASCIIMathML.js";
+#$path_to_ASCIIMathML = "ASCIIMathML_with_modified_escapes.js"; # default is current dir
+
+
+#-------------------------------------
+#--------Document Markup lang---------
+
+# how are doc sections marked? "dotHTML":"rawHTML"
+# $weave_markup = "rawHTML"; # default is "rawHTML"
+
+
+#--------------------------------------
+#---------File extensions setting------
+ 
+# what is the file extention to weave it? (perms must allow execution!)
+# e.g. "scriptname.weave" or "scriptname.cgi" etc.
+#$weave_extension = "weave";	# default is "weave"
+
+# what is the file extention to tangle it? (perms must allow execution!)
+# e.g. "scriptname.tangle",  "scriptname.pl" etc.
+#$tangle_extension = "tangle";	# default is "tangle"
+
+#--------------------------------------
+#---------invocation of MOLLY.pl-------
+do "MOLLY.pl";
+exit;
+__DATA__
+#-----------------------start of script---------------------------
+#-----------------------------------------------------------------
+#-----------------------------------------------------------------
+
+
+
+
+
+#----------------------
+<h1> MY PROJECT </h1>
+#----------------------
+
+The main idea for my new project is ..
+bla-bla-bla
+
+
+#--------------------------
+<h2> Subsection 1 </h2>
+#--------------------------
+
+The math formula that explains what my software
+is supposed to do ;))
+
+
+AA x in CC (sin^2x+cos^2x=1) ---> ``AA x in CC (sin^2x+cos^2x=1)``
+and one more: sum_(i=1)^n i^3=((n(n+1))/2)^2 ---> ``sum_(i=1)^n i^3=((n(n+1))/2)^2``
+
+Next comes quadratic equation (ASCIIMathML notation):
+
+amath
+Example: Solving the quadratic equation.
+Suppose a x^2+b x+c=0 and a!=0. We first divide by \a to get x^2+b/a x+c/a=0. 
+
+Then we complete the square and obtain x^2+b/a x+(b/(2a))^2-(b/(2a))^2+c/a=0. 
+The first three terms factor to give (x+b/(2a))^2=(b^2)/(4a^2)-c/a.
+Now we take square roots on both sides and get x+b/(2a)=+-sqrt((b^2)/(4a^2)-c/a).
+
+Finally we move the b/(2a) to the right and simplify to get 
+the two solutions: x_(1,2)=(-b+-sqrt(b^2-4a c))/(2a) 
+endamath
+
+And more of math follows here (LaTeX side of the lib does not seem to 
+understand a m a t h - e n d a m a t h tags; delimit with double backticks):
+
+``mult(\xi)=\frac{2}{(\mu+\rho|\mu+\rho)-(\xi+\rho|\xi+\rho)}\sum_{\alpha\in\Delta^{+}} mult(\alpha) \sum_{k=1}^{\infty}mult(\xi+k\alpha)(\xi+k\alpha|\alpha)``
+It includes roots ``\Delta=\left\{k\delta+\alpha|k\in Z,\; \alpha\in \Delta_0\right\}``
+positive roots ``\Delta^{+}=\{k\delta+\alpha|k\geq 0,\; \alpha\in \Delta_0^{+}\}\cup \{k\delta+\alpha|k\geq 1,\; \alpha\in \Delta_0\setminus \Delta_0^{+}\}``
+
+
+#--------------------------------------
+<h2> Subsection 2 - My Prog </h2>
+#--------------------------------------
+
+So the program is .........
+
+#--------------------------------------
+<h3> Subsection 3 - the code </h3>
+#--------------------------------------
+
+Here I explain things that may come first
+
+
+<<print the explanation>>=
+
+print STDOUT <<end_of_it;
+
+another chunk of code can be included into any
+chunk of code.
+
+Those can be out of machine order and rather be 
+kept in their logical order in your Literate 
+Source file
+
+end_of_it
+
+@
+
+
+
+And this is a chunk of code (to tangle and 
+then run, the "main" for the script):
+
+<<MyProject.pl>>=
+#!/usr/bin/perl
+
+<<print the explanation>>
+
+exit;
+@
+
+
+<h4> level 4</h4>
+
+<h5>level 5</h5>
+
+<h6>level 6</h6>
+
+<h7>level 7</h7>
+
+
+
+<h8>level 8</h8>
+
+
+<h9>level9</h9>
+
+<h10>level10</h10>
+
+<h11>level11</h11>
+
+<h12>level12</h12>
+
+
+
+
+
+
+
+
