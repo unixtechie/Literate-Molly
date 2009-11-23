@@ -25,6 +25,7 @@
 	
 	# keep TOC expanded in initial load? "block":"none"
 	$ind_expanded = $ind_expanded || "none";
+
 	# what is the file extention to weave it? (perms must allow execution!)
 	# e.g. "scriptname.weave" or "scriptname.cgi" etc.
 	$weave_extension = $weave_extension || "weave";	# default is "weave"
@@ -43,6 +44,10 @@
 	# Actually, let's always do it and disallow unsetting
 	# number lines ? 1 : else
 	$line_numbering = 1;
+
+	# Print LitSource's line no's as a reference in the tangled output?
+	$print_ref_linenos_when_tangling = $print_ref_linenos_when_tangling || 0; # default = 0, no.
+	$code_sections_comment_symbol = $code_sections_comment_symbol || "# ";
 
 	# how are doc sections marked? "dotHTML":"rawHTML"
 	$weave_markup = $weave_markup || "rawHTML"; # default is "rawHTML"
@@ -81,6 +86,9 @@ sub usage {
 
 	-R "root_chunk_name", 
 		tangle starting from this chunk. if omitted, "*" is default.
+
+	-l 'comment symbol for your language',
+		add comments with coresponding line numbers in Lit Src
 
 
 	WEAVING options:
@@ -127,7 +135,7 @@ end_of_usage
         #print STDERR "$0 was called from command line..\n";
     
         #getopts("hwu:l:d:R:", \%cl_args);
-    	getopts("hwR:", \%cl_args);
+    	getopts("hwl:R:", \%cl_args);
     
         # -- print USAGE if not evoked correctly
     	if( (! defined $ARGV[0] ) or  ( $cl_args{h} ) ) { usage(); exit };
@@ -161,12 +169,14 @@ end_of_usage
          	    #print STDERR "doc sections in coments; comment char is $cl_args{d}\n" 
          	    };
          
-         	if($cl_args{l}) { 
-         	    #print STDERR "will add reflines; comment char is $cl_args{l}\n" 
-         	    };
-         
          	if($cl_args{u}) { 
          	    #print STDERR "applying UN-tangling with script char is $cl_args{u}\n" 
+         	    };
+         
+         	if($cl_args{l}) { 
+         	    #print STDERR "will add reflines; comment char is $cl_args{l}\n" 
+         		$print_ref_linenos_when_tangling = 1;
+         		$code_sections_comment_symbol = $cl_args{l};
          	    };
          
          	# -- getting the root chunk for tangling --
@@ -237,7 +247,10 @@ TANGLE_ME:
  	my $current_chunk_name = "";
  	my $current_chunk_start_foff = 0;; # "foff" is a "file offset"
  	my $current_chunk_end_foff = 0;
+ 
  	my %file_offsets_hash = ();
+ 	my %file_lines_hash = ();
+ 
  	my $line_num = 0;
  	my $previous_line_foff = 0; # "foff" is a "file offset"
  
@@ -253,7 +266,9 @@ TANGLE_ME:
  	$current_chunk_name = $1;
  	$current_chunk_start_foff = tell LITSOURCE;
  
+ 	# -- collecting offset and line number, actually
  	push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_start_foff;
+ 	push @{$file_lines_hash{$current_chunk_name}}, $.;
  	#~ print "----> chunk $1 line $. offset $current_chunk_start_foff\n";
  
      }
@@ -262,7 +277,9 @@ TANGLE_ME:
      elsif ( $_ =~ m!$chunk_end_pattern! )  {
  
  	$current_chunk_end_foff = $previous_line_foff;
+ 	# -- collecting offset and line number:
  	push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_end_foff;
+ 	push @{$file_lines_hash{$current_chunk_name}}, $.;
  	#~ print "\tline $. offset $current_chunk_end_foff<------\n";
  
      	$current_chunk_name = "";
@@ -278,9 +295,11 @@ TANGLE_ME:
     
         while ($line =~ m!(.*?)<\<(.*?)>\>!g) {
     
-    	# "end" of prev pair
+    	# "end" of prev pair; collecting offset and line number
     	push @{$file_offsets_hash{$current_chunk_name}}, 
     	    $current_foff_pos + (length $1); 
+    	push @{$file_lines_hash{$current_chunk_name}}, $.;
+    
     
     	#-------deal with pushing ("ref", "chunkname") pair -----
     	# special id string for refs
@@ -296,7 +315,9 @@ TANGLE_ME:
     	my $end_of_match_pos = $current_foff_pos + $homegrown_pos;
     
     	# "start" a new pair.. - ok, let's not use "pos" at all, if it fails
+    	# .. and collect both offset and the line number
     	push @{$file_offsets_hash{$current_chunk_name}}, $end_of_match_pos;
+    	push @{$file_lines_hash{$current_chunk_name}}, $.;
     
     	#  I'll need to reset current_foff_pos to the pos
     	#   (or to the directly caclucalted offset, if I prefer that):
@@ -346,12 +367,14 @@ TANGLE_ME:
  
  
   # iterate over splinters of a chunk, which are foff pairs
+  my $iterate_lines = 0;
   for ( my $iterate_foffs = 0;
  	    exists $file_offsets_hash{$chunk_being_printed}[$iterate_foffs];)
   {
  
      my $snippet_position =  $file_offsets_hash{$chunk_being_printed}[$iterate_foffs++];
      my $snippet_end = $file_offsets_hash{$chunk_being_printed}[$iterate_foffs++];
+ 
      #~ print "debug got: beg $snippet_position -- end $snippet_end\n";
  
      
@@ -365,6 +388,10 @@ TANGLE_ME:
         
         }
         else { # .. print it here
+    
+    	my $snippet_beg_lineno = $file_lines_hash{$chunk_being_printed}[$iterate_lines++];
+    	my $snippet_end_lineno = $file_lines_hash{$chunk_being_printed}[$iterate_lines++];
+    
     	seek LITSOURCE, $snippet_position,  0;
     	read LITSOURCE, $buffer_out, ($snippet_end - $snippet_position);
     
@@ -383,7 +410,17 @@ TANGLE_ME:
     	$chunk_left_margin = " " x $snippet_left_margin;
     	$buffer_out =~ s!(\n)!$1$chunk_left_margin!sg;
     
+    	if ($print_ref_linenos_when_tangling){
+    		print $code_sections_comment_symbol, "[line $snippet_beg_lineno in litsrc]__start" ;
+    		print "_________________________________\n";
+    		}
+    	
     	print $buffer_out;
+    	if ($print_ref_linenos_when_tangling) {
+    		print $code_sections_comment_symbol, "[line $snippet_end_lineno in litsrc]__end" ;
+    		print "___________________________________\n";
+    		}
+    
         }
     
  
@@ -479,6 +516,7 @@ for(i=1; i <= 10000; i++){
 }
 
 </script>
+
 <style type="text/css" media="screen">
 
 
@@ -617,6 +655,7 @@ PRE	{
 
 
 </STYLE>
+
 
 </head>
 head_end
