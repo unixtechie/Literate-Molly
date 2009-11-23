@@ -784,7 +784,7 @@ if ( m!^<\<(.*)>\>=! ... m!^@\s*$! ) { # -- CODE CHUNKS --
 	} # fi - chunks index accumulation
 
 	# simple fieldset frames around code snippets
-	s!^&lt;&lt;(.+)&gt;&gt;=!$code_frameset_start_pre$1&lt;&lt;$2&gt;&gt;$code_frameset_start_post!;
+	s!^(goto)?&lt;&lt;(.+)&gt;&gt;=!$code_frameset_start_pre$1&lt;&lt;$2&gt;&gt;$code_frameset_start_post!;
 	s!^@\s*$!$code_frameset_end!;
 
 	if ( $line_numbering ) { 

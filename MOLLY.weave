@@ -481,11 +481,13 @@ See details about this setup and possible uses of it below.
     Strictly speaking, none except for core Perl (and any web server and web browser
     for operation in CGI mode).
 
-    The script now has a built-in simple tangler, which can tangle arbitrary roots
-    from the Literate Source file.
+    The script now has a built-in tangler, which can tangle arbitrary roots from the
+    Literate Source file.
 
     However it is possible to  use a "pass-through" tangler, i.e. delegate actual
-    tangling to the "notangle" utility from the "noweb" suite.
+    tangling to the "notangle" utility from the "noweb" suite - or to tangle from
+    your Literate Source file directly with "notangle", as Molly shares markup
+    with it.
 
     "Noweb" set of tools has been around for more than 10 years, and is well tested.
     It is also more flexible, at least for now.
@@ -3869,7 +3871,7 @@ if ( m!^<\<(.*)>\>=! ... m!^@\s*$! ) { # -- CODE CHUNKS --
 	} # fi - chunks index accumulation
 
 	# simple fieldset frames around code snippets
-	s!^&lt;&lt;(.+)&gt;&gt;=!$code_frameset_start_pre$1&lt;&lt;$2&gt;&gt;$code_frameset_start_post!;
+	s!^(goto)?&lt;&lt;(.+)&gt;&gt;=!$code_frameset_start_pre$1&lt;&lt;$2&gt;&gt;$code_frameset_start_post!;
 	s!^@\s*$!$code_frameset_end!;
 
 	if ( $line_numbering ) { 
