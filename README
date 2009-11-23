@@ -12,9 +12,10 @@ flexible tangling you might wish to instal "noweb" tools by Norman Ramsey,
 with which Molly shares markup (see documentation). 
  
 MOLLY also can directly use MathML (a great LGPLed third-party javascript
-library), i.e.  mathematical expressions typed in a simple ASCII notation and/or with
-LaTeX constants will be turned into MathML output to get displayed by Firefox, Opera
-(or other MathML-aware browsers) on the fly.
+library), i.e.  mathematical expressions typed in a simple ASCII notation and/or
+with LaTeX constants will be turned into MathML output to get displayed by Firefox,
+Opera (or other MathML-aware browsers) on the fly.
+
 
 FILES IN THE PROJECT:
 

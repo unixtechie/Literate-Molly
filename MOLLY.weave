@@ -40,7 +40,7 @@
 
 
 #--------------------------------------
-#---------File extensions and tangling------
+#---------File extensions and tangling options------
  
 # what is the file extention to weave it? (perms must allow execution!)
 # e.g. "scriptname.weave" or "scriptname.cgi" etc.
@@ -55,6 +55,14 @@
 # from Ramsey's "noweb" tools, must be installed and in your path)
 # use_builtin_tangler = 0; # default for now is to use external "notangle"
 $use_builtin_tangler = 1; 
+
+# Print LitSource's line no's as a reference in the tangled output?
+#$print_ref_linenos_when_tangling = 0; # default = 0, no.
+#$print_ref_linenos_when_tangling = 1;
+
+# ..and the comment for this line-numbering tangle-out and the language will be: 
+#$code_sections_comment_symbol = "# "; #default is the hash-space
+
 
 #--------------------------------------
 #---------invocation of MOLLY.pl-------
@@ -467,8 +475,11 @@ See details about this setup and possible uses of it below.
 
 
 #--------------------------------------------------------
-.h4. Prerequisites: "noweb" tools By Norman Ramsey ./h4.
+.h4. Prerequisites ./h4.
 #--------------------------------------------------------
+
+    Strictly speaking, none except for core Perl (and any web server and web browser
+    for operation in CGI mode).
 
     The script now has a built-in simple tangler, which can tangle arbitrary roots
     from the Literate Source file.
@@ -478,10 +489,10 @@ See details about this setup and possible uses of it below.
 
     "Noweb" set of tools has been around for more than 10 years, and is well tested.
     It is also more flexible, at least for now.
-    It would be prudent to compare tangled output of Molly with that of noweb, until you
+    It may be prudent to compare tangled output of Molly with that of noweb, until you
     feel sure you can trust it.
 
-    Please obtain and install "noweb" . .b. .i. Make sure the tangler is in your path ./i. ./b.
+    Please obtain and install "noweb" . .i. Make sure the tangler is in your path ./i.
      .a. http://www.cs.tufts.edu/~nr/noweb ./a.
 
     Any version will do, e.g. the one based on shell and awk. I created the MOLLY script 
@@ -656,7 +667,7 @@ May add to this section later. Uncomment to set, otherwise defaults apply.
 
 
 #--------------------------------------
-#---------File extensions setting------
+#---------File extensions and tangling options------
  
 # what is the file extention to weave it? (perms must allow execution!)
 # e.g. "scriptname.weave" or "scriptname.cgi" etc.
@@ -670,6 +681,12 @@ May add to this section later. Uncomment to set, otherwise defaults apply.
 # (if 0, the "pass-through" tangling will call "notangle"
 # from Ramsey's "noweb" tools, must be installed and in your path)
 # $use_builtin_tangler = 0; # default for now is to use external "notangle"
+
+# Print LitSource's line no's as a reference in the tangled output?
+#$print_ref_linenos_when_tangling = 0; # default = 0, no.
+
+# ..and the comment for this line-numbering tangle-out and the language will be: 
+#$code_sections_comment_symbol = "# "; #default is the hash-space
 
 
 #--------------------------------------
@@ -752,7 +769,8 @@ MOLLY distribution. Copy it to a different name and start editing.
 .h4. Tangling from LSFile ./h4.
 #--------------------------------
 
-    .ol. .li. Usually only one file needs to be tangled constantly, the file the developer
+    .ol. .li.  .b. Tangling "default root", "*" ./b.
+    Usually only one file needs to be tangled constantly, the file the developer
     is working on.  It's easiest to do by using the "default root", which is a code chunk
     called "*". When you run 
     .pre. MyProject.tangle > source.pl ./pre. 
@@ -766,7 +784,7 @@ MOLLY distribution. Copy it to a different name and start editing.
 
     This is the task for which MOLLY "quick tangling" is designed.
 
-    ./li. .li. If, however, you need to tangle out non-"*" root, you have two options:
+    ./li. .li. If, however, you need .b. to tangle out non-"*" root ./b., you have two options:
 
     (a) run MOLLY.pl from command line:
    .pre. MOLLY.pl -R 'root chunk name' literate_project_file ./pre.
@@ -776,14 +794,30 @@ MOLLY distribution. Copy it to a different name and start editing.
     .pre. notangle -R 'root chunk name' literate_project_file ./pre.
     This is the most flexible way, as "noweave" allows for extra pre- and post-processing.
 
-    ./li. .li. If you need to tangle out many source files, then probably the easiest way
+    ./li. .li. If you need .b. to tangle out many source files ./b., then probably the easiest way
     to arrange it is through many invocations of Molly.pl or "notangle" in a makefile.
     Include "Makefile" subsection into your Literate Source file and create a target that
     combines several "notangle -R ... " commands in it.
     Assing default root "*" to the Makefile, then run "MyProject.tangle > Makefile" to create
     it and next run "make targetname" to tangle (and compile, run etc) many files included
     into your Literate Source project file.
-    ./li. ./ol.
+    ./li. .li.
+	.b. Numbering lines in the tangle output ./b.
+	Sometimes your scripts or programs fail giving the line number at which error occured.
+	Then it is convenient to know where in the Literate Source this piece of code lives.
+	There is an option both in "notangle" and in Molly to print LitSource line numbers as
+	comments in the tangled output.
+	
+	From command line: 
+	.pre.	MOLLY.pl [-R 'root chunk name'] -l 'comment symbol' Lit_Source_file ./pre.
+	When using QuickTangling, set the corresponding option in the config section at the top.
+	"Comment symbol" is prepended to the line number printout, set it for the language you 
+	used in this particular tangle-out. 
+	Default for QuickTangling mode is "# " (hash-space).
+	
+	./li. ./ol.
+
+
 
     .i. .b. NOTE ./b. ./i.
     that Molly uses the same markup for document and code sections as "noweb".
@@ -1666,7 +1700,7 @@ OR: .b. TOC/Index in a floating window? ./b. -- should be easy, just  name the
 
 
 #-------------------------------------------
-{{{5 .h5.  CONTRACT PROGRAMMING and Molly?? ./h5.
+{{{5 .h5.  Contract programming  and Molly?? ./h5.
 #-------------------------------------------
 
 possibly add conditional tangling to produce a contract-assertion-littereted prog during
@@ -1979,6 +2013,7 @@ tunings if you modify MOLLY.pl
 	
 	# keep TOC expanded in initial load? "block":"none"
 	$ind_expanded = $ind_expanded || "none";
+
 @
 
 The script will behave differently depending on its own name. One "major" name
@@ -2007,6 +2042,10 @@ The modes are detected by file extensions, which are set here.
 	# Actually, let's always do it and disallow unsetting
 	# number lines ? 1 : else
 	$line_numbering = 1;
+
+	# Print LitSource's line no's as a reference in the tangled output?
+	$print_ref_linenos_when_tangling = $print_ref_linenos_when_tangling || 0; # default = 0, no.
+	$code_sections_comment_symbol = $code_sections_comment_symbol || "# ";
 
 @
 
@@ -2144,7 +2183,7 @@ exit;  # just in case
     #print STDERR "$0 was called from command line..\n";
 
     #getopts("hwu:l:d:R:", \%cl_args);
-	getopts("hwR:", \%cl_args);
+	getopts("hwl:R:", \%cl_args);
 
     # -- print USAGE if not evoked correctly
 	if( (! defined $ARGV[0] ) or  ( $cl_args{h} ) ) { usage(); exit };
@@ -2191,12 +2230,14 @@ exit;  # just in case
 	    #print STDERR "doc sections in coments; comment char is $cl_args{d}\n" 
 	    };
 
-	if($cl_args{l}) { 
-	    #print STDERR "will add reflines; comment char is $cl_args{l}\n" 
-	    };
-
 	if($cl_args{u}) { 
 	    #print STDERR "applying UN-tangling with script char is $cl_args{u}\n" 
+	    };
+
+	if($cl_args{l}) { 
+	    #print STDERR "will add reflines; comment char is $cl_args{l}\n" 
+		$print_ref_linenos_when_tangling = 1;
+		$code_sections_comment_symbol = $cl_args{l};
 	    };
 
 	# -- getting the root chunk for tangling --
@@ -2259,6 +2300,9 @@ sub usage {
 
 	-R "root_chunk_name", 
 		tangle starting from this chunk. if omitted, "*" is default.
+
+	-l 'comment symbol for your language',
+		add comments with coresponding line numbers in Lit Src
 
 
 	WEAVING options:
@@ -2361,13 +2405,11 @@ exit;
     after those have been brought to "canonical form", i.e. .b. all code chunks
     end with "@", no exceptions ./b. 
     ./li. .li. can handle multiple refs on the same line surrounded by other text,
-    ./li. .li. and tangles only the default chunk "*" (again, for now),  
+	./li. .li. can tangle starting from arbitrary chunks (option "-R 'chunkname'" on CL)
     ./li. ./ul.
-    so you might want to use the Ramsey's tool, at least to check the output.
+    You might want to use the Ramsey's tool sometimes  to check the Molly's output.
     Norman Ramsey's "noweb" has been around for more than 10 years and been used
     on thousands of lines of other projects.
-    You will also have to run "notangle" for getting non-default-root ("*") chunks
-    until I have supplied command line processing.
 
 	.ul. .b.  1. Note./b. that for .b. "notangle" ./b. you have   to make sure your 
 	double angle brackets are broken by spaces "< <"  or with actual escapes 
@@ -2405,7 +2447,7 @@ exit;
 
 
 #---------------------------------------
-{{{4 .h4. Code: run pass-through or built-in tangler ./h4.
+{{{4 .h4. Tangler despatcher: run pass-through or built-in tangler ./h4.
 #---------------------------------------
 
     Passes the request to "notangle" from the "noweb" literate tools suite -
@@ -2464,7 +2506,7 @@ close LITSOURCE;
 
 
 #------------------------------------------------------
-{{{4 .h4. seek-peek tangler (working) ./h4.
+{{{4 .h4. seek-peek tangler ./h4.
 #------------------------------------------------------
 
 #------------------------------------------------------
@@ -2490,7 +2532,7 @@ This 'seek-peek' tangler also filters out all of documentation chunks and looks 
 .b. dbl angles and the @ sign in the first position of the line ./b.
 
 (e) The used regexps ensure that if you have both opening and closing double brackets
-somewhere in your code, the S-P tangler will get screwed.
+somewhere .b. in your code ./b., the S-P tangler will get screwed.
 This and the first-positioned symbols are the only escapes one needs to observe as
 far as I understand.
 
@@ -2528,44 +2570,6 @@ script are not implemented yet */
 
 
 #-----------------
-{{{6<h6>Makefile for s.-p. tangler tests</h6>
-#-----------------
-
-a small informal test for now; to be expanded to:
-    - "make" --> "help"
-    - "make target" -> for tests, tangling out parts of the project etc
-
-
-
-<<seek-peek tangler Makefile>>=
-
-all: tangle  perl-check run compare
-#-
-
-tangle:
-	./zz-seek-peek.tangle > zz.pl;
-#-
-
-perl-check:
-	perl -c zz.pl;
-#-
-
-
-run:
-	perl zz.pl zyy-test.litsource.txt >test.out;
-#-	
-
-compare:
-		fldiff zyy-test.litsource.txt test.out;
-#-
-
- 
-@
-
-
-}}}6
-
-#-----------------
 {{{6 <h6>todo</h6>
 #-----------------
 .s. Now, the next step is to fix the trailing line with @
@@ -2578,7 +2582,7 @@ which contains the trailing rubbish).  ./s. -- DONE
 .s. NEXT is many chunk refs on teh same line surrounded by other text/code ./s.
 --done--
 
-NEXT is command-line processing for tangling any given root
+.s. NEXT is command-line processing for tangling any given root ./s. --done
 
 NEXT is adding comments with line nums and offsets in teh original Lit Source
 into the tangled out code
@@ -2649,7 +2653,10 @@ declare and initialize some vars
 	my $current_chunk_name = "";
 	my $current_chunk_start_foff = 0;; # "foff" is a "file offset"
 	my $current_chunk_end_foff = 0;
+
 	my %file_offsets_hash = ();
+	my %file_lines_hash = ();
+
 	my $line_num = 0;
 	my $previous_line_foff = 0; # "foff" is a "file offset"
 
@@ -2789,7 +2796,9 @@ the title from the later output.
 	$current_chunk_name = $1;
 	$current_chunk_start_foff = tell LITSOURCE;
 
+	# -- collecting offset and line number, actually
 	push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_start_foff;
+	push @{$file_lines_hash{$current_chunk_name}}, $.;
 	#~ print "----> chunk $1 line $. offset $current_chunk_start_foff\n";
 
     }
@@ -2808,7 +2817,9 @@ Plus - set $current_chunk_name=""; # just in case
     elsif ( $_ =~ m!$chunk_end_pattern! )  {
 
 	$current_chunk_end_foff = $previous_line_foff;
+	# -- collecting offset and line number:
 	push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_end_foff;
+	push @{$file_lines_hash{$current_chunk_name}}, $.;
 	#~ print "\tline $. offset $current_chunk_end_foff<------\n";
 
     	$current_chunk_name = "";
@@ -2816,10 +2827,8 @@ Plus - set $current_chunk_name=""; # just in case
 
 @
 
-.b.Ok, so we put the foffs  in the (beg, end) order./b..
-Now, "pop" will get them in the pop1 -> (end), then pop2 -> beg order
-While  shift_first -> beg, shift_second -> end. This will be the right one
-for later tangling.
+.b.Ok, so we put the foffs and line numbers  in the 
+(beg offset,  end offset) order./b..
 
 
 .b.Now, the chunk refs ./b.
@@ -2878,9 +2887,11 @@ I'll write out logic later, after I have tested and adjusted it enough
 
     while ($line =~ m!(.*?)<\<(.*?)>\>!g) {
 
-	# "end" of prev pair
+	# "end" of prev pair; collecting offset and line number
 	push @{$file_offsets_hash{$current_chunk_name}}, 
 	    $current_foff_pos + (length $1); 
+	push @{$file_lines_hash{$current_chunk_name}}, $.;
+
 
 	#-------deal with pushing ("ref", "chunkname") pair -----
 	# special id string for refs
@@ -2896,7 +2907,9 @@ I'll write out logic later, after I have tested and adjusted it enough
 	my $end_of_match_pos = $current_foff_pos + $homegrown_pos;
 
 	# "start" a new pair.. - ok, let's not use "pos" at all, if it fails
+	# .. and collect both offset and the line number
 	push @{$file_offsets_hash{$current_chunk_name}}, $end_of_match_pos;
+	push @{$file_lines_hash{$current_chunk_name}}, $.;
 
 	#  I'll need to reset current_foff_pos to the pos
 	#   (or to the directly caclucalted offset, if I prefer that):
@@ -2928,7 +2941,8 @@ Need to save left margin (here) and apply it in the sub print_chunk below
 
 
 This is a snippet showing how it can be treated:
-
+.i. broken with whitespaces as escapes for the half-brain "notangle" not to
+stumble. Delete spaces btw <_<  ./i.
 .pre.
 
 #~ Nope, they use it inside "while" 
@@ -2936,12 +2950,12 @@ This is a snippet showing how it can be treated:
 #~ /the while loop is over the line that contained at least 
 #~ one ref; the loop body includes pushes into the hash/
 
-	$line = "asdfas asd <<qewrqw>> opiopiopi <<2345>> asdasdf";
+	$line = "asdfas asd < <qewrqw>> opiopiopi < <2345>> asdasdf";
 	$llen = length $line;
 	print "the original line:: [$line] -- of length $llen\n";
 
 
-	while ($line =~ m!(.*?)<<(.*?)>>!g) {
+	while ($line =~ m!(.*?)<\<(.*?)>>!g) {
 		print "$1 -- $2\n";
 		$ancor_off  = pos $line;
 
@@ -2955,7 +2969,7 @@ This is a snippet showing how it can be treated:
 And this is its output:
 
 .pre.
-the original line:: [asdfas asd <<qewrqw>> opiopiopi <<2345>> asdasdf] -- of length 48
+the original line:: [asdfas asd < <qewrqw>> opiopiopi < <2345>> asdasdf] -- of length 48
 asdfas asd  -- qewrqw
 ancor position is 21
  opiopiopi  -- 2345
@@ -3015,12 +3029,14 @@ Now - the RECURSIVE PRINTOUT untangling from the default/given root.
 
 
  # iterate over splinters of a chunk, which are foff pairs
+ my $iterate_lines = 0;
  for ( my $iterate_foffs = 0;
 	    exists $file_offsets_hash{$chunk_being_printed}[$iterate_foffs];)
  {
 
     my $snippet_position =  $file_offsets_hash{$chunk_being_printed}[$iterate_foffs++];
     my $snippet_end = $file_offsets_hash{$chunk_being_printed}[$iterate_foffs++];
+
     #~ print "debug got: beg $snippet_position -- end $snippet_end\n";
 
     <<the meat>>
@@ -3060,6 +3076,10 @@ For that I'll have to keep "a printer state" wth two flags for (a) and (b).
 
 <<the meat>>=
     else { # .. print it here
+
+	my $snippet_beg_lineno = $file_lines_hash{$chunk_being_printed}[$iterate_lines++];
+	my $snippet_end_lineno = $file_lines_hash{$chunk_being_printed}[$iterate_lines++];
+
 	seek LITSOURCE, $snippet_position,  0;
 	read LITSOURCE, $buffer_out, ($snippet_end - $snippet_position);
 
@@ -3078,7 +3098,17 @@ For that I'll have to keep "a printer state" wth two flags for (a) and (b).
 	$chunk_left_margin = " " x $snippet_left_margin;
 	$buffer_out =~ s!(\n)!$1$chunk_left_margin!sg;
 
+	if ($print_ref_linenos_when_tangling){
+		print $code_sections_comment_symbol, "[line $snippet_beg_lineno in litsrc]__start" ;
+		print "_________________________________\n";
+		}
+	
 	print $buffer_out;
+	if ($print_ref_linenos_when_tangling) {
+		print $code_sections_comment_symbol, "[line $snippet_end_lineno in litsrc]__end" ;
+		print "___________________________________\n";
+		}
+
     }
 
 @
@@ -3514,6 +3544,7 @@ for(i=1; i <= 10000; i++){
 }
 
 </script>
+
 @
 
 }}}5
@@ -3661,6 +3692,7 @@ PRE	{
 
 
 </STYLE>
+
 @
 
 }}}5
@@ -3837,7 +3869,7 @@ if ( m!^<\<(.*)>\>=! ... m!^@\s*$! ) { # -- CODE CHUNKS --
 	} # fi - chunks index accumulation
 
 	# simple fieldset frames around code snippets
-	s!^(goto)?&lt;&lt;(.+)&gt;&gt;=!$code_frameset_start_pre$1&lt;&lt;$2&gt;&gt;$code_frameset_start_post!;
+	s!^&lt;&lt;(.+)&gt;&gt;=!$code_frameset_start_pre$1&lt;&lt;$2&gt;&gt;$code_frameset_start_post!;
 	s!^@\s*$!$code_frameset_end!;
 
 	if ( $line_numbering ) { 
