@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-#-------------------------------------
+#{{{1--------------CONFIGURATION-----------------------
 # -------TOC and INDEX behaviour------
 
 # print TOC? 1:0
@@ -20,8 +20,8 @@
 #-------------------------------------
 #---------MathML options--------------
 # should we enable MathML via ASCIIMathML.js or LaTeXMathML.js library? 1:0
-#$enable_ASCIIMathML = 0; #default is to disable as it slows Molly down a lot
-$enable_ASCIIMathML = 1;
+#$enable_ASCIIMathML = 0; #default is to disable as it slows down web browsers
+#$enable_ASCIIMathML = 1;
 
 # If yes, what is the full path to the lib? Remember to get the one with proper
 # escapes for your work, default or modified (see documenation)
@@ -40,7 +40,7 @@ $enable_ASCIIMathML = 1;
 
 
 #--------------------------------------
-#---------File extensions setting------
+#---------File extensions and tangling options------
  
 # what is the file extention to weave it? (perms must allow execution!)
 # e.g. "scriptname.weave" or "scriptname.cgi" etc.
@@ -50,16 +50,28 @@ $enable_ASCIIMathML = 1;
 # e.g. "scriptname.tangle",  "scriptname.pl" etc.
 #$tangle_extension = "tangle";	# default is "tangle"
 
+#When tangling, should I use the built-in tangler? 0:1
+# (if 0, the "pass-through" tangling will call "notangle"
+# from Ramsey's "noweb" tools, must be installed and in your path)
+# use_builtin_tangler = 0; # default for now is to use external "notangle"
+$use_builtin_tangler = 1; 
+
+# Print LitSource's line no's as a reference in the tangled output?
+#$print_ref_linenos_when_tangling = 0; # default = 0, no.
+#$print_ref_linenos_when_tangling = 1;
+
+# ..and the comment for this line-numbering tangle-out and the language will be: 
+#$code_sections_comment_symbol = "# "; #default is the hash-space
+
+
 #--------------------------------------
 #---------invocation of MOLLY.pl-------
 do "MOLLY.pl";
 exit;
 __DATA__
-#-----------------------start of script---------------------------
-#-----------------------------------------------------------------
-#-----------------------------------------------------------------
-
-
+#--------------start of script---------------------------
+#--------------------------------------------------------
+#-----------------------------------------------------}}}1
 
 
 

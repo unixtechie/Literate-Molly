@@ -2,19 +2,20 @@
 WHAT IS MOLLY?
 
 Files in this repository relate to "MOLLY", a MO-dule for LI-terate programming.
-Technically, it is a "weaver" which can create "folding html" documents on the fly,
-working either from command line or as CGI under a developer's personal web server.
+Technically, it is a standalone tool for literate programming with a new
+kind of "weaver" which can create "folding html" documents on the fly,
+working either from command line or as CGI under a developer's personal
+web server.
 
-The module is a simple script written in core perl, no extra modules are needed.
+Molly is a simple script written in core perl, no extra modules are needed.
 
-Molly is self-contained now, and includes both a tangler and weaver, but for
-flexible tangling you might wish to instal "noweb" tools by Norman Ramsey,
-with which Molly shares markup (see documentation). 
+Molly shares literate marku with "noweb" tools by Norman Ramsey, so for
+more flexible tangling you might wish also to instal them as well.
  
 MOLLY also can directly use MathML (a great LGPLed third-party javascript
-library), i.e.  mathematical expressions typed in a simple ASCII notation and/or
-with LaTeX constants will be turned into MathML output to get displayed by Firefox,
-Opera (or other MathML-aware browsers) on the fly.
+library), i.e.  mathematical expressions typed in a simple ASCII notation
+with LaTeX constants will be turned into MathML output to get displayed by
+Firefox, Opera (or other MathML-aware browsers) on the fly.
 
 
 FILES IN THE PROJECT:

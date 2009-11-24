@@ -1,10 +1,20 @@
 #!/usr/bin/perl
 
-#---------------------------------------------------------------------------------    
+#-----------------------------------------------------------------------------------------
+# MOLLY - A MO-DULE FOR LI-TERATE PROGRAMMING
+#-----------------------------------------------------------------------------------------
+# ............................................
+# .......licensed under GPL version 3.........
+# ............................................
+# ....... Author: unixtechie; email: .........
+# .. /same/ ..  at .. yahoo .. dot .. com ....
+# ............................................
+# ..... Git depos. - docs and download: ......
+# http://github.com/unixtechie/Literate-Molly/
+# ............................................
 #
-#	This script is licensed under GPL version 3
-#
-#----------------------Script proper----------------------------------------------
+#-----------------------------------------------------------------------------------------
+#---|-4-|-8-|-12----|-20------|-30------|-40------|-50------|-60------|-70------|-80------|
 
 
   # need to fool the noweb "notangle" utility, switch markup modes etc.
@@ -45,8 +55,8 @@
 	# number lines ? 1 : else
 	$line_numbering = 1;
 
-	# Print LitSource's line no's as a reference in the tangled output?
-	$print_ref_linenos_when_tangling = $print_ref_linenos_when_tangling || 0; # default = 0, no.
+	# Print LitSource's line nums as a reference in the tangled output? deflt is 0.
+	$print_ref_linenos_when_tangling = $print_ref_linenos_when_tangling || 0; 
 	$code_sections_comment_symbol = $code_sections_comment_symbol || "# ";
 
 	# how are doc sections marked? "dotHTML":"rawHTML"
