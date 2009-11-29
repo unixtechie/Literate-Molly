@@ -1,6 +1,26 @@
 #!/usr/bin/perl
 
-#{{{1--------------CONFIGURATION-----------------------
+#{{{1----------------------------------------------
+#-----------------------------------------------------------------------------------------
+# MOLLY - A MO-DULE FOR LI-TERATE PROGRAMMING
+#-----------------------------------------------------------------------------------------
+# ....../Literate source of the script/.......
+# ............................................
+# .......licensed under GPL version 3.........
+# ............................................
+# ....... Author: unixtechie; email: .........
+# .. /same/ ..  at .. yahoo .. dot .. com ....
+# ............................................
+# ..... Git depos. - docs and download: ......
+# http://github.com/unixtechie/Literate-Molly/
+# ............................................
+#
+#-----------------------------------------------------------------------------------------
+#---|-4-|-8-|-12----|-20------|-30------|-40------|-50------|-60------|-70------|-80------|
+
+
+
+#--------------CONFIGURATION-----------------------
 # -------TOC and INDEX behaviour------
 
 # print TOC? 1:0
@@ -80,7 +100,7 @@ MOLLY is licensed under GNU Public License version 3. .<. /center .>.
 
 
 #--------------------------------------------------
-{{{1 .+h1. MOLLY MODULE ./h1.
+.+h1. MOLLY MODULE ./h1.
 #--------------------------------------------------
 
 .b. What is it? ./b.
@@ -97,7 +117,11 @@ MOLLY is licensed under GNU Public License version 3. .<. /center .>.
 {{{2 .h2. THE CHUNK TO TANGLE BY  DEFAULT ./h2.
 #------------------------------------------------------------
 
-<<*>>=
+.b. .i. All disabled for now ./i. ./b. - I do not tangle anything from here at the moment
+(although meaningful pieces exist, such as configuration templates).
+I am not going to tangle the 2 pieces together at the moment -- therefore "*" is disabled
+
+<<*-dis>>=
 <<MOLLY.pl module>>
 @
 
@@ -658,7 +682,7 @@ May add to this section later. Uncomment to set, otherwise defaults apply.
 # (b) in current dir "ASCIIMathML_with_modified_escapes.js" or
 # (c) on the web, e.g. the original site of the library (unmodified) is:
 #$path_to_ASCIIMathML = "http://www1.chapman.edu/~jipsen/mathml/ASCIIMathML.js";
-#$path_to_ASCIIMathML = "ASCIIMathML_with_modified_escapes.js"; # default is current dir
+#$path_to_ASCIIMathML = "ASCIIMathML_with_modified_escapes.js"; # deflt is curr. dir
 
 
 #-------------------------------------
@@ -690,6 +714,10 @@ May add to this section later. Uncomment to set, otherwise defaults apply.
 # ..and the comment for this line-numbering tangle-out and the language will be: 
 #$code_sections_comment_symbol = "# "; #default is the hash-space
 
+# find and print root chunks in the LitSrc (i.e. instead of tangling when run
+# as "./LitSrc.tangle" from command line) ? 0:1
+# $show_all_roots = 0; default is not (i.e. to tangle)
+
 
 #--------------------------------------
 #---------invocation of MOLLY.pl-------
@@ -718,115 +746,6 @@ Here I explain things that come first
 
 A better example can be seen in a new project template file that comes with
 MOLLY distribution. Copy it to a different name and start editing.
-
-
-
-#---------------------------------------------------
-.h4. Markup of code and documentation sections ./h4.
-#----------------------------------------------------
-
-.b. First, ./b.
-    .ul. .li.  code sections begin with "< <name of the section> >="
-    in the first position in the line and end with "@"  in the first position
-    .i. no spaces between the double angle brackets - I used spaces as escapes here ./i.
-    
-    ./li. .li. References to other code sections are done with "< <name of the ref sect> >"
-    inside the code sections
-
-    ./li. .li. The rest is "documentation chunks" which must be marked up with some formatting
-    tags. (The default is html).
-
-     I do not insert examples here, as the file you are reading provides them ad nauseam.
-
-    THIS IS THE BASIC MARKUP OF THE LITERATE SOURCE FILE, as used by the 
-    "noweb" tools.
-
-    .i. .b. NOTE ./b. ./i. While Molly uses the same markup. .b. "notangle" allows to skip 
-    "@" signs./b. in the first position on the line if the next chunk is also code.
-    .b. Molly insists on full markup. ./b. Molly tangled examples from 'noweb' distribution 
-    correctly when those were canonized to use full notation.
-
-
-    ./ul.
-
-.b. Secondly,./b. how do we format the documentation sections?
-
-    .ul. .li. In the simplest case, with straight HTML markup (default)
-
-    ./li. .li. If a simple subsection is added to the MOLLY.pl script to process it, in any
-    markup lingo of your choice (e.g. "wiki") 
-    
-    Currently I provide a "dotHTML" formatting subsection as an example. It implements
-    a few of the most common HTML tags but with "dots" around them, in place of angle brackets 
-    "<" and ">" (which is faster, as one does not need to switch register, so is less prone 
-    to typos). See below for more detailed explanations
-    ./li. ./ul.
-    
-    .b. .i. The only difference ./i. ./b. from the truly "raw" HTML is that except in "pre" sections the MOLLY.pl script will 
-    add automatic <br> tags at the end of each line of your Literate Source file.
-
-
-
-#--------------------------------
-.h4. Tangling from LSFile ./h4.
-#--------------------------------
-
-    .ol. .li.  .b. Tangling "default root", "*" ./b.
-    Usually only one file needs to be tangled constantly, the file the developer
-    is working on.  It's easiest to do by using the "default root", which is a code chunk
-    called "*". When you run 
-    .pre. MyProject.tangle > source.pl ./pre. 
-    MOLLY will pass the command to "notangle" from Ramsey's "noweb" tools, or tangle it
-    itself if configured at the top of your project file and then it will print code
-    chunks starting from the one named "*". Therefore, I drag along the default root to
-    wherever I am editing now and reassigning to it the chunk I need to tangle currently.
-    I usually keep the pointer subsection at the top of the Literate Source file. See 
-    "THE CHUNK TO TANGLE BY DEFAULT" in the file you are reading as an example of this
-    technique.
-
-    This is the task for which MOLLY "quick tangling" is designed.
-
-    ./li. .li. If, however, you need .b. to tangle out non-"*" root ./b., you have two options:
-
-    (a) run MOLLY.pl from command line:
-   .pre. MOLLY.pl -R 'root chunk name' literate_project_file ./pre.
-    If chunk name is not supplied, the script will tangle from "*", the default root. 
-
-    (b) ..or you might run N.Ramsey's "notangle" utility directly on your Lit.Source file. 
-    .pre. notangle -R 'root chunk name' literate_project_file ./pre.
-    This is the most flexible way, as "noweave" allows for extra pre- and post-processing.
-
-    ./li. .li. If you need .b. to tangle out many source files ./b., then probably the easiest way
-    to arrange it is through many invocations of Molly.pl or "notangle" in a makefile.
-    Include "Makefile" subsection into your Literate Source file and create a target that
-    combines several "notangle -R ... " commands in it.
-    Assing default root "*" to the Makefile, then run "MyProject.tangle > Makefile" to create
-    it and next run "make targetname" to tangle (and compile, run etc) many files included
-    into your Literate Source project file.
-    ./li. .li.
-	.b. Numbering lines in the tangle output ./b.
-	Sometimes your scripts or programs fail giving the line number at which error occured.
-	Then it is convenient to know where in the Literate Source this piece of code lives.
-	There is an option both in "notangle" and in Molly to print LitSource line numbers as
-	comments in the tangled output.
-	
-	From command line: 
-	.pre.	MOLLY.pl [-R 'root chunk name'] -l 'comment symbol' Lit_Source_file ./pre.
-	When using QuickTangling, set the corresponding option in the config section at the top.
-	"Comment symbol" is prepended to the line number printout, set it for the language you 
-	used in this particular tangle-out. 
-	Default for QuickTangling mode is "# " (hash-space).
-	
-	./li. ./ol.
-
-
-
-    .i. .b. NOTE ./b. ./i.
-    that Molly uses the same markup for document and code sections as "noweb".
-    Nowever .b. "notangle" allows to skip "@" signs./b. in the first position on the line if
-    the next chunk is also code.
-    .b. Molly insists on full markup. ./b. Molly tangled examples from 'noweb' distribution correctly
-    when those were canonized to use full notation.
 
 
 #------------------------------------------------
@@ -895,6 +814,53 @@ PROJECT_ADMIN_DIR="/my/home/00trash/tmp/literate.perl/WWW.server";
 $PROJECT_ADMIN_DIR/thttpd -C $PROJECT_ADMIN_DIR/thttpd.config
 @
 
+
+
+#---------------------------------------------------
+.h4. Markup of code and documentation sections ./h4.
+#----------------------------------------------------
+
+.b. First, ./b.
+    .ul. .li.  code sections begin with "< <name of the section> >="
+    in the first position in the line and end with "@"  in the first position
+    .i. no spaces between the double angle brackets - I used spaces as escapes here ./i.
+    
+    ./li. .li. References to other code sections are done with "< <name of the ref sect> >"
+    inside the code sections
+
+    ./li. .li. The rest is "documentation chunks" which must be marked up with some formatting
+    tags. (The default is html).
+
+     I do not insert examples here, as the file you are reading provides them ad nauseam.
+
+    THIS IS THE BASIC MARKUP OF THE LITERATE SOURCE FILE, as used by the 
+    "noweb" tools.
+
+    .i. .b. NOTE ./b. ./i. While Molly uses the same markup. .b. "notangle" allows to skip 
+    "@" signs./b. in the first position on the line if the next chunk is also code.
+    .b. Molly insists on full markup. ./b. Molly tangled examples from 'noweb' distribution 
+    correctly when those were canonized to use full notation.
+
+
+    ./ul.
+
+.b. Secondly,./b. how do we format the documentation sections?
+
+    .ul. .li. In the simplest case, with straight HTML markup (default)
+
+    ./li. .li. If a simple subsection is added to the MOLLY.pl script to process it, in any
+    markup lingo of your choice (e.g. "wiki") 
+    
+    Currently I provide a "dotHTML" formatting subsection as an example. It implements
+    a few of the most common HTML tags but with "dots" around them, in place of angle brackets 
+    "<" and ">" (which is faster, as one does not need to switch register, so is less prone 
+    to typos). See below for more detailed explanations
+    ./li. ./ul.
+    
+    .b. .i. The only difference ./i. ./b. from the truly "raw" HTML is that except in "pre" sections the MOLLY.pl script will 
+    add automatic <br> tags at the end of each line of your Literate Source file.
+
+
 }}}3
 
 #-----------------------------------------------------------------------
@@ -953,9 +919,9 @@ without spaces, and  comment lines with dashes
 ./li. ./ol.
 
 
-#------------------------------
-.h4. Markup and Escaping ./h4.
-#------------------------------
+#-------------------------------------------------------------------------
+.h4. Choking on bad strings - on Markup and Escaping /h4.
+#-------------------------------------------------------------------------
 
 Escaping in files marked in multiple ways is a big source of all kinds of errors.
 Currently Molly should be able to take care of most cases.
@@ -980,6 +946,166 @@ processing to the library. (It also processes everything between "a m a t h" and
 Make sure that your target programming language or any future "markdown" you are going to 
 add to Molly does not use these signs at all -- or re-edit the javascript library to
 substitute all inclusions of double backticks to sth else.
+
+#----------------------------------------
+.h4. Markup and Editor highlighting ./h4.
+#----------------------------------------
+
+Working with Literate Programming documents will throw off your editor highlighting
+unless you configure a special 2-language mode: all text as "html" (or "plain text"
+if you wish), and the target language(s) inside literate code sections.
+One problem is your Literate Source file may include .i. many ./i. target languages:
+Makefiles, shell scripts, one or more scripting or compile languages etc.
+
+The Vim editor has a "noweb.vim" and a "nw.vim" sample highlighting configuration files.
+They both derive from the same ancestor. "noweb.vim" is more sophisticated, and allows
+a user to have many target languages which are switched according to a regex match on the
+title of the chunk. I.e. one tactic would be to name your chunks "subtree XX - Makefile",
+or "xxxxx - c source" etc.
+
+The files are obtainable from .a. http://www.vim.org ./a.
+
+It is also possible to have a number of one-language highlighters - "noweb-perl.vim",
+"noweb-sh.vim" etc - which are trivially generated, and switch quickly while editing,
+without coding the language in the names of the chunks.
+
+It is possible to keep "noweb.vim" for full highlighting, and "nw.vim" just to recolor
+all docs, say, greenish, and all literate code chunks blue, and switch whenever it is
+convenient. Make sure to rename internal vars in (the simpler nw.vim), because otherwise
+they will clobber each other.
+
+For Molly also change the "default" (for the doc sections) from TeX to HTML.
+
+Vim is also good in the sense that its folding and prompts for symbols, nor its completion
+of HTML tags depend on teh highlighting mode - in simpler editors those depend on each
+other and make life unpleasant.
+
+}}}3
+
+#------------------------------------------------------
+{{{3 .h3. Tangling - extracting code from LSFile ./h3.
+#------------------------------------------------------
+
+
+#--------------------------------
+.h4. Tangling from LSFile ./h4.
+#--------------------------------
+
+    .ol. .li.  .b. Tangling "default root", "*" ./b.
+    Usually only one file needs to be tangled constantly, the file the developer
+    is working on.  It's easiest to do by using the "default root", which is a code chunk
+    called "*". When you run 
+    .pre. MyProject.tangle > source.pl ./pre. 
+    MOLLY will tangle it itself (or pass the command to "notangle" from Ramsey's "noweb"
+    tools, as configured at the top of your project file, and then it will print code
+    chunks starting from the one named "*". Therefore, I drag along the default root to
+    wherever I am editing now and reassigning to it the chunk I need to tangle currently.
+    I usually keep the pointer subsection at the top of the Literate Source file. See 
+    "THE CHUNK TO TANGLE BY DEFAULT" in the file you are reading as an example of this
+    technique.
+
+    This is the task for which MOLLY "quick tangling" is designed.
+
+    ./li. .li. If, however, you need .b. to tangle out non-"*" root ./b., you have two options:
+
+    (a) run MOLLY.pl from command line:
+   .pre. MOLLY.pl -R 'root chunk name' literate_project_file ./pre.
+    If chunk name is not supplied, the script will tangle from "*", the default root. 
+
+    (b) ..or you might run N.Ramsey's "notangle" utility directly on your Lit.Source file. 
+    .pre. notangle -R 'root chunk name' literate_project_file ./pre.
+    This is the most flexible way, as "noweave" allows for extra pre- and post-processing.
+
+    ./li. .li. If you need .b. to tangle out many source files ./b., then probably the easiest way
+    to arrange it is through many invocations of Molly.pl or "notangle" in a makefile.
+    Include "Makefile" subsection into your Literate Source file and create a target that
+    combines several "notangle -R ... " commands in it.
+    Assing default root "*" to the Makefile, then run "MyProject.tangle > Makefile" to create
+    it and next run "make targetname" to tangle (and compile, run etc) many files included
+    into your Literate Source project file.
+    ./li. .li.
+	.b. Numbering lines in the tangle output ./b.
+	Sometimes your scripts or programs fail giving the line number at which error occured.
+	Then it is convenient to know where in the Literate Source this piece of code lives.
+	There is an option both in "notangle" and in Molly to print LitSource line numbers as
+	comments in the tangled output.
+	
+	From command line: 
+	.pre.	MOLLY.pl [-R 'root chunk name'] -l 'comment symbol' Lit_Source_file ./pre.
+	When using QuickTangling, set the corresponding option in the config section at the top.
+	"Comment symbol" is prepended to the line number printout, set it for the language you 
+	used in this particular tangle-out. 
+	Default for QuickTangling mode is "# " (hash-space).
+	
+	./li. ./ol.
+
+
+
+    .i. .b. NOTE ./b. ./i.
+    that Molly uses the same markup for document and code sections as "noweb".
+    Nowever .b. "notangle" allows to skip "@" signs./b. in the first position on the line if
+    the next chunk is also code.
+    .b. Molly insists on full markup. ./b. Molly tangled examples from 'noweb' distribution correctly
+    when those were canonized to use full notation.
+
+
+#--------------------------------------
+.h4. Scaling up: tangling from many LS files ./h4.
+#--------------------------------------
+
+Built-in Tangler in Molly makes 2 passes over LitSrc file(s) on disk, it does not process
+them in buffer memory. Therefore it cannot take piped input. However this type of tangler
+is easy to adjust for processing many LitSource files .i. (note: this is different from
+extracting several .b.target, code./b. files from one or many Literate Source project files) ./i.
+
+When you project scales up so that even folding features of Molly cannot overcome
+inconvenience (e.g. when TOC and chunks index become unmanageable), you can .b. .i.
+mechanically split ./i. ./b. your Literate Source file into parts. Remember to "mollify"
+the pieces (prepend Molly template at the top) if you use Quick mode based on file
+extension. If you use Molly as a traditional weaver and tangler from command line or
+scripts, just cut LitSrc mechanically.
+
+(It also follows from above that you can then "cat" the pieces together into one big whole,
+if you wish. Just remove the "mollification" headers from all but the first one, if you
+added them, or otherwise simply mechanically "cat" them together.)
+
+The cut cannot tear your code line inside a code chunk, obviously. You'll most probably
+do your cutting at HTML section headings. .b. Code chunk names must remain unique
+over the whole project, ./b. so you might include file names into their namestrings for
+a largish setup, something like this: 
+.pre. < <code to proces XX - "backengine.section.weave"> > ./pre.
+But that is left to your own imagination.
+
+However your chunk chains can run anywhere over the parts of your project, and it
+will still be tangled correctly. Just supply the names of all partial Literate Source
+file names on command line to Molly:
+.pre. MOLLY.pl -R'root chunk name' [-l 'comment symbol'] file1 file2 .... ./pre.
+You do not need to give explicit name of the root to tangle from if it is "*", the default.
+You might want line numbering for debugging, but otherwise not use it.
+(It would be a mistake to set a default root "*" in several partial LitSrc files: these
+will be appended together, as follows from the lit. programming format for incremental
+definition of a chunk done with splinters under the same chunk name).
+
+.b. Partial definitions of one chunk, e.g. "chunk A"can be scattered ./b. in various
+LS files now.
+According to Knuth and descending tradition, the first mention of "chunk A" will
+begin it, any other code under this name will append to the body of the chunk in
+the order it is scanned down the file(s), and inserted in teh first location the chunk
+was used.
+
+Therefore if you have such split chunks and sequencing of code inside is important,
+.b. supply filenames to MOLLY in proper order./b.  In other cases order is unimportant.
+
+This is traditional treatment in Literate Programming and Molly just implements it.
+
+.b. .i. NOTE 1./i. ./b. that multi-file tangling can be used from command line only.
+Quick Tangle mode, Quick Weave and all other weaving are done on one file only.
+
+.b. .i. NOTE 2./i. ./b. Do not adjust the HTML sections levels in the split LitSrc
+subproject files. Molly won't care if the file to weave and turn into "folding HTML"
+headings start not on level 0 or 1 and display all nicely aligned to the left.
+This once again means that you can mechanically cut your LitSrc project into pieces
+and reassemble them at your  will.
 
 }}}3
 
@@ -1496,11 +1622,10 @@ Use .b."mollify"./b. as  a technical term (insert MOLLY.pl invocation into the L
 
 }}}2
 
-
 .h2. ./h2.
 
 #------------------------------------------------------------------
-{{{2 .h2. PART III ------------ LITERATE SOURCE OF THE SCRIPT ------------ ./h2.
+{{{2 .+h2. PART III ------------ LITERATE SOURCE OF THE SCRIPT ------------ ./h2.
 #-------------------------------------------------------
 
 
@@ -1534,20 +1659,42 @@ Should add that to the filtering expression in MOLLY
 #----------------------------------------------
 
 #-------------------------------
+{{{4 .h4. Bugs ./h4.
+#-------------------------------
+
+.b.Mistreatment of tabs in _some_ cases. ./b.
+        (*) Molly tangler will treat tabs OK .i. unless ./i. they were met
+        in the "while over regexp" where Molly just calculates the length
+        of the left margin, which is filled with spaces in "pass 2 - print"
+
+I.e. chunks referenced from within Makefiles .i. have to ./i. be in pos 1
+on the line and all tabs used explicitly in their bodies.
+
+This can be fixed, but not now.
+I made sure to "et!" (=expand tabs)  and "retab" in vim to make sure
+all indentation I type in code is preserved in folding html 
+
+
+}}}4
+
+#-------------------------------
 {{{4 .h4. Ideas - versions - changes./h4.
 #-------------------------------
 
 Current version:
 .ul.
     .li. creates folding documents on the fly..
-    ./li..li. ..based on dotHTML or rawHTML markup 
-    (i.e. either to create new docs or convert existing HTML into folding format);
+    ./li..li. ..based on rawHTML or dotHTML markup 
+    (i.e. either creates new docs or displays some existing HTML in folding format);
     ./li..li. and generates dynamically TOC and code chunks index;
     ./li..li. ties collapsing/expandind of sections with TOC highlighting;
     ./li..li. ..provides pass-through tangling with "noweb".
-    ./li..li. provides built-in simple tangler which does not clobber tabs
+    ./li..li. provides built-in fully-fledged tangler which does not clobber tabs
     ./li..li. provides a tie to ASCIIMathML.js library for inclusion of 
-	    mathematical expressions in your documents.
+            mathematical expressions in your documents.
+    ./li..li. can tangle and weave from command line like traditiona lit prog tools
+    ./li..li. allows for the project to be split into several files or reassembled
+            at will: the tangler can process many LitSrc arguments on command line
     ./li../ul.
 
     This script is a test of the concept (LitProg+folding+dynamic web formatting)
@@ -1764,10 +1911,10 @@ The namess of the POD sections are the names of literate chunks, then.
 I coould try "=pod Name of the Chunk"
 as simple PODs stand for nothing
 
-	(a) need empty lines around all POD markers
-	(b) =pod is ignored unless there is a =meaningful_mark
-	before
-	(c) =pod SOME TEXT -- text is ignored
+        (a) need empty lines around all POD markers
+        (b) =pod is ignored unless there is a =meaningful_mark
+        before
+        (c) =pod SOME TEXT -- text is ignored
 
 So, I could use it, it seems? OR: is there any sense in that??
 
@@ -1782,25 +1929,26 @@ So, I could use it, it seems? OR: is there any sense in that??
 
 
 #-------------------------------------------
-{{{5 .h5. for Tangling ./h5.
+{{{5 .h5. done for Tangling ./h5.
 #-------------------------------------------
 
 1. command-line options (for weaver, too?) to imitate "noweb" (?)
 Options: 
     .ul. -to show all roots??
-    - mark refline nums and offsets of the Lit Source in the tangled code
-    - root to tangle 
+    - .s. mark refline nums and offsets of the Lit Source in the tangled code ./s.
+    - .s. root to tangle ./s.
     - keep docs in comments (and/or Pod sections?? ./ul.
 
 2. ability   to tangle over several file. I.e.
-    .ul. I grow my LitSource for a while, then split it almost
+    .ul. .s. I grow my LitSource for a while, then split it almost
     mechanically, not making splinters self-contained
     I then supply all splinter file names to "MOLLY.pl my.project-*.weave"
-    and it tangles them out, however my prog is going through the splinters.
+    and it tangles them out, however my prog is going through the splinters. ./s.
     ./ul.
 
 3. 
 
+}}}5
 
 }}}4
 
@@ -1946,6 +2094,102 @@ include a mini-web server as well as a folding weaver and a tangler.
 }}}3
 
 
+#------------------------------------------------------
+{{{3 .h3. Default Root to tangle./h3.
+#------------------------------------------------------
+
+Without this the "QuickWeave" and "QuickTangle" modes are not operational.
+
+<<*>>=
+<<MOLLY.pl module>>
+@
+
+}}}3
+
+#------------------------------------------------------
+{{{3 .h3. Makefile./h3.
+#------------------------------------------------------
+
+
+<<Makefile>>=
+
+all: help
+#-
+
+help:
+        @echo;
+        @echo " ---TARGETS---";
+        @echo " new - tangle out MOLLYs-new.pl";
+<<other Makefile help commands>>
+        @echo;
+#-
+
+new:
+        perl ./MOLLY.pl -R'MOLLY.pl module' MOLLYs-bottom.weave >MOLLYs-new.pl;
+#-
+
+<<other Makefile commands>>
+
+@
+
+Checking my Makefile insertions ;)). This is going to be a test of M's tangling
+as well, actually
+
+The help insertions have already been indented with  a tab
+
+<<other Makefile help commands>>=
+        @echo " td  - run a tanglediff against MOLLY.pl";
+        @echo " fld - tangle and run a GUI diff tool, fldiff";
+@
+
+<<other Makefile commands>>=
+
+td:
+        MOLLYs-bottom.tangle | diff -y -w --left-column MOLLY.pl - |less;
+#-
+
+fld:
+        perl ./MOLLY.pl -R'MOLLY.pl module' MOLLYs-bottom.weave >MOLLYs-new.pl;
+        fldiff MOLLY.pl MOLLYs-new.pl;
+#-
+
+@
+
+}}}3
+
+#------------------------------------------------------
+{{{3 .h3. Tests to run on a newly tangled script./h3.
+#------------------------------------------------------
+
+.. will append to the Makefile, mostly.
+
+FIRST, tests go into ./tests.and.examples subdir
+
+TANGLING
+1. Check it tangles itself out
+    "make fd" "make fld" already do that
+    maybe: check sizes and/or MD5s
+
+2. Check tangling of the "substitution torture test"(s)
+
+3. Check tangling of split script(s)
+
+4. I have 2 modes: command line and Quick Mode
+Testing CL involves:
+
+    Usage printout - no ARGV[0], wrong options (several poss)
+    weaving from CL
+    tangling from CL
+    weaving, tangling from Quick Mode; compare output?
+
+Running against "notangle" in several tests above.
+
+ALSO: tangling, split or not: test for DAG loops
+/toposort not added yet/
+
+
+}}}3
+
 .h3. ./h3.
 
 #------------------------------------------------------
@@ -1978,7 +2222,6 @@ include a mini-web server as well as a folding weaver and a tangler.
 <<weave me>>
 
 # just in case:
-close LITSOURCE;
 exit;
 
 # END OF SCRIPT
@@ -2017,14 +2260,14 @@ tunings if you modify MOLLY.pl
 
   # ----- GENERAL settings -----
   
-	# print toc? 1:0
-	$print_toc = 1 unless defined $print_toc;
-	
-	# keep TOC expanded on initial load? "block":"none"
-	$toc_expanded = $toc_expanded || "block";
-	
-	# keep TOC expanded in initial load? "block":"none"
-	$ind_expanded = $ind_expanded || "none";
+        # print toc? 1:0
+        $print_toc = 1 unless defined $print_toc;
+        
+        # keep TOC expanded on initial load? "block":"none"
+        $toc_expanded = $toc_expanded || "block";
+        
+        # keep TOC expanded in initial load? "block":"none"
+        $ind_expanded = $ind_expanded || "none";
 
 @
 
@@ -2036,28 +2279,34 @@ The modes are detected by file extensions, which are set here.
 'Tangling' = creating the program/script source on STDOUT
 
 <<general settings>>=
-	# what is the file extention to weave it? (perms must allow execution!)
-	# e.g. "scriptname.weave" or "scriptname.cgi" etc.
-	$weave_extension = $weave_extension || "weave";	# default is "weave"
+        # what is the file extention to weave it? (perms must allow execution!)
+        # e.g. "scriptname.weave" or "scriptname.cgi" etc.
+        $weave_extension = $weave_extension || "weave"; # default is "weave"
 
-	# what is the file extention to tangle it? (perms must allow execution!)
-	# e.g. "scriptname.tangle",  "scriptname.pl" etc.
-	$tangle_extension = $tangle_extension || "tangle";	# default is "tangle"
-	
-	
-	#When tangling, should I use the built-in tangler? 0:1
-	# (if 0, the "pass-through" tangling will call "notangle"
-	# from Ramsey's "noweb" tools, must be installed and in your path)
-	# use_builtin_tangler = 0; # default for now is to use external "notangle"
-	$use_builtin_tangler = $use_builtin_tangler || 0; 
-	
-	# Actually, let's always do it and disallow unsetting
-	# number lines ? 1 : else
-	$line_numbering = 1;
+        # what is the file extention to tangle it? (perms must allow execution!)
+        # e.g. "scriptname.tangle",  "scriptname.pl" etc.
+        $tangle_extension = $tangle_extension || "tangle";      # default is "tangle"
+        
+        
+        #When tangling, should I use the built-in tangler? 0:1
+        # (if 0, the "pass-through" tangling will call "notangle"
+        # from Ramsey's "noweb" tools, must be installed and in your path)
+        # use_builtin_tangler = 0; # default for now is to use external "notangle"
+        $use_builtin_tangler = $use_builtin_tangler || 0; 
+        
+        # Actually, let's always do it and disallow unsetting
+        # number lines ? 1 : else
+        $line_numbering = 1;
 
-	# Print LitSource's line nums as a reference in the tangled output? deflt is 0.
-	$print_ref_linenos_when_tangling = $print_ref_linenos_when_tangling || 0; 
-	$code_sections_comment_symbol = $code_sections_comment_symbol || "# ";
+        # Print LitSource's line nums as a reference in the tangled output? deflt is 0.
+        $print_ref_linenos_when_tangling = $print_ref_linenos_when_tangling || 0; 
+        $code_sections_comment_symbol = $code_sections_comment_symbol || "# ";
+
+
+        # find and print root chunks in the LitSrc (i.e. instead of tangling when it is run
+        # as "./LitSrc.tangle" from command line) ? 0:1
+        $show_all_roots = $show_all_roots || 0; # default is not (i.e. to tangle)
+
 
 @
 
@@ -2067,17 +2316,17 @@ dot-br-dot, not open.angle-br-closing.angle
 This is selected here:
 
 <<general settings>>=
-	# how are doc sections marked? "dotHTML":"rawHTML"
-	$weave_markup = $weave_markup || "rawHTML"; # default is "rawHTML"
-	
-	if ($weave_markup eq "dotHTML") {
-	$tag_open_symbol = $dot;	# this will take care of default
-	$tag_close_symbol = $dot;	# when no var is set in the Lit Src file
-	}
-	elsif ($weave_markup eq "rawHTML") { 
-	$tag_open_symbol = $lt;
-	$tag_close_symbol = $gt;
-	} #fi
+        # how are doc sections marked? "dotHTML":"rawHTML"
+        $weave_markup = $weave_markup || "rawHTML"; # default is "rawHTML"
+        
+        if ($weave_markup eq "dotHTML") {
+        $tag_open_symbol = $dot;        # this will take care of default
+        $tag_close_symbol = $dot;       # when no var is set in the Lit Src file
+        }
+        elsif ($weave_markup eq "rawHTML") { 
+        $tag_open_symbol = $lt;
+        $tag_close_symbol = $gt;
+        } #fi
 
 @
 
@@ -2089,10 +2338,10 @@ This slows down interpretation of the file on reload drastically (from nothing t
 
 <<general settings>>=
 
-	# enable MathML interpretation? 1 : 0
-	$enable_ASCIIMathML = $enable_ASCIIMathML || 0;
-	# If enabled, set the path; default is local in current dir
-	$path_to_ASCIIMathML = $path_to_ASCIIMathML || "ASCIIMathML_with_modified_escapes.js";
+        # enable MathML interpretation? 1 : 0
+        $enable_ASCIIMathML = $enable_ASCIIMathML || 0;
+        # If enabled, set the path; default is local in current dir
+        $path_to_ASCIIMathML = $path_to_ASCIIMathML || "ASCIIMathML_with_modified_escapes.js";
 
 @
 
@@ -2142,18 +2391,22 @@ in the docs.
 
 <<sub print usage>>
 
+my @LITSOURCE_list = ();
+my %LITSOURCE_hash = ();
 
   # -1- shortcut invocations for "mollified" LitSrc file depending on its extension ---
 
   if ( $0 =~ m!\w+\.$weave_extension$! ) { 
 
-	open LITSOURCE, "< $0" or die "\n\tcould not open the target file\n\n";
-	goto WEAVE_ME;
+        open LITSOURCE, "< $0" or die "\n\tcould not open the target file\n\n";
+        goto WEAVE_ME;
     }
     elsif ( $0 =~ m!\w+\.$tangle_extension$! )  {
 
-	open LITSOURCE, "< $0" or die "could not open the target file\n";
-	goto TANGLE_ME;
+        open LITSOURCE0, "< $0" or die "\n\tcould not open the target file for tangling\n\n";
+        push @LITSOURCE_list, 'LITSOURCE0';
+        $LITSOURCE_hash{'LITSOURCE0'} = $0;
+        goto TANGLE_ME;
   }
 
   # -2- several cases for application of Molly to an external target file. --- 
@@ -2176,7 +2429,7 @@ in the docs.
 
   else {
 
-	die "MOLLY.pl: I do not know how I was called, exiting anyway\n";
+        die "MOLLY.pl: I do not know how I was called, exiting anyway\n";
 
   } # esle, fi - end of despatcher
 
@@ -2195,41 +2448,54 @@ exit;  # just in case
     #print STDERR "$0 was called from command line..\n";
 
     #getopts("hwu:l:d:R:", \%cl_args);
-	getopts("hwl:R:", \%cl_args);
+        getopts("hwl:R:i", \%cl_args);
 
     # -- print USAGE if not evoked correctly
-	if( (! defined $ARGV[0] ) or  ( $cl_args{h} ) ) { usage(); exit };
+        if( (! defined $ARGV[0] ) or  ( $cl_args{h} ) ) { usage(); exit };
 
     # -- does target file exist?
-	if ( -f $ARGV[0] ) {
-	    ; # nop, a debug printout
-	    #print STDERR "target file to operate on is $ARGV[0]\n";
-	}
-	else { 
-	    die "\n\tERROR: No target file seem to exist\n\n";
-	};
+        if ( -f $ARGV[0] ) {
+            ; # nop, a debug printout
+            #print STDERR "target file to operate on is $ARGV[0]\n";
+        }
+        else { 
+            die "\n\tERROR: No target file $ARGV[0] seem to exist\n\n";
+        };
 
 
     # -- Final CL despatch, do it: --
-	
-	open LITSOURCE, "< $ARGV[0]" || die "could not open the file to tangle\n";
+        
 
-	if($cl_args{w}) { # this is weaving
+        if($cl_args{w}) { # this is weaving
 
-    	    #print STDERR "weaving from CL, got $cl_args{w}\n"; 
+            if (@ARGV > 1) {
+            print STDERR "\n\n\tDo not know how to weave several files\n";
+            print STDERR "\tweaving the first one: $cl_args{w}\n\n"; 
+            }
 
-    	    goto WEAVE_ME;
+            open LITSOURCE, "< $ARGV[0]" || die "could not open the target file\n";
+            goto WEAVE_ME;
 
-	}
+        }
 
-	else { # this is tangling, default action, no opt
+        else { # this is tangling, default action, no opt
 
-    	    <<process args for tangling an external file from CL>>
+            <<process args for tangling an external file from CL>>
 
-    	    goto SEEK_PEEK_TANGLER;
+            for (my $countem=0; $countem < @ARGV; $countem++) {
 
-    	} # fi - CL final despatch
+             $LITSOURCE_multi = 'LITSOURCE' . $countem;
+             open $LITSOURCE_multi, "< $ARGV[$countem]"
+                 or die "\n\tCould not open target file $ARGV[$countem]\n\n";
 
+             push @LITSOURCE_list, $LITSOURCE_multi;
+             $LITSOURCE_hash{$LITSOURCE_multi} = $ARGV[$countem];
+
+            } # rof
+
+            goto SEEK_PEEK_TANGLER;
+
+        } # fi - CL final despatch
 
     exit; #redundant and unused
 
@@ -2238,25 +2504,31 @@ exit;  # just in case
 
 <<process args for tangling an external file from CL>>=
 
-	if($cl_args{d}) { 
-	    #print STDERR "doc sections in coments; comment char is $cl_args{d}\n" 
-	    };
+        if($cl_args{d}) { 
+            #print STDERR "doc sections in coments; comment char is $cl_args{d}\n" 
+            };
 
-	if($cl_args{u}) { 
-	    #print STDERR "applying UN-tangling with script char is $cl_args{u}\n" 
-	    };
+        if($cl_args{u}) { 
+            #print STDERR "applying UN-tangling with script char is $cl_args{u}\n" 
+            };
 
-	if($cl_args{l}) { 
-	    #print STDERR "will add reflines; comment char is $cl_args{l}\n" 
-		$print_ref_linenos_when_tangling = 1;
-		$code_sections_comment_symbol = $cl_args{l};
-	    };
+        if($cl_args{i}) { 
+            #print STDERR "printing information on roots, discovered chunks\n" 
+            $show_all_roots = 1;
+            
+            };
 
-	# -- getting the root chunk for tangling --
-	if($cl_args{R}) { 
-	    $root_chunk = $cl_args{R};
-	    print STDERR "tangling root chunk '$root_chunk'\n"
-	    };
+        if($cl_args{l}) { 
+            #print STDERR "will add reflines; comment char is $cl_args{l}\n" 
+            $print_ref_linenos_when_tangling = 1;
+            $code_sections_comment_symbol = $cl_args{l};
+            };
+
+        # -- getting the root chunk for tangling --
+        if($cl_args{R}) { 
+            $root_chunk = $cl_args{R};
+            print STDERR "tangling root chunk '$root_chunk'\n"
+            };
 
 @
 
@@ -2272,15 +2544,15 @@ exit;  # just in case
 <<write 'nothing here' html message>>=
 
     print "Content-Type: text/html; charset=utf-8\n\n";
-	print <<_XXX_;
-	<html><body>
-	<p>
-	<b>I was caled as CGI, but this invocation seems to be meaningless.</b><br>
-	Maybe you meant to "weave", but set a wrong file extension.<br>
-	Goodbye.<br>
-	<i>-- MOLLY.pl --</i>
-	<p>
-	</body></html>
+        print <<_XXX_;
+        <html><body>
+        <p>
+        <b>I was caled as CGI, but this invocation seems to be meaningless.</b><br>
+        Maybe you meant to "weave", but set a wrong file extension.<br>
+        Goodbye.<br>
+        <i>-- MOLLY.pl --</i>
+        <p>
+        </body></html>
 _XXX_
 
   exit;
@@ -2303,35 +2575,37 @@ sub usage {
 
     USAGE: MOLLY.pl [options] [--] filename
 
-	-h, or no filename
-		get this help message
+        -h, or no filename
+                get this help message
 
 
-	TANGLING Options:
-		Tangling mode is default, no special option to force needed.
+        TANGLING Options:
+                Tangling mode is default, no special option to force needed.
 
-	-R "root_chunk_name", 
-		tangle starting from this chunk. if omitted, "*" is default.
+        -R "root_chunk_name", 
+                tangle starting from this chunk. if omitted, "*" is default.
 
-	-l 'comment symbol for your language',
-		add comments with coresponding line numbers in Lit Src
+        -l 'comment symbol for your language',
+                add comments with coresponding line numbers in Lit Src
+
+        -i  information on root chunks
 
 
-	WEAVING options:
+        WEAVING options:
 
-	-w,  weave from the external target file
-	    This option presupposes html-marked document sections,
+        -w,  weave from the external target file
+            This option presupposes html-marked document sections,
 
 
     FOR INTERNALLY MOLLIFIED FILES:
-	shortcut invocation - depending on file extension. If run as script
+        shortcut invocation - depending on file extension. If run as script
 
-	"lit_prog_file.tangle" 
-		tangles to STDOUT, from default root "*" only. 
-	"lit_prog_file.weave" 
-		weaves to STDOUT as folding HTML; usable under CGI
-	
-	/ OR: set your own extensions in your lit.source configuraton section /
+        "lit_prog_file.tangle" 
+                tangles to STDOUT, from default root "*" only. 
+        "lit_prog_file.weave" 
+                weaves to STDOUT as folding HTML; usable under CGI
+        
+        / OR: set your own extensions in your lit.source configuraton section /
 
 end_of_usage
 
@@ -2371,9 +2645,9 @@ needs to be adjusted too, or it will break (open $0 as LITSOURCE here)
   else {
   print <<end_of_print;
 
-	USAGE:
-	Not set to tangle (wrong file extension).
-	Set config variables at the top of the script.  
+        USAGE:
+        Not set to tangle (wrong file extension).
+        Set config variables at the top of the script.  
 
 end_of_print
 
@@ -2417,26 +2691,26 @@ exit;
     after those have been brought to "canonical form", i.e. .b. all code chunks
     end with "@", no exceptions ./b. 
     ./li. .li. can handle multiple refs on the same line surrounded by other text,
-	./li. .li. can tangle starting from arbitrary chunks (option "-R 'chunkname'" on CL)
+        ./li. .li. can tangle starting from arbitrary chunks (option "-R 'chunkname'" on CL)
     ./li. ./ul.
     You might want to use the Ramsey's tool sometimes  to check the Molly's output.
     Norman Ramsey's "noweb" has been around for more than 10 years and been used
     on thousands of lines of other projects.
 
-	.ul. .b.  1. Note./b. that for .b. "notangle" ./b. you have   to make sure your 
-	double angle brackets are broken by spaces "< <"  or with actual escapes 
-	"<\<" even in doc chunks (and escape them in your code, too. "Notangle" 
-	reacts to them NOT only at the beginning of the line, as my tangler does, 
-	but everywhere and chokes if finds them.
+        .ul. .b.  1. Note./b. that for .b. "notangle" ./b. you have   to make sure your 
+        double angle brackets are broken by spaces "< <"  or with actual escapes 
+        "<\<" even in doc chunks (and escape them in your code, too. "Notangle" 
+        reacts to them NOT only at the beginning of the line, as my tangler does, 
+        but everywhere and chokes if finds them.
 
-	.b. 2.  Note./b. that the built-in tangler ./b. uses "noweb" markup, but it is 
-	.i. more restrictive ./i. in one sense: .b. all code chunks MUST end with "@"./b. 
-	    .pre.< <name of chunk> >=
-	    ......
-	    @ ./pre.
-	Norman Ramsey's convention was: .i. you are allowed not to close the code chunk
-	with "@" if the next code chunk is coming right after it ./i.
-	./ul.
+        .b. 2.  Note./b. that the built-in tangler ./b. uses "noweb" markup, but it is 
+        .i. more restrictive ./i. in one sense: .b. all code chunks MUST end with "@"./b. 
+            .pre.< <name of chunk> >=
+            ......
+            @ ./pre.
+        Norman Ramsey's convention was: .i. you are allowed not to close the code chunk
+        with "@" if the next code chunk is coming right after it ./i.
+        ./ul.
 
 
     So, when the script is invoked as "script.tangle" (which can be a link or a soft
@@ -2472,15 +2746,24 @@ exit;
 
     Test line (delete spaces to test): < < get it, choke on this, bastard > >
     < < or this> >=
-	or even this
+        or even this
     @
+
+    .b. ADD-ON: multi-file tangling ./b.
+    LITSOURCE  opened in the main despatcher for Quick Mode
+    and for weaving, both modes. That is always .i. one file only ./i.
+
+    Many files must be opened here now for multi-file tangling, pass-through
+    disabled ("notangle" cannot do it).
+    
+    ALSO: an error in logic to check for $use_builtin_tangler? Will be unset and false
+    in Command-line mode anyway.
 
 
 <<tangle me>>=
 
 TANGLE_ME:
 
-#open LITSOURCE, "<$0";
 
   if ( $use_builtin_tangler ) {
 
@@ -2491,28 +2774,28 @@ TANGLE_ME:
 
     open TANGLE_PIPE, "| notangle -t4 -";
 
-    while  (<LITSOURCE>) {
+    while  (<LITSOURCE0>) {
 
-	    if ( m!^<\<(.*)>\>=! ... m!^@\s*$! ) { # -- CODE CHUNKS ONLY -- 
-		print TANGLE_PIPE $_;
-	    }
+            if ( m!^<\<(.*)>\>=! ... m!^@\s*$! ) { # -- CODE CHUNKS ONLY -- 
+                print TANGLE_PIPE $_;
+            }
 
     } # elihw
 
     close TANGLE_PIPE;
+    close LITSOURCE0;
 
   } #; esle, pass-through clause end
 
-close LITSOURCE;
  exit;
 
 @
 
-    .b. Speculative: Immediate execution of the script ? Do I need it?  ./b.
+    .s. .b. Speculative: Immediate execution of the script ? Do I need it?  ./b.
     It did not work exactly, but then I did not try it for real -- if it is needed and if your
     language supports taking input from STDIN, it may be possible also to immediately run your
     script skipping the stage of "tangling-into-a-file" before running.
-    To be added (possibly).
+    To be added (possibly). ./s.
 
 }}}4
 
@@ -2555,21 +2838,21 @@ work across several litsource files (not implemented yet))
 .b.The idea/algorithm is to:./b.
 
 (a) run a first pass over the file collecting a list of 
-	chunk offsets, or "addresses"
+        chunk offsets, or "addresses"
 
 (b) run a second pass recursively, already knowing where to read the
-	bits and pieces from . That's all there is to "tangling".
-	
+        bits and pieces from . That's all there is to "tangling".
+        
 (c) Filters could apply to some chunks for:
-	/weaving/
-	* feeding the text to a markdown lang
-	* cutting sth out for a math processor 
-		(e.g. mimeTeX, or to ASCIIMathML.js)
-	/tangling/
-	* for conditional tangling of certain chunks
-	(e.g. those whose names start with DEBUG, negative
-	or the opposint, CLEAN, for a positive filtering)
-/none of the above are used now/	
+        /weaving/
+        * feeding the text to a markdown lang
+        * cutting sth out for a math processor 
+                (e.g. mimeTeX, or to ASCIIMathML.js)
+        /tangling/
+        * for conditional tangling of certain chunks
+        (e.g. those whose names start with DEBUG, negative
+        or the opposint, CLEAN, for a positive filtering)
+/none of the above are used now/        
 
 This type of tangler will not be able to get input via pipes,
 but - it should be fine working across .b.several literate source
@@ -2610,18 +2893,18 @@ of the same Literate Project
 }}}5
 
 #-----------------
-{{{5 <h5>The code</h5>
+{az{{5 <h5>The code</h5>
 #-----------------
 
 <<seek-peek tangler>>=
 
 SEEK_PEEK_TANGLER:
 
-	<<pass 1>>
-	<<pass 2 and print>>
-	<<main: call the sub>>
+        <<pass 1>>
+        <<check for cycles, search for roots>>
+        <<pass 2 and print>>
+        <<main: call the sub>>
 
-close LITSOURCE;
 exit;
 
 @
@@ -2637,8 +2920,13 @@ I'll ' add command-line and CGI arguments processing later.
 
 <<main: call the sub>>=
 
-	$root_chunk = $root_chunk || "*";
-	print_chunk($root_chunk, 0, 1); 
+        $root_chunk = $root_chunk || "*";
+
+# USAGE: print_chunk(name_of_chunk, left_margin, print_newline_flag)
+        print_chunk($root_chunk, 0, 1); 
+
+        # and close all the opened files
+        for (@LITSOURCE_list){close $_;}
 
 @
 
@@ -2651,26 +2939,27 @@ declare and initialize some vars
 
 <<pass 1>>=
 
-	<<declarations and initializations>>
-	<<while-loop and peek file ofsets>>
+        <<declarations and initializations>>
+        <<while-loop and peek file ofsets>>
 
 @
 
 <<declarations and initializations>>=
 
-	my $chunk_beg_pattern = q(^<\<(.*)>\>=);
-	my $chunk_end_pattern = q(^@\s.*$);
-	my $chunk_ref_pattern = q(<\<(.*?)>\>[^=]); # can be used several times in a line
-	
-	my $current_chunk_name = "";
-	my $current_chunk_start_foff = 0;; # "foff" is a "file offset"
-	my $current_chunk_end_foff = 0;
+        my $chunk_beg_pattern = q(^<\<(.*)>\>=);
+        my $chunk_end_pattern = q(^@\s.*$);
+        my $chunk_ref_pattern = q(<\<(.*?)>\>[^=]); # can be used several times in a line
+        
+        my $current_chunk_name = "";
+        my $current_chunk_start_foff = 0;; # "foff" is a "file offset"
+        my $current_chunk_end_foff = 0;
 
-	my %file_offsets_hash = ();
-	my %file_lines_hash = ();
+        my %file_offsets_hash = ();
+        my %file_lines_hash = ();
+        my $parents_list = ();
 
-	my $line_num = 0;
-	my $previous_line_foff = 0; # "foff" is a "file offset"
+        my $line_num = 0;
+        my $previous_line_foff = 0; # "foff" is a "file offset"
 
 @
 
@@ -2704,7 +2993,7 @@ then those become quadruples and quintil.. whatever ;)
 #-------------------
 
 .b.---Perl operators----./b.
-	
+        
 .b.pos./b.
 
 .ul.
@@ -2719,12 +3008,12 @@ then those become quadruples and quintil.. whatever ;)
 ./ul.
 
 .b.tell filehandle./b. (if omitted, the last file read)
-		
+                
 .b.seek FILEHANDLE,POSITION,WHENCE ./b.
 Sets FILEHANDLE's position, just like the fseek call of stdio . 
 FILEHANDLE may be an expression whose value gives the name of the filehandle. 
 The values for WHENCE are 0 to set the new position in bytes to POSITION,
-	
+        
 .b.read FROM_FILEHANDLE, IN_SCALAR_BUFER_VAR_OR_STREM, LENGTH_IN_BYTES_OR_CHARS./b.
 There .b.may be problems./b. if FH is opened in non-bytes mode, or if some pragma is used
 
@@ -2742,25 +3031,55 @@ There .b.may be problems./b. if FH is opened in non-bytes mode, or if some pragm
 .i. A loop over the doc starts here ./i.
 Process inside doc sections:
 
+.b. ADD-ON: multi-file tangling ./b.
+LITSOURCE  opened in the main despatcher for Quick Mode
+and for weaving, both modes. That is always .i. one file only ./i.
+
+Many files must be opened here now for multi-file tangling, pass-through
+disabled ("notangle" cannot do it).
+ 
+mm.. (a) all fh's must be opened at the same time for pass2; not for pass1.
+Then: can I still call it "LITSOURCE" here, but rename down the line?
+Is it kludgier than renaming the whole chain from despatcher?
+
+.b. the problem is this ./b.
+I .b. ./i. absolute have to ./i. ./b. process files in the correct order,
+which is presupposed to be the one given on CL.
+Why? - bcs splinters of a chunk spread across several files must start with
+the correct first splinter, etc., get assembled in correct order.
+
+Now, as I assigned names like "LITSOURCE0", 1,2,... to my opened filehandles,
+if I sort hte hash keys, I'll get them right (I iterated over ARGV to open
+them and therefore the numbering is good) -- IF I sort NUMERICALLY.
+
+Question: will sort do 0,1,2,3..10.11.12... -- or 0,1,10,11,12...,2... ??
+Check, or I'll get a hidden error here.
+
+
 <<while-loop and peek file ofsets>>=
 
- while (<LITSOURCE>) {
+foreach $LITSOURCE_multi(@LITSOURCE_list) {
+
+
+ while (<$LITSOURCE_multi>) {
     $line_num++;
 
-	# --- CODE CHUNKS -- not inside documentation section
+        # --- CODE CHUNKS -- not inside documentation section
     if ( m!$chunk_beg_pattern! .. m!$chunk_end_pattern! ) {
 
-	<<chunk beginning>>
-	<<chunk ending>>
-	<<chunk reference>>
-	<<chunk body>>
+        <<chunk beginning>>
+        <<chunk ending>>
+        <<chunk reference>>
+        <<chunk body>>
 
 
     } #fi
 
-	$previous_line_foff = tell LITSOURCE;
+        $previous_line_foff = tell $LITSOURCE_multi;
 
-  } #eliwh
+  } # eliwh
+
+} # hcaerof iteration over all files collecting file offsets
 
 @
 
@@ -2782,8 +3101,8 @@ implicit and hidden
 
     else { # chunk body
 
-		; # nop; here just not to hide an implicit case
-		#~ print "."; # debug: show dots for lines 
+                ; # nop; here just not to hide an implicit case
+                #~ print "."; # debug: show dots for lines 
 
     }
 
@@ -2794,24 +3113,27 @@ implicit and hidden
 some previous splinters of the same chunk in the LitSource file)
 
 If a chunk begins (or continues) here, 
-	- set the current chunk name
-	-pick up its "peeked" offset in  the file 
-	- and push it in the hash of f_offs under the current chunk name
+        - set the current chunk name
+        -pick up its "peeked" offset in  the file 
+        - and push it in the hash of f_offs under the current chunk name
 
 Hmm.. The perl "tell" gives the position after the read line, I understand.
 No adjustment is needed for the beginning chunk match, and it'll eliminate
 the title from the later output.
 
+.b. Multifile ./b. - not touching line numbering yet. First, do tangling.
+Line numbers are analogous.
+
 <<chunk beginning>>=
 
     if ( $_ =~ m!$chunk_beg_pattern! ) {
-	$current_chunk_name = $1;
-	$current_chunk_start_foff = tell LITSOURCE;
+        $current_chunk_name = $1;
+        $current_chunk_start_foff = $LITSOURCE_multi . "-" . (tell $LITSOURCE_multi);
 
-	# -- collecting offset and line number, actually
-	push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_start_foff;
-	push @{$file_lines_hash{$current_chunk_name}}, $.;
-	#~ print "----> chunk $1 line $. offset $current_chunk_start_foff\n";
+        # -- collecting offset and line number, actually
+        push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_start_foff;
+        push @{$file_lines_hash{$current_chunk_name}}, $LITSOURCE_multi . "-" . $.;
+        #~ print "----> chunk $1 line $. offset $current_chunk_start_foff\n";
 
     }
 
@@ -2828,13 +3150,13 @@ Plus - set $current_chunk_name=""; # just in case
 
     elsif ( $_ =~ m!$chunk_end_pattern! )  {
 
-	$current_chunk_end_foff = $previous_line_foff;
-	# -- collecting offset and line number:
-	push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_end_foff;
-	push @{$file_lines_hash{$current_chunk_name}}, $.;
-	#~ print "\tline $. offset $current_chunk_end_foff<------\n";
+        $current_chunk_end_foff = $LITSOURCE_multi . "-" . $previous_line_foff;
+        # -- collecting offset and line number:
+        push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_end_foff;
+        push @{$file_lines_hash{$current_chunk_name}}, $LITSOURCE_multi . "-" . $.;
+        #~ print "\tline $. offset $current_chunk_end_foff<------\n";
 
-    	$current_chunk_name = "";
+        $current_chunk_name = "";
     }
 
 @
@@ -2846,14 +3168,14 @@ Plus - set $current_chunk_name=""; # just in case
 .b.Now, the chunk refs ./b.
 
 If we get a reference, regex-split the line 
-	- set the end offset of the current chunk
-	- push it in the hash of lists
-	- figure the offset after the chunk ref
-	- push it into the hash of lists using the current chunkname
-	- IMPORTANT COMPLICATION
-		deal with the case when several chunk refs on the same
-		line are present;
-		do .i.not./i. do it for the first version of the script.
+        - set the end offset of the current chunk
+        - push it in the hash of lists
+        - figure the offset after the chunk ref
+        - push it into the hash of lists using the current chunkname
+        - IMPORTANT COMPLICATION
+                deal with the case when several chunk refs on the same
+                line are present;
+                do .i.not./i. do it for the first version of the script.
 
 for many matches on a line - 
 Here we'll have to match with continuation and repeat matching in a loop until the line 
@@ -2895,38 +3217,41 @@ I'll write out logic later, after I have tested and adjusted it enough
     my $line = $_;
     my $current_foff_pos =  $previous_line_foff;
     my $initial_margin = 0;
-	my $homegrown_pos = 0;
+        my $homegrown_pos = 0;
 
     while ($line =~ m!(.*?)<\<(.*?)>\>!g) {
 
-	# "end" of prev pair; collecting offset and line number
-	push @{$file_offsets_hash{$current_chunk_name}}, 
-	    $current_foff_pos + (length $1); 
-	push @{$file_lines_hash{$current_chunk_name}}, $.;
+        # "end" of prev pair; collecting offset and line number
+        push @{$file_offsets_hash{$current_chunk_name}}, 
+            $LITSOURCE_multi . "-" . ($current_foff_pos + (length $1)); 
+        push @{$file_lines_hash{$current_chunk_name}}, $LITSOURCE_multi . "-" . $.;
 
 
-	#-------deal with pushing ("ref", "chunkname") pair -----
-	# special id string for refs
-	push @{$file_offsets_hash{$current_chunk_name}}, "ref";
-	# name of reference
-	push @{$file_offsets_hash{$current_chunk_name}}, $2; 
+        #-------deal with pushing ("ref", "chunkname") pair -----
+        # special id string for refs
+        push @{$file_offsets_hash{$current_chunk_name}}, "ref";
+        # name of reference
+        push @{$file_offsets_hash{$current_chunk_name}}, $2; 
+        # .. and form pairs for toposort (cycles check, search roots):
+        push @parents_list, ($current_chunk_name, $2);
 
-	# -- next a special entry for refs: (left_margin)
-	$initial_margin += (length $1);
-	push @{$file_offsets_hash{$current_chunk_name}}, $initial_margin; 
+        # -- next a special entry for refs: (left_margin)
+        $initial_margin += (length $1);
+        push @{$file_offsets_hash{$current_chunk_name}}, $initial_margin; 
 
-	my $homegrown_pos = (length $1) + (length $2) + 2*(length "<>");
-	my $end_of_match_pos = $current_foff_pos + $homegrown_pos;
+        my $homegrown_pos = (length $1) + (length $2) + 2*(length "<>");
+        my $end_of_match_pos = $current_foff_pos + $homegrown_pos;
 
-	# "start" a new pair.. - ok, let's not use "pos" at all, if it fails
-	# .. and collect both offset and the line number
-	push @{$file_offsets_hash{$current_chunk_name}}, $end_of_match_pos;
-	push @{$file_lines_hash{$current_chunk_name}}, $.;
+        # "start" a new pair.. - ok, let's not use "pos" at all, if it fails
+        # .. and collect both offset and the line number
+        push @{$file_offsets_hash{$current_chunk_name}}, 
+            $LITSOURCE_multi . "-" . $end_of_match_pos;
+        push @{$file_lines_hash{$current_chunk_name}}, $LITSOURCE_multi . "-" . $.;
 
-	#  I'll need to reset current_foff_pos to the pos
-	#   (or to the directly caclucalted offset, if I prefer that):
-	$current_foff_pos = $end_of_match_pos; 
-	$initial_margin += (length $2) + 2*( length "<>"); 	
+        #  I'll need to reset current_foff_pos to the pos
+        #   (or to the directly caclucalted offset, if I prefer that):
+        $current_foff_pos = $end_of_match_pos; 
+        $initial_margin += (length $2) + 2*( length "<>");      
 
     } # elihw
 
@@ -2962,19 +3287,19 @@ stumble. Delete spaces btw <_<  ./i.
 #~ /the while loop is over the line that contained at least 
 #~ one ref; the loop body includes pushes into the hash/
 
-	$line = "asdfas asd < <qewrqw>> opiopiopi < <2345>> asdasdf";
-	$llen = length $line;
-	print "the original line:: [$line] -- of length $llen\n";
+        $line = "asdfas asd < <qewrqw>> opiopiopi < <2345>> asdasdf";
+        $llen = length $line;
+        print "the original line:: [$line] -- of length $llen\n";
 
 
-	while ($line =~ m!(.*?)<\<(.*?)>>!g) {
-		print "$1 -- $2\n";
-		$ancor_off  = pos $line;
+        while ($line =~ m!(.*?)<\<(.*?)>>!g) {
+                print "$1 -- $2\n";
+                $ancor_off  = pos $line;
 
-		print "ancor position is $ancor_off\n";
-	}
+                print "ancor position is $ancor_off\n";
+        }
 
-	print "THE LAST PART IS  ", (substr $line, $ancor_off), "\n";
+        print "THE LAST PART IS  ", (substr $line, $ancor_off), "\n";
 
 ./pre.
 
@@ -2993,6 +3318,133 @@ THE LAST PART IS   asdasdf
 
 }}}6
 
+#-------------------------------------------------------------
+{{{6 .h6. Topological sort: check for cycles and find roots./h6.
+#-------------------------------------------------------------
+
+So, let's cut the root search (if an options is set) and cycles check (always,
+unless an option is given to bypass, maybe), into the program flow.
+
+<<check for cycles, search for roots>>=
+
+<<toposort>>
+
+# will abort if cycles detected. Does not detect all cycles? - need to check
+my @chunks_in_chains = topological_sort($show_all_roots, @parents_list);
+
+if ($show_all_roots){
+
+    # non-standalone roots are already printed from inside "topological_sort"
+    print "\n\t------single-chunk roots-------\n";
+    my %lookup_hash = ();
+    for (@chunks_in_chains){ $lookup_hash{$_} = 1;}
+
+    for (keys %file_offsets_hash) { 
+        print "$_\n"
+            unless exists $lookup_hash{$_};
+        }
+    print "\t-------------------------------\n\n";
+exit;
+}
+
+@
+
+1. This sub is taken from .............. and is a perl reimplementation of an
+algorithm taken from "Programming Pearls" by Bentley, who borrowed it from
+Knuth.
+
+2. I have modified it trivially to abort at cycles and print roots. 
+Should I offer an option to force Molly to ignore this with a "-f" flag from
+command line (?? and config var ??).
+
+3. .. and added an option, both CL and from mollifying template to print roots.
+    Now, the prob with printing roots is that standalone chunks, which can be
+    tangled out, are not in my collected pairs list, and so not printed among
+    possible roots.
+    -> collect them as children of some 'dummy' and print out in a second
+    invocation of topological_sort?? 
+
+
+<<toposort>>=
+
+sub topological_sort {
+
+    my $flag_show_roots = shift;
+    my %pairs;  # all pairs ($l, $r)
+    my %npred;  # number of predecessors
+    my %succ;   # list of successors
+    my $opt_b = 0;
+
+    my @topo_list_out = '';
+
+    while ( @_ ) {
+        my $l = shift @_;
+        my $r = shift @_;
+        my @l = ($l, $r);
+        #my ($l, $r) = my @l = split;
+        next unless @l == 2;
+        next if defined $pairs{$l}{$r};
+        $pairs{$l}{$r}++;
+        $npred {$l} += 0;
+        ++$npred{$r};
+        push @{$succ{$l}}, $r;
+    }
+
+    # create a list of nodes without predecessors
+    my @list = grep {!$npred{$_}} keys %npred;
+
+    #--print discovered roots, if asked--
+    if ($flag_show_roots) {
+    print "\n\t--roots of multi-chunk chains--\n";
+    for (@list) { print "$_\n";}
+    print "\t-------------------------------\n";
+    }
+
+    while (@list) {
+        $_ = pop @list;
+        unshift @topo_list_out, $_;
+        #print "$_\n";
+        foreach my $child (@{$succ{$_}}) {
+            if ($opt_b) {       # breadth-first
+                unshift @list, $child unless --$npred{$child};
+            } else {    # depth-first (default)
+                push @list, $child unless --$npred{$child};
+            }
+
+        }
+    }
+
+    # mm.. better if I warn, print out the list so far, and then exit
+    #   the user will have the place where the problem occured 
+    #~ warn "cycle detected\n" if grep {$npred{$_}} keys %npred;
+    if ( grep {$npred{$_}} keys %npred ){
+        warn  "\n\tERROR: cycle detected - aborting execution!\n"; 
+        print "\n---chunks discovered before the 'cycle' ERROR - sorted topologically ---\n";
+        for (@topo_list_out) {
+            print "$_\n";
+        } # rof
+
+    exit;
+    } # fi check for cycles
+
+# -DEBUG-
+#    if ($flag_show_roots){
+#    print "\t--all chunks discovered--\n";
+#    for (@topo_list_out) {
+#        print $_, "\n";
+#    }
+#    exit;
+#    }
+
+return @topo_list_out;
+#return 1;
+} # tros_lacigolopot
+
+@
+
+
+}}}6
+
 #---------------------
 {{{6 <h6> pass 2 and print </h6>
 #---------------------
@@ -3008,7 +3460,7 @@ OK, now we have a hash of pairs (beg_chunk_offset, end_chunk_offset) with triple
 That should be it
 
 <<pass 2 and print>>=
-	<<sub: tangle recursively - nondestructive>>
+        <<sub: tangle recursively - nondestructive>>
 @
 
 
@@ -3023,12 +3475,11 @@ Now - the RECURSIVE PRINTOUT untangling from the default/given root.
 <<sub: tangle recursively - nondestructive>>=
 
 # USAGE: print_chunk(name_of_chunk, left_margin, print_newline_flag)
-
- sub print_chunk {
+sub print_chunk {
 
  (my $chunk_being_printed,
     my $snippet_left_margin, 
-	  my $snippet_print_newline_flag, @rest) = @_; 
+          my $snippet_print_newline_flag, @rest) = @_; 
 
 
  #~ print "\n---- printing chunk $chunk_being_printed --------\n";
@@ -3043,7 +3494,7 @@ Now - the RECURSIVE PRINTOUT untangling from the default/given root.
  # iterate over splinters of a chunk, which are foff pairs
  my $iterate_lines = 0;
  for ( my $iterate_foffs = 0;
-	    exists $file_offsets_hash{$chunk_being_printed}[$iterate_foffs];)
+            exists $file_offsets_hash{$chunk_being_printed}[$iterate_foffs];)
  {
 
     my $snippet_position =  $file_offsets_hash{$chunk_being_printed}[$iterate_foffs++];
@@ -3051,30 +3502,31 @@ Now - the RECURSIVE PRINTOUT untangling from the default/given root.
 
     #~ print "debug got: beg $snippet_position -- end $snippet_end\n";
 
-    <<the meat>>
+    <<if the record is a ref, call it recursively>>
+    <<else print out the chunk>>
 
  } # rof non-destructive
-	
+        
      return 1;
-    } # bus -- ends the recursive sub
+} # bus -- ends the recursive sub
 
 @
 
 ok, if we got a chunk ref in our array of pairs, then the next entry after it is 
-	(left_margin) 
+        (left_margin) 
 (that is my nano-protocol here ;)  ). I use these numbers to keep the 
 "printer state" before recursively calling this function for the referred 
 chunk.
 
-<<the meat>>=
+<<if the record is a ref, call it recursively>>=
 
     if ($snippet_position eq "ref") {
 
-		my $snippet_left_margin_ref = 
-				$file_offsets_hash{$chunk_being_printed}[$iterate_foffs++];
+        my $snippet_left_margin_ref = 
+            $file_offsets_hash{$chunk_being_printed}[$iterate_foffs++];
 
-		# any call to a ref uncurs "print newline" flag of 0
-		print_chunk($snippet_end, $snippet_left_margin_ref, 0);
+        # any call to a ref uncurs "print newline" flag of 0
+        print_chunk($snippet_end, $snippet_left_margin_ref, 0);
     
     }
 @
@@ -3086,42 +3538,66 @@ this chunk is last in the referring line.
 
 For that I'll have to keep "a printer state" wth two flags for (a) and (b).
 
-<<the meat>>=
+.b. Multifile ./b.
+Now $snippet_position and $snippet_end are not just offsets, but strings like
+"LITSOURCE0-2365"
+I'll need to split them and supply the two pieces to "seek" and "read".
+
+<<else print out the chunk>>=
     else { # .. print it here
 
-	my $snippet_beg_lineno = $file_lines_hash{$chunk_being_printed}[$iterate_lines++];
-	my $snippet_end_lineno = $file_lines_hash{$chunk_being_printed}[$iterate_lines++];
+        (my $litsrc_fhname_beg, my $litsrc_line_beg) =
+            split '-', $file_lines_hash{$chunk_being_printed}[$iterate_lines++];
+        (my $litsrc_fhname_end, my $litsrc_line_end) =
+            split '-', $file_lines_hash{$chunk_being_printed}[$iterate_lines++];
 
-	seek LITSOURCE, $snippet_position,  0;
-	read LITSOURCE, $buffer_out, ($snippet_end - $snippet_position);
+        (my $litsrc_fhname_beg, my $litsrc_foff_beg) = split '-', $snippet_position;
+        (my $litsrc_fhname_end, my $litsrc_foff_end) = split '-', $snippet_end;
+        # DEBUG prints:
+        #print "in file_beg $litsrc_fhname_beg $litsrc_foff_beg\n";
+        #print "in file_end $litsrc_fhname_end $litsrc_foff_end\n------\n"; 
 
-	#----Newlines at the end of chunks and refs. 
-	# only for the last splinter of a chunk, do newline control:
-	if ( ((scalar @{$file_offsets_hash{$chunk_being_printed}}) - $iterate_foffs ) == 0 )
-	{ 
-		# works, but is suspicious logically:
-		# maybe I just have not invented a counterexample yet, and
-		# it's a trap waiting for its quarry. But it works
-		$buffer_out =~ s!\n([\s]*)$!$1! unless ($snippet_print_newline_flag);
-	}
 
-	#----Left indent/margin. Seems OK
+        # the file is always the same, though. You cannot have one chunk splinter
+        # start in one file and end in another one. (2 splinters can live in 2 files)
+        seek $litsrc_fhname_beg, $litsrc_foff_beg,  0;
+        read $litsrc_fhname_end, $buffer_out, ($litsrc_foff_end - $litsrc_foff_beg);
 
-	$chunk_left_margin = " " x $snippet_left_margin;
-	$buffer_out =~ s!(\n)!$1$chunk_left_margin!sg;
+        #----Newlines at the end of chunks and refs. 
+        # only for the last splinter of a chunk, do newline control:
+        if ( ((scalar @{$file_offsets_hash{$chunk_being_printed}}) - $iterate_foffs ) == 0 )
+        { 
+                # works, but is suspicious logically:
+                # maybe I just have not invented a counterexample yet, and
+                # it's a trap waiting for its quarry. But it works
+                $buffer_out =~ s!\n([\s]*)$!$1! unless ($snippet_print_newline_flag);
+        }
 
-	if ($print_ref_linenos_when_tangling){
-		print $code_sections_comment_symbol, "[line $snippet_beg_lineno in litsrc]__start" ;
-		print "_________________________________\n";
-		}
-	
-	print $buffer_out;
-	if ($print_ref_linenos_when_tangling) {
-		print $code_sections_comment_symbol, "[line $snippet_end_lineno in litsrc]__end" ;
-		print "___________________________________\n";
-		}
+        #----Left indent/margin. Seems OK
 
-    }
+        $chunk_left_margin = " " x $snippet_left_margin;
+        $buffer_out =~ s!(\n)!$1$chunk_left_margin!sg;
+
+
+        #----And Print Out:
+
+        if ($print_ref_linenos_when_tangling){
+        print $code_sections_comment_symbol, 
+            "[line ", $litsrc_line_beg," in file ",
+            $LITSOURCE_hash{$litsrc_fhname_beg}, "]__start" ;
+        print "_________________________________\n";
+        }
+        
+        print $buffer_out;
+
+        if ($print_ref_linenos_when_tangling) {
+        print $code_sections_comment_symbol,
+            "[line ", $litsrc_line_end," in file ",
+            $LITSOURCE_hash{$litsrc_fhname_end}, "]__end" ;
+        print "___________________________________\n";
+        }
+
+    } #esle for printout
 
 @
 
@@ -3133,21 +3609,21 @@ For that I'll have to keep "a printer state" wth two flags for (a) and (b).
 
 <<DEBUG print out full hash>>=
 
-	for $k (keys %file_offsets_hash) {
-		#~ print @{$file_offsets_hash{$k}}, "\n";
+        for $k (keys %file_offsets_hash) {
+                #~ print @{$file_offsets_hash{$k}}, "\n";
 
-	 while (scalar @{$file_offsets_hash{$k}}){
-		print "beg $k foff - ", shift @{$file_offsets_hash{$k}};
-		print " -- end foff - ", shift @{$file_offsets_hash{$k}}, "\n";
-		}
-	}
+         while (scalar @{$file_offsets_hash{$k}}){
+                print "beg $k foff - ", shift @{$file_offsets_hash{$k}};
+                print " -- end foff - ", shift @{$file_offsets_hash{$k}}, "\n";
+                }
+        }
 @
 
 <<DEBUG check hash keys>>=
 
  #~ for $k (keys  %file_offsets_hash){
-	#~ print $k, "\n";
-	#~ }
+        #~ print $k, "\n";
+        #~ }
 
 @
 
@@ -3161,6 +3637,41 @@ For that I'll have to keep "a printer state" wth two flags for (a) and (b).
 }}}5
 
 }}}4
+
+
+#-------------------------------------------------------------
+{{{4 .h4. ADD-ON: multi-file tangling./h4.
+#-------------------------------------------------------------
+
+.b. Brief descrtiption ./b.
+
+1. Files opened with universal filehandles LITSOURCE0, 1, ...
+Both for 1-file case (both for QuickTangle and CL), then
+despatched correctly (one file, pass-through, multifile-CL) - 
+multifile can happen only on CL only for external files.
+
+File opening, the whole chain not changed for weaving.
+
+2. Order of files on CL is .i. important ./i., as there are
+cases of one chunk living in its additive splinters in many
+files. According to Knuth, Ramsey such a chunk is added to
+in the order or occurrence. This behavious is implemented
+with a LITSOURCE_list. /fh-fhame/ correspondence for line ##
+printout is kept in a hash.
+
+
+
+.b. Tests for ./b. /to add to the Makefile/
+
+Tests live in their own directory, ./tmp-tests/assembly.order*
+.pre.
+ perl ../../MOLLY.pl -l# -R 'chunk A' nl-0 nl-1 nl-2 nl-3 nl-4 nl-10 nl-11
+./pre.
+
+.b. .i. not finished ./i. ./b.
+
+}}}4
+
 
 }}}3
 
@@ -3188,7 +3699,6 @@ WEAVE_ME:
 #3. print out the TOC, the Chunks Index, the output buffer and close the page.
 <<print out>>
 
-close LITSOURCE;
 exit;
 
 @
@@ -3255,20 +3765,20 @@ tying of folding to the TOC section highlighting:
 <script type="text/javascript">
 
     function setHilite(evt) {
-	evt = (evt) ? evt : ((window.event) ? window.event : null);
-	if (evt) {
-	    var elem = (evt.srcElement) ? evt.srcElement : evt.target;
-	    elem.className = "hilited";
-	}
+        evt = (evt) ? evt : ((window.event) ? window.event : null);
+        if (evt) {
+            var elem = (evt.srcElement) ? evt.srcElement : evt.target;
+            elem.className = "hilited";
+        }
     }
 
 
 function setUnHilite(evt) {
     evt = (evt) ? evt : ((window.event) ? window.event : null);
-	if (evt) {
-    	    var elem = (evt.srcElement) ? evt.srcElement : evt.target;
-    	    elem.className = "unhilited";
-	}
+        if (evt) {
+            var elem = (evt.srcElement) ? evt.srcElement : evt.target;
+            elem.className = "unhilited";
+        }
 }
 
 function toggleDiv(divid) {
@@ -3279,18 +3789,18 @@ el.style.display = (el.style.display == 'block') ? 'none' : 'block';
 function toggleCombined(divid){
     if(document.getElementById(divid).style.display == 'none'){
       document.getElementById(divid).style.display = 'block';
-	document.getElementById("toc"+divid).className="hilited";
+        document.getElementById("toc"+divid).className="hilited";
     }
     
     else{
       document.getElementById(divid).style.display = 'none';
-	document.getElementById("toc"+divid).className="unhilited";
+        document.getElementById("toc"+divid).className="unhilited";
     }
 }
 
 
 function expandDiv(divid){
-	document.getElementById("toc"+divid).className="hilited";
+        document.getElementById("toc"+divid).className="hilited";
 }
 
 
@@ -3374,29 +3884,29 @@ First, define two style sheet rules, each with a different class selector. Then 
 an event handler for the element to change the element's className property to the desired 
 class selector's identifier: 
 
-		<style type="text/css">
-		.unhilited {background-color:white}
-		.hilited {background-color:yellow; text-decoration:underline}
-		</style>
-		...
-		<script type="text/javascript">
-		function setHilite(evt) {
-			evt = (evt) ? evt : ((window.event) ? window.event : null);
-			if (evt) {
-				var elem = (evt.srcElement) ? evt.srcElement : evt.target;
-				elem.className = "hilited";
-			}
-		}
-		function setUnHilite(evt) {
-			evt = (evt) ? evt : ((window.event) ? window.event : null);
-			if (evt) {
-				var elem = (evt.srcElement) ? evt.srcElement : evt.target;
-				elem.className = "unhilited";
-			}
-		}
-		...
-		<span class="unhilited" onmouseover="setHilite(event)" 
-			onmouseout="setUnHilite(event)">Some potentially hot spot text.</span>
+                <style type="text/css">
+                .unhilited {background-color:white}
+                .hilited {background-color:yellow; text-decoration:underline}
+                </style>
+                ...
+                <script type="text/javascript">
+                function setHilite(evt) {
+                        evt = (evt) ? evt : ((window.event) ? window.event : null);
+                        if (evt) {
+                                var elem = (evt.srcElement) ? evt.srcElement : evt.target;
+                                elem.className = "hilited";
+                        }
+                }
+                function setUnHilite(evt) {
+                        evt = (evt) ? evt : ((window.event) ? window.event : null);
+                        if (evt) {
+                                var elem = (evt.srcElement) ? evt.srcElement : evt.target;
+                                elem.className = "unhilited";
+                        }
+                }
+                ...
+                <span class="unhilited" onmouseover="setHilite(event)" 
+                        onmouseout="setUnHilite(event)">Some potentially hot spot text.</span>
 
 Adjusting the className property of an element as shown here is a more stable approach 
 for early versions of Netscape 6 instead of manipulating styleSheet objects and their 
@@ -3461,10 +3971,10 @@ $html_body_table = "<center><table class='outertable'><tr><td>";
 $html_body_table_end = "\n</td></tr></table></center></body></html>\n";
 
 
-	
+        
 
 $folding_section_start1_str = <<'fold_sect_start_1_xxx';
-	<fieldset><legend><a href="javascript:;" onmousedown="toggleCombined('$section_num');">
+        <fieldset><legend><a href="javascript:;" onmousedown="toggleCombined('$section_num');">
 fold_sect_start_1_xxx
 
 
@@ -3532,11 +4042,11 @@ el.style.display = (el.style.display == 'block') ? 'none' : 'block';
 function toggleCombined(divid){
     if(document.getElementById(divid).style.display == 'none'){
       document.getElementById(divid).style.display = 'block';
-	document.getElementById("toc"+divid).className="hilited";
+        document.getElementById("toc"+divid).className="hilited";
     }
     else{
       document.getElementById(divid).style.display = 'none';
-	document.getElementById("toc"+divid).className="unhilited";
+        document.getElementById("toc"+divid).className="unhilited";
     }
 }
 
@@ -3570,37 +4080,37 @@ for(i=1; i <= 10000; i++){
 
 
 BODY {
-	FONT-SIZE: 10pt;
-	<!--FONT-FAMILY: sans-serif -->
-	background: #f0f0f0;
-	}
+        FONT-SIZE: 10pt;
+        <!--FONT-FAMILY: sans-serif -->
+        background: #f0f0f0;
+        }
 FIELDSET {
-	BORDER-RIGHT: #000000 1px solid; 
-	BORDER-TOP: #000000 1px solid; 
-	BORDER-LEFT: #000000 1px solid; 
-	BORDER-BOTTOM: #000000 1px solid; 
-	PADDING-RIGHT: 5px; 
-	PADDING-LEFT: 5px; 
-	PADDING-BOTTOM: 2px; 
-	PADDING-TOP: 5px;
-	MARGIN-BOTTOM: 1px; 
-	background: #f5f5f5; 
-	color: #000000;
-	}
+        BORDER-RIGHT: #000000 1px solid; 
+        BORDER-TOP: #000000 1px solid; 
+        BORDER-LEFT: #000000 1px solid; 
+        BORDER-BOTTOM: #000000 1px solid; 
+        PADDING-RIGHT: 5px; 
+        PADDING-LEFT: 5px; 
+        PADDING-BOTTOM: 2px; 
+        PADDING-TOP: 5px;
+        MARGIN-BOTTOM: 1px; 
+        background: #f5f5f5; 
+        color: #000000;
+        }
 LEGEND {
-	BORDER-RIGHT: #a9a9a9 1px solid; 
-	BORDER-BOTTOM: #a9a9a9 1px solid;
-	BORDER-TOP: #a9a9a9 1px solid; 
-	BORDER-LEFT: #a9a9a9 1px solid; 
-	PADDING-RIGHT: 20px; 
-	PADDING-LEFT: 20px; 
-	PADDING-BOTTOM: 5px; 
-	PADDING-TOP: 5px; 
-	FONT-WEIGHT: bold;  
-	BACKGROUND: #fdfdfd; 
-	color: #000000;
-	}
-PRE	{
+        BORDER-RIGHT: #a9a9a9 1px solid; 
+        BORDER-BOTTOM: #a9a9a9 1px solid;
+        BORDER-TOP: #a9a9a9 1px solid; 
+        BORDER-LEFT: #a9a9a9 1px solid; 
+        PADDING-RIGHT: 20px; 
+        PADDING-LEFT: 20px; 
+        PADDING-BOTTOM: 5px; 
+        PADDING-TOP: 5px; 
+        FONT-WEIGHT: bold;  
+        BACKGROUND: #fdfdfd; 
+        color: #000000;
+        }
+PRE     {
         PADDING-LEFT: 20px; 
         PADDING-RIGHT: 5px; 
         padding-top: 0px; 
@@ -3610,64 +4120,64 @@ PRE	{
         BORDER-RIGHT: #a9a9a9 0px solid; 
         BORDER-LEFT: #a9a9a9 0px solid;
         BORDER-BOTTOM: #a9a9a9 0px solid;        
-	background: #fefefe;
-	}
+        background: #fefefe;
+        }
 
 
 .tocfieldset {
-	background: #ffffff; 
-	color: #000000;
-	}
+        background: #ffffff; 
+        color: #000000;
+        }
 
 .codefieldset {
-	BORDER-RIGHT: #000 1px solid; 
-	BORDER-TOP: #000 1px solid; 
-	BORDER-LEFT: #000 1px solid; 
-	BORDER-BOTTOM: #000 1px solid; 
-	background: #ffffff; 
-	color: #000;
-	MARGIN-BOTTOM: 1px; 
-	PADDING-LEFT: 15px; 
-	PADDING-RIGHT: 5px; 
-	PADDING-BOTTOM: 10px; 
-	PADDING-TOP: 1px;
-	}
+        BORDER-RIGHT: #000 1px solid; 
+        BORDER-TOP: #000 1px solid; 
+        BORDER-LEFT: #000 1px solid; 
+        BORDER-BOTTOM: #000 1px solid; 
+        background: #ffffff; 
+        color: #000;
+        MARGIN-BOTTOM: 1px; 
+        PADDING-LEFT: 15px; 
+        PADDING-RIGHT: 5px; 
+        PADDING-BOTTOM: 10px; 
+        PADDING-TOP: 1px;
+        }
 .codelegend {
-	BORDER-RIGHT: #777 1px solid; 
-	BORDER-TOP: #777 1px solid; 
-	BORDER-LEFT: #777 1px solid; 
-	BORDER-BOTTOM: #777 1px solid
-	PADDING-RIGHT: 10px; 
-	PADDING-LEFT: 10px; 
-	PADDING-TOP: 2px; 
-	PADDING-BOTTOM: 2px; 
-	background: #ffffff; 
-	color: #00b;
-	FONT-WEIGHT: bold;  
-	/font-variant: small-caps;
-	/font-style: italic;
-	}
+        BORDER-RIGHT: #777 1px solid; 
+        BORDER-TOP: #777 1px solid; 
+        BORDER-LEFT: #777 1px solid; 
+        BORDER-BOTTOM: #777 1px solid
+        PADDING-RIGHT: 10px; 
+        PADDING-LEFT: 10px; 
+        PADDING-TOP: 2px; 
+        PADDING-BOTTOM: 2px; 
+        background: #ffffff; 
+        color: #00b;
+        FONT-WEIGHT: bold;  
+        /font-variant: small-caps;
+        /font-style: italic;
+        }
 
 
 
 .chunkref {
-        color: #00b;	
+        color: #00b;    
         background: #f6f6f6;
         /font-style: italic;
         font-weight: bold;
         /font-variant: small-caps;
-	}
+        }
 
 
 .outertable {
-	width: 99%; 
-	cellpadding: 25; 
-	background: #ffffff; 
-	border: 1px solid;
-	}
+        width: 99%; 
+        cellpadding: 25; 
+        background: #ffffff; 
+        border: 1px solid;
+        }
 
-.hl	{
-	 ;
+.hl     {
+         ;
         PADDING-LEFT: 5px; PADDING-RIGHT: 5px; 
         padding-top: 5px; padding-bottom: 5px;
         MARGIN-BOTTOM: 1px; 
@@ -3675,12 +4185,12 @@ PRE	{
         BORDER-RIGHT: #a9a9a9 0px solid; 
         BORDER-LEFT: #a9a9a9 0px solid;
         BORDER-BOTTOM: #a9a9a9 0px solid;        
-        background: #f5f5f5;	
+        background: #f5f5f5;    
         width: 70%;
-	}
+        }
 
 .hl-wide {
-	 ;
+         ;
         PADDING-LEFT: 5px; 
         PADDING-RIGHT: 5px; 
         padding-top: 15px; 
@@ -3690,14 +4200,14 @@ PRE	{
         BORDER-RIGHT: #a9a9a9 0px solid; 
         BORDER-LEFT: #a9a9a9 0px solid;
         BORDER-BOTTOM: #a9a9a9 0px solid;        
-        background: #fbfbfb;	
-	}
+        background: #fbfbfb;    
+        }
 
 .lnum {
 
-	color: #a0a0a0;
-	/background: #fbfbfb;
-	}
+        color: #a0a0a0;
+        /background: #fbfbfb;
+        }
 
 .unhilited {background-color:white}
 .hilited {background-color:#c0c0ff}
@@ -3726,10 +4236,10 @@ Some of the vars may be unused later (run perl -wc to check?)
 # vars for the main loop over lines of the target file
 
  $chunkbuf = ''; # collects whole formatted project file in memory
- $tocbuf = "";	# will accumulate TOC contents, i.e. small
+ $tocbuf = "";  # will accumulate TOC contents, i.e. small
  @indbuf = ();  # accumulates index of code chunks, small
  #%indbuf = ();
- @headings = ();	# the stack for nested subsections numbers/ids
+ @headings = ();        # the stack for nested subsections numbers/ids
 
  $section_num = 0;
  $section_num_prev = 0;
@@ -3749,10 +4259,10 @@ The idea is this.
     .ul.
     (a) not to clobber the overall "while" loop, do it inside it
     (b) If the first line of the file is a perl invocation,
-	then check for "MOLLY.pl" call, then for _ _ D A T A _ _ line
-	then for first white line or sth
-	This cuts the "mollifier" part out.
-	OR - drop off letting out a scream "wrongly formatted file"
+        then check for "MOLLY.pl" call, then for _ _ D A T A _ _ line
+        then for first white line or sth
+        This cuts the "mollifier" part out.
+        OR - drop off letting out a scream "wrongly formatted file"
     (c) for lines other than first, do regular processing
     ./ul.
 
@@ -3767,30 +4277,30 @@ This is just to quickly cut out the Molly perly template at the top.
 
 if ( ($line_counter == 1) && (m!^#.*perl!) ) {
 
-	# this is the mollifying template or some perl script.
-	
-	do {
-	    $_ = <LITSOURCE>;
-	    $line_counter++;
-	    if (eof LITSOURCE) {
-		print "\n\t--------ERROR: wrong target file format for weaving--------\n";
-		print "\tmay be a regular perl script, without a call for Molly\n\n";
-		exit;
-	    }
-	} until ( lc($_) =~ m!^do.*molly!) ;	
-	
-	# throw away lines until DATA, then process/weave normally
-	do {
-	    $_ = <LITSOURCE>;
-	    $line_counter++;
-	    if (eof LITSOURCE) {
-		print "\n\t--------ERROR: wrong target file format for weaving--------\n";
-		print "\tdid not find the  __DATA__ keyword  in first pos on its line\n\n";
-		exit;
-	    }
-	} until ( m!^__DATA__! ) ;
+        # this is the mollifying template or some perl script.
+        
+        do {
+            $_ = <LITSOURCE>;
+            $line_counter++;
+            if (eof LITSOURCE) {
+                print "\n\t--------ERROR: wrong target file format for weaving--------\n";
+                print "\tmay be a regular perl script, without a call for Molly\n\n";
+                exit;
+            }
+        } until ( lc($_) =~ m!^do.*molly!) ;    
+        
+        # throw away lines until DATA, then process/weave normally
+        do {
+            $_ = <LITSOURCE>;
+            $line_counter++;
+            if (eof LITSOURCE) {
+                print "\n\t--------ERROR: wrong target file format for weaving--------\n";
+                print "\tdid not find the  __DATA__ keyword  in first pos on its line\n\n";
+                exit;
+            }
+        } until ( m!^__DATA__! ) ;
 
-	next;
+        next;
 
 } # fi cutting out MOLLY.pl template/config  if present in lit.source target file
 
@@ -3825,16 +4335,16 @@ $line_counter++;
 
 } #elihw over the whole input file
 
-
+close LITSOURCE;
 
  foreach (@headings)  {
 
-	($section_level, $section_num_prev) = split /-/, $_;
-	$folding_section_end = $folding_section_end_str;
-	$folding_section_end =~ s!(\$section_num_prev)!$1!ee;
-	$chunkbuf .= $folding_section_end; 
+        ($section_level, $section_num_prev) = split /-/, $_;
+        $folding_section_end = $folding_section_end_str;
+        $folding_section_end =~ s!(\$section_num_prev)!$1!ee;
+        $chunkbuf .= $folding_section_end; 
 
-	};
+        };
 
 @
 
@@ -3863,33 +4373,33 @@ in an option var) is written too
 <<process code chunks>>=
 
 if ( m!^<\<(.*)>\>=! ... m!^@\s*$! ) { # -- CODE CHUNKS -- 
-	$chunk_title = $2;
+        $chunk_title = $2;
 
-	s/&/&amp;/g;	# escape &
-	s/</&lt;/g;	# escape <
-	s/>/&gt;/g;	# escape >
+        s/&/&amp;/g;    # escape &
+        s/</&lt;/g;     # escape <
+        s/>/&gt;/g;     # escape >
 
-	if (m!(&lt;&lt;(.+?)&gt;&gt);(=)?!) 
-	  {
-	  $reference = $1;
-	  $ind_str = "&lt;&lt;$2&gt;&gt; $section_num";
-	  if (defined $3) {$ind_str .= "<sub>def</sub>"}
-	  else { s!$reference!<font class='chunkref'>$reference</font>! }
+        if (m!(&lt;&lt;(.+?)&gt;&gt);(=)?!) 
+          {
+          $reference = $1;
+          $ind_str = "&lt;&lt;$2&gt;&gt; $section_num";
+          if (defined $3) {$ind_str .= "<sub>def</sub>"}
+          else { s!$reference!<font class='chunkref'>$reference</font>! }
 
-	  unshift @indbuf, $ind_str;
+          unshift @indbuf, $ind_str;
 
-	} # fi - chunks index accumulation
+        } # fi - chunks index accumulation
 
-	# simple fieldset frames around code snippets
-	s!^(goto)?&lt;&lt;(.+)&gt;&gt;=!$code_frameset_start_pre$1&lt;&lt;$2&gt;&gt;$code_frameset_start_post!;
-	s!^@\s*$!$code_frameset_end!;
+        # simple fieldset frames around code snippets
+        s!^(goto)?&lt;&lt;(.+)&gt;&gt;=!$code_frameset_start_pre$1&lt;&lt;$2&gt;&gt;$code_frameset_start_post!;
+        s!^@\s*$!$code_frameset_end!;
 
-	if ( $line_numbering ) { 
-	$chunkbuf .= "<font class='lnum'>" . $line_counter . "</font>   " . $_;
-	}
-	else{
-	$chunkbuf .= $_;
-	}
+        if ( $line_numbering ) { 
+        $chunkbuf .= "<font class='lnum'>" . $line_counter . "</font>   " . $_;
+        }
+        else{
+        $chunkbuf .= $_;
+        }
 
 } # fi code chunks
 
@@ -3923,111 +4433,111 @@ CHANGES" subsection
 <<process section headings>>=
 
 # -- SECTION HEADINGS 
-#elsif ( m!\.(\+)?h(\d)\.(.*?)\./h\d\.! ) {	# old version, no "rawHTML" enabled yet
-elsif ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/h\d{1,2}$tag_close_symbol! ) {	
+#elsif ( m!\.(\+)?h(\d)\.(.*?)\./h\d\.! ) {     # old version, no "rawHTML" enabled yet
+elsif ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/h\d{1,2}$tag_close_symbol! ) {  
 
 
 
-	# -- using split vars for substitution to avoid
-	#	regexps and need to keep old state --	
+        # -- using split vars for substitution to avoid
+        #       regexps and need to keep old state --   
 
-	$section_num_prev = $section_num;
-	$section_num = $section_num + 1;
-
-
-		#default for fold state in "settings" ??
-		if ($1 eq "+") {
-		    $fold_state="block";
-		    $highlight_state = qq!  <script language=javascript> 
-		    document.getElementById("toc"+ $section_num).className='hilited';
-		    </script> !;
-		} 
-		else {
-		    $fold_state="none";
-		    $highlight_state = "";
-		};
-		$section_level = $2;
-		$section_title = $3;
+        $section_num_prev = $section_num;
+        $section_num = $section_num + 1;
 
 
-	
-
-	
-
-	$folding_section_start1 = $folding_section_start1_str;
-	$folding_section_start2 = $folding_section_start2_str;
-	$folding_section_end = $folding_section_end_str;
-
-
-	$folding_section_start1 =~ s!(\$section_num)!$1!ee;
-	$folding_section_start2 =~ s!(\$section_num)!$1!ee;
-	$folding_section_start2 =~ s!(\$fold_state)!$1!ee;
-	$folding_section_start2 =~ s!(\$highlight_state)!$1!ee;
-	$folding_section_end =~ s!(\$section_num_prev)!$1!ee;
-
-
-	$section_id = $section_level . '-' . $section_num;
+                #default for fold state in "settings" ??
+                if ($1 eq "+") {
+                    $fold_state="block";
+                    $highlight_state = qq!  <script language=javascript> 
+                    document.getElementById("toc"+ $section_num).className='hilited';
+                    </script> !;
+                } 
+                else {
+                    $fold_state="none";
+                    $highlight_state = "";
+                };
+                $section_level = $2;
+                $section_title = $3;
 
 
-	# finish previous subsection if not the first section in the file
-	# ..and deal with nesting of sections according to their "depth level"
+        
 
-	# this is NOT the first section:
-	if ( exists $headings[0] ){
+        
 
-		($prev_section_level, $prev_section_num)  = split /-/, $headings[0];
-
-		if ($section_level == $prev_section_level){
-
-		# close prev, start new
-		$chunkbuf .= $folding_section_end;
-		shift @headings;
-		
-		}
-
-		elsif($section_level < $prev_section_level){
-		
-		  # close a bunch of them, in a loop -- THEN start a new one.
-		  do  {
-			($prev_section_level, $section_num_prev) = split /-/, shift @headings;
-			
-			$folding_section_end = $folding_section_end_str;
-			$folding_section_end =~ s!(\$section_num_prev)!$1!ee;
-			$chunkbuf .= $folding_section_end;
-
-		   } while ( $section_level < $prev_section_level );
-		}
-	} # fi not the first section
+        $folding_section_start1 = $folding_section_start1_str;
+        $folding_section_start2 = $folding_section_start2_str;
+        $folding_section_end = $folding_section_end_str;
 
 
-	# common operations		
-	unshift @headings, $section_id ;
-	$chunkbuf .= $folding_section_start1;
-	$chunkbuf .= "<font class='lnum'><i>(" . $section_num . ")</i></font>" . "&nbsp;" . $section_title .
-	    "</a>&nbsp;<a><font class='lnum' size=-1><sub><i>(line " .
-	    $line_counter . ")</i></sub></font>"; 
-	$chunkbuf .= $folding_section_start2;
-
-	#$chunkbuf .= "\n" . "<font class='lnum'><i>------ line " . $line_counter . 
-	#	    " ------</i></font><br>\n";
+        $folding_section_start1 =~ s!(\$section_num)!$1!ee;
+        $folding_section_start2 =~ s!(\$section_num)!$1!ee;
+        $folding_section_start2 =~ s!(\$fold_state)!$1!ee;
+        $folding_section_start2 =~ s!(\$highlight_state)!$1!ee;
+        $folding_section_end =~ s!(\$section_num_prev)!$1!ee;
 
 
-	$toc_indent = "&nbsp;" x ($section_level * 7);
-	#$toc_indent = "&nbsp;" x (($section_level-1) * 7 );
-	#$tocbuf .= "\n<p>\n" if ( $section_level == 1 ); 
-	$tocbuf .= $toc_indent . 
-		"<i>" . $section_num . "</i>" .
-		qq/&nbsp;<a href="javascript:;" onmousedown="toggleCombined(/ .  
-		$section_num . 
-		qq/);" id="toc/ . $section_num .
-		qq/"><b>/ .
-		$section_title . "</a>&nbsp;<a><font class='lnum' size=-1><i>(line " .
-		    $line_counter . ")</i></font>" .
-		    "</b></a><br>\n";
+        $section_id = $section_level . '-' . $section_num;
+
+
+        # finish previous subsection if not the first section in the file
+        # ..and deal with nesting of sections according to their "depth level"
+
+        # this is NOT the first section:
+        if ( exists $headings[0] ){
+
+                ($prev_section_level, $prev_section_num)  = split /-/, $headings[0];
+
+                if ($section_level == $prev_section_level){
+
+                # close prev, start new
+                $chunkbuf .= $folding_section_end;
+                shift @headings;
+                
+                }
+
+                elsif($section_level < $prev_section_level){
+                
+                  # close a bunch of them, in a loop -- THEN start a new one.
+                  do  {
+                        ($prev_section_level, $section_num_prev) = split /-/, shift @headings;
+                        
+                        $folding_section_end = $folding_section_end_str;
+                        $folding_section_end =~ s!(\$section_num_prev)!$1!ee;
+                        $chunkbuf .= $folding_section_end;
+
+                   } while ( $section_level < $prev_section_level );
+                }
+        } # fi not the first section
+
+
+        # common operations             
+        unshift @headings, $section_id ;
+        $chunkbuf .= $folding_section_start1;
+        $chunkbuf .= "<font class='lnum'><i>(" . $section_num . ")</i></font>" . "&nbsp;" . $section_title .
+            "</a>&nbsp;<a><font class='lnum' size=-1><sub><i>(line " .
+            $line_counter . ")</i></sub></font>"; 
+        $chunkbuf .= $folding_section_start2;
+
+        #$chunkbuf .= "\n" . "<font class='lnum'><i>------ line " . $line_counter . 
+        #           " ------</i></font><br>\n";
+
+
+        $toc_indent = "&nbsp;" x ($section_level * 7);
+        #$toc_indent = "&nbsp;" x (($section_level-1) * 7 );
+        #$tocbuf .= "\n<p>\n" if ( $section_level == 1 ); 
+        $tocbuf .= $toc_indent . 
+                "<i>" . $section_num . "</i>" .
+                qq/&nbsp;<a href="javascript:;" onmousedown="toggleCombined(/ .  
+                $section_num . 
+                qq/);" id="toc/ . $section_num .
+                qq/"><b>/ .
+                $section_title . "</a>&nbsp;<a><font class='lnum' size=-1><i>(line " .
+                    $line_counter . ")</i></font>" .
+                    "</b></a><br>\n";
 
 } #; fisle: end elif headings
 
-	
+        
 
 @
 
@@ -4083,29 +4593,29 @@ It is very convenient and I keep large manuals as folding HTML documents.
 
 
 <<rawHTML formatter>>=
-	if( $weave_markup eq "rawHTML" ) {	# if the doc chunks marked up with real HTML
-		s!^#-----.*!!;
+        if( $weave_markup eq "rawHTML" ) {      # if the doc chunks marked up with real HTML
+                s!^#-----.*!!;
 
-	      #s/^{{{\d+(.*)$/$1/;	# - eliminate vim folding markup, start 
-					# - dummy, as it's killed in "headings" processing 
-	      s/^}}}\d+//;	# - eliminate vim folding markup, end
-
-
-	      # Paragraphs and line breaks are automatic now:
-	      # ... unless we are dealing with the "preformat" tag
-		#--note! that ranges do not work here
-		$in_pre_tag = 1 if (m!<pre>!);
-		$in_pre_tag = 0 if (m!</pre>!);;
+              #s/^{{{\d+(.*)$/$1/;      # - eliminate vim folding markup, start 
+                                        # - dummy, as it's killed in "headings" processing 
+              s/^}}}\d+//;      # - eliminate vim folding markup, end
 
 
-		unless ($in_pre_tag) {
-		(m/^\s*$/) and s/$_/<p>\n/
-		or s/\n/<br>\n/;
-		}
+              # Paragraphs and line breaks are automatic now:
+              # ... unless we are dealing with the "preformat" tag
+                #--note! that ranges do not work here
+                $in_pre_tag = 1 if (m!<pre>!);
+                $in_pre_tag = 0 if (m!</pre>!);;
 
-		$chunkbuf .= $_;
 
-	} # fi - default rawHTML formatter for body of doc chunks
+                unless ($in_pre_tag) {
+                (m/^\s*$/) and s/$_/<p>\n/
+                or s/\n/<br>\n/;
+                }
+
+                $chunkbuf .= $_;
+
+        } # fi - default rawHTML formatter for body of doc chunks
 
 @
     
@@ -4239,35 +4749,35 @@ Index of code chunks; calculated in this snippet:
 
 <<print out>>=
 
-	 $ind_outbuf = '';
-	 $prev_ch_name = '';
+         $ind_outbuf = '';
+         $prev_ch_name = '';
 
-	 #for (sort @indbuf){ print $_, "<br>";}
+         #for (sort @indbuf){ print $_, "<br>";}
 
-	 for (sort @indbuf){
+         for (sort @indbuf){
 
-	   ($ch_name, $closing_bracket, $ref_num) = split /&gt;/, $_; 
-		#/ - for editor colouring bug
+           ($ch_name, $closing_bracket, $ref_num) = split /&gt;/, $_; 
+                #/ - for editor colouring bug
 
-	    if ( $ch_name eq $prev_ch_name ){ 
-	      $ind_outbuf .= " <b>" . $ref_num . "</b> ";
-	    }
-	    else{
-	      print  $ind_outbuf, "<br>\n"; 
-	      $ch_namestr = $ch_name;
-	      $ch_namestr =~ s!&lt;&lt;!!;
-	      $ind_outbuf = 
-	      	"<b>&lt;&lt;</b><font class='chunkref'>" . 
-	      	$ch_namestr . 
-	      	"</font><b>&gt;&gt;</b> -- <b>" . 
-	      	$ref_num . 
-	      	"</b> ";
-	    }
-	    $prev_ch_name = $ch_name;
+            if ( $ch_name eq $prev_ch_name ){ 
+              $ind_outbuf .= " <b>" . $ref_num . "</b> ";
+            }
+            else{
+              print  $ind_outbuf, "<br>\n"; 
+              $ch_namestr = $ch_name;
+              $ch_namestr =~ s!&lt;&lt;!!;
+              $ind_outbuf = 
+                "<b>&lt;&lt;</b><font class='chunkref'>" . 
+                $ch_namestr . 
+                "</font><b>&gt;&gt;</b> -- <b>" . 
+                $ref_num . 
+                "</b> ";
+            }
+            $prev_ch_name = $ch_name;
 
-	 }; # rof - forming the code chunks index
+         }; # rof - forming the code chunks index
 
-	print $ind_outbuf, "<br>\n";
+        print $ind_outbuf, "<br>\n";
 
 @
 
@@ -4302,7 +4812,7 @@ end_of_print
 <<print out>>=
 
 # The FULL OUTPUT, the file body:
- 	print $chunkbuf;
+        print $chunkbuf;
 
 @
 
@@ -4311,8 +4821,8 @@ Close the HTML formatting tags at the end of the page:
 <<print out>>=
 
 # close the page
-	print $html_body_table_end;
-	
+        print $html_body_table_end;
+        
 
 #--- END OF SCRIPT ---
 
@@ -4346,14 +4856,14 @@ filters/susbtitutions in the  doc chunk bodies, must be wrapped in the same two 
 
 <<my_new_markup - disabled - add to "other body formatters" below>>=
 
-	elsif( $weave_markup eq "name_of_your_markup" ) { # comment
+        elsif( $weave_markup eq "name_of_your_markup" ) { # comment
 
-		#...........your line-by-line transforming.
-		#..........or filtering expressions here
+                #...........your line-by-line transforming.
+                #..........or filtering expressions here
 
-		#$chunkbuf .= $_;
+                #$chunkbuf .= $_;
 
-	} #fisle for name_of_your_markup
+        } #fisle for name_of_your_markup
 
 @
 
@@ -4365,8 +4875,8 @@ This is  my own kind of simple markdown for quick typing.
 
 <<other body formatters>>=
 
-	<<dotHTML formatter>>
-	
+        <<dotHTML formatter>>
+        
 @
 
 
@@ -4440,74 +4950,74 @@ cases.
 
 <<dotHTML formatter>>=
 
-	elsif( $weave_markup eq "dotHTML" ) {	# dotHTML formatter here
+        elsif( $weave_markup eq "dotHTML" ) {   # dotHTML formatter here
 
-	      s/^=begin.*$//;	# - eliminate perl escaping, start
-	      s/^=cut.*$//;		# - eliminate perl escaping, end
-   	      #s/^{{{\d+(.*)$/$1/;	# - eliminate vim folding markup, start 
-					# - dummy, as it is killed in "headings" processing 
-	      s/^}}}\d+//;	# - eliminate vim folding markup, end
+              s/^=begin.*$//;   # - eliminate perl escaping, start
+              s/^=cut.*$//;             # - eliminate perl escaping, end
+              #s/^{{{\d+(.*)$/$1/;      # - eliminate vim folding markup, start 
+                                        # - dummy, as it is killed in "headings" processing 
+              s/^}}}\d+//;      # - eliminate vim folding markup, end
 
-		s/&/&amp;/g;	# escape &
-		s/</&lt;/g;	# escape <
-		s/>/&gt;/g;	# escape >
+                s/&/&amp;/g;    # escape &
+                s/</&lt;/g;     # escape <
+                s/>/&gt;/g;     # escape >
 
 
-	      # Paragraphs and line breaks are automatic now:
-	      # ... unless we are dealing with the "preformat" tag
-		#--note! that ranges do not work here
-		$in_pre_tag = 1 if (m!\.pre\.!);
-		$in_pre_tag = 0 if (m!\./pre\.!);;
+              # Paragraphs and line breaks are automatic now:
+              # ... unless we are dealing with the "preformat" tag
+                #--note! that ranges do not work here
+                $in_pre_tag = 1 if (m!\.pre\.!);
+                $in_pre_tag = 0 if (m!\./pre\.!);;
 
-		s/\.(\/?)pre\./<$1pre>/g;
+                s/\.(\/?)pre\./<$1pre>/g;
 
-	    unless ($in_pre_tag) {
-	    (m/^\s*$/) and s/$_/<p>\n/
-	    or s/\n/<br>\n/;
-	    }
+            unless ($in_pre_tag) {
+            (m/^\s*$/) and s/$_/<p>\n/
+            or s/\n/<br>\n/;
+            }
 @
 
 Now the regexps to cut out "#--------" lines and substitute "dot-notation" with angle brackets:
 
 <<dotHTML formatter>>=
 
-	      # originally I separated header from the body with such a line
-	      #s/^#-----.*/starting the table here/;
-	      s/^#-----.*//;
+              # originally I separated header from the body with such a line
+              #s/^#-----.*/starting the table here/;
+              s/^#-----.*//;
 
 
-		# add more here
+                # add more here
 
-		s/\.(\/?)b\./<$1b>/g;
-		s/\.(\/?)i\./<$1i>/g;
-		s/\.(\/?)ul\./<$1ul>/g;
-		s/\.(\/?)li\./<$1li>/g;
-		s/\.(\/?)ol\./<$1ol>/g;
-		s/\.(\/?)s\./<$1s>/g;
-		s/\.(\/?)div\./<$1div>/g;
-		s/\.br\./<br>/g;
-		s/\.p\./<p>/g;
-		s/\.sp\./&nbsp;/g;
+                s/\.(\/?)b\./<$1b>/g;
+                s/\.(\/?)i\./<$1i>/g;
+                s/\.(\/?)ul\./<$1ul>/g;
+                s/\.(\/?)li\./<$1li>/g;
+                s/\.(\/?)ol\./<$1ol>/g;
+                s/\.(\/?)s\./<$1s>/g;
+                s/\.(\/?)div\./<$1div>/g;
+                s/\.br\./<br>/g;
+                s/\.p\./<p>/g;
+                s/\.sp\./&nbsp;/g;
 
-		s/\.(\/?)tab\./<$1ul>/g;	# "tabbing" with "ul"
+                s/\.(\/?)tab\./<$1ul>/g;        # "tabbing" with "ul"
 
 
-		# this is some bullshit ???
-		s/\.hr\./<hr /g;
-		s/\.\/hr\./>/g;
+                # this is some bullshit ???
+                s/\.hr\./<hr /g;
+                s/\.\/hr\./>/g;
 
-		s!\.a\.(.+?)\.\/a\.!<a href=$1>$1</a>!g;
+                s!\.a\.(.+?)\.\/a\.!<a href=$1>$1</a>!g;
 
-		# rudimentary &nbsp; s p a c i n g &nbsp (one word only)
-		#s!\.x\.(.+?)\./x\.!join " ","&nbsp;&nbsp;",(split //, $1),"&nbsp;&nbsp;"!eg;
+                # rudimentary &nbsp; s p a c i n g &nbsp (one word only)
+                #s!\.x\.(.+?)\./x\.!join " ","&nbsp;&nbsp;",(split //, $1),"&nbsp;&nbsp;"!eg;
 
-		# slightly better spacing (phrases, too):
-		# although redundant  with more work than is needed
-		if ( m!(\.x\.)(.+?)(\./x\.)!g) {
-		    s!(\.x\.)(.+?)(\./x\.)!join " _ ", $1, (split / /, $2), $3!eg;
-		    s!\.x\.(.+?)\./x\.!join " ", (split //, $1)!eg;
-		    s!  _  ! &nbsp; !g;
-		} 
+                # slightly better spacing (phrases, too):
+                # although redundant  with more work than is needed
+                if ( m!(\.x\.)(.+?)(\./x\.)!g) {
+                    s!(\.x\.)(.+?)(\./x\.)!join " _ ", $1, (split / /, $2), $3!eg;
+                    s!\.x\.(.+?)\./x\.!join " ", (split //, $1)!eg;
+                    s!  _  ! &nbsp; !g;
+                } 
 @
 
 .b. BUG! ./b. This URL breaks my "ancor" dot-tags: 
@@ -4521,14 +5031,14 @@ tag conntains some options, and so is not of generic simple type.
 
 <<dotHTML formatter>>=
 
-		# generic for all tags with options
-		s!\.&lt;\. !<!g;
-		s! \.&gt;\.!>!g;
+                # generic for all tags with options
+                s!\.&lt;\. !<!g;
+                s! \.&gt;\.!>!g;
 
 
-		$chunkbuf .= $_;
+                $chunkbuf .= $_;
 
-	} # fisle - end of "dotHTML" body formatter
+        } # fisle - end of "dotHTML" body formatter
 
 @
 
@@ -4567,21 +5077,20 @@ $str_sp = $ARGV[0];
 
     # -- first get the matching string in "if", then massage it:
     if ($str_sp =~ m!(\.x\.)(.+?)(\./x\.)!g) {
-	$str_sp =~ s!(\.x\.)(.+?)(\./x\.)!join " _ ", $1, (split / /, $2), $3!eg;
+        $str_sp =~ s!(\.x\.)(.+?)(\./x\.)!join " _ ", $1, (split / /, $2), $3!eg;
         $str_sp =~ s!\.x\.(.+?)\./x\.!join " ", (split //, $1)!eg;
-	$str_sp =~ s!  _  ! &nbsp; !g;
+        $str_sp =~ s!  _  ! &nbsp; !g;
     }
 
     #print "\nthe string is $str\n";
     print "\nthe str_sp is $str_sp\n\n";
 @
 
-}}}5	
+}}}5    
 
 }}}4
 
 }}}3
-
 
 
 #-------------------------------------------------------------
@@ -4824,8 +5333,8 @@ sub-algebra is Cartan sub-algebra, this relation gives...
 
 }}}3
 
+
 }}}2
 
-}}}1
 
 

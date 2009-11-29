@@ -63,6 +63,10 @@ $use_builtin_tangler = 1;
 # ..and the comment for this line-numbering tangle-out and the language will be: 
 #$code_sections_comment_symbol = "# "; #default is the hash-space
 
+# find and print root chunks in the LitSrc (i.e. instead of tangling when run
+# as "./LitSrc.tangle" from command line) ? 0:1
+# $show_all_roots = 0; default is not (i.e. to tangle)
+
 
 #--------------------------------------
 #---------invocation of MOLLY.pl-------

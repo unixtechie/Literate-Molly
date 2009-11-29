@@ -9,13 +9,38 @@ web server.
 
 Molly is a simple script written in core perl, no extra modules are needed.
 
-Molly shares literate marku with "noweb" tools by Norman Ramsey, so for
-more flexible tangling you might wish also to instal them as well.
+Molly shares literate markup with "noweb" tools by Norman Ramsey, so for
+flexible tangling you might wish also to instal them. Molly however can
+tangle from a project split into many Literate Source files, what "noweb"
+cannot do.
  
 MOLLY also can directly use MathML (a great LGPLed third-party javascript
 library), i.e.  mathematical expressions typed in a simple ASCII notation
 with LaTeX constants will be turned into MathML output to get displayed by
 Firefox, Opera (or other MathML-aware browsers) on the fly.
+
+
+CURRENT VERSION FEATURES:
+
+    * creates folding documents on the fly from Literate Source files..
+    * ..based on rawHTML or dotHTML markup in document sections
+    /i.e. either creates new docs or displays some existing HTML in folding fmt/
+    * and generates dynamically TOC and code chunks index;
+    * ties collapsing/expandind of sections with TOC highlighting.
+    * Provides pass-through tangling with "noweb" and
+    * provides built-in fully-fledged tangler
+    * provides a (trivial) tie to ASCIIMathML.js library for inclusion of 
+	mathematical expressions in your documents.
+    * can tangle and weave from command line like traditiona lit prog tools
+    * allows for the project to be split into several files or reassembled
+	at will: the tangler can process many LitSrc files on command line.
+    * has options to print all roots in your progect, autodetects cycles 
+	(unchecked fully)
+    * can print comments with line numbers referring to the Lit Source in
+	the tangled output
+
+
+This script is a test of the concept (LitProg+folding+dynamic web formatting)
 
 
 FILES IN THE PROJECT:
