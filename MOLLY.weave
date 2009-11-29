@@ -2117,15 +2117,15 @@ all: help
 #-
 
 help:
-        @echo;
-        @echo " ---TARGETS---";
-        @echo " new - tangle out MOLLYs-new.pl";
-<<other Makefile help commands>>
-        @echo;
+	@echo;
+	@echo " ---TARGETS---";
+	@echo " new - tangle out MOLLYs-new.pl";
+	<<other Makefile help commands>>
+	@echo;
 #-
 
 new:
-        perl ./MOLLY.pl -R'MOLLY.pl module' MOLLYs-bottom.weave >MOLLYs-new.pl;
+	perl ./MOLLY.pl -R'MOLLY.pl module' MOLLYs-bottom.weave >MOLLYs-new.pl;
 #-
 
 <<other Makefile commands>>
@@ -2138,19 +2138,19 @@ as well, actually
 The help insertions have already been indented with  a tab
 
 <<other Makefile help commands>>=
-        @echo " td  - run a tanglediff against MOLLY.pl";
-        @echo " fld - tangle and run a GUI diff tool, fldiff";
+@echo " td  - run a tanglediff against MOLLY.pl";
+@echo " fld - tangle and run a GUI diff tool, fldiff";
 @
 
 <<other Makefile commands>>=
 
 td:
-        MOLLYs-bottom.tangle | diff -y -w --left-column MOLLY.pl - |less;
+	MOLLYs-bottom.tangle | diff -y -w --left-column MOLLY.pl - |less;
 #-
 
 fld:
-        perl ./MOLLY.pl -R'MOLLY.pl module' MOLLYs-bottom.weave >MOLLYs-new.pl;
-        fldiff MOLLY.pl MOLLYs-new.pl;
+	perl ./MOLLY.pl -R'MOLLY.pl module' MOLLYs-bottom.weave >MOLLYs-new.pl;
+	fldiff MOLLY.pl MOLLYs-new.pl;
 #-
 
 @
@@ -2923,7 +2923,7 @@ I'll ' add command-line and CGI arguments processing later.
         $root_chunk = $root_chunk || "*";
 
 # USAGE: print_chunk(name_of_chunk, left_margin, print_newline_flag)
-        print_chunk($root_chunk, 0, 1); 
+        print_chunk($root_chunk, "", 1); 
 
         # and close all the opened files
         for (@LITSOURCE_list){close $_;}
@@ -3216,14 +3216,19 @@ I'll write out logic later, after I have tested and adjusted it enough
 
     my $line = $_;
     my $current_foff_pos =  $previous_line_foff;
-    my $initial_margin = 0;
-        my $homegrown_pos = 0;
+    my $initial_margin = "";
+    my $homegrown_pos = 0;
 
     while ($line =~ m!(.*?)<\<(.*?)>\>!g) {
 
+        my $pre_ref_match = $1;
+        my $ref_match = $2;
+        my $len_pre_ref_match = length $pre_ref_match;
+        my $len_ref_match = length $ref_match;
+
         # "end" of prev pair; collecting offset and line number
         push @{$file_offsets_hash{$current_chunk_name}}, 
-            $LITSOURCE_multi . "-" . ($current_foff_pos + (length $1)); 
+            $LITSOURCE_multi . "-" . ($current_foff_pos + $len_pre_ref_match); 
         push @{$file_lines_hash{$current_chunk_name}}, $LITSOURCE_multi . "-" . $.;
 
 
@@ -3231,15 +3236,18 @@ I'll write out logic later, after I have tested and adjusted it enough
         # special id string for refs
         push @{$file_offsets_hash{$current_chunk_name}}, "ref";
         # name of reference
-        push @{$file_offsets_hash{$current_chunk_name}}, $2; 
+        push @{$file_offsets_hash{$current_chunk_name}}, $ref_match; 
         # .. and form pairs for toposort (cycles check, search roots):
-        push @parents_list, ($current_chunk_name, $2);
+        push @parents_list, ($current_chunk_name, $ref_match);
 
         # -- next a special entry for refs: (left_margin)
-        $initial_margin += (length $1);
+        # I keep tabs and spaces and subst all else to spaces
+        $pre_ref_match =~ s!\S! !g;
+        $initial_margin .= $pre_ref_match;
         push @{$file_offsets_hash{$current_chunk_name}}, $initial_margin; 
+        $initial_margin .= " " x ( $len_ref_match + 2*( length "<>") );      
 
-        my $homegrown_pos = (length $1) + (length $2) + 2*(length "<>");
+        my $homegrown_pos = $len_pre_ref_match + $len_ref_match + 2*(length "<>");
         my $end_of_match_pos = $current_foff_pos + $homegrown_pos;
 
         # "start" a new pair.. - ok, let's not use "pos" at all, if it fails
@@ -3251,7 +3259,6 @@ I'll write out logic later, after I have tested and adjusted it enough
         #  I'll need to reset current_foff_pos to the pos
         #   (or to the directly caclucalted offset, if I prefer that):
         $current_foff_pos = $end_of_match_pos; 
-        $initial_margin += (length $2) + 2*( length "<>");      
 
     } # elihw
 
@@ -3340,7 +3347,7 @@ if ($show_all_roots){
     for (@chunks_in_chains){ $lookup_hash{$_} = 1;}
 
     for (keys %file_offsets_hash) { 
-        print "$_\n"
+        print "\t$lt$lt$_$gt$gt\n"
             unless exists $lookup_hash{$_};
         }
     print "\t-------------------------------\n\n";
@@ -3396,7 +3403,7 @@ sub topological_sort {
     #--print discovered roots, if asked--
     if ($flag_show_roots) {
     print "\n\t--roots of multi-chunk chains--\n";
-    for (@list) { print "$_\n";}
+    for (@list) { print "\t$lt$lt$_$gt$gt\n";}
     print "\t-------------------------------\n";
     }
 
@@ -3575,7 +3582,7 @@ I'll need to split them and supply the two pieces to "seek" and "read".
 
         #----Left indent/margin. Seems OK
 
-        $chunk_left_margin = " " x $snippet_left_margin;
+        $chunk_left_margin =  $snippet_left_margin;
         $buffer_out =~ s!(\n)!$1$chunk_left_margin!sg;
 
 
