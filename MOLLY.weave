@@ -24,17 +24,17 @@
 # -------TOC and INDEX behaviour------
 
 # print TOC? 1:0
-#$print_toc=1;	# default is to print
+#$print_toc=1;  # default is to print
 
 # should we keep TOC expanded? "block":"none"
-#$toc_expanded="block";	# default is to unfold
+#$toc_expanded="block"; # default is to unfold
 
 # should we keep Chunks Index expanded? "block":"none"
-#$ind_expanded="none";	# default is to keep folded
+#$ind_expanded="none";  # default is to keep folded
 
 
 # should we number lines in code sections? 1 : else
-#$line_numbering = 1;	# default is to number
+#$line_numbering = 1;   # default is to number
 
 
 #-------------------------------------
@@ -64,11 +64,11 @@
  
 # what is the file extention to weave it? (perms must allow execution!)
 # e.g. "scriptname.weave" or "scriptname.cgi" etc.
-#$weave_extension = "weave";	# default is "weave"
+#$weave_extension = "weave";    # default is "weave"
 
 # what is the file extention to tangle it? (perms must allow execution!)
 # e.g. "scriptname.tangle",  "scriptname.pl" etc.
-#$tangle_extension = "tangle";	# default is "tangle"
+#$tangle_extension = "tangle";  # default is "tangle"
 
 #When tangling, should I use the built-in tangler? 0:1
 # (if 0, the "pass-through" tangling will call "notangle"
@@ -121,7 +121,7 @@ MOLLY is licensed under GNU Public License version 3. .<. /center .>.
 (although meaningful pieces exist, such as configuration templates).
 I am not going to tangle the 2 pieces together at the moment -- therefore "*" is disabled
 
-<<*-dis>>=
+<<*>>=
 <<MOLLY.pl module>>
 @
 
@@ -339,35 +339,35 @@ Yep, computer geeks are passionate souls. Программисты пассио�
     ensured L.P. never fell into complete obscurity.
 
     .ul.
-	.li. .b. First, L.P. used TeX as a formatting tool ./b., which is a sort of programming language in
-	itself. Therefore, the first thing to blame L.P. for became "but I'd need to write - .i. and 
-	debug! ./i. - two programs at the same time, in TeX and in my own machine language.
+        .li. .b. First, L.P. used TeX as a formatting tool ./b., which is a sort of programming language in
+        itself. Therefore, the first thing to blame L.P. for became "but I'd need to write - .i. and 
+        debug! ./i. - two programs at the same time, in TeX and in my own machine language.
 
-	Today when much, much simpler markup languages abound - "html" or even "markdown 
-	html" or even "wiki" for the majority of uses that do not require typesetting complicated
-	equations or graphs - this problem has long been solved.
-	You do not need to "debug" basic HTML markup - any error is displayed in your browser as a
-	distortion of the web page, I do not need to "debug" html when writing with my Molly script
-	which uses html markup.
+        Today when much, much simpler markup languages abound - "html" or even "markdown 
+        html" or even "wiki" for the majority of uses that do not require typesetting complicated
+        equations or graphs - this problem has long been solved.
+        You do not need to "debug" basic HTML markup - any error is displayed in your browser as a
+        distortion of the web page, I do not need to "debug" html when writing with my Molly script
+        which uses html markup.
 
-	./li. .li. .b. Secondly, the first generation of L.P. tools was language-specific. ./b. You could 
-	do Pascal, but not Fortran. Later "C" and "Fortran" literate tools were added, but you could
-	not do Lisp or Ada etc.
+        ./li. .li. .b. Secondly, the first generation of L.P. tools was language-specific. ./b. You could 
+        do Pascal, but not Fortran. Later "C" and "Fortran" literate tools were added, but you could
+        not do Lisp or Ada etc.
 
-	Today with tools like "noweb" by Norman Ramsey this problem has long been solved. Simplified
-	to its core idea Literate Programming is now totally language-independent to the degree that
-	you can write books or essays with L.P. tools not even knowing how to program for the computer.
+        Today with tools like "noweb" by Norman Ramsey this problem has long been solved. Simplified
+        to its core idea Literate Programming is now totally language-independent to the degree that
+        you can write books or essays with L.P. tools not even knowing how to program for the computer.
 
-	./li. .li. .b. And the third problem is the flat file structure of Literate Source files ./b. and
-	(probably that could be listed as the fourth, psychological stumbling block) the insistence
-	on "producing clean documentation" or "polished essays" of one's programs other could read
-	and enjoy.
+        ./li. .li. .b. And the third problem is the flat file structure of Literate Source files ./b. and
+        (probably that could be listed as the fourth, psychological stumbling block) the insistence
+        on "producing clean documentation" or "polished essays" of one's programs other could read
+        and enjoy.
 
-	Flat files continue to limit the size of the literate source files: your mind still .i. has to
-	keep internally the overall structure of your program ./i. and switch from it to doing concrete
-	tasks.
-	Technically a Literate Source file can include .i. many ./i. program files ( e.g. project.h,
-	project.c, a makefile and a README). In reality the size is limited by your "attention horizon"
+        Flat files continue to limit the size of the literate source files: your mind still .i. has to
+        keep internally the overall structure of your program ./i. and switch from it to doing concrete
+        tasks.
+        Technically a Literate Source file can include .i. many ./i. program files ( e.g. project.h,
+        project.c, a makefile and a README). In reality the size is limited by your "attention horizon"
     ./li. ./ul.
 
     .b. I propose to solve  this last problem by combining L.P. with folding or outlining ./b. ,
@@ -429,7 +429,7 @@ Yep, computer geeks are passionate souls. Программисты пассио�
     further polishing, as polishing occurs naturally with developing and rewriting your program.
 
 
-}}}2	    
+}}}2        
 
 .h2. ./h2.
 
@@ -531,32 +531,32 @@ See details about this setup and possible uses of it below.
 .h4. Two ways to invoke Molly  ./h4.
 #------------------------------
 
-	Molly like any traditional Literate Programming tool can be used on its target files from
-	command line. So, to tangle to STDOUT, do:
-	.pre.	MOLLY,pl my_literate_source_file  # this will tangle out from "*" 
-	or MOLLY.pl -R 'root chunk name' my_literate_source_file ./pre.
-	and to weave to STDOUT
-	.pre.	MOLLY.pl -w my_literate_source_file ./pre.
-	
-	However,  another "shorthand" way to treat your LitSrc file, more convenient during
-	development is to include a short section with configuration parameters and a call to
-	Molly at the top of it. Your LitSrc file (which you make executable) becomes then a perl 
-	script that works on itself, choosing weaving or tangling according to its file extension.,
-	and you can do a Quick Weave and a Quick Tangle, correspondingly, by running from CL:
-	.pre.	./My_Lit_Src.weave > formatted_documentation.html
-	and ./My_Lit_Src.tangle > extracted_code ./pre.
-	(Quick Tangle tangles only from the "default root" chunk, "*").
-	
-	The main idea for this mode was to enable a quick use of it under a local web server:
-	the print to STDOUT is picked as CGI and can be immediately seen in your browser 
-	upon reload of the page ("Ctrl-R").
-	So a developer can  read a nicely formatted folding HTML document while he explores
-	and thinks, having an "eagle's eye view" of the whole code and concepts,  i.e. "to think
-	globally", and use line numbers to get to the right place in his editor, which
-	is no longer used for navigating code blindly (and have to keep in his mind the whole 
-	structure of his program, polluting and  maiming his thinking) , i.e. to "edit locally".
-	
-	The next section explains details of the setup.
+        Molly like any traditional Literate Programming tool can be used on its target files from
+        command line. So, to tangle to STDOUT, do:
+        .pre.   MOLLY,pl my_literate_source_file  # this will tangle out from "*" 
+        or MOLLY.pl -R 'root chunk name' my_literate_source_file ./pre.
+        and to weave to STDOUT
+        .pre.   MOLLY.pl -w my_literate_source_file ./pre.
+        
+        However,  another "shorthand" way to treat your LitSrc file, more convenient during
+        development is to include a short section with configuration parameters and a call to
+        Molly at the top of it. Your LitSrc file (which you make executable) becomes then a perl 
+        script that works on itself, choosing weaving or tangling according to its file extension.,
+        and you can do a Quick Weave and a Quick Tangle, correspondingly, by running from CL:
+        .pre.   ./My_Lit_Src.weave > formatted_documentation.html
+        and ./My_Lit_Src.tangle > extracted_code ./pre.
+        (Quick Tangle tangles only from the "default root" chunk, "*").
+        
+        The main idea for this mode was to enable a quick use of it under a local web server:
+        the print to STDOUT is picked as CGI and can be immediately seen in your browser 
+        upon reload of the page ("Ctrl-R").
+        So a developer can  read a nicely formatted folding HTML document while he explores
+        and thinks, having an "eagle's eye view" of the whole code and concepts,  i.e. "to think
+        globally", and use line numbers to get to the right place in his editor, which
+        is no longer used for navigating code blindly (and have to keep in his mind the whole 
+        structure of his program, polluting and  maiming his thinking) , i.e. to "edit locally".
+        
+        The next section explains details of the setup.
  
 #------------------------------
 .h4. Setting up the file ./h4.
@@ -599,7 +599,7 @@ See details about this setup and possible uses of it below.
     a perl script
 
     ./li. .li. .b. .i. Make it executable. ./i. ./b. 
-	.pre. chmod 755 MyProject.txt ./pre.
+        .pre. chmod 755 MyProject.txt ./pre.
 
     ./li. .li.  .b. .i. The script behaves according to its name extension ./i. ./b.
     The script will produce HTML-formatted documentation, if its name ends with "weave" 
@@ -610,17 +610,17 @@ See details about this setup and possible uses of it below.
     So,  name or rename your LSFile "MyProject.weave" and create a soft link to it named
     "MyProject.tangle" (or whatever alternative you set in configuration for tangling):
     .pre.
-	mv MyProject.txt MyProject.weave
-	ln -s MyProject.weave MyProject.tangle ./pre.
+        mv MyProject.txt MyProject.weave
+        ln -s MyProject.weave MyProject.tangle ./pre.
 
     Now if you run MyProject.weave, it will dump HTML-formatted documentation of your work to STDOUT
-	.pre. ./MyProject.weave > MyProject-formatted.foldingdocument.html ./pre.
+        .pre. ./MyProject.weave > MyProject-formatted.foldingdocument.html ./pre.
     It you run MyProject.tangle, it will dump machine code from your Literate Source file to STDOUT.
-	.pre. ./MyProject.tangle > MyProject-runnable.script.pl ./pre.
+        .pre. ./MyProject.tangle > MyProject-runnable.script.pl ./pre.
     ( Of course, tangling is independent of the language you program in )
 
     For example, if you develop in perl, you can run the resulting script like this:
-	.pre. ./MyProject.tangle | perl [perl options here] - ./pre.
+        .pre. ./MyProject.tangle | perl [perl options here] - ./pre.
 
     Additionally, as the markup is the same as that of "noweb" tools. one can use them directly
     on the My.Project.weave file, with all of their flexibility and extra options.
@@ -656,17 +656,17 @@ May add to this section later. Uncomment to set, otherwise defaults apply.
 # -------TOC and INDEX behaviour------
 
 # print TOC? 1:0
-#$print_toc=1;	# default is to print
+#$print_toc=1;  # default is to print
 
 # should we keep TOC expanded? "block":"none"
-#$toc_expanded="block";	# default is to unfold
+#$toc_expanded="block"; # default is to unfold
 
 # should we keep Chunks Index expanded? "block":"none"
-#$ind_expanded="none";	# default is to keep folded
+#$ind_expanded="none";  # default is to keep folded
 
 
 # should we number lines in code sections? 1 : else
-#$line_numbering = 1;	# default is to number
+#$line_numbering = 1;   # default is to number
 
 
 #-------------------------------------
@@ -697,11 +697,11 @@ May add to this section later. Uncomment to set, otherwise defaults apply.
  
 # what is the file extention to weave it? (perms must allow execution!)
 # e.g. "scriptname.weave" or "scriptname.cgi" etc.
-#$weave_extension = "weave";	# default is "weave"
+#$weave_extension = "weave";    # default is "weave"
 
 # what is the file extention to tangle it? (perms must allow execution!)
 # e.g. "scriptname.tangle",  "scriptname.pl" etc.
-#$tangle_extension = "tangle";	# default is "tangle"
+#$tangle_extension = "tangle";  # default is "tangle"
 
 #When tangling, should I use the built-in tangler? 0:1
 # (if 0, the "pass-through" tangling will call "notangle"
@@ -1024,20 +1024,20 @@ other and make life unpleasant.
     it and next run "make targetname" to tangle (and compile, run etc) many files included
     into your Literate Source project file.
     ./li. .li.
-	.b. Numbering lines in the tangle output ./b.
-	Sometimes your scripts or programs fail giving the line number at which error occured.
-	Then it is convenient to know where in the Literate Source this piece of code lives.
-	There is an option both in "notangle" and in Molly to print LitSource line numbers as
-	comments in the tangled output.
-	
-	From command line: 
-	.pre.	MOLLY.pl [-R 'root chunk name'] -l 'comment symbol' Lit_Source_file ./pre.
-	When using QuickTangling, set the corresponding option in the config section at the top.
-	"Comment symbol" is prepended to the line number printout, set it for the language you 
-	used in this particular tangle-out. 
-	Default for QuickTangling mode is "# " (hash-space).
-	
-	./li. ./ol.
+        .b. Numbering lines in the tangle output ./b.
+        Sometimes your scripts or programs fail giving the line number at which error occured.
+        Then it is convenient to know where in the Literate Source this piece of code lives.
+        There is an option both in "notangle" and in Molly to print LitSource line numbers as
+        comments in the tangled output.
+        
+        From command line: 
+        .pre.   MOLLY.pl [-R 'root chunk name'] -l 'comment symbol' Lit_Source_file ./pre.
+        When using QuickTangling, set the corresponding option in the config section at the top.
+        "Comment symbol" is prepended to the line number printout, set it for the language you 
+        used in this particular tangle-out. 
+        Default for QuickTangling mode is "# " (hash-space).
+        
+        ./li. ./ol.
 
 
 
@@ -1397,16 +1397,16 @@ The behaviour of folding sections in the mollified LSFile is as follows:
     vim fold, and then see the range and issue the range command.
 
     .i. Note ./i. 
-	.ul. Use of folding inside your programming editor .x. is not a substitute ./x. for reading 
-	a well-laid out formatted document in the browser. Vim folding is still "blind" and  navigation
-	inside such a file still has to rely on your memory of the full layout. 
+        .ul. Use of folding inside your programming editor .x. is not a substitute ./x. for reading 
+        a well-laid out formatted document in the browser. Vim folding is still "blind" and  navigation
+        inside such a file still has to rely on your memory of the full layout. 
 
-	MOLLY numbers lines in the code sections by default, making jumps from reading in your browser
-	to editing a particular line in your editor painless. I could also put it like this: .b. I view
-	the file globally ./b. in my browser as a folding document when I am thinking, .b. while editing 
-	"locally" ./b. in a programming editor, without thinking about the overall layout of the file.
+        MOLLY numbers lines in the code sections by default, making jumps from reading in your browser
+        to editing a particular line in your editor painless. I could also put it like this: .b. I view
+        the file globally ./b. in my browser as a folding document when I am thinking, .b. while editing 
+        "locally" ./b. in a programming editor, without thinking about the overall layout of the file.
 
-	./ul.
+        ./ul.
 
     MOLLY.pl is written to filter out vim folding markups ( {{{number ... }}}number ) and those 
     will not show on your web page.
@@ -1507,7 +1507,7 @@ techniques (and that may be the reason it is too bloated and somewhat unorderly 
 .ol. .li. Literate Programming proper.
 
     Emphasis on note-taking rather than producing a polished "essay" or "documentation"
-	
+        
     Traditional Literate Programming texts place much emphasis on the fact that it is a means of 
     providing .i. documentation ./i. (albeit with source code, and reflecting the thinking rather
     than machine-imposed order).
@@ -1625,7 +1625,7 @@ Use .b."mollify"./b. as  a technical term (insert MOLLY.pl invocation into the L
 .h2. ./h2.
 
 #------------------------------------------------------------------
-{{{2 .+h2. PART III ------------ LITERATE SOURCE OF THE SCRIPT ------------ ./h2.
+{{{2 .h2. PART III ------------ LITERATE SOURCE OF THE SCRIPT ------------ ./h2.
 #-------------------------------------------------------
 
 
@@ -1663,17 +1663,18 @@ Should add that to the filtering expression in MOLLY
 #-------------------------------
 
 .b.Mistreatment of tabs in _some_ cases. ./b.
-        (*) Molly tangler will treat tabs OK .i. unless ./i. they were met
+.s.       (*) Molly tangler will treat tabs OK .i. unless ./i. they were met
         in the "while over regexp" where Molly just calculates the length
         of the left margin, which is filled with spaces in "pass 2 - print"
 
 I.e. chunks referenced from within Makefiles .i. have to ./i. be in pos 1
 on the line and all tabs used explicitly in their bodies.
 
-This can be fixed, but not now.
+This can be fixed, but not now. ./s.
+
 I made sure to "et!" (=expand tabs)  and "retab" in vim to make sure
 all indentation I type in code is preserved in folding html 
-
+/which may be a good idea generally/
 
 }}}4
 
@@ -1739,7 +1740,7 @@ Current version:
     For a local programming setup ( thttpd on localhost:8000 for example) this
     will do. However one still needs to figure out if there is a possible post-
     processing of the dynamically created (and then saved from the browser) page
-    with some script that would strip back the "frameset" decorations and the 
+    with some script that would strip back the "fieldset" decorations and the 
     invocations of folding plus the html head and TOC/chunks index sections.
 
     I might say, I need the "reverse weaver" (although not as thorough ?)
@@ -2093,39 +2094,26 @@ include a mini-web server as well as a folding weaver and a tangler.
 
 }}}3
 
-
-#------------------------------------------------------
-{{{3 .h3. Default Root to tangle./h3.
-#------------------------------------------------------
-
-Without this the "QuickWeave" and "QuickTangle" modes are not operational.
-
-<<*>>=
-<<MOLLY.pl module>>
-@
-
-}}}3
-
 #------------------------------------------------------
 {{{3 .h3. Makefile./h3.
 #------------------------------------------------------
 
 
-<<Makefile>>=
+<<Makefile for split MOLLY-top and MOLLY-bottom>>=
 
 all: help
 #-
 
 help:
-	@echo;
-	@echo " ---TARGETS---";
-	@echo " new - tangle out MOLLYs-new.pl";
-	<<other Makefile help commands>>
-	@echo;
+        @echo;
+        @echo " ---TARGETS---";
+        @echo " new - tangle out MOLLYs-new.pl";
+        <<other Makefile help commands>>
+        @echo;
 #-
 
 new:
-	perl ./MOLLY.pl -R'MOLLY.pl module' MOLLYs-bottom.weave >MOLLYs-new.pl;
+        perl ./MOLLY.pl -R'MOLLY.pl module' MOLLYs-bottom.weave >MOLLYs-new.pl;
 #-
 
 <<other Makefile commands>>
@@ -2145,12 +2133,12 @@ The help insertions have already been indented with  a tab
 <<other Makefile commands>>=
 
 td:
-	MOLLYs-bottom.tangle | diff -y -w --left-column MOLLY.pl - |less;
+        MOLLYs-bottom.tangle | diff -y -w --left-column MOLLY.pl - |less;
 #-
 
 fld:
-	perl ./MOLLY.pl -R'MOLLY.pl module' MOLLYs-bottom.weave >MOLLYs-new.pl;
-	fldiff MOLLY.pl MOLLYs-new.pl;
+        perl ./MOLLY.pl -R'MOLLY.pl module' MOLLYs-bottom.weave >MOLLYs-new.pl;
+        fldiff MOLLY.pl MOLLYs-new.pl;
 #-
 
 @
@@ -3647,9 +3635,88 @@ I'll need to split them and supply the two pieces to "seek" and "read".
 
 
 #-------------------------------------------------------------
-{{{4 .h4. ADD-ON: multi-file tangling./h4.
+{{{4 .h4. (VIRTUAL VIEW): adding multi-file tangling ./h4.
 #-------------------------------------------------------------
 
+.i. This is (VIRTUAL VIEW) - a Virtual View on the code with LINKED_CHUNKs./i.
+
+The tangler was developed incrementally, and ealier variation could tangle from one
+file only, and only in Quick Mode (i.e. by running mollified "Lit.Src.tangle" as
+script file to dump the code to STDOUT)
+
+Later command-line invocation was added, and ability to tangle from many files, 
+supplied on command line. ("Quick Mode" still tangles from the only mollified
+file, and uses whatever is assigned as the current default root chunk, "*")
+
+This change affected a number of code chunks in various places.
+
+First, the "despatcher" at the top of Molly script was modified.
+
+[[LINKED_CHUNK main despatcher]]
+
+while the previous simple despatcher was renamed and put away.
+
+There are several comments I could make on the newer one..........
+
+[[LINKED_CHUNK main despatcher with CL]]
+
+Then, because I still wanted to preserve pass-through Quick Tangling, which 
+hands the job to "notangle" from "noweb" tools by N. Ramsey, I had to split
+dispatching and keep a second part in
+
+[[LINKED_CHUNK tangle me]]
+
+Actually, the first, main despatcher uses two labels, "TANGLE_ME" if there is
+only one file to tangle, to enable pass-through or built-in tangler use, and
+"SEEK_PEEK_TANGLER", to send execution for multi-file tangling with the built-in
+tangler.
+.b.Note./b. that "notangle" by Ramsey also can tangle from multiple Literate Source files
+when supplied those on its command line.
+.b.Note./b. also that pass-through tanlging filters out doc chunks - something practical
+because Ramsey's tool dies on finding unescaped <<bla-bla>> anywhere in the file.
+I switch "doc section - code section" only on <<bla-bla>>= in the .b. first position ./b.
+on the line, and do not react to <<bla-blas>> anywhere, but inside code chunks.
+
+Now, the tangling has been wrapped inside a "foreach" loop, going over a list of 
+opened files. I had to keep their names standard, "LITSOURCE0", "LITSOURCE1", ...
+for the code to work in all cases, and LITSOURCE0 is given as a handle even  in case of
+one file only. This and the wish to preserve pass-through tangling was the reason for a
+certain clumsiness in the despatcher.
+
+[[LINKED_CHUNK while-loop and peek file ofsets]]
+
+
+Now, the "seek-peek" tangler algorithm is this: 
+(1) make pass 1 over all LitSource files collecting offsets for code chunks and for
+references to other code chunks embedded in them. The information is collected in
+hashes.
+(2) Then make another pass, starting from the given root chunk and "seek" jumping
+between files and known offsets, then printing out. No building of a tree with 
+subsequent topological sort in memory.
+
+To turn this algoritm into a multi-file app, it was sufficient to prepend filehandle
+names to collected offsets, and on the second pass to split the strings and proceed
+to the known filename and offset.
+Note the use of $LITSOURCE-multi in the first pass chunks:
+
+[[LINKED_CHUNK  chunk beginning]]
+
+[[LINKED_CHUNK  chunk ending]]
+
+[[LINKED_CHUNK chunk reference - multiref inside other text]]
+
+............................
+............................
+............................
+
+One more later addition was "topological sort" subroutine. It is not needed for tangling
+itself and provides (a) some check for reference loops and (b) allows one to print out
+all possible root chunks in a Literate Source file.
+
+
+.b. .i. ....unfinished.... ./i. ./b.
+
+{{{5 .h5. Scrap ./h5.
 .b. Brief descrtiption ./b.
 
 1. Files opened with universal filehandles LITSOURCE0, 1, ...
@@ -3676,6 +3743,9 @@ Tests live in their own directory, ./tmp-tests/assembly.order*
 ./pre.
 
 .b. .i. not finished ./i. ./b.
+
+
+}}}5
 
 }}}4
 
@@ -3717,7 +3787,7 @@ exit;
 
 .b.1 The first formatting element ./b.  that is  part of the .i. function ./i. of the script
 rather than formatting decorations is the
-.pre. frameset - legend - /legend - /frameset ./pre.
+.pre. fieldset - legend - /legend - /fieldset ./pre.
 which create the distinctive look of the documents generated by MOLLY. I do not wish to
 change them (although strictly speaking they are not obligatory).
 
@@ -3950,6 +4020,20 @@ d/ http://www.pageresource.com/dhtml/ryan/part4-1.html - another tutorial
 {{{4 .h4. set formatting strings for weaver ./h4.
 #------------------------------------------------------------
 
+1. Formatting strings include variables, later substituted for each new section and chunk.
+One idea would be to interpolate these strings with regexps then - with "s/X/Y/ee"
+Another is to split the strings into "pre-X" and "post-X" and leave the var outside.
+I use both methods. The second one is clumsier, but maybe not, as the first might
+require keeping state in vars and copying strings anyway.
+
+But both solutions are used.
+
+2. Output file header and the outer table.
+
+ASCIIMathML.js is cut in in a trivial way. 
+The library allows extension with new operators/translatons from LaTeX into MathML.
+Those can be cut in here, too.
+
 <<set formatting strings for weaver>>=
 
   #----SETTING FORMATTING STRINGS-----------
@@ -3977,8 +4061,13 @@ head_end
 $html_body_table = "<center><table class='outertable'><tr><td>";
 $html_body_table_end = "\n</td></tr></table></center></body></html>\n";
 
-
+@
         
+
+3. This is split vars around each of the HTML folding sections; they substitute simple 
+HTML headings in the literate source
+
+<<set formatting strings for weaver>>=
 
 $folding_section_start1_str = <<'fold_sect_start_1_xxx';
         <fieldset><legend><a href="javascript:;" onmousedown="toggleCombined('$section_num');">
@@ -4013,13 +4102,16 @@ collapse all</a>
 
 folding_section_end_xxx
 
+@
 
-$code_frameset_start_pre = "<pre><fieldset class='codefieldset'><legend class='codelegend'>";
-$code_frameset_start_post = "=</legend>";
-$code_frameset_end = "</fieldset></pre>\n";
+4. This is for the frames around the code chunks:
 
+<<set formatting strings for weaver>>=
 
-
+#$code_fieldset_start_pre = q(<pre><fieldset class='codefieldset' id='$codechunk_id'><legend class='codelegend'>);
+$code_fieldset_start_pre = q(<pre><fieldset class='codefieldset'><legend class='codelegend'>);
+$code_fieldset_start_post = "=</legend>";
+$code_fieldset_end = "</fieldset></pre>\n";
 
 @
 
@@ -4072,9 +4164,13 @@ for(i=1; i <= 10000; i++){
     };
 }
 
+<<Javascript: node clone and destroy clone>>
+
 </script>
 
 @
+
+note that  "Javascript: node clone and destroy clone" is in the "virtual" ADD-ON section
 
 }}}5
 
@@ -4211,13 +4307,38 @@ PRE     {
         }
 
 .lnum {
-
         color: #a0a0a0;
-        /background: #fbfbfb;
         }
 
 .unhilited {background-color:white}
 .hilited {background-color:#c0c0ff}
+
+.linked_chunk {
+        PADDING-RIGHT: 5px; 
+        PADDING-LEFT: 5px; 
+        PADDING-BOTTOM: 5px; 
+        PADDING-TOP: 5px; 
+        BORDER-TOP: #c0c0c0 1px solid;
+        BORDER-RIGHT: #c0c0c0 1px solid; 
+        BORDER-LEFT: #c0c0c0 1px solid;
+        BORDER-BOTTOM: #c0c0c0 1px solid;              
+        color: #505050;
+        background: #ffffff;
+        }
+
+.linked_chunk_legend {
+        PADDING-RIGHT: 5px; 
+        PADDING-LEFT: 5px; 
+        PADDING-BOTTOM: 3px; 
+        PADDING-TOP: 3px; 
+        BORDER-TOP: #c0c0c0 1px solid;
+        BORDER-RIGHT: #c0c0c0 1px solid; 
+        BORDER-LEFT: #c0c0c0 1px solid;
+        BORDER-BOTTOM: #c0c0c0 1px solid;              
+        color: #505050;
+        background: #ffffff;
+        }
+
 
 
 </STYLE>
@@ -4245,8 +4366,9 @@ Some of the vars may be unused later (run perl -wc to check?)
  $chunkbuf = ''; # collects whole formatted project file in memory
  $tocbuf = "";  # will accumulate TOC contents, i.e. small
  @indbuf = ();  # accumulates index of code chunks, small
- #%indbuf = ();
- @headings = ();        # the stack for nested subsections numbers/ids
+ @headings = ();  # the stack for nested subsections numbers/ids
+ %headings_id_hash = ();
+ %chunks_id_hash = ();
 
  $section_num = 0;
  $section_num_prev = 0;
@@ -4284,7 +4406,7 @@ This is just to quickly cut out the Molly perly template at the top.
 
 if ( ($line_counter == 1) && (m!^#.*perl!) ) {
 
-        # this is the mollifying template or some perl script.
+        # Matched? - this must be either the mollifying template or some perl script.
         
         do {
             $_ = <LITSOURCE>;
@@ -4380,26 +4502,66 @@ in an option var) is written too
 <<process code chunks>>=
 
 if ( m!^<\<(.*)>\>=! ... m!^@\s*$! ) { # -- CODE CHUNKS -- 
-        $chunk_title = $2;
 
         s/&/&amp;/g;    # escape &
         s/</&lt;/g;     # escape <
         s/>/&gt;/g;     # escape >
+        my $codechunk_id = "";
 
-        if (m!(&lt;&lt;(.+?)&gt;&gt);(=)?!) 
+      if ( m!(&lt;&lt;(.+?)&gt;&gt;)(=)?! ) 
           {
+          $chunk_title = $2;
           $reference = $1;
           $ind_str = "&lt;&lt;$2&gt;&gt; $section_num";
-          if (defined $3) {$ind_str .= "<sub>def</sub>"}
+          if (defined $3) {$ind_str .= "<sup>def</sup>"}
           else { s!$reference!<font class='chunkref'>$reference</font>! }
 
           unshift @indbuf, $ind_str;
 
+        # /.. "if" is not finished in this chunk yet.. read on/
+@
+
+Here I have to create a unique $codechunk_id, save it in %chunks_id_hash, and
+assign to the created fieldset by .s. interpolating it in $code_fieldset_start_pre ./s.
+.. - was buggy, so I create a wrapping "div" and assign this ID to it.
+Unique IDs can be calculated from a counter -- or taken from line numbers, which 
+are also unique and an increasing sequence. Those are available as $line_counter
+
+It also allows us to preserve line numbers for the second pass, interpolated print
+of the formed $chunkbuf string.
+
+I could do the same with section IDs, too. Will have to change code, but it will
+allow me to get line numbers painlessly. Check this.
+
+Second question - how to treat splintered chunks (like this one, split by this very
+text).  Push IDs as a list? - possibly the simplest idea. 
+
+<<process code chunks>>=
+
+            # cut-in for virtual links handling: create codechunk_id 
+            if (defined $3) {
+            
+                $codechunk_id = 'codechunk' . $.;
+                push @{$chunks_id_hash{$chunk_title}}, $codechunk_id; # with splinters
+
+                my $splinter_number = '';
+                $splinter_number = @{$chunks_id_hash{$chunk_title}}
+                    if @{$chunks_id_hash{$chunk_title}} > 1;
+
+                # simple fieldset frames around code snippets if chunk definition
+                # /changing current line $_ which will get appended to $chunkbuf/
+                s!^&lt;&lt;(.+)&gt;&gt;=!
+                <div id=$codechunk_id>
+    $code_fieldset_start_pre&lt;&lt;$1&gt;&gt<sub>$splinter_number</sub>$code_fieldset_start_post!x;
+
+            } # fi - cut-in for virtual chunk links
+
         } # fi - chunks index accumulation
 
-        # simple fieldset frames around code snippets
-        s!^(goto)?&lt;&lt;(.+)&gt;&gt;=!$code_frameset_start_pre$1&lt;&lt;$2&gt;&gt;$code_frameset_start_post!;
-        s!^@\s*$!$code_frameset_end!;
+
+        # close fieldset frame at end of code chunk
+        s!^@\s*$!$code_fieldset_end</div>!;
+
 
         if ( $line_numbering ) { 
         $chunkbuf .= "<font class='lnum'>" . $line_counter . "</font>   " . $_;
@@ -4437,6 +4599,10 @@ The logic was tested first in an external skeleton script.
 CHANGES" subsection
 
 
+.b. First./b. get the info from the heading and set several vars for substitutions etc.:
+Also: print subsections marked with a "+" as unfolded (JS stype 'block'), rather than 
+collapsed ('none')
+
 <<process section headings>>=
 
 # -- SECTION HEADINGS 
@@ -4466,10 +4632,16 @@ elsif ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/
                 $section_level = $2;
                 $section_title = $3;
 
+                # add-on for virtual nodes; DEBUG for now
+                $stripped_section_title = $section_title;
+                $stripped_section_title =~ s!\s*(.*\S)\s*!$1!;
+                $headings_id_hash{$stripped_section_title} = $section_num;
 
+@
         
+.b. Secondly, ./b. copy the formatting strings and modify copies with substitutions
 
-        
+<<process section headings>>=        
 
         $folding_section_start1 = $folding_section_start1_str;
         $folding_section_start2 = $folding_section_start2_str;
@@ -4485,7 +4657,23 @@ elsif ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/
 
         $section_id = $section_level . '-' . $section_num;
 
+@
 
+Note that "$section_id"  above is a string with a dash that contains two pieces of info
+
+.b. Three ./b. Take care of the contained folding subsections
+The idea below is this:
+When will I need to insert "close subsection" and refs to its folding JS funcs?
+Supposing I started with h2. Then I'll skip h3, h4, .. - and must close it when
+the next met subsection is again h2.
+Array @headings keeps a stack of headings met during parsing.
+
+//Q: Should I check if ($section_level >= $prev_section_level){ .. } ??
+// To cleanly close sections when a prog made a mistake and missed a level?
+// OR: should I leave it as it is, as it gives a visual clue of the error?
+// OR: has it been taken care of already? - reading my own code ;))))))))))
+
+<<process section headings>>=        
         # finish previous subsection if not the first section in the file
         # ..and deal with nesting of sections according to their "depth level"
 
@@ -4516,6 +4704,14 @@ elsif ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/
                 }
         } # fi not the first section
 
+        # end of "finish previous subsection if not the first section in the file"
+@
+
+.b. Four ./b.
+And the common operations, which form the output buffer string, "$chunkbuf", and
+output buffer for printing TOC with needed indentation, "$tocbuf"
+
+<<process section headings>>=        
 
         # common operations             
         unshift @headings, $section_id ;
@@ -4543,7 +4739,6 @@ elsif ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/
                     "</b></a><br>\n";
 
 } #; fisle: end elif headings
-
         
 
 @
@@ -4555,8 +4750,11 @@ elsif ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/
 #--------------------------------------------------------------------
 
 The last "else" case is the documentation chunk body.
-It includes one default formatter, which is "rawHTML", and can include a number of other markups.
-That section should be made extensible by users.
+It includes one default formatter, which is "rawHTML", and can include a number
+of other markups. That section should be made extensible by users.
+
+Secondly, docsection  body may contain LINKED_CHUNKs (or LINKED_SECTIONs), so
+I'll have to add them to @indbuf here.
 
 So here we are:
 
@@ -4567,34 +4765,42 @@ else { # this is the body of the doc section
 <<rawHTML formatter>>
 <<other body formatters>>
 
-} # esle, fi -- end of selection of doc heading, end, or body inside 'while' over the file.
+    if (m!^\s*\[\[LINKED_CHUNK(_\d+)?\s+(.*\S)\s*\]\]\s*<br>$!) { # -- CHUNK LINKS --
+        my $index_str = "&lt;&lt;$2&gt;&gt; " . $section_num . "<sup>link</sup>";
+        unshift @indbuf, $index_str;
+    }
+
+} # esle, fi -- end of processing inside 'while' over the file lines.
 
 @
 
+
+.b. Body formatters ./b.
 Now, the default formatter starts an "if" (selecting with a config variable $weave_markup),
 and all other selection clauses must implement "elsif" clauses. Those are not obligatory, 
 as "if" is extensible, of course.
 
-For the convenience of the users who might wish to add other markups to Molly, all non-default
-sections are moved to the end to .b. ADD-ON: example of additional markup ./b. folding sections
-of this Literate Source file.
+For the convenience of the users who might wish to add other markups to Molly, all
+non-default sections are moved to the end to .b. ADD-ON: example of additional markup
+./b. folding sections of this Literate Source file.
 
 .b. rawHTML formatter./b.
-Raw HTML formatting can be done - either because it is non-restricted, compared to the stripped-down
-"dotHTML" of my invention, or because it allows one to convert existing HTML documentation into the
-folding format.
-I.e. if you have a longish manual in which section headings are marked with HTML h1, h2, h3, ... tags,
-you can convert it in 3 simple steps:
-.ul. .li. delete opening and closing "html" and "head" "body" tags at the very top and bottom of your 
-document
+Raw HTML formatting can be done. It is non-restricted, compared to the stripped-down
+"dotHTML" of my invention, and  it also allows one to convert existing HTML documentation
+into the folding format.
+I.e. if you have a longish manual in which section headings are marked with HTML
+h1, h2, h3, ... tags, you can convert it in 3 simple steps:
+.ul. .li. delete opening and closing "html" and "head" "body" tags at the very top and
+bottom of your  document
 ./li. .li. put perl invocation as the first line
-./li. .li. set up markup mode in a variable: "$weave_markup = "rawHTML";" and "mollify" the document,
-putting  "do MOLLY.pl" and DATA marker
+./li. .li. set up markup mode in a variable: "$weave_markup = "rawHTML";" and "mollify"
+the document, putting  "do MOLLY.pl" and DATA marker
 ./li. ./ul.
-and if there are no interfering div section etc. - no complicated markup inside the headings, you'll get
-an automatically generated folding HTML document.
+and if there are no interfering div section etc. - no complicated markup inside the
+headings, you'll get an automatically generated folding HTML document.
 
-If you do, it is sometimes easy to clean headings with a few regexps in a good editor like Vim
+If you do, it is sometimes easy to clean headings with a few regexps in a good editor
+like Vim
 
 It is very convenient and I keep large manuals as folding HTML documents.
 
@@ -4640,11 +4846,14 @@ Page and the outer formatting table:
 
 <<print out>>=
 
-  # begin the page:
-  #print '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">', "\n";
+# begin the page:
+
+  # /disabled doctype line/
+  #print  '<!DOCTYPE HTML PUBLIC "- blab-bla>', "\n";
+
   print "<html>\n  $html_head\n <body>  $html_body_table \n";
 
-  # print out the TOC, the Chunks Index, the output buffer and close the page.
+# print out the TOC, the Chunks Index, the output buffer and close the page.
 
 @
 
@@ -4653,7 +4862,8 @@ Next print the short instructions section (collapsible) at the top:
 <<print out>>=
 
 print <<end_of_print;
-<p><fieldset class='tocfieldset'><legend><b>TABLE OF CONTENTS: outline of the document structure</b></legend>
+<p><fieldset class='tocfieldset'>
+<legend><b>TABLE OF CONTENTS: outline of the document structure</b></legend>
 
 <ul>
 <p>
@@ -4744,8 +4954,9 @@ print <<end_of_print;
 <div id='indbuf' style='display:$ind_expanded' style='background:#ffffff'> 
 <ul>
 <p>
-<b>"Def" subscript</b> means the chunk is defined, while a bare number means 
-<br>the chunk is being used in the given section.
+A <b>"def" superscript</b> means the chunk is defined,<br>
+a <b>"link"</b> that the chunk is being linked to from that section,<br>
+and a <b>bare number</b> means the chunk is being used in a section.
 <p>
 end_of_print
 
@@ -4814,16 +5025,144 @@ end_of_print
 
 
 
-..and the document itself, formed earlier in the "chunkbuf" string in memory:
+..and..
+.b. PRINT the document itself./b., formed earlier in the "chunkbuf" string in memory.
+This section was greatly modified for LINKED_CHUNKs and LINKED_SECTIONs to "while"
+over lines in the $chunkbuf with regexps and do the substitutions if links are presentat
+in the document.
+
 
 <<print out>>=
+<<print out - with virtual nodes>>
+@
 
-# The FULL OUTPUT, the file body:
-        print $chunkbuf;
+
+.b. see ADD_ON for "Virtual Nodes" ./b. - there's a logical overview of 
+all changes that were implemented.
+
+Briefly here:
+(a) I suppose those live inside regular subsections
+(b) I suppose they are marked as "[[", then"LINKED_CHUNK" or "LINKED_CHUNK_3",
+then  "literate copy of the node to clone", then "]]".
+    (one or more space chars after LINKED_SECTION or LINKED_CHUNK)
+(c) They live inside documentation chunks, and so I do not need to bypass them
+    in regular code processing, tangler or weaver, above (?)
+(d) In this final parsing of $chunkbuf str I must distinguish them from chunk
+    regular refs. But if I reserve LINKED_xxx as two unique identifiers, that's it.
+
+Seems, just an ordinary match inside the string will do.
+mm.. need to distinguish from a passing usage in docs, like in (b).
+Let's restrict syntax to ONLY MEANINGFUL CHARS ON THE LINE:
+
+(e) .. and finally, I need to subst the matching line, but pass through
+    and print out everything else.
+
+(f) The code is ugly because I am still debugging it and wish to keep the two cases
+(of CHUNKs and SECTIONs) completely separate in spite of duplicated code
+
+
+<<print out - with virtual nodes>>=
+
+#The FULL OUTPUT, the file body (with links handling  added):
+
+sub print_chunk_link {
+
+(my $name_of_linked_chunk, $virtual_id, my $created_clone_div_id, my $shown_splinter_num) = @_;
+
+print <<"end_of_clone_sect";
+
+        <fieldset class='linked_chunk'>
+        <legend class='linked_chunk_legend'>
+        $lt_esc$lt_esc$name_of_linked_chunk$gt_esc$gt_esc $shown_splinter_num
+        <font size=-2><i>
+        <a href="javascript:;"
+        onmousedown="CreateVirtualNode('$virtual_id', '$created_clone_div_id');"
+        > [open] </a>
+        <a href="javascript:;"
+        onmousedown="DeleteVirtualNode('$created_clone_div_id');"
+        > [close]</a></i></font>
+        </legend>
+        <div id="$created_clone_div_id">
+        </div>
+        </fieldset>
+
+end_of_clone_sect
+
+        # a DEBUG printout:
+        #for (keys %chunks_id_hash) {print "[$_] => $chunks_id_hash{$_}<br>\n"}
+
+        #<br>DEBUG: trying to clone [[$1]] whose id is [$virtual_id] 
+        #OR [$chunks_id_hash{$name_of_linked_chunk}]
+
+} # bus -- printing out formatted CHUNK_LINK cloning line
+
+
+my $clonebody_cnt = 0;
+
+while ($chunkbuf =~ m!^(.*)$!gm ) { # -- line by line iteration over the doc as string in mem
+    my $printed_line = $1;
+
+<<if LINKED_CHUNK, create clone-destructclone fieldset>>
+
+<<elsif LINKED_SECTION, create clone-destructclone fieldset>>
+
+    else{ # -- BODY OF THE DOCUMENT--  no virtual links met. Just print
+
+            print $printed_line, "\n"; 
+
+    } # 
+
+} # eliwh - end of line-by-line iteration over the buffer string in memory 
 
 @
 
-Close the HTML formatting tags at the end of the page:
+
+To take care of splinters of a chunk with the same name, I'll have to loop now over the 
+list kept in the %chunks_id_hash, and repeat the same clone creation.
+
+I should do it the same way I did in Tangler, it's the same data structure.. done.
+
+<<if LINKED_CHUNK, create clone-destructclone fieldset>>=
+
+if ($printed_line =~ m!^\s*\[\[LINKED_CHUNK(_\d+)?\s+(.*\S)\s*\]\]\s*<br>$!) { # -- CHUNK LINKS --
+
+    my $name_of_linked_chunk = $2;
+
+    if ($1) { # printing a single splinter LINKED_CHUNK_N of a given number
+        my $splinter_cnt = (substr $1, 1);
+        $virtual_id = $chunks_id_hash{$name_of_linked_chunk}[$splinter_cnt-1]; 
+        my $created_clone_div_id = "clonebody" . $clonebody_cnt;
+        $clonebody_cnt++;
+        my $shown_splinter_num = "(" . $splinter_cnt . ")" ;
+
+        print_chunk_link($name_of_linked_chunk, $virtual_id, $created_clone_div_id, $shown_splinter_num);
+
+    }
+    else { # regular case: printing all splinters of a LINKED_CHUNK
+        for (my $splinter_cnt=0;
+                exists $chunks_id_hash{$name_of_linked_chunk}[$splinter_cnt]; )
+        {
+
+        my $virtual_id = $chunks_id_hash{$name_of_linked_chunk}[$splinter_cnt++];   
+        my $created_clone_div_id = "clonebody" . $clonebody_cnt;
+        $clonebody_cnt++;
+
+        my $shown_splinter_num = 
+                "(" . $splinter_cnt . ")" 
+                        if $splinter_cnt > 1;
+
+        print_chunk_link($name_of_linked_chunk, $virtual_id, $created_clone_div_id, $shown_splinter_num);
+
+
+        } # rof over chunk splinters
+    }
+    
+} # fi treatment of LINKED_CHUNKs
+   
+@
+
+
+.b. Finally ./b. close the HTML formatting tags at the end of the page:
 
 <<print out>>=
 
@@ -4837,6 +5176,110 @@ Close the HTML formatting tags at the end of the page:
 
 End of the project file
 
+
+
+{{{5 .h5. Three chunks excluded from final printing./h5.
+
+
+This is a working copy without splinter handling
+
+<<if LINKED_CHUNK, create clone-destructclone fieldset - dis - no splinters>>=
+
+    if ($printed_line =~ m!^\s*\[\[LINKED_CHUNK\s+(.*\S)\s*\]\]\s*<br>$!) { # -- CHUNK LINKS --
+
+        my $name_of_linked_chunk = $lt_esc . $lt_esc . $1 . $gt_esc . $gt_esc;
+
+        my $virtual_id = $chunks_id_hash{$name_of_linked_chunk};   
+        my $created_clone_div_id = "clonebody" . $clonebody_cnt;
+        $clonebody_cnt++;
+
+print <<"end_of_clone_sect";
+
+        <fieldset>
+        <legend>
+        <font color=green> $lt_esc$lt_esc$1$gt_esc$gt_esc </font>
+        </legend>
+        <div align=left><b><i><font size=-2 color=darkblue>---- Linked Chunk ---- 
+        <a href="javascript:;"
+        onmousedown="CreateVirtualNode('$virtual_id', '$created_clone_div_id');" id="virttoc14"
+        >[open] </a>
+        <a href="javascript:;"
+        onmousedown="DeleteVirtualNode('$created_clone_div_id');" id="virttoc15"
+        > [close]</a>
+         ----</i></b></font>
+        </div>
+        <div id="$created_clone_div_id" name="virtual_clone">
+        </div>
+        </fieldset>
+
+end_of_clone_sect
+
+        # a DEBUG printout:
+        #for (keys %chunks_id_hash) {print "[$_] => $chunks_id_hash{$_}<br>\n"}
+
+        #<br>DEBUG: trying to clone [[$1]] whose id is [$virtual_id] 
+        #OR [$chunks_id_hash{$name_of_linked_chunk}]
+
+    }
+    
+@
+
+
+
+
+
+I dislike the cludginess of cloned sections and so disabled them for now.
+There is no way to easily change all IDs inside, and so any cloned sect.
+conflicts with any link or subsection that is also present and open.
+Clicking to close X will close it somewhere else in the document etc.
+
+<<elsif LINKED_SECTION, create clone-destructclone fieldset>>=
+
+=head I DO NOT LIKE SECTION LINKS. DISABLED (at least for now)
+
+    elsif ($printed_line =~ m!^\s*\[\[LINKED_SECTION\s+(.*\S)\s*\]\]\s*<br>$!) { # --SECTION LINKS--
+
+        my $virtual_id = $headings_id_hash{$1};    # this works with sections
+        my $created_clone_div_id = "clonebody" . $clonebody_cnt;
+        $clonebody_cnt++;
+
+print <<"end_of_clone_sect";
+        <fieldset><legend>
+        <b><i><font color=darkblue>Linked Section:</i></b></font>
+        <font color=green> $lt_esc$lt_esc$1$gt_esc$gt_esc </font></i><br>
+        <font size=-2>
+        <a href="javascript:;"
+        onmousedown="CreateVirtualNode('$virtual_id', '$created_clone_div_id');" id="virttoc14"
+        >[open] </a>
+        <a href="javascript:;" 
+        onmousedown="DeleteVirtualNode('$created_clone_div_id');" id="virttoc15"
+        > [close]</a>
+        </font></legend>
+        <div id="$created_clone_div_id" name="virtual_clone"></div>
+        </fieldset>
+end_of_clone_sect
+
+        # a DEBUG printout:
+        #for (keys %headings_id_hash) {print "[$_] => $headings_id_hash{$_}<br>\n"}
+        #<br>DEBUG: trying to clone [[$1]] whose id is [$virtual_id] OR [$headings_id_hash{$1}]
+
+    }
+
+=cut
+
+@
+
+
+
+<<print out - simple>>=
+
+# The FULL OUTPUT, the file body:
+        print $chunkbuf;
+
+@
+
+}}}5
+
 }}}4
 
 }}}3
@@ -4844,9 +5287,308 @@ End of the project file
 
 .h3. ./h3.
 
+#--------------------------------------------------------------------------------
+{{{3 .h3.(VIRTUAL VIEW): Creation of Linked Chunk functionality./h3.
+#--------------------------------------------------------------------------------
+
+.i. This is (VIRTUAL VIEW) - a Virtual View on the code with LINKED_CHUNKs./i.
+
+.b. The idea is ./b. to create a complete analogue of a "soft link" on a file system,
+for code chunks and/or for sections of the Literate Document.
+
+.b. Why? ./b. - to help a programmer work according to the logic of his thinking.
+Supposing the skeleton of a program has been created, and the prog is being further
+developed/enhanced. It means not only appending more code somewhere at the end,
+but modifications of already existing code.
+
+Same for later maintenance and debugging.
+
+Therefore, I'd like to create a sort of "Virtual Views" on my code, in which
+all relevant code chunks are visible, but the text (my thoughts, notes, etc)
+is different from the text put around that code before.
+Starting on a task, I will collect all needed code chunks, and work from this
+"virtual view" on my code.
+
+In other words, I'd like to create a sort of analogue of a new directory
+with soft links to existing files. 
+
+The linked code chunks are 'clones' of their originals, and I will use the line
+numbers to jump to the relevant places in my editor (in which I "edit locally").
+So in the weaved document I logically combine pieces of code from many places
+and create a consistent logical View on parts of my code, relevant to some task.
+
+.b.Actual Implementation ./b. below shows how it may work.
+
+{{{4 .h4. First ideas, todo lists ./h4.
+
+1. .s. Test creating a node copy dynamically, copying contents of an existing node. ./s.
+2. Test improved navigation: new links/ancors and "jumps" btw TOC and the place.
+/3/ .. and how <div>, and <pre><code>... work with my existing folding.
+
+.b. general how to do it ./b.
+    
+    (a) keep a hash of "section name => id number" for all section 
+    headings and all code chunks. 2 hashes, 2 independent unique namespaces.
+    
+    (b) invent a code word to parse on (e.g. VIRTUAL as the first word in a
+    sect name or a chunk name?)
+    .ul.
+    .i. .b. LINKED_SECTION or LINKED_CHUNK then space char(s) and the verbatim
+    name of the cloned chunk or section -- all in double square brackets ./b. ./i.
+    ./ul.
+
+    (c) add cloning JS funcs into "JS functions" subsect in the Weaver
+
+    (d) cut into  $chunkbuf the needed refs to the new "clone" and "destroy
+    clone" JS functions .i. plus ./i. some colour styling (green?)
+    This can be done in the "process code chunks" and "process section 
+    headings"
+
+    (e) do something (not sure yet) to make sure the Virtual stuff gets
+    into the TOC and is the local clicks are tied to the TOC colouring..
+
+
+.b. How to do Virtual Nodes, better defined ./b.
+.ul..li. (a) add hashes (name => id) for chunks, sections in pass 1 
+./li..li. (b) ignore "Virtual" links in pass 1
+./li..li. (c) do the subst while'ing over the $chunkbuf in printing
+./li../ul.
+
+So, take example from tangler, while'ing over a string and regexp matching.
+Test with a relevant string. Add to weaver-printer.
+Then add hashes and test with real matches, rather than a token line.
+
+.b. OK, as a result of first tests ./b.
+
+(a) Sections are discouraged, generally. Chunks are encouraged.
+(b) sections they clone the whole thread, which can be read from the clone (this is OK);
+sections foul up opening-closing other sections bcs clones IDs are the same.
+(c) Same true for code chunks, but they do not open the whole hierarchies, so they
+do not conflict as easily.
+Being flat, one-level clones they can be assigned unique IDs by adjusting their
+attribute on cloning
+
+(d) Behaviour with rasHTML marked file not tested yet; seems to have problems (?)
+
+(e) many splinters of one-chunk - not solved yet.
+
+}}}4
+
+
+{{{4 .h4. Actual implementation (with links to affected code sections ./h4.
+
+.b. 1. ./b. All implementation changes are done belowe "WEAVER" section
+
+.b. 2. ./b. Two functions, to clone a given ID under a "div" with a known ID,
+    and to destroy the cloned (actually, all children) under a "div"
+    with a know id, 
+    were tested separately.
+
+Then, a cut-in chunk was created in
+
+[[LINKED_CHUNK JS script functions]]
+
+where the functions themselves live in the subsection below this one
+
+[[LINKED_CHUNK Javascript: node clone and destroy clone]]
+
+The functions were created from some scrib, and can actually be combined
+
+.b. .i. todo ./i. ./b. The "create" function needs an addition of a unique ID for the cloned
+section. Otherwise the cloned section preserves the same ID as another clone,
+or the original section. If those are open, closing a later clone will close
+the first ones. Which is bery untidy and not possible to fix cleanly.
+
+The problem is much less in case of LINKED_CHUNKs, as the original chunks
+are not collapsible and aren't affected. Similar cnflict is poss only btw
+2 clones, if those are opened at the same time.
+
+Assignement of a unique Id upon creation will fix it.
+
+.b. 3. ./b. Next, a number of changes was required in the code where formation of the
+output $chunkbuf takes place.
+
+(a) for code chunk links, I had to add creation of unique IDs and collecting
+a hash of "chunk name => ID", to use later as arguments to the JS funcs.
+
+this lives in 
+[[LINKED_CHUNK process code chunks]]
+
+The implementation is redundant now, as it was created incrementally.
+I trew away the idea of assigning IDs to the "fieldset" elements themselves, 
+and wrapped all code sections in "div" elements, which got the unique IDs,
+generated from word "codechunk" and the line number.
+
+Matching on a chunk def puts in the div, and a match on the end of code section
+closes it.
+
+.b. .i. todo ./i. ./b.
+As can be seen from the ref right above, only the last splinter of the chunk
+is visible here. I have to add functionality either to point to the precise
+splinter, and/or to clone all splinters inside a ref
+
+
+.b. 4. ./b.  Next, a place to cut the interpolation in is needed.
+The algorithm of my weaver constructs an output string $chunkbuf as it goes
+down a literate source file, with all necessary formatting and calls to JS
+folding funcs.
+
+So, I decided to combine a second pass with the next stage, that of printout
+of $chunkbuf. 
+
+[[LINKED_CHUNK_7 print out]]
+
+//see, how it is a wrong splinter, again? -- NEED TO DO IT//
+Again, a cut-in was created and a simple print-out renamed and put out of the way. 
+
+[[LINKED_CHUNK print out - simple]]
+
+(Actually, I can switch btw them on a configuration var, sth like "enable virtual
+linking", but let's keep this functionality always on for now.
+
+Instead of just dumping it, I now iterate line by line on this buffer string
+in memory with regular expressions
+
+.b. Two words are reserved now, and the format is: ./b. 
+/i.e. to put a link into your Literate Source, which will then be prettyprinted/
+.ul.
+[[,
+word LINKED_CHUNK or LINKED SECTION, 
+space character(s),
+name of your chunk/sectin verbatim (copy and paste it),
+]]
+./ul.
+This must be on a line by itself, no other nonspace chars are allowed. Space before
+and after is ignored.
+
+[[LINKED_CHUNK print out - with virtual nodes]]
+
+[[LINKED_CHUNK if LINKED_CHUNK, create clone-destructclone fieldset]]
+
+[[LINKED_CHUNK elsif LINKED_SECTION, create clone-destructclone fieldset]]
+
+
+.b. 5. Putting links in the Chunks Indes ./b.
+is below in its own subsection
+
+.b. bugs and unfinished stuff ./b.
+.ul..li. .s. splinters of the same chunk./s.
+./li..li. .s. unique ID for just cloned div./s.
+./li..li. .s. add first line number for sections (none there), ./s. .i.-- sections disabled./i.
+and for chunks .i. not needed , as all other lines of a chunk are numbered anyway./i.
+./li..li. .s.add chunk splinter numbering in non-links, in real chunks./s.
+./li..li. .s.add links to the chunk index./s.
+./li../ul. 
+
+}}}4
+
+{{{4 .h4.  Node Cloning/destruction - JavaScript functions ./h4.
+Two Javascript functions do provide node cloning and destroying:
+
+<<Javascript: node clone and destroy clone>>=
+
+// DELETING a CLONE -- this works too:
+function DeleteVirtualNode(someid) {
+    
+    elem = document.getElementById(someid);
+
+    while (elem.childNodes.length > 0) {
+    elem.removeChild(elem.firstChild);
+    }  
+}
+
+// CREATING a CLONE - this works
+/* for clean execution - run "delete" before any creation */
+function CreateVirtualNode(clone_from_id, append_to_id){
+        DeleteVirtualNode(append_to_id);
+
+    if ( document.getElementById(append_to_id).childNodes.length == 0 ) {
+    var elem = document.createElement("div");
+
+    elem = document.getElementById(clone_from_id).cloneNode(1);
+    elem.style.display = 'block';
+    document.getElementById(append_to_id).appendChild(elem); 
+
+    } /* fi - do not create duplicates of the cloned node */ 
+    
+}
+
+@
+
+Then, using them from an html doc is like this:
+
+<<Node clone/destroy - test.html>>=
+
+@
+
+}}}4
+
+{{{4 .h4. Numbering Chunk Splinters and Putting Links in the Chunks Index ./h4. 
+
+(a) .b. links in chunks index ./b.
+the format of the string accumulated in @indbuf
+is simple, a string
+    "<<chunk name>> 34" or "<<chunk name>> 45<sub>def</sub>"
+and can be glimpsed above in 
+
+[[LINKED_CHUNK process code chunks]]
+
+That string is later disassembled in 
+
+[[LINKED_CHUNK_5 print out]]
+
+Pretty much I used a string which later will be split on a space
+in place of a 2-member list or other such structure to keep 2
+pieces of information, a chunk name and the section where it is used.
+
+SO: all I have to do is form and push into @indbuf a string
+    "<<chunk name>> 22<sub>link</sub>"
+and, because linked chunks are inside doc section bodies, this
+parsing must be added here:
+
+[[LINKED_CHUNK body HTML formatters]]
+
+outside any "markup formatters". Var $section_num is set in headings
+processing and is available for me in the docsection body.
+
+
+(b) .b.Adding numbering to splinters./b. of the same chunk is done trivially in
+"process code chunks" linked above, using the length of the list in 
+%chunks_id_hash as the splinter number.
+
+
+}}}4
+
+{{{4 .h4. Test of a Virtual Node inclusion ./h4.
+
+[[LINKED_SECTION ADD-ON: Virtual Nodes]]
+
+and another section
+
+[[LINKED_SECTION Node Cloning/destruction - JavaScript functions]]
+
+
+.. and these are code chunks, not sections:
+
+[[LINKED_CHUNK Makefile for split MOLLY-top and MOLLY-bottom]]
+
+.. and another one
+
+[[LINKED_CHUNK accumulate result in a buffer]]
+
+/end of the tests/
+
+}}}4
+
+}}}3
+
+.h3. ./h3.
+
 #-------------------------------------------------------------
-{{{3 .h3. ADD-ON: example of additional markup - dotHTML./h3.
+{{{3 .h3. (VIRTUAL VIEW): example of additional markup - dotHTML./h3.
 #-------------------------------------------------------------
+
+.i. This is (VIRTUAL VIEW) - a Virtual View on the code with LINKED_CHUNKs./i.
 
 .i. This subsection is a good example of the "out-of-order" processing that is
 enabled in Literate Programming. Pieces for this subsection come from different
@@ -4856,6 +5598,10 @@ by the machine ./i.
 
 .b. 1. the elsif clause ./b.The default "rawHTML" formatter opened an "if" clause, 
 matching on the configuration variable $weave_markup. 
+
+[[LINKED_CHUNK body HTML formatters]]
+
+[[LINKED_CHUNK rawHTML formatter]]
 
 All other formatters (and this is extensible, of course) can be added here to the chunk
 below, and the actual implementation (in its own subsection, the regex line-by-line 
@@ -4874,6 +5620,8 @@ filters/susbtitutions in the  doc chunk bodies, must be wrapped in the same two 
 
 @
 
+This new markup of your of course must be added to the 'other body formatters' chunk.
+
 
 .b. The actual working example./b. below implements a "dotHTML" formatter (this very 
 file is marked with it rather than the default HTML).
@@ -4889,13 +5637,15 @@ This is  my own kind of simple markdown for quick typing.
 
 .b. 2. Adding a new markup language involves  two more obligatory changes. ./b.
 
-You'll have to mention name of your new markup as an option to the user (no new vars 
+1. You'll have to mention name of your new markup as an option to the user (no new vars 
 are necessary) in  the "mollifying template" in part II .b. "HOW TO USE MOLLY.pl" ./b.
 
-And you'll have to add that into the "template project file" distributed with MOLLY.pl ,
+[[LINKED_CHUNK full MOLLY template]]
+
+2. And you'll have to add that into the "template project file" distributed with MOLLY.pl,
 again  for other people to know and notice.
 
-You might also add that new possible value for the config var  at the top of this very 
+3. You might also add that new possible value for the config var  at the top of this very 
 LitSource document, although it has been marked in dotHTML already and is not 
 going to reform ;)) . You might want it because this file serves as the central example
 itself, and so some people might copy the config section from here to start their 
@@ -5099,10 +5849,13 @@ $str_sp = $ARGV[0];
 
 }}}3
 
+.h3. ./h3.
 
 #-------------------------------------------------------------
-{{{3 .h3. ADD-ON: ASCIIMathML and LaTeXMathML inside Molly  ./h3.
+{{{3 .h3. (VIRTUAL VIEW): ASCIIMathML and LaTeXMathML inside Molly  ./h3.
 #-------------------------------------------------------------
+
+.i. This is (VIRTUAL VIEW) - a Virtual View on the code with LINKED_CHUNKs./i.
 
 .b. 1 ./b. .i. STATUS ./i. - Ok, but may be brittle if escapes (double backticks)
 get in conflict with the target prog language or some "markdown" 

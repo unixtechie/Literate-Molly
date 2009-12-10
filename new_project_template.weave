@@ -139,7 +139,11 @@ print STDOUT <<end_of_it;
 
 another chunk of code can be included into any
 chunk of code.
+@
 
+the second splinter of the same chunk:
+
+<<print the explanation>>=
 Those can be out of machine order and rather be 
 kept in their logical order in your Literate 
 Source file
@@ -183,8 +187,21 @@ exit;
 
 <h12>level12</h12>
 
+#--------------------------------------
+<h3> Virtual Chunks included here </h3>
+#--------------------------------------
 
+this chunk contains 2 splinters:
 
+[[LINKED_CHUNK print the explanation]]
+
+and this one is one whole piece:
+
+[[LINKED_CHUNK MyProject.pl]]
+
+Click to create clones, then delete the clones.
+These work exactly like soft links in unix and
+create "virtual views" of your code
 
 
 

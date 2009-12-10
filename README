@@ -17,6 +17,8 @@ library), i.e.  mathematical expressions typed in a simple ASCII notation
 with LaTeX constants will be turned into MathML output to get displayed by
 Firefox, Opera (or other MathML-aware browsers) on the fly.
 
+Molly was also ehnahced with "chunk links". Those work like unix filesystem
+"soft links" and allow a programmer create "virtual views" of his code.
 
 CURRENT VERSION FEATURES:
 
@@ -36,7 +38,9 @@ CURRENT VERSION FEATURES:
 	(not checked fully)
     * can print comments with line numbers referring to the Lit Source in
 	the tangled output
-
+    * further enhances traditional LitProg with "Virtual Views" with
+	LINKED_CHUNKs, which are like unix soft links to code chunks
+	from any place in your document.
 
 This script is a test of the concept (LitProg+folding+dynamic web formatting)
 

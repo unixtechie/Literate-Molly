@@ -687,6 +687,34 @@ for(i=1; i <= 10000; i++){
     };
 }
 
+
+// DELETING a CLONE -- this works too:
+function DeleteVirtualNode(someid) {
+    
+    elem = document.getElementById(someid);
+
+    while (elem.childNodes.length > 0) {
+    elem.removeChild(elem.firstChild);
+    }  
+}
+
+// CREATING a CLONE - this works
+/* for clean execution - run "delete" before any creation */
+function CreateVirtualNode(clone_from_id, append_to_id){
+        DeleteVirtualNode(append_to_id);
+
+    if ( document.getElementById(append_to_id).childNodes.length == 0 ) {
+    var elem = document.createElement("div");
+
+    elem = document.getElementById(clone_from_id).cloneNode(1);
+    elem.style.display = 'block';
+    document.getElementById(append_to_id).appendChild(elem); 
+
+    } /* fi - do not create duplicates of the cloned node */ 
+    
+}
+
+
 </script>
 
 <style type="text/css" media="screen">
@@ -817,13 +845,38 @@ PRE     {
         }
 
 .lnum {
-
         color: #a0a0a0;
-        /background: #fbfbfb;
         }
 
 .unhilited {background-color:white}
 .hilited {background-color:#c0c0ff}
+
+.linked_chunk {
+        PADDING-RIGHT: 5px; 
+        PADDING-LEFT: 5px; 
+        PADDING-BOTTOM: 5px; 
+        PADDING-TOP: 5px; 
+        BORDER-TOP: #c0c0c0 1px solid;
+        BORDER-RIGHT: #c0c0c0 1px solid; 
+        BORDER-LEFT: #c0c0c0 1px solid;
+        BORDER-BOTTOM: #c0c0c0 1px solid;              
+        color: #505050;
+        background: #ffffff;
+        }
+
+.linked_chunk_legend {
+        PADDING-RIGHT: 5px; 
+        PADDING-LEFT: 5px; 
+        PADDING-BOTTOM: 3px; 
+        PADDING-TOP: 3px; 
+        BORDER-TOP: #c0c0c0 1px solid;
+        BORDER-RIGHT: #c0c0c0 1px solid; 
+        BORDER-LEFT: #c0c0c0 1px solid;
+        BORDER-BOTTOM: #c0c0c0 1px solid;              
+        color: #505050;
+        background: #ffffff;
+        }
+
 
 
 </STYLE>
@@ -835,8 +888,6 @@ head_end
 $html_body_table = "<center><table class='outertable'><tr><td>";
 $html_body_table_end = "\n</td></tr></table></center></body></html>\n";
 
-
-        
 
 $folding_section_start1_str = <<'fold_sect_start_1_xxx';
         <fieldset><legend><a href="javascript:;" onmousedown="toggleCombined('$section_num');">
@@ -872,12 +923,10 @@ collapse all</a>
 folding_section_end_xxx
 
 
-$code_frameset_start_pre = "<pre><fieldset class='codefieldset'><legend class='codelegend'>";
-$code_frameset_start_post = "=</legend>";
-$code_frameset_end = "</fieldset></pre>\n";
-
-
-
+#$code_fieldset_start_pre = q(<pre><fieldset class='codefieldset' id='$codechunk_id'><legend class='codelegend'>);
+$code_fieldset_start_pre = q(<pre><fieldset class='codefieldset'><legend class='codelegend'>);
+$code_fieldset_start_post = "=</legend>";
+$code_fieldset_end = "</fieldset></pre>\n";
 
 
 #2. accumulate result in a buffer
@@ -889,8 +938,9 @@ $code_frameset_end = "</fieldset></pre>\n";
  $chunkbuf = ''; # collects whole formatted project file in memory
  $tocbuf = "";  # will accumulate TOC contents, i.e. small
  @indbuf = ();  # accumulates index of code chunks, small
- #%indbuf = ();
- @headings = ();        # the stack for nested subsections numbers/ids
+ @headings = ();  # the stack for nested subsections numbers/ids
+ %headings_id_hash = ();
+ %chunks_id_hash = ();
 
  $section_num = 0;
  $section_num_prev = 0;
@@ -908,7 +958,7 @@ $line_counter++;
 
 if ( ($line_counter == 1) && (m!^#.*perl!) ) {
 
-        # this is the mollifying template or some perl script.
+        # Matched? - this must be either the mollifying template or some perl script.
         
         do {
             $_ = <LITSOURCE>;
@@ -938,26 +988,48 @@ if ( ($line_counter == 1) && (m!^#.*perl!) ) {
 
 
 if ( m!^<\<(.*)>\>=! ... m!^@\s*$! ) { # -- CODE CHUNKS -- 
-        $chunk_title = $2;
 
         s/&/&amp;/g;    # escape &
         s/</&lt;/g;     # escape <
         s/>/&gt;/g;     # escape >
+        my $codechunk_id = "";
 
-        if (m!(&lt;&lt;(.+?)&gt;&gt);(=)?!) 
+      if ( m!(&lt;&lt;(.+?)&gt;&gt;)(=)?! ) 
           {
+          $chunk_title = $2;
           $reference = $1;
           $ind_str = "&lt;&lt;$2&gt;&gt; $section_num";
-          if (defined $3) {$ind_str .= "<sub>def</sub>"}
+          if (defined $3) {$ind_str .= "<sup>def</sup>"}
           else { s!$reference!<font class='chunkref'>$reference</font>! }
 
           unshift @indbuf, $ind_str;
 
+        # /.. "if" is not finished in this chunk yet.. read on/
+
+            # cut-in for virtual links handling: create codechunk_id 
+            if (defined $3) {
+            
+                $codechunk_id = 'codechunk' . $.;
+                push @{$chunks_id_hash{$chunk_title}}, $codechunk_id; # with splinters
+
+                my $splinter_number = '';
+                $splinter_number = @{$chunks_id_hash{$chunk_title}}
+                    if @{$chunks_id_hash{$chunk_title}} > 1;
+
+                # simple fieldset frames around code snippets if chunk definition
+                # /changing current line $_ which will get appended to $chunkbuf/
+                s!^&lt;&lt;(.+)&gt;&gt;=!
+                <div id=$codechunk_id>
+    $code_fieldset_start_pre&lt;&lt;$1&gt;&gt<sub>$splinter_number</sub>$code_fieldset_start_post!x;
+
+            } # fi - cut-in for virtual chunk links
+
         } # fi - chunks index accumulation
 
-        # simple fieldset frames around code snippets
-        s!^(goto)?&lt;&lt;(.+)&gt;&gt;=!$code_frameset_start_pre$1&lt;&lt;$2&gt;&gt;$code_frameset_start_post!;
-        s!^@\s*$!$code_frameset_end!;
+
+        # close fieldset frame at end of code chunk
+        s!^@\s*$!$code_fieldset_end</div>!;
+
 
         if ( $line_numbering ) { 
         $chunkbuf .= "<font class='lnum'>" . $line_counter . "</font>   " . $_;
@@ -996,10 +1068,11 @@ elsif ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/
                 $section_level = $2;
                 $section_title = $3;
 
+                # add-on for virtual nodes; DEBUG for now
+                $stripped_section_title = $section_title;
+                $stripped_section_title =~ s!\s*(.*\S)\s*!$1!;
+                $headings_id_hash{$stripped_section_title} = $section_num;
 
-        
-
-        
 
         $folding_section_start1 = $folding_section_start1_str;
         $folding_section_start2 = $folding_section_start2_str;
@@ -1014,7 +1087,6 @@ elsif ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/
 
 
         $section_id = $section_level . '-' . $section_num;
-
 
         # finish previous subsection if not the first section in the file
         # ..and deal with nesting of sections according to their "depth level"
@@ -1046,6 +1118,7 @@ elsif ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/
                 }
         } # fi not the first section
 
+        # end of "finish previous subsection if not the first section in the file"
 
         # common operations             
         unshift @headings, $section_id ;
@@ -1072,8 +1145,7 @@ elsif ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/
                     $line_counter . ")</i></font>" .
                     "</b></a><br>\n";
 
-} #; fisle: end elif headings
-        
+} #; fisle: end elif headings        
 
 
 
@@ -1180,7 +1252,12 @@ else { # this is the body of the doc section
                 
 
 
-} # esle, fi -- end of selection of doc heading, end, or body inside 'while' over the file.
+    if (m!^\s*\[\[LINKED_CHUNK(_\d+)?\s+(.*\S)\s*\]\]\s*<br>$!) { # -- CHUNK LINKS --
+        my $index_str = "&lt;&lt;$2&gt;&gt; " . $section_num . "<sup>link</sup>";
+        unshift @indbuf, $index_str;
+    }
+
+} # esle, fi -- end of processing inside 'while' over the file lines.
 
 
     # debug
@@ -1203,15 +1280,19 @@ close LITSOURCE;
 
 #3. print out the TOC, the Chunks Index, the output buffer and close the page.
 
-  # begin the page:
-  #print '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">', "\n";
+# begin the page:
+
+  # /disabled doctype line/
+  #print  '<!DOCTYPE HTML PUBLIC "- blab-bla>', "\n";
+
   print "<html>\n  $html_head\n <body>  $html_body_table \n";
 
-  # print out the TOC, the Chunks Index, the output buffer and close the page.
+# print out the TOC, the Chunks Index, the output buffer and close the page.
 
 
 print <<end_of_print;
-<p><fieldset class='tocfieldset'><legend><b>TABLE OF CONTENTS: outline of the document structure</b></legend>
+<p><fieldset class='tocfieldset'>
+<legend><b>TABLE OF CONTENTS: outline of the document structure</b></legend>
 
 <ul>
 <p>
@@ -1292,8 +1373,9 @@ print <<end_of_print;
 <div id='indbuf' style='display:$ind_expanded' style='background:#ffffff'> 
 <ul>
 <p>
-<b>"Def" subscript</b> means the chunk is defined, while a bare number means 
-<br>the chunk is being used in the given section.
+A <b>"def" superscript</b> means the chunk is defined,<br>
+a <b>"link"</b> that the chunk is being linked to from that section,<br>
+and a <b>bare number</b> means the chunk is being used in a section.
 <p>
 end_of_print
 
@@ -1346,8 +1428,123 @@ end_of_print
  print "</ul></fieldset><p>\n<br>";
 
 
-# The FULL OUTPUT, the file body:
-        print $chunkbuf;
+#The FULL OUTPUT, the file body (with links handling  added):
+
+sub print_chunk_link {
+
+(my $name_of_linked_chunk, $virtual_id, my $created_clone_div_id, my $shown_splinter_num) = @_;
+
+print <<"end_of_clone_sect";
+
+        <fieldset class='linked_chunk'>
+        <legend class='linked_chunk_legend'>
+        $lt_esc$lt_esc$name_of_linked_chunk$gt_esc$gt_esc $shown_splinter_num
+        <font size=-2><i>
+        <a href="javascript:;"
+        onmousedown="CreateVirtualNode('$virtual_id', '$created_clone_div_id');"
+        > [open] </a>
+        <a href="javascript:;"
+        onmousedown="DeleteVirtualNode('$created_clone_div_id');"
+        > [close]</a></i></font>
+        </legend>
+        <div id="$created_clone_div_id">
+        </div>
+        </fieldset>
+
+end_of_clone_sect
+
+        # a DEBUG printout:
+        #for (keys %chunks_id_hash) {print "[$_] => $chunks_id_hash{$_}<br>\n"}
+
+        #<br>DEBUG: trying to clone [[$1]] whose id is [$virtual_id] 
+        #OR [$chunks_id_hash{$name_of_linked_chunk}]
+
+} # bus -- printing out formatted CHUNK_LINK cloning line
+
+
+my $clonebody_cnt = 0;
+
+while ($chunkbuf =~ m!^(.*)$!gm ) { # -- line by line iteration over the doc as string in mem
+    my $printed_line = $1;
+
+
+if ($printed_line =~ m!^\s*\[\[LINKED_CHUNK(_\d+)?\s+(.*\S)\s*\]\]\s*<br>$!) { # -- CHUNK LINKS --
+
+    my $name_of_linked_chunk = $2;
+
+    if ($1) { # printing a single splinter LINKED_CHUNK_N of a given number
+        my $splinter_cnt = (substr $1, 1);
+        $virtual_id = $chunks_id_hash{$name_of_linked_chunk}[$splinter_cnt-1]; 
+        my $created_clone_div_id = "clonebody" . $clonebody_cnt;
+        $clonebody_cnt++;
+        my $shown_splinter_num = "(" . $splinter_cnt . ")" ;
+
+        print_chunk_link($name_of_linked_chunk, $virtual_id, $created_clone_div_id, $shown_splinter_num);
+
+    }
+    else { # regular case: printing all splinters of a LINKED_CHUNK
+        for (my $splinter_cnt=0;
+                exists $chunks_id_hash{$name_of_linked_chunk}[$splinter_cnt]; )
+        {
+
+        my $virtual_id = $chunks_id_hash{$name_of_linked_chunk}[$splinter_cnt++];   
+        my $created_clone_div_id = "clonebody" . $clonebody_cnt;
+        $clonebody_cnt++;
+
+        my $shown_splinter_num = 
+                "(" . $splinter_cnt . ")" 
+                        if $splinter_cnt > 1;
+
+        print_chunk_link($name_of_linked_chunk, $virtual_id, $created_clone_div_id, $shown_splinter_num);
+
+
+        } # rof over chunk splinters
+    }
+    
+} # fi treatment of LINKED_CHUNKs   
+
+
+
+=head I DO NOT LIKE SECTION LINKS. DISABLED (at least for now)
+
+    elsif ($printed_line =~ m!^\s*\[\[LINKED_SECTION\s+(.*\S)\s*\]\]\s*<br>$!) { # --SECTION LINKS--
+
+        my $virtual_id = $headings_id_hash{$1};    # this works with sections
+        my $created_clone_div_id = "clonebody" . $clonebody_cnt;
+        $clonebody_cnt++;
+
+print <<"end_of_clone_sect";
+        <fieldset><legend>
+        <b><i><font color=darkblue>Linked Section:</i></b></font>
+        <font color=green> $lt_esc$lt_esc$1$gt_esc$gt_esc </font></i><br>
+        <font size=-2>
+        <a href="javascript:;"
+        onmousedown="CreateVirtualNode('$virtual_id', '$created_clone_div_id');" id="virttoc14"
+        >[open] </a>
+        <a href="javascript:;" 
+        onmousedown="DeleteVirtualNode('$created_clone_div_id');" id="virttoc15"
+        > [close]</a>
+        </font></legend>
+        <div id="$created_clone_div_id" name="virtual_clone"></div>
+        </fieldset>
+end_of_clone_sect
+
+        # a DEBUG printout:
+        #for (keys %headings_id_hash) {print "[$_] => $headings_id_hash{$_}<br>\n"}
+        #<br>DEBUG: trying to clone [[$1]] whose id is [$virtual_id] OR [$headings_id_hash{$1}]
+
+    }
+
+=cut
+
+
+    else{ # -- BODY OF THE DOCUMENT--  no virtual links met. Just print
+
+            print $printed_line, "\n"; 
+
+    } # 
+
+} # eliwh - end of line-by-line iteration over the buffer string in memory 
 
 
 # close the page
