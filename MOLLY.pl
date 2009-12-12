@@ -1311,9 +1311,9 @@ close LITSOURCE;
 
 # begin the page:
 
-  # /disabled doctype line/
-  print q(<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
-                   "http://www.w3.org/TR/html4/loose.dtd">), "\n";
+  # /disabled doctype line/ - it garbles output of TOC (!!)
+  #print q(<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+  #                 "http://www.w3.org/TR/html4/loose.dtd">), "\n";
 
   print "<html>\n  $html_head\n <body>  $html_body_table \n";
 
