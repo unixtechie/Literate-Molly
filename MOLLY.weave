@@ -154,7 +154,14 @@ I am not going to tangle the 2 pieces together at the moment -- therefore "*" is
 .h2. ./h2.
 
 #-------------------------------------------------------------------------------------
-{{{2 .h2. PART 0 ----------- Краткое описание для русских пользователей ------------ ./h2.
+{{{2 .h2. PART I ----------- CONCEPTS ------------ ./h2.
+#-------------------------------------------------------------------------------------
+
+If you do not know what Literate Programming is already, skip this section.
+This is mostly argument.
+
+#-------------------------------------------------------------------------------------
+{{{3 .h3. Краткое описание для русских пользователей ./h3.
 #--------------------------------------------------------------
 
 .b. 1. Что такое Molly? ./b. 
@@ -239,16 +246,11 @@ Yep, computer geeks are passionate souls. Программисты пассио�
 
 .i. .b. ..not finished yet.. раздел не завершен.. ./b../i.
 
-}}}2
-
-.h2. ./h2.
-
-#-------------------------------------------------------------------------------------
-{{{2 .h2. PART I ----------- Concepts. Controlling human attention.------------ ./h2.
-#-------------------------------------------------------------------------------------
+}}}3
 
 
-.b. LP as "management of thinking" ./b. 
+
+.h3. LP as "management of thinking" ./h3. 
 
     If you never heard of Literate Programming, please read something like the Wikipedia
     article .a. http://en.wikipedia.org/wiki/Literate_programming ./a.
@@ -256,41 +258,52 @@ Yep, computer geeks are passionate souls. Программисты пассио�
     but excellent article  on the subject (linked from the site).
     .a. http://www.cs.tufts.edu/~nr/noweb ./a.
 
-    .b. .i. L.P. is a technique for "management of thinking" that helps to relieve short-term memory
-    of "housekeeping" tasks when creating complicated texts and "splits levels" for 'global thinking"
-    and "local changing" ./i. ./b.
+    I could actually offer three different definitions of L.P.
 
-    The biggest problem in managing complex texts of any kind - programming simply being the most
-    complicated one, where the text is not supposed contain errors at all - is in holding it all
-    together in one's mind.
+    .b. (1) L.P. is writing programs with arbitrary phrases as pseudocode, which 
+    then become precise new operators of the literate "meta-language", turned
+    into correctly ordered programming statements after "tangling". ./b.
 
-    Human short-term memory is surprisingly tiny, up to 7 to 9 objects simultaneously at any one
-    time, psychologists tell us. Therefore, when faced with larger tasks, humans need to use a number
-    of "aoivdance techniques" to dance around the limitation.
+    .b. (2) L.P. is writing programs from precise specifications, expressed in
+    "normal" human language, rather than with formalized symbols ./b.
 
-    First, we constantly switch levels. E.g. I need to change my program. I remember the general
-    outline of it, so I use that to figure out where to go. On each evel I would probably remember
-    details "inside" each of those larger blocks etc.
+    .b. (3) L.P. is a technique for "management of thinking" that helps to
+    relieve short-term memory of "housekeeping" tasks when creating complicated
+    texts and "splits attention levels" for "global thinking" and "local changing"./b.
+    In this sense the technique is not about programming and is applicable to any
+    texts.
 
-    In my experience a script or a program longer than, say 1000 to 1200 lines becomes a major
-    problem unless special techniques are used to help one's attention.
+    The general feeling when working with L.P. tools is that of "thinking aloud"
+    and writing down notes of your thoughts in the order of your thinking.
+
+    The biggest problem in managing complex texts of any kind - programming simply
+    being the most complicated one - the texts are supposed to contain no errors at
+    all - is in holding it all together in one's mind.
+
+    Human short-term memory is surprisingly tiny, up to 7 to 9 objects simultaneously
+    at any one time, psychologists tell us. Therefore, when faced with larger tasks,
+    humans need to use a number of "aoivdance techniques" to dance around the limitation.
+
+    In my experience a script or a program longer than, say 1000 to 1200 lines becomes
+    a major problem unless special techniques are used to help one's attention.
 
     In programming, probably 90% of "chunking", i.e. division into procedures, or "objects" or
     "functions" are not needed for the machine. They are done .b. simply for the humans not
     to lose the thread of their thinking. ./b. Whithout this things would become totally 
     unmanageable.
 
-    Here comes also the idea of "writing domain-specific languages": humans chunk lower-level
-    operations into a new 'unit' or 'abstraction', then manipulate with higher-level abstractions
-    over abstractions over abstractions over abstractions..
+    This is why people write "domain-specific languages": humans chunk lower-level
+    operations into a new 'unit' or 'abstraction', then manipulate higher-level
+    abstractions over abstractions over abstractions over abstractions..
 
-    "Literate Programming" is not a programming-specific technique that allows us to create arbitrary
-    systems of abstractions .i. with phrases in a human language ./i. - "in pseudocode" - while staying
-    precise in our specification opf the final product. Everyone knows that explanation with
-    pseudocode are helpful - that was the way we learned of the subject of programming in the first
-    place. Most if not all textbooks are written in this way.
+    "Literate Programming" is not a programming-specific technique that allows us to
+    create arbitrary systems of abstractions .i. with phrases in a human language ./i.
+    - "in pseudocode" - while staying precise in our specification of the final product.
+    Everyone knows that explanation with pseudocode are helpful - that was the way we
+    learned of the subject of programming in the first place. Most textbooks are written
+    in this way.
 
-    So L.P. .b. is an alternative to procedures and subroutines in the machine language ./b.
+    So L.P. .b..i. is an alternative to procedures and subroutines in the machine language ./i../b.
 
     For example, I can easily write and maintain na LPSource file with
 
@@ -312,31 +325,32 @@ Yep, computer geeks are passionate souls. Программисты пассио�
     a human mind would not be able to keep the thread, it would have lost it, while  all the
     introduced paraphenalia is totally unnecessary for the machine execution.
 
-    Subroutines or functions are sometimes necessary. To give one example: to create a recursive
+    Subroutines or functions are sometimes necessary. To give one example - to create a recursive
     invocation the programmer uses the built-in ability of a function to push its current state
     on the stack and then to automatically pick up where left upon returning.
     But probably 90% of all sub-dividing in programming is done just for the humans not to get
     lost in the sea of code.
 
-    So, .ul. .i. .b. Literate Programming is a system of free-form macros in a natural human 
+    So, a slightly expanded third definition, which is relevant to my attempt to marry L.P. and
+    outlining is:
+    .ul. .i. .b. Literate Programming is a system of free-form macros in a natural human 
     language used as an alternative to programming language procedures 
     (functions) when those serve as props to limit load on human attention
     span, and totally unnecessary for machine execution in themselves ./b. ./i. ./ul.
 
 
-.br.
-.b. Three problems with L.P. -- unification of L.P. and folding ./b.
+.h3. Three problems with L.P. -- unification of L.P. and folding ./h3.
 
     Donald Knuth first was thinking of how to document his code when he created a mish-mash of
     previous attempts at similar management techniques with macros, which he called "WEB" (at
     the time when no "www-web" existed yet).
-    Then he proclaimed this is the best way to write programs he knows, and repositioned it
+    Then he proclaimed this was the best way to write programs he knows, and repositioned it
     as "a programming paradigm", in direct competition to the "structural programming",
     introduced in the previous decade.
 
     Acceptance of this new method of program writing however was disappointing. I believe, there
     were and still are three factors at play, which hurt it, even though the name of L.P. creator
-    ensured L.P. never fell into complete obscurity.
+    ensured L.P. would never fall into complete obscurity.
 
     .ul.
         .li. .b. First, L.P. used TeX as a formatting tool ./b., which is a sort of programming language in
@@ -398,14 +412,15 @@ Yep, computer geeks are passionate souls. Программисты пассио�
     keep an internal mental map of the document .i. before ./i. reading it and inability to see more than
     one snippet puts a stop to perception: once the snippet is left, one has to rely on memory of
     previously read pieces to relate things to each other.
+
     Nor the split HTML, nor the flat file format provide for human-friendly perception of code
     unless it is  a small short self-contained piece.
     
 
     .i. A document that is based on a structure of folding subsections ./i. drastically increases
     one's attention span, allows to manage easily thousands and thousands of lines of text, and
-    makes inclusion of many different types of files into what becomes one .i. Literate Source Project
-    file ./i. "a cinch".
+    makes easy an inclusion of many different types of files into what becomes one .i. Literate 
+    Source Project file ./i. .
 
     A number of techniques becomes possible which have not been possible before in a flat file. 
     Snippets testing language constructs, doubling certain "chunks" while keeping a pointer in a
@@ -444,12 +459,14 @@ Yep, computer geeks are passionate souls. Программисты пассио�
 
  .<. img src=eeerotate.jpg align=right hspace=5 width=200 border=2 .>.
 .i. .b. A prerequisite of sorts ./b.
-Use a vertically rotated screen (with an external keyboard and mouse on
-a notebook) or a large  enough screen to see a vertically positioned A4
-sheet of paper to obtain full advantages of outlining and folding 
-Psychologically, the more we see, the more "clever" we are. Stop reading
-compicated documents through a slit: with mental perception crippled, 
-you'll just jump between fragments, and never truly "get" them in whole. ./i. .b. >>> ./b.
+Use a vertically rotated screen (with an external keyboard and mouse
+on a notebook) or a large  enough screen to see a vertically positioned
+A4 sheet of paper to obtain full advantages of outlining and folding 
+Psychologically, the more we see, the more "clever" we are.
+
+.b.Stop reading compicated documents through a slit./b.: with mental
+perception crippled,  you'll just jump between fragments, and
+never truly "get the whole picture". ./i. .b. >>> ./b.
 
 Rotation on Linux is done by running .pre. xrandr -o right|left|normal ./pre.
 from an X terminal window. Most modern video cards support this.
@@ -463,30 +480,37 @@ from an X terminal window. Most modern video cards support this.
     ./li. .li. I write my Literate Source file in a vim editor. I mark up
     the documentation section (i.e. not code) with most basic HTML tags
     (e.g. <h2>, <b>, <ul> ...). 
-    The code sections live between "< < section name > > =" and "@" 
+    The code sections live between "<<section name>> =" and "@" 
     (in the first position in the line), as is required by "noweb"
     literate programming tools. Other code sections can be referred to
-    from inside code section with < <name of section referred to> >.
+    from inside code section with "<<name of section referred to>>".
 
     ./li. .li. I view my file in a web browser, and reload the page after editing updates.
-    Because I write my Literate Source with help from the MOLLY.pl script (see below how to 
-    set it up), every "heading" in HTML (i.e.  h1,  h2  etc. ) automatically becomes a .b. 
-    folding subsection ./b. of the document I see in the browser, and every code section is 
-    automatically formatted with line numbers and a frame.
+    Because I write my Literate Source with help from the MOLLY.pl script
+    (see below how to  set it up), every "heading" in HTML (i.e.  h1,  h2  etc. )
+    automatically becomes a .b. folding subsection ./b. of the document I see in
+    the browser, and every code section is  automatically formatted with line
+    numbers and a frame.
 
-    ./li. .li. When I think ("globally"), I look at the formatted, immediately updating document
-    in the browser, keeping open only the sections relevant to my thinking.
-    When I edit, I refer to the line numbers, and avoid navigating "blindly" in the programming
-    editor, stressing my memory. I edit "locally".
+    ./li. .li. When I think ("globally"), I look at the formatted, immediately updating
+    document in the browser, keeping open only the sections relevant to my thinking.
+    When I edit, I refer to the line numbers, and avoid navigating "blindly" in the
+    programming editor, stressing my memory. I edit "locally".
     This is what makes all the difference.
 
-    ./li. .li. Automatically created folding documents allow me a number of techniques and
-    uses impossible previously with flat "literate programming" files.
+    ./li. .li. Automatically created folding documents allow me a number of techniques
+    and uses impossible previously with flat "literate programming" files.
+    Frist, folding HTML and Molly script scale traditional Literate Programming up.
+    Then, not only can I avoid stressing memory, but I can also create "virtual
+    views" on code that allow me to maintain, debug or develop some aspects of the
+    code while totally excluding everything irrelevant, or allow to document overviews
+    of functionality, while keeping only scribbles and notes needed for immediate 
+    programming alongside actual code, etc. etc. etc.
 
     ./li. .li. I tangle the created code either directly with a built-in Molly tangler, with
     "notangle" tools from "noweb", or by running "MyProject.tangle", which is a link to 
-    "MyProject.weave", the actual main Literate Source file turned into a perl script by inclusion
-    of the MOLLY.pl into it.
+    "MyProject.weave", the actual main Literate Source file turned into a perl script by
+    inclusion of the MOLLY.pl into it.
 ./ol.
 
 See details about this setup and possible uses of it below.
@@ -4276,8 +4300,8 @@ PRE     {
         background: #ffffff; 
         color: #00b;
         FONT-WEIGHT: bold;  
-        /font-variant: small-caps;
-        /font-style: italic;
+        <!--font-variant: small-caps; -->
+        <!--font-style: italic; -->
         }
 
 
@@ -4287,7 +4311,7 @@ PRE     {
         background: #f6f6f6;
         /font-style: italic;
         font-weight: bold;
-        /font-variant: small-caps;
+        <!--font-variant: small-caps; -->
         }
 
 
@@ -4358,7 +4382,7 @@ PRE     {
         background: #ffffff;
         }
 
-
+a:visited { color: darkblue; }
 
 </STYLE>
 
@@ -4737,24 +4761,43 @@ output buffer for printing TOC with needed indentation, "$tocbuf"
         $chunkbuf .= $folding_section_start1;
         $chunkbuf .= "<font class='lnum'><i>(" . $section_num . ")</i></font>"
             . "&nbsp;" . $section_title
-            . "</a>&nbsp;<a><font class='lnum' size=-1><sub><i>(line "
-            . $line_counter . ")</i></sub></font>"; 
+            . "</a>&nbsp;<font class='lnum' size=-1><sub><i>(line "
+            . $line_counter
+            . ")</i></sub></font>"; 
+
+        $chunkbuf .= " <font size=-2><i><a href='#tocancor'>toc</a></i></font>";
+
+        #for F-links
+        $chunkbuf .= "<a name='" . $section_num . "'>"; 
 
         $chunkbuf .= $folding_section_start2;
 
         #$chunkbuf .= "\n" . "<font class='lnum'><i>------ line " . $line_counter . 
         #           " ------</i></font><br>\n";
 
-        # open_all_above(someid) - for quick navigation
-        $tocbuf .=  
-                q/&nbsp;<a href="javascript:;" onmousedown="open_all_above(/  
+        # TOC Navigation: open all parents, then junp to section
+        my $open_all_and_jump =  
+                q/&nbsp;<a href="#/
+                . $section_num
+                . q/" onmousedown="open_all_above(/  
+                . $section_num . 
+                q/);" >/ . '))</a>';
+
+
+        # TOC Navigation: open_all_above(someid)
+        $tocbuf .= 
+                $open_all_and_jump . "&nbsp;" 
+                . q/&nbsp;<a href="javascript:;" onmousedown="open_all_above(/  
                 . $section_num . 
                 q/);" >/ . '<i>' . $section_num . '</i></a>';
 
-        $toc_indent = "&nbsp;"x5 . "." x (($section_level-1) * 7);
+        $toc_indent = "&nbsp;"x4 . "." x (($section_level-1) * 7);
+
+        # old-disabled
         #$toc_indent = "&nbsp;" x ($section_level * 7);
         #$toc_indent = "&nbsp;" x (($section_level-1) * 7 );
         #$tocbuf .= "\n<p>\n" if ( $section_level == 1 ); 
+
         $tocbuf .= $toc_indent . 
                 #--disabled--#"<i>" . $section_num . "</i>" .
                 qq/&nbsp;<a href="javascript:;" onmousedown="toggleCombined(/ .  
@@ -4763,7 +4806,10 @@ output buffer for printing TOC with needed indentation, "$tocbuf"
                 qq/"><b>/ .
                 $section_title . "</a>&nbsp;<a><font class='lnum' size=-1><i>(line " .
                     $line_counter . ")</i></font>" .
-                    "</b></a><br>\n";
+                    "</b></a>";
+
+        # and end the line
+        $tocbuf .= "<br>\n";
 
 
 
@@ -4914,10 +4960,12 @@ print <<end_of_print;
 <br>larger file, at which other points one must fill in values or adjust
 <br>invocation etc. <i>immediately makes the user "more intelligent"</i>
 <p>
-</li><li><b>To toggle</b> a section open/closed, click on the <i>corresponding link</i>
+</li><li><b>TOC: to toggle</b> a section open/closed, click on the <i>corresponding link</i>
 <br>Remember to open <i>all sections above it</i> for it to become visible.
-</li><li><b>To open all sections above</b> some internal subsection to make
-<br>it visible, click on the <i>section number</i> in the leftmost column.
+</li><li><b>TOC: to open all sections above</b> some internal subsection to make
+<br>it visible, click on the <i>section number</i> in the column on the left.
+</li><li><b>TOC: to open all above and jump</b> click on the leftmost symbol.
+<p>
 </li><li><b>To restore the default view</b> <i>reload</i> the page in the browser.
 <p>
 </li><li>
@@ -4948,14 +4996,15 @@ print <<end_of_print;
 <br>
 <p>
 <div class='hl' align=center>
-<!--i><font size=-3> expand all -- collapse all</font></i-->
+<p>
 <a href="javascript:;" onmousedown="toggleDiv('tocmain');">
 <b>TABLE OF CONTENTS [expand/collapse]</b></a>
-<font size=-2 color=grey40><p>
-<i>Clicking on the subsection number on the left
-<br>will open all parent sections to make it visible.
+<a name="tocancor"></a>
+<font size=-1 color=grey40><i>
+<p><b>Section name</b> toggles expanded state. <b>Subsection number</b> on the left opens
+<br>all parent sections to make it visible. <b>Leftmost symbol</b> opens parents and
+<br>jumps to the section.
 </i></font>
-
 </div>
 
 <div id='tocmain' style='display:$toc_expanded' style='background:#ffffff'> 
@@ -5147,11 +5196,13 @@ while ($chunkbuf =~ m!^(.*)$!gm ) { # -- line by line iteration over the doc as 
 
 <<elsif LINKED_SECTION, create clone-destructclone fieldset>>
 
-    else{ # -- BODY OF THE DOCUMENT--  no virtual links met. Just print
+<<elsif create FLINKs>>
+
+else{ # -- BODY OF THE DOCUMENT--  no virtual links met. Just print
 
             print $printed_line, "\n"; 
 
-    } # 
+} # 
 
 } # eliwh - end of line-by-line iteration over the buffer string in memory 
 
@@ -5201,6 +5252,45 @@ if ($printed_line =~ m!^\s*\[\[LINKED_CHUNK(_\d+)?\s+(.*\S)\s*\]\]\s*<br>$!) { #
 } # fi treatment of LINKED_CHUNKs
    
 @
+
+This creates "flinks" functionality: a link of this kind points to a
+local ancor in the LitSource document ("#blabla"), and it will
+open all parents of a section/element, then jump right there.
+Browser "back" button to return to the location of previous 
+reading works.
+
+One thing is this: while in the TOC I need to use "onmousedown" when
+I call "open_all_above" JS function, here I must use "onclick".
+Looks like a timing problem (?? not sure), and "onclick" seems to heal
+it.
+"Onclick" for the TOC func fails: it opens the parents on the first click,
+then jumps on the second one. The (exact?) opposite of behaviour of the 
+"flink".
+
+<<elsif create FLINKs>>=
+
+elsif ($printed_line =~ m!^(.*)\[\[FLINK\s+(.*\S)\s*\]\](.*)$!) { # --FLINKS--
+
+print $1;
+
+my $virtual_id_ancor = $headings_id_hash{$2};    # this works with sections
+    my $virtual_id_ancor_href = "#" . $virtual_id_ancor; 
+print <<"end_of_clone_sect";
+        <a href="$virtual_id_ancor_href"
+        onclick="open_all_above($virtual_id_ancor);" 
+        ><i>($virtual_id_ancor)</i> $2<sup>flink</sup></a>
+end_of_clone_sect
+
+print $3,"\n";
+
+        # a DEBUG printout:
+        #for (keys %headings_id_hash) {print "[$_] => $headings_id_hash{$_}<br>\n"}
+        #<br>DEBUG: trying to clone [[$2]] whose id is [$virtual_id_ancor] 
+        #OR [$headings_id_hash{$2}] and ancor is $virtual_id_ancor_href
+} # fisle - end of FLINKs
+
+@
+
 
 
 .b. Finally ./b. close the HTML formatting tags at the end of the page:
@@ -5455,7 +5545,6 @@ a hash of "chunk name => ID", to use later as arguments to the JS funcs.
 this lives in 
 [[LINKED_CHUNK process code chunks]]
 
-The implementation is redundant now, as it was created incrementally.
 I trew away the idea of assigning IDs to the "fieldset" elements themselves, 
 and wrapped all code sections in "div" elements, which got the unique IDs,
 generated from word "codechunk" and the line number.
@@ -5463,10 +5552,8 @@ generated from word "codechunk" and the line number.
 Matching on a chunk def puts in the div, and a match on the end of code section
 closes it.
 
-.b. .i. todo ./i. ./b.
-As can be seen from the ref right above, only the last splinter of the chunk
-is visible here. I have to add functionality either to point to the precise
-splinter, and/or to clone all splinters inside a ref
+.b. Same for LINKED_SECTIONs ./b. - in here:
+[[LINKED_CHUNK_1 process section headings]]
 
 
 .b. 4. ./b.  Next, a place to cut the interpolation in is needed.
@@ -5479,7 +5566,6 @@ of $chunkbuf.
 
 [[LINKED_CHUNK_7 print out]]
 
-//see, how it is a wrong splinter, again? -- NEED TO DO IT//
 Again, a cut-in was created and a simple print-out renamed and put out of the way. 
 
 [[LINKED_CHUNK print out - simple]]
@@ -5493,11 +5579,7 @@ in memory with regular expressions
 .b. Two words are reserved now, and the format is: ./b. 
 /i.e. to put a link into your Literate Source, which will then be prettyprinted/
 .ul.
-[[,
-word LINKED_CHUNK or LINKED SECTION, 
-space character(s),
-name of your chunk/sectin verbatim (copy and paste it),
-]]
+  .i.[[LINKED_CHUNK|LINKED SECTION, space(s),name of chunk/sectin verbatim]]./i.
 ./ul.
 This must be on a line by itself, no other nonspace chars are allowed. Space before
 and after is ignored.
@@ -5506,8 +5588,12 @@ and after is ignored.
 
 [[LINKED_CHUNK if LINKED_CHUNK, create clone-destructclone fieldset]]
 
+I actually decided LINKED_SECTIONs were not good and disabled the feature.
+The code is put aside in here:
+
 [[LINKED_CHUNK elsif LINKED_SECTION, create clone-destructclone fieldset]]
 
+[[LINKED_CHUNK elsif create FLINKs]]
 
 .b. 5. Putting links in the Chunks Indes ./b.
 is below in its own subsection
@@ -5515,7 +5601,20 @@ is below in its own subsection
 .b. 6. FOLDING_LINKs ./b.
 
 .. are the same as "LINKED_SECTION", they just refer to a different JS function
-.i..b. --- to be added --- ./b../i.
+
+.b. FLINKs ./b.
+Instead of section links, which open a fieldset frame in which a clone of the
+section is visible, I decided to offer the user FLINKS.
+They work exactly like hyperlinks on ancors in the same document. However
+simple links are not accessible if they are in folded sections. FLINKs will
+open a section and all parents above it, so it becomes visible, then jump
+to it as with a normal link.
+Broweser's "back" button works and allows one to return to the previously
+browsed spot. Make sure to close the flinked sections after reading, or have
+your nicely folded document unnecessary unfolded.
+
+
+.i..b. --- to be finished --- ./b../i.
 
 
 .b. bugs and unfinished stuff ./b.
@@ -5606,7 +5705,9 @@ processing and is available for me in the docsection body.
 
 }}}4
 
-{{{4 .h4. Test of a Virtual Node inclusion ./h4.
+{{{4 .h4. Tests of a chunk link, section link and flink functionality ./h4.
+
+.b. 1. Section links ./b.
 
 [[LINKED_SECTION ADD-ON: Virtual Nodes]]
 
@@ -5614,15 +5715,36 @@ and another section
 
 [[LINKED_SECTION Node Cloning/destruction - JavaScript functions]]
 
+.b. .i. ...disabled now... ./i. ./b.
 
-.. and these are code chunks, not sections:
+.b. 2 and these are code chunks ./b.  not sections
 
 [[LINKED_CHUNK Makefile for split MOLLY-top and MOLLY-bottom]]
 
-.. and another one
+.. and another one with 2 splinters
 
 [[LINKED_CHUNK accumulate result in a buffer]]
 
+.b. 3. ..and FLINKs./b.
+
+standalone flinks on their own lines:
+[[FLINK Node Cloning/destruction - JavaScript functions]]
+[[FLINK My workflow - literate programming with Molly]] 
+
+2. multiple flinks on teh same line
+
+Before the test line ...........
+OK, two flinks: [[FLINK (VIRTUAL VIEW): example of additional markup - dotHTML]] and
+[[FLINK test two - from realistic paper, partially failing]] on two lines
+......... after which another line is coming
+
+Seems without "while-ing" over matches on the same line (or "for"-ing over the list)
+it's not going to work.
+So: enclosing text OK, but ONE FLINK PER LINE until I bother to make the match better.
+(see tangler test script for the idea)
+
+..more to jump around..
+[[FLINK Mathematical Formulae - MathML inside Mollified Literate source files]]
 /end of the tests/
 
 }}}4

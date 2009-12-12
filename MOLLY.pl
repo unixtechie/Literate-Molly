@@ -814,8 +814,8 @@ PRE     {
         background: #ffffff; 
         color: #00b;
         FONT-WEIGHT: bold;  
-        /font-variant: small-caps;
-        /font-style: italic;
+        <!--font-variant: small-caps; -->
+        <!--font-style: italic; -->
         }
 
 
@@ -825,7 +825,7 @@ PRE     {
         background: #f6f6f6;
         /font-style: italic;
         font-weight: bold;
-        /font-variant: small-caps;
+        <!--font-variant: small-caps; -->
         }
 
 
@@ -896,7 +896,7 @@ PRE     {
         background: #ffffff;
         }
 
-
+a:visited { color: darkblue; }
 
 </STYLE>
 
@@ -1144,24 +1144,43 @@ elsif ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/
         $chunkbuf .= $folding_section_start1;
         $chunkbuf .= "<font class='lnum'><i>(" . $section_num . ")</i></font>"
             . "&nbsp;" . $section_title
-            . "</a>&nbsp;<a><font class='lnum' size=-1><sub><i>(line "
-            . $line_counter . ")</i></sub></font>"; 
+            . "</a>&nbsp;<font class='lnum' size=-1><sub><i>(line "
+            . $line_counter
+            . ")</i></sub></font>"; 
+
+        $chunkbuf .= " <font size=-2><i><a href='#tocancor'>toc</a></i></font>";
+
+        #for F-links
+        $chunkbuf .= "<a name='" . $section_num . "'>"; 
 
         $chunkbuf .= $folding_section_start2;
 
         #$chunkbuf .= "\n" . "<font class='lnum'><i>------ line " . $line_counter . 
         #           " ------</i></font><br>\n";
 
-        # open_all_above(someid) - for quick navigation
-        $tocbuf .=  
-                q/&nbsp;<a href="javascript:;" onmousedown="open_all_above(/  
+        # TOC Navigation: open all parents, then junp to section
+        my $open_all_and_jump =  
+                q/&nbsp;<a href="#/
+                . $section_num
+                . q/" onmousedown="open_all_above(/  
+                . $section_num . 
+                q/);" >/ . '))</a>';
+
+
+        # TOC Navigation: open_all_above(someid)
+        $tocbuf .= 
+                $open_all_and_jump . "&nbsp;" 
+                . q/&nbsp;<a href="javascript:;" onmousedown="open_all_above(/  
                 . $section_num . 
                 q/);" >/ . '<i>' . $section_num . '</i></a>';
 
-        $toc_indent = "&nbsp;"x5 . "." x (($section_level-1) * 7);
+        $toc_indent = "&nbsp;"x4 . "." x (($section_level-1) * 7);
+
+        # old-disabled
         #$toc_indent = "&nbsp;" x ($section_level * 7);
         #$toc_indent = "&nbsp;" x (($section_level-1) * 7 );
         #$tocbuf .= "\n<p>\n" if ( $section_level == 1 ); 
+
         $tocbuf .= $toc_indent . 
                 #--disabled--#"<i>" . $section_num . "</i>" .
                 qq/&nbsp;<a href="javascript:;" onmousedown="toggleCombined(/ .  
@@ -1170,7 +1189,10 @@ elsif ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/
                 qq/"><b>/ .
                 $section_title . "</a>&nbsp;<a><font class='lnum' size=-1><i>(line " .
                     $line_counter . ")</i></font>" .
-                    "</b></a><br>\n";
+                    "</b></a>";
+
+        # and end the line
+        $tocbuf .= "<br>\n";
 
 
 
@@ -1343,10 +1365,12 @@ print <<end_of_print;
 <br>larger file, at which other points one must fill in values or adjust
 <br>invocation etc. <i>immediately makes the user "more intelligent"</i>
 <p>
-</li><li><b>To toggle</b> a section open/closed, click on the <i>corresponding link</i>
+</li><li><b>TOC: to toggle</b> a section open/closed, click on the <i>corresponding link</i>
 <br>Remember to open <i>all sections above it</i> for it to become visible.
-</li><li><b>To open all sections above</b> some internal subsection to make
-<br>it visible, click on the <i>section number</i> in the leftmost column.
+</li><li><b>TOC: to open all sections above</b> some internal subsection to make
+<br>it visible, click on the <i>section number</i> in the column on the left.
+</li><li><b>TOC: to open all above and jump</b> click on the leftmost symbol.
+<p>
 </li><li><b>To restore the default view</b> <i>reload</i> the page in the browser.
 <p>
 </li><li>
@@ -1377,14 +1401,15 @@ print <<end_of_print;
 <br>
 <p>
 <div class='hl' align=center>
-<!--i><font size=-3> expand all -- collapse all</font></i-->
+<p>
 <a href="javascript:;" onmousedown="toggleDiv('tocmain');">
 <b>TABLE OF CONTENTS [expand/collapse]</b></a>
-<font size=-2 color=grey40><p>
-<i>Clicking on the subsection number on the left
-<br>will open all parent sections to make it visible.
+<a name="tocancor"></a>
+<font size=-1 color=grey40><i>
+<p><b>Section name</b> toggles expanded state. <b>Subsection number</b> on the left opens
+<br>all parent sections to make it visible. <b>Leftmost symbol</b> opens parents and
+<br>jumps to the section.
 </i></font>
-
 </div>
 
 <div id='tocmain' style='display:$toc_expanded' style='background:#ffffff'> 
@@ -1579,11 +1604,33 @@ end_of_clone_sect
 =cut
 
 
-    else{ # -- BODY OF THE DOCUMENT--  no virtual links met. Just print
+
+elsif ($printed_line =~ m!^(.*)\[\[FLINK\s+(.*\S)\s*\]\](.*)$!) { # --FLINKS--
+
+print $1;
+
+my $virtual_id_ancor = $headings_id_hash{$2};    # this works with sections
+    my $virtual_id_ancor_href = "#" . $virtual_id_ancor; 
+print <<"end_of_clone_sect";
+        <a href="$virtual_id_ancor_href"
+        onclick="open_all_above($virtual_id_ancor);" 
+        ><i>($virtual_id_ancor)</i> $2<sup>flink</sup></a>
+end_of_clone_sect
+
+print $3,"\n";
+
+        # a DEBUG printout:
+        #for (keys %headings_id_hash) {print "[$_] => $headings_id_hash{$_}<br>\n"}
+        #<br>DEBUG: trying to clone [[$2]] whose id is [$virtual_id_ancor] 
+        #OR [$headings_id_hash{$2}] and ancor is $virtual_id_ancor_href
+} # fisle - end of FLINKs
+
+
+else{ # -- BODY OF THE DOCUMENT--  no virtual links met. Just print
 
             print $printed_line, "\n"; 
 
-    } # 
+} # 
 
 } # eliwh - end of line-by-line iteration over the buffer string in memory 
 
