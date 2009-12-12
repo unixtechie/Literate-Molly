@@ -4164,6 +4164,25 @@ for(i=1; i <= 10000; i++){
     };
 }
 
+
+function open_all_above(someid){
+
+    elem = document.getElementById(someid);
+	elem.style.display = 'block';
+	document.getElementById('toc'+someid).className = 'hilited';
+	
+    while (elem.parentNode.id != 1) {
+		if (elem.parentNode.nodeType == 1) {
+		elem.parentNode.style.display = 'block';
+		//document.getElementById(elem.parentNode.id).className = 'hilited';
+		var toc_elem = document.getElementById('toc'+elem.id);
+		if (toc_elem) {toc_elem.className = 'hilited'};
+		}
+		elem = elem.parentNode;
+	}
+}
+
+
 <<Javascript: node clone and destroy clone>>
 
 </script>
@@ -4716,20 +4735,28 @@ output buffer for printing TOC with needed indentation, "$tocbuf"
         # common operations             
         unshift @headings, $section_id ;
         $chunkbuf .= $folding_section_start1;
-        $chunkbuf .= "<font class='lnum'><i>(" . $section_num . ")</i></font>" . "&nbsp;" . $section_title .
-            "</a>&nbsp;<a><font class='lnum' size=-1><sub><i>(line " .
-            $line_counter . ")</i></sub></font>"; 
+        $chunkbuf .= "<font class='lnum'><i>(" . $section_num . ")</i></font>"
+            . "&nbsp;" . $section_title
+            . "</a>&nbsp;<a><font class='lnum' size=-1><sub><i>(line "
+            . $line_counter . ")</i></sub></font>"; 
+
         $chunkbuf .= $folding_section_start2;
 
         #$chunkbuf .= "\n" . "<font class='lnum'><i>------ line " . $line_counter . 
         #           " ------</i></font><br>\n";
 
+        # open_all_above(someid) - for quick navigation
+        $tocbuf .=  
+                q/&nbsp;<a href="javascript:;" onmousedown="open_all_above(/  
+                . $section_num . 
+                q/);" >/ . '<i>' . $section_num . '</i></a>';
 
-        $toc_indent = "&nbsp;" x ($section_level * 7);
+        $toc_indent = "&nbsp;"x5 . "." x (($section_level-1) * 7);
+        #$toc_indent = "&nbsp;" x ($section_level * 7);
         #$toc_indent = "&nbsp;" x (($section_level-1) * 7 );
         #$tocbuf .= "\n<p>\n" if ( $section_level == 1 ); 
         $tocbuf .= $toc_indent . 
-                "<i>" . $section_num . "</i>" .
+                #--disabled--#"<i>" . $section_num . "</i>" .
                 qq/&nbsp;<a href="javascript:;" onmousedown="toggleCombined(/ .  
                 $section_num . 
                 qq/);" id="toc/ . $section_num .
@@ -4737,6 +4764,8 @@ output buffer for printing TOC with needed indentation, "$tocbuf"
                 $section_title . "</a>&nbsp;<a><font class='lnum' size=-1><i>(line " .
                     $line_counter . ")</i></font>" .
                     "</b></a><br>\n";
+
+
 
 } #; fisle: end elif headings
         
@@ -4849,7 +4878,8 @@ Page and the outer formatting table:
 # begin the page:
 
   # /disabled doctype line/
-  #print  '<!DOCTYPE HTML PUBLIC "- blab-bla>', "\n";
+  print q(<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+                   "http://www.w3.org/TR/html4/loose.dtd">), "\n";
 
   print "<html>\n  $html_head\n <body>  $html_body_table \n";
 
@@ -4875,7 +4905,7 @@ print <<end_of_print;
 <div id='tochowto' style='display:none' style='background:#ffffff'> 
 <p>
 <ul>
-<li><b>Collapsing is necessary when</b> you work on some code and must exclude 
+<li><b>Collapsing is necessary when</b> you work on code and must exclude 
 <br>irrelevant sections of the rest of the literate project file. This 
 <br>greatly helps to clear thinking by eliminating a general feeling of 
 <br>being in a maze of code and unnecessary "housekeeping" tasks.
@@ -4883,24 +4913,30 @@ print <<end_of_print;
 <br>mind, and relieving it of the need to remember where things are in a 
 <br>larger file, at which other points one must fill in values or adjust
 <br>invocation etc. <i>immediately makes the user "more intelligent"</i>
-</li><li><b>To toggle</b> a section open/closed, click on the corresponding link
+<p>
+</li><li><b>To toggle</b> a section open/closed, click on the <i>corresponding link</i>
 <br>Remember to open <i>all sections above it</i> for it to become visible.
-</li><li><b>To restore the default view</b> reload the page in the browser.
+</li><li><b>To open all sections above</b> some internal subsection to make
+<br>it visible, click on the <i>section number</i> in the leftmost column.
+</li><li><b>To restore the default view</b> <i>reload</i> the page in the browser.
+<p>
 </li><li>
-<b>To keep some sections open</b> upon each reload - 
-<br>e.g. you work on the code, update it constantly and cannot reopen it 
-<br>again and again - mark their sections in the source file with a plus, 
-<br>i.e. write the opening tag (only)  as +h2, +h3 (in &lt; &gt;  or in dots
-<br>for dotHTML). Again, all sections above must be marked open too. 
-<p><b>Note that</b> "expand all" and "collapse all" disregard these settings.
-<br>Reload the page after using those options to again view the text according 
-<br>to your preferences.
+<b>To keep some sections open</b> upon each reload: supposing you
+<br>work on the code, constantly update it and cannot bother to reopen it 
+<br>again and again - mark the headings for the sections in the source file
+<br>with a plus, i.e. write the opening tag (only)  as +h2, +h3. Again, all
+<br>sections above must be marked open too. 
+<br><b>Note that</b> "expand all" and "collapse all" disregard these settings.
+<br>Reload the page after using those options to again view the text
+<br>according to your preferences.
+<p>
 </li><li>
 <b> To use the Index </b>, click on the numbered sections in the TOC above
 <br>(opening them; use highlighting as a guide; when sections are visible,
 <br>the slider on your browser window  will shorten too), or "expand all", 
 <br>and then use your browser's Find function to highlight all chunk name 
 <br>instances in the visible text
+<p>
 </li><li>
 <b>To search for variables etc.</b>, "expand all" text - or manually 
 <br>expand needed sections - and then use your browser's Find function to 
@@ -4915,6 +4951,11 @@ print <<end_of_print;
 <!--i><font size=-3> expand all -- collapse all</font></i-->
 <a href="javascript:;" onmousedown="toggleDiv('tocmain');">
 <b>TABLE OF CONTENTS [expand/collapse]</b></a>
+<font size=-2 color=grey40><p>
+<i>Clicking on the subsection number on the left
+<br>will open all parent sections to make it visible.
+</i></font>
+
 </div>
 
 <div id='tocmain' style='display:$toc_expanded' style='background:#ffffff'> 
@@ -5470,6 +5511,12 @@ and after is ignored.
 
 .b. 5. Putting links in the Chunks Indes ./b.
 is below in its own subsection
+
+.b. 6. FOLDING_LINKs ./b.
+
+.. are the same as "LINKED_SECTION", they just refer to a different JS function
+.i..b. --- to be added --- ./b../i.
+
 
 .b. bugs and unfinished stuff ./b.
 .ul..li. .s. splinters of the same chunk./s.
