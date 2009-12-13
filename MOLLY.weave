@@ -607,7 +607,7 @@ See details about this setup and possible uses of it below.
     Your Literate Source file can be typed here
 
     <h2> Subsection </h2>
-    level 0-9 of subsections are allowed now.
+    level 0-99 of subsections are allowed now.
 
     Each subsection will be automatically created as "folding". 
     Javascript must be enabled in your browser to use this functionality
@@ -810,9 +810,9 @@ data_dir=/my/home/00trash/tmp/literate.perl/WORKDIR
 #chroot
 
 # extensions understood as valid "cgi" scripts:
-#cgipat=/**.cgi|/**.weave|/**.pl
+cgipat=/**.cgi|/**.weave|/**.tangle|/**.pl
 #cgipat=/**.tangle
-cgipat=/**.weave
+#cgipat=/**.weave
 
 #logfile=/my/home/00trash/tmp/literate.perl/WWW.server/thttpd.log
 logfile=/dev/null
@@ -845,28 +845,25 @@ $PROJECT_ADMIN_DIR/thttpd -C $PROJECT_ADMIN_DIR/thttpd.config
 #----------------------------------------------------
 
 .b. First, ./b.
-    .ul. .li.  code sections begin with "< <name of the section> >="
+    .ul. .li.  code sections begin with "<<name of the section>>="
     in the first position in the line and end with "@"  in the first position
-    .i. no spaces between the double angle brackets - I used spaces as escapes here ./i.
     
-    ./li. .li. References to other code sections are done with "< <name of the ref sect> >"
+    ./li. .li. References to other code sections are done with "<<name of the ref sect>>"
     inside the code sections
 
-    ./li. .li. The rest is "documentation chunks" which must be marked up with some formatting
-    tags. (The default is html).
-
+    ./li. .li. The rest is "documentation chunks" which must be marked up with some
+    formatting tags. The default is html.
      I do not insert examples here, as the file you are reading provides them ad nauseam.
+    ./li../ul.
 
-    THIS IS THE BASIC MARKUP OF THE LITERATE SOURCE FILE, as used by the 
-    "noweb" tools.
+THIS IS THE BASIC MARKUP OF THE LITERATE SOURCE FILE, as used by the 
+"noweb" tools.
 
-    .i. .b. NOTE ./b. ./i. While Molly uses the same markup. .b. "notangle" allows to skip 
-    "@" signs./b. in the first position on the line if the next chunk is also code.
-    .b. Molly insists on full markup. ./b. Molly tangled examples from 'noweb' distribution 
-    correctly when those were canonized to use full notation.
-
-
-    ./ul.
+ .b. NOTE regarding notangle./b.
+While Molly uses the same markup. .i..b. "notangle" allows to skip "@" signs./b../i.
+in the first position on the line if the next chunk is also code.
+.i..b. Molly insists on full markup. ./b../i. Molly tangled examples from 'noweb'
+distribution correctly when those were canonized to use full notation.
 
 .b. Secondly,./b. how do we format the documentation sections?
 
@@ -952,7 +949,7 @@ Currently Molly should be able to take care of most cases.
 
 Exceptions include:
 
-1.  .b. double angle brackets ("< <" and "> >" without spaces in between) and the "at" sign ./b.
+1.  .b. double angle brackets "<<" and ">>" and the "@" sign ./b.
 Those confuse the "notangle" tool from Ramsey's "noweb". While Molly treats
 double angle brackets and "at" as a switch between documentation and a code chunk .i. only
 if those are in the first position in the line ./i., "noweb" stumbles.
@@ -1003,6 +1000,24 @@ For Molly also change the "default" (for the doc sections) from TeX to HTML.
 Vim is also good in the sense that its folding and prompts for symbols, nor its completion
 of HTML tags depend on teh highlighting mode - in simpler editors those depend on each
 other and make life unpleasant.
+
+
+#-------------------------------------------------
+.h4. Navigation in the Folding HTML document ./h4.
+#-------------------------------------------------
+/newer "flinks" etc. - to be added/
+
+#-------------------------------------------------
+.h4. Chunk links and Virtual Views on code ./h4.
+#-------------------------------------------------
+/examples at the end of the Molly code sections (PART III of this document)
+Instructions to be added here/
+
+#-------------------------------------------------
+.h4. Saving multipart work ./h4.
+#-------------------------------------------------
+/add - basically, save as *.mht, which will pack all files into one, that is
+readable by most browsers now/
 
 }}}3
 
@@ -1136,6 +1151,8 @@ and reassemble them at your  will.
 #------------------------------------------------------------------------------
 {{{3 .h3. Mathematical Formulae - MathML inside Mollified Literate source files ./h3.
 #------------------------------------------------------------------------------
+
+.b..i. -- section needs rewriting - too disorganized and redundant -- ./i../b.
 
 .i. The most common reason users put forward for the continued use of (La)TeX in this day 
 is its facility in dealing with mathematical notation. However today much .b. simpler HTML ./b. 
@@ -2891,14 +2908,14 @@ which contains the trailing rubbish).  ./s. -- DONE
 
 .s. NEXT is command-line processing for tangling any given root ./s. --done
 
-NEXT is adding comments with line nums and offsets in teh original Lit Source
-into the tangled out code
+.s. NEXT is adding comments with line nums and offsets in teh original Lit Source
+into the tangled out code ./s.
 
 NEXT is "un-tangling", i.e. reimporting code, changed during testing back into
 LitSource (? possibly)
 
-NEXT possibly - processing over several files, which are mechanical splinters
-of the same Literate Project
+.s. NEXT possibly - processing over several files, which are mechanical splinters
+of the same Literate Project ./s.
 
 }}}6
 
@@ -2912,10 +2929,10 @@ of the same Literate Project
 
 SEEK_PEEK_TANGLER:
 
-        <<pass 1>>
-        <<check for cycles, search for roots>>
-        <<pass 2 and print>>
-        <<main: call the sub>>
+<<pass 1>>
+<<check for cycles, search for roots>>
+<<pass 2 and print>>
+<<main: call the sub>>
 
 exit;
 
@@ -2951,27 +2968,27 @@ declare and initialize some vars
 
 <<pass 1>>=
 
-        <<declarations and initializations>>
-        <<while-loop and peek file ofsets>>
+<<declarations and initializations>>
+<<while-loop and peek file ofsets>>
 
 @
 
 <<declarations and initializations>>=
 
-        my $chunk_beg_pattern = q(^<\<(.*)>\>=);
-        my $chunk_end_pattern = q(^@\s.*$);
-        my $chunk_ref_pattern = q(<\<(.*?)>\>[^=]); # can be used several times in a line
-        
-        my $current_chunk_name = "";
-        my $current_chunk_start_foff = 0;; # "foff" is a "file offset"
-        my $current_chunk_end_foff = 0;
+    my $chunk_beg_pattern = q(^<\<(.*)>\>=);
+    my $chunk_end_pattern = q(^@\s.*$);
+    my $chunk_ref_pattern = q(<\<(.*?)>\>[^=]); # can be used several times in a line
+    
+    my $current_chunk_name = "";
+    my $current_chunk_start_foff = 0;; # "foff" is a "file offset"
+    my $current_chunk_end_foff = 0;
 
-        my %file_offsets_hash = ();
-        my %file_lines_hash = ();
-        my $parents_list = ();
+    my %file_offsets_hash = ();
+    my %file_lines_hash = ();
+    my $parents_list = ();
 
-        my $line_num = 0;
-        my $previous_line_foff = 0; # "foff" is a "file offset"
+    my $line_num = 0;
+    my $previous_line_foff = 0; # "foff" is a "file offset"
 
 @
 
@@ -3076,18 +3093,17 @@ foreach $LITSOURCE_multi(@LITSOURCE_list) {
  while (<$LITSOURCE_multi>) {
     $line_num++;
 
-        # --- CODE CHUNKS -- not inside documentation section
+    # --- CODE CHUNKS -- not inside documentation section
     if ( m!$chunk_beg_pattern! .. m!$chunk_end_pattern! ) {
 
-        <<chunk beginning>>
-        <<chunk ending>>
-        <<chunk reference>>
-        <<chunk body>>
-
+    <<chunk beginning>>
+    <<chunk ending>>
+    <<chunk reference>>
+    <<chunk body>>
 
     } #fi
 
-        $previous_line_foff = tell $LITSOURCE_multi;
+    $previous_line_foff = tell $LITSOURCE_multi;
 
   } # eliwh
 
@@ -3111,12 +3127,10 @@ implicit and hidden
 
 <<chunk body>>=
 
-    else { # chunk body
-
-                ; # nop; here just not to hide an implicit case
-                #~ print "."; # debug: show dots for lines 
-
-    }
+else { # chunk body
+    ; # nop; here just not to hide an implicit case
+    #~ print "."; # debug: show dots for lines 
+}
 
 @
 
@@ -3194,7 +3208,7 @@ Here we'll have to match with continuation and repeat matching in a loop until t
 with matches is exhausted.
 
 <<chunk reference>>=
-    <<chunk reference - multiref inside other text>>
+<<chunk reference - multiref inside other text>>
 @
 
 }}}6
@@ -3446,14 +3460,14 @@ sub topological_sort {
     exit;
     } # fi check for cycles
 
-# -DEBUG-
-#    if ($flag_show_roots){
-#    print "\t--all chunks discovered--\n";
-#    for (@topo_list_out) {
-#        print $_, "\n";
-#    }
-#    exit;
-#    }
+    # -DEBUG-
+    #    if ($flag_show_roots){
+    #    print "\t--all chunks discovered--\n";
+    #    for (@topo_list_out) {
+    #        print $_, "\n";
+    #    }
+    #    exit;
+    #    }
 
 return @topo_list_out;
 #return 1;
@@ -4031,10 +4045,10 @@ from there ??
 
 I'll need some javascript and DOM reference for further work;
 
-a/ http://w3schools.com/htmldom/dom_reference.asp  -- ref from W3C
-b/ http://w3schools.com/htmldom/default.asp -- might also be useful
-c/ http://www.howtocreate.co.uk/tutorials/javascript/domcss --javascript tutorial (not necessarily best) 
-d/ http://www.pageresource.com/dhtml/ryan/part4-1.html - another tutorial
+a/ .a. http://w3schools.com/htmldom/dom_reference.asp ./a.  -- ref from W3C
+b/ .a. http://w3schools.com/htmldom/default.asp ./a. -- might also be useful
+c/ .a. http://www.howtocreate.co.uk/tutorials/javascript/domcss ./a. --javascript tutorial (not necessarily best) 
+d/ .a. http://www.pageresource.com/dhtml/ryan/part4-1.html ./a. - another tutorial
 
 
 }}}4
@@ -4071,7 +4085,9 @@ head_end_1
 
 #switch on ASCIIMathML.js library if enabled in template options:
 if ($enable_ASCIIMathML) {
-$html_head .= "\n" . qq(<script type="text/javascript" src="$path_to_ASCIIMathML"></script>) . "\n";
+    $html_head .= "\n"
+    . qq(<script type="text/javascript" src="$path_to_ASCIIMathML"></script>)
+    . "\n";
     }
 
 $html_head .= <<head_end;
@@ -4132,7 +4148,6 @@ folding_section_end_xxx
 
 <<set formatting strings for weaver>>=
 
-#$code_fieldset_start_pre = q(<pre><fieldset class='codefieldset' id='$codechunk_id'><legend class='codelegend'>);
 $code_fieldset_start_pre = q(<pre><fieldset class='codefieldset'><legend class='codelegend'>);
 $code_fieldset_start_post = "=</legend>";
 $code_fieldset_end = "</fieldset></pre>\n";
@@ -4192,18 +4207,18 @@ for(i=1; i <= 10000; i++){
 function open_all_above(someid){
 
     elem = document.getElementById(someid);
-	elem.style.display = 'block';
-	document.getElementById('toc'+someid).className = 'hilited';
-	
+        elem.style.display = 'block';
+        document.getElementById('toc'+someid).className = 'hilited';
+        
     while (elem.parentNode.id != 1) {
-		if (elem.parentNode.nodeType == 1) {
-		elem.parentNode.style.display = 'block';
-		//document.getElementById(elem.parentNode.id).className = 'hilited';
-		var toc_elem = document.getElementById('toc'+elem.id);
-		if (toc_elem) {toc_elem.className = 'hilited'};
-		}
-		elem = elem.parentNode;
-	}
+        if (elem.parentNode.nodeType == 1) {
+        elem.parentNode.style.display = 'block';
+        //document.getElementById(elem.parentNode.id).className = 'hilited';
+        var toc_elem = document.getElementById('toc'+elem.id);
+        if (toc_elem) {toc_elem.className = 'hilited'};
+        }
+        elem = elem.parentNode;
+    }
 }
 
 
@@ -4227,7 +4242,6 @@ note that  "Javascript: node clone and destroy clone" is in the "virtual" ADD-ON
 
 BODY {
         FONT-SIZE: 10pt;
-        <!--FONT-FAMILY: sans-serif -->
         background: #f0f0f0;
         }
 FIELDSET {
@@ -4268,13 +4282,10 @@ PRE     {
         BORDER-BOTTOM: #a9a9a9 0px solid;        
         background: #fefefe;
         }
-
-
 .tocfieldset {
         background: #ffffff; 
         color: #000000;
         }
-
 .codefieldset {
         BORDER-RIGHT: #000 1px solid; 
         BORDER-TOP: #000 1px solid; 
@@ -4300,30 +4311,19 @@ PRE     {
         background: #ffffff; 
         color: #00b;
         FONT-WEIGHT: bold;  
-        <!--font-variant: small-caps; -->
-        <!--font-style: italic; -->
         }
-
-
-
 .chunkref {
         color: #00b;    
         background: #f6f6f6;
-        /font-style: italic;
         font-weight: bold;
-        <!--font-variant: small-caps; -->
         }
-
-
 .outertable {
         width: 99%; 
         cellpadding: 25; 
         background: #ffffff; 
         border: 1px solid;
         }
-
 .hl     {
-         ;
         PADDING-LEFT: 5px; PADDING-RIGHT: 5px; 
         padding-top: 5px; padding-bottom: 5px;
         MARGIN-BOTTOM: 1px; 
@@ -4334,9 +4334,7 @@ PRE     {
         background: #f5f5f5;    
         width: 70%;
         }
-
 .hl-wide {
-         ;
         PADDING-LEFT: 5px; 
         PADDING-RIGHT: 5px; 
         padding-top: 15px; 
@@ -4348,14 +4346,11 @@ PRE     {
         BORDER-BOTTOM: #a9a9a9 0px solid;        
         background: #fbfbfb;    
         }
-
 .lnum {
         color: #a0a0a0;
         }
-
 .unhilited {background-color:white}
 .hilited {background-color:#c0c0ff}
-
 .linked_chunk {
         PADDING-RIGHT: 5px; 
         PADDING-LEFT: 5px; 
@@ -4368,7 +4363,6 @@ PRE     {
         color: #505050;
         background: #ffffff;
         }
-
 .linked_chunk_legend {
         PADDING-RIGHT: 5px; 
         PADDING-LEFT: 5px; 
@@ -4381,8 +4375,7 @@ PRE     {
         color: #505050;
         background: #ffffff;
         }
-
-a:visited { color: darkblue; }
+a:visited { color: blue; }
 
 </STYLE>
 
@@ -4449,30 +4442,30 @@ This is just to quickly cut out the Molly perly template at the top.
 
 if ( ($line_counter == 1) && (m!^#.*perl!) ) {
 
-        # Matched? - this must be either the mollifying template or some perl script.
-        
-        do {
-            $_ = <LITSOURCE>;
-            $line_counter++;
-            if (eof LITSOURCE) {
-                print "\n\t--------ERROR: wrong target file format for weaving--------\n";
-                print "\tmay be a regular perl script, without a call for Molly\n\n";
-                exit;
-            }
-        } until ( lc($_) =~ m!^do.*molly!) ;    
-        
-        # throw away lines until DATA, then process/weave normally
-        do {
-            $_ = <LITSOURCE>;
-            $line_counter++;
-            if (eof LITSOURCE) {
-                print "\n\t--------ERROR: wrong target file format for weaving--------\n";
-                print "\tdid not find the  __DATA__ keyword  in first pos on its line\n\n";
-                exit;
-            }
-        } until ( m!^__DATA__! ) ;
+    # Matched? - this must be either the mollifying template or some perl script.
+    
+    do {
+        $_ = <LITSOURCE>;
+        $line_counter++;
+        if (eof LITSOURCE) {
+            print "\n\t--------ERROR: wrong target file format for weaving--------\n";
+            print "\tmay be a regular perl script, without a call for Molly\n\n";
+            exit;
+        }
+    } until ( lc($_) =~ m!^do.*molly!) ;    
+    
+    # throw away lines until DATA, then process/weave normally
+    do {
+        $_ = <LITSOURCE>;
+        $line_counter++;
+        if (eof LITSOURCE) {
+            print "\n\t--------ERROR: wrong target file format for weaving--------\n";
+            print "\tdid not find the  __DATA__ keyword  in first pos on its line\n\n";
+            exit;
+        }
+    } until ( m!^__DATA__! ) ;
 
-        next;
+    next;
 
 } # fi cutting out MOLLY.pl template/config  if present in lit.source target file
 
@@ -4650,9 +4643,9 @@ collapsed ('none')
 
 # -- SECTION HEADINGS 
 #elsif ( m!\.(\+)?h(\d)\.(.*?)\./h\d\.! ) {     # old version, no "rawHTML" enabled yet
-elsif ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/h\d{1,2}$tag_close_symbol! ) {  
-
-
+elsif
+  ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/h\d{1,2}$tag_close_symbol! )
+  {  
 
         # -- using split vars for substitution to avoid
         #       regexps and need to keep old state --   
@@ -4661,24 +4654,24 @@ elsif ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/
         $section_num = $section_num + 1;
 
 
-                #default for fold state in "settings" ??
-                if ($1 eq "+") {
-                    $fold_state="block";
-                    $highlight_state = qq!  <script language=javascript> 
-                    document.getElementById("toc"+ $section_num).className='hilited';
-                    </script> !;
-                } 
-                else {
-                    $fold_state="none";
-                    $highlight_state = "";
-                };
-                $section_level = $2;
-                $section_title = $3;
+        #default for fold state in "settings" ??
+        if ($1 eq "+") {
+            $fold_state="block";
+            $highlight_state = qq!  <script language=javascript> 
+            document.getElementById("toc"+ $section_num).className='hilited';
+            </script> !;
+        } 
+        else {
+            $fold_state="none";
+            $highlight_state = "";
+        };
+        $section_level = $2;
+        $section_title = $3;
 
-                # add-on for virtual nodes; DEBUG for now
-                $stripped_section_title = $section_title;
-                $stripped_section_title =~ s!\s*(.*\S)\s*!$1!;
-                $headings_id_hash{$stripped_section_title} = $section_num;
+        # add-on for virtual nodes; DEBUG for now
+        $stripped_section_title = $section_title;
+        $stripped_section_title =~ s!\s*(.*\S)\s*!$1!;
+        $headings_id_hash{$stripped_section_title} = $section_num;
 
 @
         
@@ -4723,28 +4716,28 @@ Array @headings keeps a stack of headings met during parsing.
         # this is NOT the first section:
         if ( exists $headings[0] ){
 
-                ($prev_section_level, $prev_section_num)  = split /-/, $headings[0];
+            ($prev_section_level, $prev_section_num)  = split /-/, $headings[0];
 
-                if ($section_level == $prev_section_level){
+            if ($section_level == $prev_section_level){
 
-                # close prev, start new
-                $chunkbuf .= $folding_section_end;
-                shift @headings;
-                
-                }
+            # close prev, start new
+            $chunkbuf .= $folding_section_end;
+            shift @headings;
+            
+            }
 
-                elsif($section_level < $prev_section_level){
-                
-                  # close a bunch of them, in a loop -- THEN start a new one.
-                  do  {
-                        ($prev_section_level, $section_num_prev) = split /-/, shift @headings;
-                        
-                        $folding_section_end = $folding_section_end_str;
-                        $folding_section_end =~ s!(\$section_num_prev)!$1!ee;
-                        $chunkbuf .= $folding_section_end;
+            elsif($section_level < $prev_section_level){
+            
+              # close a bunch of them, in a loop -- THEN start a new one.
+              do  {
+                    ($prev_section_level, $section_num_prev) = split /-/, shift @headings;
+                    
+                    $folding_section_end = $folding_section_end_str;
+                    $folding_section_end =~ s!(\$section_num_prev)!$1!ee;
+                    $chunkbuf .= $folding_section_end;
 
-                   } while ( $section_level < $prev_section_level );
-                }
+               } while ( $section_level < $prev_section_level );
+            }
         } # fi not the first section
 
         # end of "finish previous subsection if not the first section in the file"
@@ -5000,7 +4993,7 @@ print <<end_of_print;
 <a href="javascript:;" onmousedown="toggleDiv('tocmain');">
 <b>TABLE OF CONTENTS [expand/collapse]</b></a>
 <a name="tocancor"></a>
-<font size=-1 color=grey40><i>
+<font size=-1 color=darkgrey><i>
 <p><b>Section name</b> toggles expanded state. <b>Subsection number</b> on the left opens
 <br>all parent sections to make it visible. <b>Leftmost symbol</b> opens parents and
 <br>jumps to the section.
@@ -5057,35 +5050,35 @@ Index of code chunks; calculated in this snippet:
 
 <<print out>>=
 
-         $ind_outbuf = '';
-         $prev_ch_name = '';
+ $ind_outbuf = '';
+ $prev_ch_name = '';
 
-         #for (sort @indbuf){ print $_, "<br>";}
+ #for (sort @indbuf){ print $_, "<br>";}
 
-         for (sort @indbuf){
+ for (sort @indbuf){
 
-           ($ch_name, $closing_bracket, $ref_num) = split /&gt;/, $_; 
-                #/ - for editor colouring bug
+   ($ch_name, $closing_bracket, $ref_num) = split /&gt;/, $_; 
+        #/ - for editor colouring bug
 
-            if ( $ch_name eq $prev_ch_name ){ 
-              $ind_outbuf .= " <b>" . $ref_num . "</b> ";
-            }
-            else{
-              print  $ind_outbuf, "<br>\n"; 
-              $ch_namestr = $ch_name;
-              $ch_namestr =~ s!&lt;&lt;!!;
-              $ind_outbuf = 
-                "<b>&lt;&lt;</b><font class='chunkref'>" . 
-                $ch_namestr . 
-                "</font><b>&gt;&gt;</b> -- <b>" . 
-                $ref_num . 
-                "</b> ";
-            }
-            $prev_ch_name = $ch_name;
+    if ( $ch_name eq $prev_ch_name ){ 
+      $ind_outbuf .= " <b>" . $ref_num . "</b> ";
+    }
+    else{
+      print  $ind_outbuf, "<br>\n"; 
+      $ch_namestr = $ch_name;
+      $ch_namestr =~ s!&lt;&lt;!!;
+      $ind_outbuf = 
+        "<b>&lt;&lt;</b><font class='chunkref'>" . 
+        $ch_namestr . 
+        "</font><b>&gt;&gt;</b> -- <b>" . 
+        $ref_num . 
+        "</b> ";
+    }
+    $prev_ch_name = $ch_name;
 
-         }; # rof - forming the code chunks index
+ }; # rof - forming the code chunks index
 
-        print $ind_outbuf, "<br>\n";
+print $ind_outbuf, "<br>\n";
 
 @
 
@@ -5127,6 +5120,48 @@ in the document.
 @
 
 
+
+<<print out - with virtual nodes>>=
+
+#The FULL OUTPUT, the file body (with links handling  added):
+
+<<sub print_chunk_link>>
+
+my $clonebody_cnt = 0; # to assign unique id's to divs to put clones in.
+
+while ($chunkbuf =~ m!^(.*)$!gm ) { # -- line by line iteration over the doc as string in mem
+    my $printed_line = $1;
+
+<<if LINKED_CHUNK, create clone-destructclone fieldset>>
+<<elsif create FLINKs>>
+
+else{ # -- BODY OF THE DOCUMENT--  no virtual links met. Just print
+            print $printed_line, "\n"; 
+} # 
+} # eliwh - end of line-by-line iteration over the buffer string in memory 
+
+@
+
+
+.b. Finally ./b. close the HTML formatting tags at the end of the page:
+
+<<print out>>=
+
+# close the page
+        print $html_body_table_end;
+        
+
+#--- END OF SCRIPT ---
+
+@
+
+
+
+
+#--------------------------------------------------
+{{{5 .h5. Linked chunks, sections and Flinks ./h5.
+#--------------------------------------------------
+
 .b. see ADD_ON for "Virtual Nodes" ./b. - there's a logical overview of 
 all changes that were implemented.
 
@@ -5151,9 +5186,13 @@ Let's restrict syntax to ONLY MEANINGFUL CHARS ON THE LINE:
 (of CHUNKs and SECTIONs) completely separate in spite of duplicated code
 
 
-<<print out - with virtual nodes>>=
 
-#The FULL OUTPUT, the file body (with links handling  added):
+To take care of splinters of a chunk with the same name, I'll have to loop now over the 
+list kept in the %chunks_id_hash, and repeat the same clone creation.
+
+I should do it the same way I did in Tangler, it's the same data structure.. done.
+
+<<sub print_chunk_link>>=
 
 sub print_chunk_link {
 
@@ -5161,58 +5200,34 @@ sub print_chunk_link {
 
 print <<"end_of_clone_sect";
 
-        <fieldset class='linked_chunk'>
-        <legend class='linked_chunk_legend'>
-        $lt_esc$lt_esc$name_of_linked_chunk$gt_esc$gt_esc $shown_splinter_num
-        <font size=-2><i>
-        <a href="javascript:;"
-        onmousedown="CreateVirtualNode('$virtual_id', '$created_clone_div_id');"
-        > [open] </a>
-        <a href="javascript:;"
-        onmousedown="DeleteVirtualNode('$created_clone_div_id');"
-        > [close]</a></i></font>
-        </legend>
-        <div id="$created_clone_div_id">
-        </div>
-        </fieldset>
+    <fieldset class='linked_chunk'>
+    <legend class='linked_chunk_legend'>
+    $lt_esc$lt_esc$name_of_linked_chunk$gt_esc$gt_esc $shown_splinter_num
+    <font size=-2><i>
+    <a href="javascript:;"
+    onmousedown="CreateVirtualNode('$virtual_id', '$created_clone_div_id');"
+    > [open] </a>
+    <a href="javascript:;"
+    onmousedown="DeleteVirtualNode('$created_clone_div_id');"
+    > [close]</a></i></font>
+    </legend>
+    <div id="$created_clone_div_id">
+    </div>
+    </fieldset>
 
 end_of_clone_sect
 
-        # a DEBUG printout:
-        #for (keys %chunks_id_hash) {print "[$_] => $chunks_id_hash{$_}<br>\n"}
+    # a DEBUG printout:
+    #for (keys %chunks_id_hash) {print "[$_] => $chunks_id_hash{$_}<br>\n"}
 
-        #<br>DEBUG: trying to clone [[$1]] whose id is [$virtual_id] 
-        #OR [$chunks_id_hash{$name_of_linked_chunk}]
+    #<br>DEBUG: trying to clone [[$1]] whose id is [$virtual_id] 
+    #OR [$chunks_id_hash{$name_of_linked_chunk}]
 
 } # bus -- printing out formatted CHUNK_LINK cloning line
-
-
-my $clonebody_cnt = 0;
-
-while ($chunkbuf =~ m!^(.*)$!gm ) { # -- line by line iteration over the doc as string in mem
-    my $printed_line = $1;
-
-<<if LINKED_CHUNK, create clone-destructclone fieldset>>
-
-<<elsif LINKED_SECTION, create clone-destructclone fieldset>>
-
-<<elsif create FLINKs>>
-
-else{ # -- BODY OF THE DOCUMENT--  no virtual links met. Just print
-
-            print $printed_line, "\n"; 
-
-} # 
-
-} # eliwh - end of line-by-line iteration over the buffer string in memory 
 
 @
 
 
-To take care of splinters of a chunk with the same name, I'll have to loop now over the 
-list kept in the %chunks_id_hash, and repeat the same clone creation.
-
-I should do it the same way I did in Tangler, it's the same data structure.. done.
 
 <<if LINKED_CHUNK, create clone-destructclone fieldset>>=
 
@@ -5220,11 +5235,26 @@ if ($printed_line =~ m!^\s*\[\[LINKED_CHUNK(_\d+)?\s+(.*\S)\s*\]\]\s*<br>$!) { #
 
     my $name_of_linked_chunk = $2;
 
+    unless ( exists $chunks_id_hash{$name_of_linked_chunk} ) {
+
+print <<"end_of_clone_sect";
+    <fieldset class='linked_chunk'>
+    <legend class='linked_chunk_legend'>
+    &lt;&lt;$name_of_linked_chunk&gt;&gt;<font color=darkred><sub><i>broken_link</i></sub></font>
+    </legend>
+    </fieldset>
+end_of_clone_sect
+
+    next;
+    }
+
     if ($1) { # printing a single splinter LINKED_CHUNK_N of a given number
+
         my $splinter_cnt = (substr $1, 1);
-        $virtual_id = $chunks_id_hash{$name_of_linked_chunk}[$splinter_cnt-1]; 
+        my $virtual_id = $chunks_id_hash{$name_of_linked_chunk}[$splinter_cnt-1]; 
         my $created_clone_div_id = "clonebody" . $clonebody_cnt;
         $clonebody_cnt++;
+
         my $shown_splinter_num = "(" . $splinter_cnt . ")" ;
 
         print_chunk_link($name_of_linked_chunk, $virtual_id, $created_clone_div_id, $shown_splinter_num);
@@ -5247,7 +5277,8 @@ if ($printed_line =~ m!^\s*\[\[LINKED_CHUNK(_\d+)?\s+(.*\S)\s*\]\]\s*<br>$!) { #
 
 
         } # rof over chunk splinters
-    }
+
+    } # fi-esle
     
 } # fi treatment of LINKED_CHUNKs
    
@@ -5271,9 +5302,15 @@ then jumps on the second one. The (exact?) opposite of behaviour of the
 
 elsif ($printed_line =~ m!^(.*)\[\[FLINK\s+(.*\S)\s*\]\](.*)$!) { # --FLINKS--
 
-print $1;
+    print $1;
 
-my $virtual_id_ancor = $headings_id_hash{$2};    # this works with sections
+    unless ( exists $headings_id_hash{$2} ) {
+    print "<u><font color=blue>$2</font></u>";
+    print "<font color=darkred><sup><b><i>broken_flink</i></b></sup></font><br>\n";
+    next;
+    }
+
+    my $virtual_id_ancor = $headings_id_hash{$2};    # this works with sections
     my $virtual_id_ancor_href = "#" . $virtual_id_ancor; 
 print <<"end_of_clone_sect";
         <a href="$virtual_id_ancor_href"
@@ -5281,32 +5318,17 @@ print <<"end_of_clone_sect";
         ><i>($virtual_id_ancor)</i> $2<sup>flink</sup></a>
 end_of_clone_sect
 
-print $3,"\n";
+    print $3,"\n";
 
-        # a DEBUG printout:
-        #for (keys %headings_id_hash) {print "[$_] => $headings_id_hash{$_}<br>\n"}
-        #<br>DEBUG: trying to clone [[$2]] whose id is [$virtual_id_ancor] 
-        #OR [$headings_id_hash{$2}] and ancor is $virtual_id_ancor_href
+    # a DEBUG printout:
+    #for (keys %headings_id_hash) {print "[$_] => $headings_id_hash{$_}<br>\n"}
+    #<br>DEBUG: trying to clone [[$2]] whose id is [$virtual_id_ancor] 
+    #OR [$headings_id_hash{$2}] and ancor is $virtual_id_ancor_href
 } # fisle - end of FLINKs
 
 @
 
-
-
-.b. Finally ./b. close the HTML formatting tags at the end of the page:
-
-<<print out>>=
-
-# close the page
-        print $html_body_table_end;
-        
-
-#--- END OF SCRIPT ---
-
-@
-
-End of the project file
-
+}}}5
 
 
 {{{5 .h5. Three chunks excluded from final printing./h5.
@@ -5400,7 +5422,7 @@ end_of_clone_sect
 
 @
 
-
+This is how it was before chunk links, section links  and flinks:
 
 <<print out - simple>>=
 
@@ -5609,7 +5631,7 @@ They work exactly like hyperlinks on ancors in the same document. However
 simple links are not accessible if they are in folded sections. FLINKs will
 open a section and all parents above it, so it becomes visible, then jump
 to it as with a normal link.
-Broweser's "back" button works and allows one to return to the previously
+Browser's "back" button works and allows one to return to the previously
 browsed spot. Make sure to close the flinked sections after reading, or have
 your nicely folded document unnecessary unfolded.
 
@@ -5723,19 +5745,19 @@ and another section
 
 .. and another one with 2 splinters
 
-[[LINKED_CHUNK accumulate result in a buffer]]
+[[LINKED_CHUNK accumulate result in a buffer - with error]]
 
 .b. 3. ..and FLINKs./b.
 
 standalone flinks on their own lines:
 [[FLINK Node Cloning/destruction - JavaScript functions]]
-[[FLINK My workflow - literate programming with Molly]] 
+[[FLINK My workflow - literate programming with Molly]]  
 
 2. multiple flinks on teh same line
 
 Before the test line ...........
 OK, two flinks: [[FLINK (VIRTUAL VIEW): example of additional markup - dotHTML]] and
-[[FLINK test two - from realistic paper, partially failing]] on two lines
+ [[FLINK test two - from realistic paper, partially failing]] on two lines
 ......... after which another line is coming
 
 Seems without "while-ing" over matches on the same line (or "for"-ing over the list)
@@ -5743,9 +5765,48 @@ it's not going to work.
 So: enclosing text OK, but ONE FLINK PER LINE until I bother to make the match better.
 (see tangler test script for the idea)
 
-..more to jump around..
+..more to jump around.. [[FLINK process code chunks --with error]]
 [[FLINK Mathematical Formulae - MathML inside Mollified Literate source files]]
+
 /end of the tests/
+
+.b. testing and bugginess ./b.
+Seems there is a .b..i.timing issue ./i../b. with Javascript etc.
+Some things may take place "onmousedown" others (link following) - "onclick" (I am
+guessing). 
+Seems to help to push the mouse button, keep it pressed for a fraction of a second,
+then release, rather than click with one quick movement.
+
+There may be another effect at play here: when I run my "open_all_above" in the body
+of the text, it .i.jerks./i. when new section becomes visible. Therefore changing 
+position of the cursor (still kept pressed).
+Therefore when o_a_a func is run "onmousedown" in the body, the subsequent jump to 
+the link, which is run internally  "onclick" or sth, falls on another line and fails.
+
+But timing seems to get into this, too.
+
+Seems to run in Firefox smoothier than in Opera.
+Tests in Opera on MS look the same as tests on Opera under Linux.
+MS Explorer fails to work with folding sections, as it opens all up, except the target
+one - it runs into an "error by one" somewhere in sections numbering..
+
+.b..i. A solution may be ./i../b. to use form submit() method insead of relying on built-in
+browser implementation?
+http://www.javascript-coder.com/javascript-form/javascript-form-submit-example.html
+etc. etc.
+
+Nope, it'll reload the page. I do not want to turn Molly into an interactive CGI script
+that works on the server side. Or do I ?
+
+IE-only "click()" method ;)))))
+
+.b. OK, conclusion ./b.
+Seems to work in Firefox. Fails in one case on Opera.
+Opera failure: opens the parents, does not jump. .b..i. A second click ./i../b. will jump
+you to the already open section - so it's a very minor issue. A user will try a second
+time automatically.
+
+I will start using flinks and see how browsers behave. So status: good enough for now.
 
 }}}4
 
@@ -5799,7 +5860,7 @@ This is  my own kind of simple markdown for quick typing.
 
 <<other body formatters>>=
 
-        <<dotHTML formatter>>
+<<dotHTML formatter>>
         
 @
 

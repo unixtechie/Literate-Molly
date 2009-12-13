@@ -278,133 +278,130 @@ TANGLE_ME:
     
     SEEK_PEEK_TANGLER:
     
-            
-                
-                my $chunk_beg_pattern = q(^<\<(.*)>\>=);
-                my $chunk_end_pattern = q(^@\s.*$);
-                my $chunk_ref_pattern = q(<\<(.*?)>\>[^=]); # can be used several times in a line
-                
-                my $current_chunk_name = "";
-                my $current_chunk_start_foff = 0;; # "foff" is a "file offset"
-                my $current_chunk_end_foff = 0;
-        
-                my %file_offsets_hash = ();
-                my %file_lines_hash = ();
-                my $parents_list = ();
-        
-                my $line_num = 0;
-                my $previous_line_foff = 0; # "foff" is a "file offset"
-        
-                
-        foreach $LITSOURCE_multi(@LITSOURCE_list) {
-        
-        
-         while (<$LITSOURCE_multi>) {
-            $line_num++;
-        
-                # --- CODE CHUNKS -- not inside documentation section
-            if ( m!$chunk_beg_pattern! .. m!$chunk_end_pattern! ) {
-        
-                
-            if ( $_ =~ m!$chunk_beg_pattern! ) {
-                $current_chunk_name = $1;
-                $current_chunk_start_foff = $LITSOURCE_multi . "-" . (tell $LITSOURCE_multi);
-        
-                # -- collecting offset and line number, actually
-                push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_start_foff;
-                push @{$file_lines_hash{$current_chunk_name}}, $LITSOURCE_multi . "-" . $.;
-                #~ print "----> chunk $1 line $. offset $current_chunk_start_foff\n";
-        
-            }
-        
-                
-            elsif ( $_ =~ m!$chunk_end_pattern! )  {
-        
-                $current_chunk_end_foff = $LITSOURCE_multi . "-" . $previous_line_foff;
-                # -- collecting offset and line number:
-                push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_end_foff;
-                push @{$file_lines_hash{$current_chunk_name}}, $LITSOURCE_multi . "-" . $.;
-                #~ print "\tline $. offset $current_chunk_end_foff<------\n";
-        
-                $current_chunk_name = "";
-            }
-        
-                    
-     elsif ( $_ =~ m!$chunk_ref_pattern!g ) {
     
-        my $line = $_;
-        my $current_foff_pos =  $previous_line_foff;
-        my $initial_margin = "";
-        my $homegrown_pos = 0;
+
+    my $chunk_beg_pattern = q(^<\<(.*)>\>=);
+    my $chunk_end_pattern = q(^@\s.*$);
+    my $chunk_ref_pattern = q(<\<(.*?)>\>[^=]); # can be used several times in a line
     
-        while ($line =~ m!(.*?)<\<(.*?)>\>!g) {
+    my $current_chunk_name = "";
+    my $current_chunk_start_foff = 0;; # "foff" is a "file offset"
+    my $current_chunk_end_foff = 0;
+
+    my %file_offsets_hash = ();
+    my %file_lines_hash = ();
+    my $parents_list = ();
+
+    my $line_num = 0;
+    my $previous_line_foff = 0; # "foff" is a "file offset"
+
+
+foreach $LITSOURCE_multi(@LITSOURCE_list) {
+
+
+ while (<$LITSOURCE_multi>) {
+    $line_num++;
+
+    # --- CODE CHUNKS -- not inside documentation section
+    if ( m!$chunk_beg_pattern! .. m!$chunk_end_pattern! ) {
+
     
-            my $pre_ref_match = $1;
-            my $ref_match = $2;
-            my $len_pre_ref_match = length $pre_ref_match;
-            my $len_ref_match = length $ref_match;
+        if ( $_ =~ m!$chunk_beg_pattern! ) {
+            $current_chunk_name = $1;
+            $current_chunk_start_foff = $LITSOURCE_multi . "-" . (tell $LITSOURCE_multi);
     
-            # "end" of prev pair; collecting offset and line number
-            push @{$file_offsets_hash{$current_chunk_name}}, 
-                $LITSOURCE_multi . "-" . ($current_foff_pos + $len_pre_ref_match); 
+            # -- collecting offset and line number, actually
+            push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_start_foff;
             push @{$file_lines_hash{$current_chunk_name}}, $LITSOURCE_multi . "-" . $.;
+            #~ print "----> chunk $1 line $. offset $current_chunk_start_foff\n";
+    
+        }
     
     
-            #-------deal with pushing ("ref", "chunkname") pair -----
-            # special id string for refs
-            push @{$file_offsets_hash{$current_chunk_name}}, "ref";
-            # name of reference
-            push @{$file_offsets_hash{$current_chunk_name}}, $ref_match; 
-            # .. and form pairs for toposort (cycles check, search roots):
-            push @parents_list, ($current_chunk_name, $ref_match);
+        elsif ( $_ =~ m!$chunk_end_pattern! )  {
     
-            # -- next a special entry for refs: (left_margin)
-            # I keep tabs and spaces and subst all else to spaces
-            $pre_ref_match =~ s!\S! !g;
-            $initial_margin .= $pre_ref_match;
-            push @{$file_offsets_hash{$current_chunk_name}}, $initial_margin; 
-            $initial_margin .= " " x ( $len_ref_match + 2*( length "<>") );      
-    
-            my $homegrown_pos = $len_pre_ref_match + $len_ref_match + 2*(length "<>");
-            my $end_of_match_pos = $current_foff_pos + $homegrown_pos;
-    
-            # "start" a new pair.. - ok, let's not use "pos" at all, if it fails
-            # .. and collect both offset and the line number
-            push @{$file_offsets_hash{$current_chunk_name}}, 
-                $LITSOURCE_multi . "-" . $end_of_match_pos;
+            $current_chunk_end_foff = $LITSOURCE_multi . "-" . $previous_line_foff;
+            # -- collecting offset and line number:
+            push @{$file_offsets_hash{$current_chunk_name}}, $current_chunk_end_foff;
             push @{$file_lines_hash{$current_chunk_name}}, $LITSOURCE_multi . "-" . $.;
+            #~ print "\tline $. offset $current_chunk_end_foff<------\n";
     
-            #  I'll need to reset current_foff_pos to the pos
-            #   (or to the directly caclucalted offset, if I prefer that):
-            $current_foff_pos = $end_of_match_pos; 
+            $current_chunk_name = "";
+        }
     
-        } # elihw
     
-        # This is where chunk refs get an extra newline ?
+ elsif ( $_ =~ m!$chunk_ref_pattern!g ) {
+
+    my $line = $_;
+    my $current_foff_pos =  $previous_line_foff;
+    my $initial_margin = "";
+    my $homegrown_pos = 0;
+
+    while ($line =~ m!(.*?)<\<(.*?)>\>!g) {
+
+        my $pre_ref_match = $1;
+        my $ref_match = $2;
+        my $len_pre_ref_match = length $pre_ref_match;
+        my $len_ref_match = length $ref_match;
+
+        # "end" of prev pair; collecting offset and line number
+        push @{$file_offsets_hash{$current_chunk_name}}, 
+            $LITSOURCE_multi . "-" . ($current_foff_pos + $len_pre_ref_match); 
+        push @{$file_lines_hash{$current_chunk_name}}, $LITSOURCE_multi . "-" . $.;
+
+
+        #-------deal with pushing ("ref", "chunkname") pair -----
+        # special id string for refs
+        push @{$file_offsets_hash{$current_chunk_name}}, "ref";
+        # name of reference
+        push @{$file_offsets_hash{$current_chunk_name}}, $ref_match; 
+        # .. and form pairs for toposort (cycles check, search roots):
+        push @parents_list, ($current_chunk_name, $ref_match);
+
+        # -- next a special entry for refs: (left_margin)
+        # I keep tabs and spaces and subst all else to spaces
+        $pre_ref_match =~ s!\S! !g;
+        $initial_margin .= $pre_ref_match;
+        push @{$file_offsets_hash{$current_chunk_name}}, $initial_margin; 
+        $initial_margin .= " " x ( $len_ref_match + 2*( length "<>") );      
+
+        my $homegrown_pos = $len_pre_ref_match + $len_ref_match + 2*(length "<>");
+        my $end_of_match_pos = $current_foff_pos + $homegrown_pos;
+
+        # "start" a new pair.. - ok, let's not use "pos" at all, if it fails
+        # .. and collect both offset and the line number
+        push @{$file_offsets_hash{$current_chunk_name}}, 
+            $LITSOURCE_multi . "-" . $end_of_match_pos;
+        push @{$file_lines_hash{$current_chunk_name}}, $LITSOURCE_multi . "-" . $.;
+
+        #  I'll need to reset current_foff_pos to the pos
+        #   (or to the directly caclucalted offset, if I prefer that):
+        $current_foff_pos = $end_of_match_pos; 
+
+    } # elihw
+
+    # This is where chunk refs get an extra newline ?
+
+ } # fisle
+
     
-     } # fisle
+    else { # chunk body
+        ; # nop; here just not to hide an implicit case
+        #~ print "."; # debug: show dots for lines 
+    }
     
-                
-            else { # chunk body
-        
-                        ; # nop; here just not to hide an implicit case
-                        #~ print "."; # debug: show dots for lines 
-        
-            }
-        
-        
-        
-            } #fi
-        
-                $previous_line_foff = tell $LITSOURCE_multi;
-        
-          } # eliwh
-        
-        } # hcaerof iteration over all files collecting file offsets
-        
-        
-            
-        
+
+    } #fi
+
+    $previous_line_foff = tell $LITSOURCE_multi;
+
+  } # eliwh
+
+} # hcaerof iteration over all files collecting file offsets
+
+
+    
+
 sub topological_sort {
 
     my $flag_show_roots = shift;
@@ -465,39 +462,39 @@ sub topological_sort {
     exit;
     } # fi check for cycles
 
-# -DEBUG-
-#    if ($flag_show_roots){
-#    print "\t--all chunks discovered--\n";
-#    for (@topo_list_out) {
-#        print $_, "\n";
-#    }
-#    exit;
-#    }
+    # -DEBUG-
+    #    if ($flag_show_roots){
+    #    print "\t--all chunks discovered--\n";
+    #    for (@topo_list_out) {
+    #        print $_, "\n";
+    #    }
+    #    exit;
+    #    }
 
 return @topo_list_out;
 #return 1;
 } # tros_lacigolopot
 
-        
-        # will abort if cycles detected. Does not detect all cycles? - need to check
-        my @chunks_in_chains = topological_sort($show_all_roots, @parents_list);
-        
-        if ($show_all_roots){
-        
-            # non-standalone roots are already printed from inside "topological_sort"
-            print "\n\t------single-chunk roots-------\n";
-            my %lookup_hash = ();
-            for (@chunks_in_chains){ $lookup_hash{$_} = 1;}
-        
-            for (keys %file_offsets_hash) { 
-                print "\t$lt$lt$_$gt$gt\n"
-                    unless exists $lookup_hash{$_};
-                }
-            print "\t-------------------------------\n\n";
-        exit;
+
+# will abort if cycles detected. Does not detect all cycles? - need to check
+my @chunks_in_chains = topological_sort($show_all_roots, @parents_list);
+
+if ($show_all_roots){
+
+    # non-standalone roots are already printed from inside "topological_sort"
+    print "\n\t------single-chunk roots-------\n";
+    my %lookup_hash = ();
+    for (@chunks_in_chains){ $lookup_hash{$_} = 1;}
+
+    for (keys %file_offsets_hash) { 
+        print "\t$lt$lt$_$gt$gt\n"
+            unless exists $lookup_hash{$_};
         }
-        
-                    
+    print "\t-------------------------------\n\n";
+exit;
+}
+
+            
         # USAGE: print_chunk(name_of_chunk, left_margin, print_newline_flag)
         sub print_chunk {
         
@@ -597,15 +594,15 @@ return @topo_list_out;
              return 1;
         } # bus -- ends the recursive sub
         
-            
-                $root_chunk = $root_chunk || "*";
-        
-        # USAGE: print_chunk(name_of_chunk, left_margin, print_newline_flag)
-                print_chunk($root_chunk, "", 1); 
-        
-                # and close all the opened files
-                for (@LITSOURCE_list){close $_;}
-        
+    
+        $root_chunk = $root_chunk || "*";
+
+# USAGE: print_chunk(name_of_chunk, left_margin, print_newline_flag)
+        print_chunk($root_chunk, "", 1); 
+
+        # and close all the opened files
+        for (@LITSOURCE_list){close $_;}
+
     
     exit;
     
@@ -647,7 +644,9 @@ head_end_1
 
 #switch on ASCIIMathML.js library if enabled in template options:
 if ($enable_ASCIIMathML) {
-$html_head .= "\n" . qq(<script type="text/javascript" src="$path_to_ASCIIMathML"></script>) . "\n";
+    $html_head .= "\n"
+    . qq(<script type="text/javascript" src="$path_to_ASCIIMathML"></script>)
+    . "\n";
     }
 
 $html_head .= <<head_end;
@@ -691,18 +690,18 @@ for(i=1; i <= 10000; i++){
 function open_all_above(someid){
 
     elem = document.getElementById(someid);
-	elem.style.display = 'block';
-	document.getElementById('toc'+someid).className = 'hilited';
-	
+        elem.style.display = 'block';
+        document.getElementById('toc'+someid).className = 'hilited';
+        
     while (elem.parentNode.id != 1) {
-		if (elem.parentNode.nodeType == 1) {
-		elem.parentNode.style.display = 'block';
-		//document.getElementById(elem.parentNode.id).className = 'hilited';
-		var toc_elem = document.getElementById('toc'+elem.id);
-		if (toc_elem) {toc_elem.className = 'hilited'};
-		}
-		elem = elem.parentNode;
-	}
+        if (elem.parentNode.nodeType == 1) {
+        elem.parentNode.style.display = 'block';
+        //document.getElementById(elem.parentNode.id).className = 'hilited';
+        var toc_elem = document.getElementById('toc'+elem.id);
+        if (toc_elem) {toc_elem.className = 'hilited'};
+        }
+        elem = elem.parentNode;
+    }
 }
 
 
@@ -741,7 +740,6 @@ function CreateVirtualNode(clone_from_id, append_to_id){
 
 BODY {
         FONT-SIZE: 10pt;
-        <!--FONT-FAMILY: sans-serif -->
         background: #f0f0f0;
         }
 FIELDSET {
@@ -782,13 +780,10 @@ PRE     {
         BORDER-BOTTOM: #a9a9a9 0px solid;        
         background: #fefefe;
         }
-
-
 .tocfieldset {
         background: #ffffff; 
         color: #000000;
         }
-
 .codefieldset {
         BORDER-RIGHT: #000 1px solid; 
         BORDER-TOP: #000 1px solid; 
@@ -814,30 +809,19 @@ PRE     {
         background: #ffffff; 
         color: #00b;
         FONT-WEIGHT: bold;  
-        <!--font-variant: small-caps; -->
-        <!--font-style: italic; -->
         }
-
-
-
 .chunkref {
         color: #00b;    
         background: #f6f6f6;
-        /font-style: italic;
         font-weight: bold;
-        <!--font-variant: small-caps; -->
         }
-
-
 .outertable {
         width: 99%; 
         cellpadding: 25; 
         background: #ffffff; 
         border: 1px solid;
         }
-
 .hl     {
-         ;
         PADDING-LEFT: 5px; PADDING-RIGHT: 5px; 
         padding-top: 5px; padding-bottom: 5px;
         MARGIN-BOTTOM: 1px; 
@@ -848,9 +832,7 @@ PRE     {
         background: #f5f5f5;    
         width: 70%;
         }
-
 .hl-wide {
-         ;
         PADDING-LEFT: 5px; 
         PADDING-RIGHT: 5px; 
         padding-top: 15px; 
@@ -862,14 +844,11 @@ PRE     {
         BORDER-BOTTOM: #a9a9a9 0px solid;        
         background: #fbfbfb;    
         }
-
 .lnum {
         color: #a0a0a0;
         }
-
 .unhilited {background-color:white}
 .hilited {background-color:#c0c0ff}
-
 .linked_chunk {
         PADDING-RIGHT: 5px; 
         PADDING-LEFT: 5px; 
@@ -882,7 +861,6 @@ PRE     {
         color: #505050;
         background: #ffffff;
         }
-
 .linked_chunk_legend {
         PADDING-RIGHT: 5px; 
         PADDING-LEFT: 5px; 
@@ -895,8 +873,7 @@ PRE     {
         color: #505050;
         background: #ffffff;
         }
-
-a:visited { color: darkblue; }
+a:visited { color: blue; }
 
 </STYLE>
 
@@ -942,7 +919,6 @@ collapse all</a>
 folding_section_end_xxx
 
 
-#$code_fieldset_start_pre = q(<pre><fieldset class='codefieldset' id='$codechunk_id'><legend class='codelegend'>);
 $code_fieldset_start_pre = q(<pre><fieldset class='codefieldset'><legend class='codelegend'>);
 $code_fieldset_start_post = "=</legend>";
 $code_fieldset_end = "</fieldset></pre>\n";
@@ -977,30 +953,30 @@ $line_counter++;
 
 if ( ($line_counter == 1) && (m!^#.*perl!) ) {
 
-        # Matched? - this must be either the mollifying template or some perl script.
-        
-        do {
-            $_ = <LITSOURCE>;
-            $line_counter++;
-            if (eof LITSOURCE) {
-                print "\n\t--------ERROR: wrong target file format for weaving--------\n";
-                print "\tmay be a regular perl script, without a call for Molly\n\n";
-                exit;
-            }
-        } until ( lc($_) =~ m!^do.*molly!) ;    
-        
-        # throw away lines until DATA, then process/weave normally
-        do {
-            $_ = <LITSOURCE>;
-            $line_counter++;
-            if (eof LITSOURCE) {
-                print "\n\t--------ERROR: wrong target file format for weaving--------\n";
-                print "\tdid not find the  __DATA__ keyword  in first pos on its line\n\n";
-                exit;
-            }
-        } until ( m!^__DATA__! ) ;
+    # Matched? - this must be either the mollifying template or some perl script.
+    
+    do {
+        $_ = <LITSOURCE>;
+        $line_counter++;
+        if (eof LITSOURCE) {
+            print "\n\t--------ERROR: wrong target file format for weaving--------\n";
+            print "\tmay be a regular perl script, without a call for Molly\n\n";
+            exit;
+        }
+    } until ( lc($_) =~ m!^do.*molly!) ;    
+    
+    # throw away lines until DATA, then process/weave normally
+    do {
+        $_ = <LITSOURCE>;
+        $line_counter++;
+        if (eof LITSOURCE) {
+            print "\n\t--------ERROR: wrong target file format for weaving--------\n";
+            print "\tdid not find the  __DATA__ keyword  in first pos on its line\n\n";
+            exit;
+        }
+    } until ( m!^__DATA__! ) ;
 
-        next;
+    next;
 
 } # fi cutting out MOLLY.pl template/config  if present in lit.source target file
 
@@ -1062,9 +1038,9 @@ if ( m!^<\<(.*)>\>=! ... m!^@\s*$! ) { # -- CODE CHUNKS --
 
 # -- SECTION HEADINGS 
 #elsif ( m!\.(\+)?h(\d)\.(.*?)\./h\d\.! ) {     # old version, no "rawHTML" enabled yet
-elsif ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/h\d{1,2}$tag_close_symbol! ) {  
-
-
+elsif
+  ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/h\d{1,2}$tag_close_symbol! )
+  {  
 
         # -- using split vars for substitution to avoid
         #       regexps and need to keep old state --   
@@ -1073,24 +1049,24 @@ elsif ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/
         $section_num = $section_num + 1;
 
 
-                #default for fold state in "settings" ??
-                if ($1 eq "+") {
-                    $fold_state="block";
-                    $highlight_state = qq!  <script language=javascript> 
-                    document.getElementById("toc"+ $section_num).className='hilited';
-                    </script> !;
-                } 
-                else {
-                    $fold_state="none";
-                    $highlight_state = "";
-                };
-                $section_level = $2;
-                $section_title = $3;
+        #default for fold state in "settings" ??
+        if ($1 eq "+") {
+            $fold_state="block";
+            $highlight_state = qq!  <script language=javascript> 
+            document.getElementById("toc"+ $section_num).className='hilited';
+            </script> !;
+        } 
+        else {
+            $fold_state="none";
+            $highlight_state = "";
+        };
+        $section_level = $2;
+        $section_title = $3;
 
-                # add-on for virtual nodes; DEBUG for now
-                $stripped_section_title = $section_title;
-                $stripped_section_title =~ s!\s*(.*\S)\s*!$1!;
-                $headings_id_hash{$stripped_section_title} = $section_num;
+        # add-on for virtual nodes; DEBUG for now
+        $stripped_section_title = $section_title;
+        $stripped_section_title =~ s!\s*(.*\S)\s*!$1!;
+        $headings_id_hash{$stripped_section_title} = $section_num;
 
 
         $folding_section_start1 = $folding_section_start1_str;
@@ -1113,28 +1089,28 @@ elsif ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/
         # this is NOT the first section:
         if ( exists $headings[0] ){
 
-                ($prev_section_level, $prev_section_num)  = split /-/, $headings[0];
+            ($prev_section_level, $prev_section_num)  = split /-/, $headings[0];
 
-                if ($section_level == $prev_section_level){
+            if ($section_level == $prev_section_level){
 
-                # close prev, start new
-                $chunkbuf .= $folding_section_end;
-                shift @headings;
-                
-                }
+            # close prev, start new
+            $chunkbuf .= $folding_section_end;
+            shift @headings;
+            
+            }
 
-                elsif($section_level < $prev_section_level){
-                
-                  # close a bunch of them, in a loop -- THEN start a new one.
-                  do  {
-                        ($prev_section_level, $section_num_prev) = split /-/, shift @headings;
-                        
-                        $folding_section_end = $folding_section_end_str;
-                        $folding_section_end =~ s!(\$section_num_prev)!$1!ee;
-                        $chunkbuf .= $folding_section_end;
+            elsif($section_level < $prev_section_level){
+            
+              # close a bunch of them, in a loop -- THEN start a new one.
+              do  {
+                    ($prev_section_level, $section_num_prev) = split /-/, shift @headings;
+                    
+                    $folding_section_end = $folding_section_end_str;
+                    $folding_section_end =~ s!(\$section_num_prev)!$1!ee;
+                    $chunkbuf .= $folding_section_end;
 
-                   } while ( $section_level < $prev_section_level );
-                }
+               } while ( $section_level < $prev_section_level );
+            }
         } # fi not the first section
 
         # end of "finish previous subsection if not the first section in the file"
@@ -1227,80 +1203,80 @@ else { # this is the body of the doc section
         } # fi - default rawHTML formatter for body of doc chunks
 
 
+
+        elsif( $weave_markup eq "dotHTML" ) {   # dotHTML formatter here
+
+              s/^=begin.*$//;   # - eliminate perl escaping, start
+              s/^=cut.*$//;             # - eliminate perl escaping, end
+              #s/^{{{\d+(.*)$/$1/;      # - eliminate vim folding markup, start 
+                                        # - dummy, as it is killed in "headings" processing 
+              s/^}}}\d+//;      # - eliminate vim folding markup, end
+
+                s/&/&amp;/g;    # escape &
+                s/</&lt;/g;     # escape <
+                s/>/&gt;/g;     # escape >
+
+
+              # Paragraphs and line breaks are automatic now:
+              # ... unless we are dealing with the "preformat" tag
+                #--note! that ranges do not work here
+                $in_pre_tag = 1 if (m!\.pre\.!);
+                $in_pre_tag = 0 if (m!\./pre\.!);;
+
+                s/\.(\/?)pre\./<$1pre>/g;
+
+            unless ($in_pre_tag) {
+            (m/^\s*$/) and s/$_/<p>\n/
+            or s/\n/<br>\n/;
+            }
+
+              # originally I separated header from the body with such a line
+              #s/^#-----.*/starting the table here/;
+              s/^#-----.*//;
+
+
+                # add more here
+
+                s/\.(\/?)b\./<$1b>/g;
+                s/\.(\/?)i\./<$1i>/g;
+                s/\.(\/?)ul\./<$1ul>/g;
+                s/\.(\/?)li\./<$1li>/g;
+                s/\.(\/?)ol\./<$1ol>/g;
+                s/\.(\/?)s\./<$1s>/g;
+                s/\.(\/?)div\./<$1div>/g;
+                s/\.br\./<br>/g;
+                s/\.p\./<p>/g;
+                s/\.sp\./&nbsp;/g;
+
+                s/\.(\/?)tab\./<$1ul>/g;        # "tabbing" with "ul"
+
+
+                # this is some bullshit ???
+                s/\.hr\./<hr /g;
+                s/\.\/hr\./>/g;
+
+                s!\.a\.(.+?)\.\/a\.!<a href=$1>$1</a>!g;
+
+                # rudimentary &nbsp; s p a c i n g &nbsp (one word only)
+                #s!\.x\.(.+?)\./x\.!join " ","&nbsp;&nbsp;",(split //, $1),"&nbsp;&nbsp;"!eg;
+
+                # slightly better spacing (phrases, too):
+                # although redundant  with more work than is needed
+                if ( m!(\.x\.)(.+?)(\./x\.)!g) {
+                    s!(\.x\.)(.+?)(\./x\.)!join " _ ", $1, (split / /, $2), $3!eg;
+                    s!\.x\.(.+?)\./x\.!join " ", (split //, $1)!eg;
+                    s!  _  ! &nbsp; !g;
+                } 
+
+                # generic for all tags with options
+                s!\.&lt;\. !<!g;
+                s! \.&gt;\.!>!g;
+
+
+                $chunkbuf .= $_;
+
+        } # fisle - end of "dotHTML" body formatter
         
-                elsif( $weave_markup eq "dotHTML" ) {   # dotHTML formatter here
-        
-                      s/^=begin.*$//;   # - eliminate perl escaping, start
-                      s/^=cut.*$//;             # - eliminate perl escaping, end
-                      #s/^{{{\d+(.*)$/$1/;      # - eliminate vim folding markup, start 
-                                                # - dummy, as it is killed in "headings" processing 
-                      s/^}}}\d+//;      # - eliminate vim folding markup, end
-        
-                        s/&/&amp;/g;    # escape &
-                        s/</&lt;/g;     # escape <
-                        s/>/&gt;/g;     # escape >
-        
-        
-                      # Paragraphs and line breaks are automatic now:
-                      # ... unless we are dealing with the "preformat" tag
-                        #--note! that ranges do not work here
-                        $in_pre_tag = 1 if (m!\.pre\.!);
-                        $in_pre_tag = 0 if (m!\./pre\.!);;
-        
-                        s/\.(\/?)pre\./<$1pre>/g;
-        
-                    unless ($in_pre_tag) {
-                    (m/^\s*$/) and s/$_/<p>\n/
-                    or s/\n/<br>\n/;
-                    }
-        
-                      # originally I separated header from the body with such a line
-                      #s/^#-----.*/starting the table here/;
-                      s/^#-----.*//;
-        
-        
-                        # add more here
-        
-                        s/\.(\/?)b\./<$1b>/g;
-                        s/\.(\/?)i\./<$1i>/g;
-                        s/\.(\/?)ul\./<$1ul>/g;
-                        s/\.(\/?)li\./<$1li>/g;
-                        s/\.(\/?)ol\./<$1ol>/g;
-                        s/\.(\/?)s\./<$1s>/g;
-                        s/\.(\/?)div\./<$1div>/g;
-                        s/\.br\./<br>/g;
-                        s/\.p\./<p>/g;
-                        s/\.sp\./&nbsp;/g;
-        
-                        s/\.(\/?)tab\./<$1ul>/g;        # "tabbing" with "ul"
-        
-        
-                        # this is some bullshit ???
-                        s/\.hr\./<hr /g;
-                        s/\.\/hr\./>/g;
-        
-                        s!\.a\.(.+?)\.\/a\.!<a href=$1>$1</a>!g;
-        
-                        # rudimentary &nbsp; s p a c i n g &nbsp (one word only)
-                        #s!\.x\.(.+?)\./x\.!join " ","&nbsp;&nbsp;",(split //, $1),"&nbsp;&nbsp;"!eg;
-        
-                        # slightly better spacing (phrases, too):
-                        # although redundant  with more work than is needed
-                        if ( m!(\.x\.)(.+?)(\./x\.)!g) {
-                            s!(\.x\.)(.+?)(\./x\.)!join " _ ", $1, (split / /, $2), $3!eg;
-                            s!\.x\.(.+?)\./x\.!join " ", (split //, $1)!eg;
-                            s!  _  ! &nbsp; !g;
-                        } 
-        
-                        # generic for all tags with options
-                        s!\.&lt;\. !<!g;
-                        s! \.&gt;\.!>!g;
-        
-        
-                        $chunkbuf .= $_;
-        
-                } # fisle - end of "dotHTML" body formatter
-                
 
 
     if (m!^\s*\[\[LINKED_CHUNK(_\d+)?\s+(.*\S)\s*\]\]\s*<br>$!) { # -- CHUNK LINKS --
@@ -1405,7 +1381,7 @@ print <<end_of_print;
 <a href="javascript:;" onmousedown="toggleDiv('tocmain');">
 <b>TABLE OF CONTENTS [expand/collapse]</b></a>
 <a name="tocancor"></a>
-<font size=-1 color=grey40><i>
+<font size=-1 color=darkgrey><i>
 <p><b>Section name</b> toggles expanded state. <b>Subsection number</b> on the left opens
 <br>all parent sections to make it visible. <b>Leftmost symbol</b> opens parents and
 <br>jumps to the section.
@@ -1446,35 +1422,35 @@ and a <b>bare number</b> means the chunk is being used in a section.
 end_of_print
 
 
-         $ind_outbuf = '';
-         $prev_ch_name = '';
+ $ind_outbuf = '';
+ $prev_ch_name = '';
 
-         #for (sort @indbuf){ print $_, "<br>";}
+ #for (sort @indbuf){ print $_, "<br>";}
 
-         for (sort @indbuf){
+ for (sort @indbuf){
 
-           ($ch_name, $closing_bracket, $ref_num) = split /&gt;/, $_; 
-                #/ - for editor colouring bug
+   ($ch_name, $closing_bracket, $ref_num) = split /&gt;/, $_; 
+        #/ - for editor colouring bug
 
-            if ( $ch_name eq $prev_ch_name ){ 
-              $ind_outbuf .= " <b>" . $ref_num . "</b> ";
-            }
-            else{
-              print  $ind_outbuf, "<br>\n"; 
-              $ch_namestr = $ch_name;
-              $ch_namestr =~ s!&lt;&lt;!!;
-              $ind_outbuf = 
-                "<b>&lt;&lt;</b><font class='chunkref'>" . 
-                $ch_namestr . 
-                "</font><b>&gt;&gt;</b> -- <b>" . 
-                $ref_num . 
-                "</b> ";
-            }
-            $prev_ch_name = $ch_name;
+    if ( $ch_name eq $prev_ch_name ){ 
+      $ind_outbuf .= " <b>" . $ref_num . "</b> ";
+    }
+    else{
+      print  $ind_outbuf, "<br>\n"; 
+      $ch_namestr = $ch_name;
+      $ch_namestr =~ s!&lt;&lt;!!;
+      $ind_outbuf = 
+        "<b>&lt;&lt;</b><font class='chunkref'>" . 
+        $ch_namestr . 
+        "</font><b>&gt;&gt;</b> -- <b>" . 
+        $ref_num . 
+        "</b> ";
+    }
+    $prev_ch_name = $ch_name;
 
-         }; # rof - forming the code chunks index
+ }; # rof - forming the code chunks index
 
-        print $ind_outbuf, "<br>\n";
+print $ind_outbuf, "<br>\n";
 
 
   # The "expand all" "collapse all" control
@@ -1496,39 +1472,40 @@ end_of_print
 
 #The FULL OUTPUT, the file body (with links handling  added):
 
+
 sub print_chunk_link {
 
 (my $name_of_linked_chunk, $virtual_id, my $created_clone_div_id, my $shown_splinter_num) = @_;
 
 print <<"end_of_clone_sect";
 
-        <fieldset class='linked_chunk'>
-        <legend class='linked_chunk_legend'>
-        $lt_esc$lt_esc$name_of_linked_chunk$gt_esc$gt_esc $shown_splinter_num
-        <font size=-2><i>
-        <a href="javascript:;"
-        onmousedown="CreateVirtualNode('$virtual_id', '$created_clone_div_id');"
-        > [open] </a>
-        <a href="javascript:;"
-        onmousedown="DeleteVirtualNode('$created_clone_div_id');"
-        > [close]</a></i></font>
-        </legend>
-        <div id="$created_clone_div_id">
-        </div>
-        </fieldset>
+    <fieldset class='linked_chunk'>
+    <legend class='linked_chunk_legend'>
+    $lt_esc$lt_esc$name_of_linked_chunk$gt_esc$gt_esc $shown_splinter_num
+    <font size=-2><i>
+    <a href="javascript:;"
+    onmousedown="CreateVirtualNode('$virtual_id', '$created_clone_div_id');"
+    > [open] </a>
+    <a href="javascript:;"
+    onmousedown="DeleteVirtualNode('$created_clone_div_id');"
+    > [close]</a></i></font>
+    </legend>
+    <div id="$created_clone_div_id">
+    </div>
+    </fieldset>
 
 end_of_clone_sect
 
-        # a DEBUG printout:
-        #for (keys %chunks_id_hash) {print "[$_] => $chunks_id_hash{$_}<br>\n"}
+    # a DEBUG printout:
+    #for (keys %chunks_id_hash) {print "[$_] => $chunks_id_hash{$_}<br>\n"}
 
-        #<br>DEBUG: trying to clone [[$1]] whose id is [$virtual_id] 
-        #OR [$chunks_id_hash{$name_of_linked_chunk}]
+    #<br>DEBUG: trying to clone [[$1]] whose id is [$virtual_id] 
+    #OR [$chunks_id_hash{$name_of_linked_chunk}]
 
 } # bus -- printing out formatted CHUNK_LINK cloning line
 
 
-my $clonebody_cnt = 0;
+my $clonebody_cnt = 0; # to assign unique id's to divs to put clones in.
 
 while ($chunkbuf =~ m!^(.*)$!gm ) { # -- line by line iteration over the doc as string in mem
     my $printed_line = $1;
@@ -1538,11 +1515,26 @@ if ($printed_line =~ m!^\s*\[\[LINKED_CHUNK(_\d+)?\s+(.*\S)\s*\]\]\s*<br>$!) { #
 
     my $name_of_linked_chunk = $2;
 
+    unless ( exists $chunks_id_hash{$name_of_linked_chunk} ) {
+
+print <<"end_of_clone_sect";
+    <fieldset class='linked_chunk'>
+    <legend class='linked_chunk_legend'>
+    &lt;&lt;$name_of_linked_chunk&gt;&gt;<font color=darkred><sub><i>broken_link</i></sub></font>
+    </legend>
+    </fieldset>
+end_of_clone_sect
+
+    next;
+    }
+
     if ($1) { # printing a single splinter LINKED_CHUNK_N of a given number
+
         my $splinter_cnt = (substr $1, 1);
-        $virtual_id = $chunks_id_hash{$name_of_linked_chunk}[$splinter_cnt-1]; 
+        my $virtual_id = $chunks_id_hash{$name_of_linked_chunk}[$splinter_cnt-1]; 
         my $created_clone_div_id = "clonebody" . $clonebody_cnt;
         $clonebody_cnt++;
+
         my $shown_splinter_num = "(" . $splinter_cnt . ")" ;
 
         print_chunk_link($name_of_linked_chunk, $virtual_id, $created_clone_div_id, $shown_splinter_num);
@@ -1565,51 +1557,23 @@ if ($printed_line =~ m!^\s*\[\[LINKED_CHUNK(_\d+)?\s+(.*\S)\s*\]\]\s*<br>$!) { #
 
 
         } # rof over chunk splinters
-    }
+
+    } # fi-esle
     
 } # fi treatment of LINKED_CHUNKs   
 
 
-
-=head I DO NOT LIKE SECTION LINKS. DISABLED (at least for now)
-
-    elsif ($printed_line =~ m!^\s*\[\[LINKED_SECTION\s+(.*\S)\s*\]\]\s*<br>$!) { # --SECTION LINKS--
-
-        my $virtual_id = $headings_id_hash{$1};    # this works with sections
-        my $created_clone_div_id = "clonebody" . $clonebody_cnt;
-        $clonebody_cnt++;
-
-print <<"end_of_clone_sect";
-        <fieldset><legend>
-        <b><i><font color=darkblue>Linked Section:</i></b></font>
-        <font color=green> $lt_esc$lt_esc$1$gt_esc$gt_esc </font></i><br>
-        <font size=-2>
-        <a href="javascript:;"
-        onmousedown="CreateVirtualNode('$virtual_id', '$created_clone_div_id');" id="virttoc14"
-        >[open] </a>
-        <a href="javascript:;" 
-        onmousedown="DeleteVirtualNode('$created_clone_div_id');" id="virttoc15"
-        > [close]</a>
-        </font></legend>
-        <div id="$created_clone_div_id" name="virtual_clone"></div>
-        </fieldset>
-end_of_clone_sect
-
-        # a DEBUG printout:
-        #for (keys %headings_id_hash) {print "[$_] => $headings_id_hash{$_}<br>\n"}
-        #<br>DEBUG: trying to clone [[$1]] whose id is [$virtual_id] OR [$headings_id_hash{$1}]
-
-    }
-
-=cut
-
-
-
 elsif ($printed_line =~ m!^(.*)\[\[FLINK\s+(.*\S)\s*\]\](.*)$!) { # --FLINKS--
 
-print $1;
+    print $1;
 
-my $virtual_id_ancor = $headings_id_hash{$2};    # this works with sections
+    unless ( exists $headings_id_hash{$2} ) {
+    print "<u><font color=blue>$2</font></u>";
+    print "<font color=darkred><sup><b><i>broken_flink</i></b></sup></font><br>\n";
+    next;
+    }
+
+    my $virtual_id_ancor = $headings_id_hash{$2};    # this works with sections
     my $virtual_id_ancor_href = "#" . $virtual_id_ancor; 
 print <<"end_of_clone_sect";
         <a href="$virtual_id_ancor_href"
@@ -1617,21 +1581,18 @@ print <<"end_of_clone_sect";
         ><i>($virtual_id_ancor)</i> $2<sup>flink</sup></a>
 end_of_clone_sect
 
-print $3,"\n";
+    print $3,"\n";
 
-        # a DEBUG printout:
-        #for (keys %headings_id_hash) {print "[$_] => $headings_id_hash{$_}<br>\n"}
-        #<br>DEBUG: trying to clone [[$2]] whose id is [$virtual_id_ancor] 
-        #OR [$headings_id_hash{$2}] and ancor is $virtual_id_ancor_href
+    # a DEBUG printout:
+    #for (keys %headings_id_hash) {print "[$_] => $headings_id_hash{$_}<br>\n"}
+    #<br>DEBUG: trying to clone [[$2]] whose id is [$virtual_id_ancor] 
+    #OR [$headings_id_hash{$2}] and ancor is $virtual_id_ancor_href
 } # fisle - end of FLINKs
 
 
 else{ # -- BODY OF THE DOCUMENT--  no virtual links met. Just print
-
             print $printed_line, "\n"; 
-
 } # 
-
 } # eliwh - end of line-by-line iteration over the buffer string in memory 
 
 
