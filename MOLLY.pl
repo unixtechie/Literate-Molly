@@ -1370,7 +1370,7 @@ print <<end_of_print;
 <b>To search for variables etc.</b>, "expand all" text - or manually 
 <br>expand needed sections - and then use your browser's Find function to 
 <br>highlight all and jump between the found items.
-<p></li>
+<p></li></ul>
 
 </div> 
 <p>
