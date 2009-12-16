@@ -25,6 +25,8 @@ with LaTeX constants will be turned into MathML output to get displayed by
 Firefox, Opera (or other MathML-aware browsers) on the fly.
 
 
+CURRENT VERSION: 0.68
+
 CURRENT VERSION FEATURES:
 
     * creates folding documents on the fly from Literate Source files..

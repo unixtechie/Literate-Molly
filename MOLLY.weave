@@ -1125,42 +1125,74 @@ Mostly explained here:
 
 .b. Brief answer: ./b.
 
-.i..b.1. A chunk link./b../i. is a fieldset frame which can be clicked open to display
-a clone of any code chunk in your document in any place.
+    .i..b.1. A chunk link./b../i. is a fieldset frame which can be clicked open to display
+    a clone of any .i.code./i. chunk in your document in any place.
+    
+    .i. Format for chunk, section links ./i. - write in your Lit Src file
+      .pre.[[LINKED_CHUNK name of chunk verbatim]]./pre.
+    There can be any number of space chars btw the reserved word
+    LINKED_CHUNK and the name of the code chunk being linked to
+    
+    CHUNK_LINKs must reside on their own line (white space before and after is ignored)
+	Example:
+	[[LINKED_CHUNK sub print usage]]
+    
+    
+    .p.
+    .i..b. 2. "Flink"./b../i. is like a local href link, but for a folding document.i.section./i.
+    It opens all sections above the target, so that target becomes 
+    visible, then jumps to it
+    
+    .i. format of a flink./i. in Lit Source file is 
+      .pre.[[F L I N K name of flinked section verbatim]]./pre.
+    /* spaces in FLINK were escapes, do not use them - write "[[FLINK" exactly */
+    
+    There can be any number of space chars btw the reserved word FLINK
+    and the name of the section
+    
+    Currently one FLINK per line is allowed, although there can be other text around it.
+    
+    Examples can be found at the end of the Molly code sections (PART III of this document)
+    See [[FLINK Tests of a chunk link, section link and flink functionality]]
 
-.i. Format for chunk, section links ./i. - write in your Lit Src file
-  .pre.[[LINKED_CHUNK name of chunk verbatim]]./pre.
-There can be any number of space chars btw the reserved word
-LINKED_CHUNK and the name of the code chunk being linked to
+    .p.
+    .i..b. 3. Virtual Views on code ./b. ./i.
+    Linked chunks can be used to create "virtual views on your code. 
+    The idea is described in 
+    [[FLINK (VIRTUAL VIEW): Creation of Linked Chunk functionality]]
+    
+    See tentative examples of VVs here (and the link below is an example of a  "Flink"):
+    [[FLINK Numbering Chunk Splinters and Putting Links in the Chunks Index]]
+    [[FLINK (VIRTUAL VIEW): example of additional markup - dotHTML]]
 
-CHUNK_LINKs must reside on their own line (white space before and after is ignored)
+	.p.
+	.b. Suggested Uses ./b.
 
-.p.
-.i..b. 2. Virtual Views on code ./b. ./i.
-Linked chunks can be used to create "virtual views on your code. 
-The idea is described in 
-[[FLINK (VIRTUAL VIEW): Creation of Linked Chunk functionality]]
-
-See tentative examples here:
-[[FLINK Numbering Chunk Splinters and Putting Links in the Chunks Index]]
-[[FLINK (VIRTUAL VIEW): example of additional markup - dotHTML]]
-
-.p.
-.i..b. 2. "Flink"./b../i. is like a local href link, but for a folding document.
-It opens all sections above the target, so that target becomes 
-visible, then jumps to it
-
-.i. format of a flink./i. in Lit Source file is 
-  .pre.[[F L I N K name of flinked section verbatim]]./pre.
-/* spaces in FLINK were escapes, do not use them - write "[[FLINK" exactly */
-
-There can be any number of space chars btw the reserved word FLINK
-and the name of the section
-
-Currently one FLINK per line is allowed, although there can be other text around it.
-
-Examples can be found at the end of the Molly code sections (PART III of this document)
-See [[FLINK Tests of a chunk link, section link and flink functionality]]
+    CHUNK_LINKs allow the developer to keep alternative text around code chunks and collect 
+    those chunks in sections in any arbitraty number and order, thus creating multiple "Virtual
+    Views" on the code. Consider:
+    
+    .i..b.Scenario (a)./b../i. I have main code with comments which are more like programmer's notes for 
+    memory, not polished documentation. However I can write a section post-factum with clean
+    explanation and overview of the code, inserting CHUNK_LINKs to refer to  the necessary chunks.
+    
+    .i..b.Scenario (b)./b../i. I have my main code written out, but for maintenance, or to correct a bug, I'll
+    need to modify code in many places.
+    I'll first think and decide where the code resides. I'll create a folding subsection  and start 
+    putting down chunk links in there, with brief explanatory notes. Then I'll use this quickly
+    created "virtual view" to jump to the correct line by its number in my text editor to do
+    the fix or changes. I attempted something similar here:
+    [[FLINK Numbering Chunk Splinters and Putting Links in the Chunks Index]] (I actually did the
+    change the described way and liked the experience)
+    or here [[FLINK Actual implementation (with links to affected code sections]] (in this example
+    the section was written post-factum, and is more of an overview or documentation of 
+    introduced changes)
+    
+    .i..b.Scenario (c)./b../i. I have a huge Literate Source Project file and need to create an explanation or
+    a presentation of some side of the project. A Virtual View will do that.
+    
+    Note that subsections, implemented as a V.V. can be printed out, too, while the rest of the 
+    document is kept folded away.
 
 
 #-------------------------------------------------
