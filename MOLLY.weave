@@ -1123,19 +1123,34 @@ Mostly explained here:
 .h4. Chunk links and Virtual Views on code ./h4.
 #-------------------------------------------------
 
-.b. Brief answer: ./b.
+.b. Format  ./b.
 
     .i..b.1. A chunk link./b../i. is a fieldset frame which can be clicked open to display
     a clone of any .i.code./i. chunk in your document in any place.
     
-    .i. Format for chunk, section links ./i. - write in your Lit Src file
+    (a) .i. Format for chunk, section links ./i. - write in your Lit Src file
       .pre.[[LINKED_CHUNK name of chunk verbatim]]./pre.
     There can be any number of space chars btw the reserved word
     LINKED_CHUNK and the name of the code chunk being linked to
     
     CHUNK_LINKs must reside on their own line (white space before and after is ignored)
-	Example:
-	[[LINKED_CHUNK sub print usage]]
+    Example:
+    [[LINKED_CHUNK sub print usage]]
+    
+    More examples in: [[FLINK Tests of a chunk link, section link and flink functionality]]
+    
+    (b) .i. Chunk splinters ./i. According to one of the standard features in LitProg,
+    a chunk with the same name may be written many times in the LitSource file.
+    Each subsuquent "chunk splinter" will be appended to the first one, and placed
+    at the location of the first such chunk. This fits perfectly with the need to add
+    to C language var definitions from any place where you are logically coding,
+    or to header files etc.
+    
+    If you use the straight "[[LINKED_CHUNK ..." invocation, Molly will show all splinters
+    in your formatted document. If you wish to address a particular splinter (e.g. 3), use
+    .pre. [[LINKED_CHUNK_3 verbatim_chunk_name]] ./pre. 
+    i.e. append "underscore-the splinter number" to the reserved word. Splinter numbers
+    are displayed as subscripts in the document ouput by Molly.
     
     
     .p.
@@ -1165,8 +1180,8 @@ Mostly explained here:
     [[FLINK Numbering Chunk Splinters and Putting Links in the Chunks Index]]
     [[FLINK (VIRTUAL VIEW): example of additional markup - dotHTML]]
 
-	.p.
-	.b. Suggested Uses ./b.
+    .p.
+    .b. Suggested Uses ./b.
 
     CHUNK_LINKs allow the developer to keep alternative text around code chunks and collect 
     those chunks in sections in any arbitraty number and order, thus creating multiple "Virtual
@@ -1207,6 +1222,12 @@ highlighting etc.), as *.mht, which will pack all files into one.
 
 MHT, while being a Microsoft  format, is readable by most browsers now, e.g. Opera, but 
 you'll have to install a plug-in for Firefox and family.
+
+.b. A longer answer./b.
+.. is given here: [[FLINK How to distribute your final folding HTML-formatted work]]
+
+Note that "folding HTML" has not been tested with Internet Explorer, but has been with
+Opera and Firefox.
 
 }}}3
 
