@@ -51,8 +51,10 @@ CURRENT VERSION FEATURES:
     * further enhances traditional LitProg with "Virtual Views" with
 	LINKED_CHUNKs, which are like unix soft links to code chunks
 	from any place in your document.
-    * improved navigation in the folding document and implemented 
-	FLINKs, "folding hyperlinks"
+    * improved navigation in the folding document with FLINKs, 
+	"folding hyperlinks"
+    * "forestry" submode to move section trees in the folding document
+
 
 This script is a test of the concept (LitProg+folding+dynamic web formatting)
 

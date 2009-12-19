@@ -653,8 +653,23 @@ See details about this setup and possible uses of it below.
 
    .b..i.WEAVING options:./i../b.
 
-   -w,  .i.weave from the external target file
+    -w,  .i.weave from the external target file
        This option presupposes html-marked document sections../i.
+    -wd 
+        same for dotHTML-encoded files
+
+
+    .b..i.FORESTRY mode:./i../b.
+
+    -t -1, or -t 3 etc. .i.(for default rawHTML-encoded files)./i.
+    -dt -2, or -dt 1 etc. .i.(for "dotHTML"-encoded files)./i.
+        .i.run as a "tree replant" filter: 
+        move subtree up 1 level or down 3 levels, etc. 
+        when employed as a filter on an editor's selected text.
+        Renumbers html headings and vim folding marks../i.
+
+    MOLLY.pl [-d] -t# < LitSource.file 
+        .i.renumber headings and vim folding marks for a whole file from CL./i.
 
 
 .b.FOR INTERNALLY MOLLIFIED FILES ("Quick Weave" or "Quick Tangle" Mode):./b.
@@ -1183,16 +1198,17 @@ Mostly explained here:
     .p.
     .b. Suggested Uses ./b.
 
-    CHUNK_LINKs allow the developer to keep alternative text around code chunks and collect 
-    those chunks in sections in any arbitraty number and order, thus creating multiple "Virtual
-    Views" on the code. Consider:
+	CHUNK_LINKs allow the developer to keep alternative text around code chunks and 
+	collect those chunks in sections in any arbitraty number and order, thus creating 
+	multiple "Virtual Views" on the code. Consider:
     
-    .i..b.Scenario (a)./b../i. I have main code with comments which are more like programmer's notes for 
-    memory, not polished documentation. However I can write a section post-factum with clean
-    explanation and overview of the code, inserting CHUNK_LINKs to refer to  the necessary chunks.
+	.i..b.Scenario (a)./b../i. I have main code with comments which are more like 
+	programmer's notes for memory, not polished documentation. However I can write a 
+	section post-factum with clean explanation and overview of the code, inserting 
+	CHUNK_LINKs to refer to  the necessary chunks.
     
-    .i..b.Scenario (b)./b../i. I have my main code written out, but for maintenance, or to correct a bug, I'll
-    need to modify code in many places.
+	.i..b.Scenario (b)./b../i. I have my main code written out, but for maintenance, 
+	or to correct a bug, I'll need to modify code in many places.
     I'll first think and decide where the code resides. I'll create a folding subsection  and start 
     putting down chunk links in there, with brief explanatory notes. Then I'll use this quickly
     created "virtual view" to jump to the correct line by its number in my text editor to do
@@ -1203,11 +1219,121 @@ Mostly explained here:
     the section was written post-factum, and is more of an overview or documentation of 
     introduced changes)
     
-    .i..b.Scenario (c)./b../i. I have a huge Literate Source Project file and need to create an explanation or
-    a presentation of some side of the project. A Virtual View will do that.
+	.i..b.Scenario (c)./b../i. I have a huge Literate Source Project file and need to 
+	create an explanation or a presentation of some side of the project. A Virtual 
+	View will do that.
     
     Note that subsections, implemented as a V.V. can be printed out, too, while the rest of the 
     document is kept folded away.
+
+
+#-------------------------------------------------
+.h4. Molly Forestry: moving and replanting trees ./h4.
+#-------------------------------------------------
+
+    From time to time you'll need to promote or demote whole branches of your document.
+    It so happens, it is surprisingly easy to do with a small perl filter. 
+    The filter has been incorporated into Molly and provides a command-line option for
+    section renumbering, "-t" for "tree"
+
+    The option is .i.MOLLY.pl -t 'number'./i. -- and it moves the subtree up if num
+    is negative, or down if it is positive.
+    Possible formats (as with all other options) are: "-t '-1' ", "-t-1", "-t2" etc.
+
+    This special mode renumbers HTML heading lines and vim folding marks - see the
+    standalone script in a subsection below for exact format.
+
+.p.
+.b. Procedure for Vim ./b.
+
+.b..i.Promoting/Demoting./i../b.
+    (a) select the subtree you are going to renumber. The easiest way to do it is to fold the
+    topmost subsection first ("za"), then select the 2 or 3 visible lines with "v" command.
+
+    (b) while the selection is on, run it through the external filter with a number telling
+    it how many levels down (if positive) or up (if negative) the subtree should move:
+    .pre.    :!MOLLY.pl -t3  .i./for files with default HTML-encoded doc sections/./i.
+    :!MOLLY.pl -dt-2 .i./for dotHTML-encoded files/./i. ./pre.
+    There is no check if the resulting level number is valid, it is on you, the programmer
+    to see it. You have to check only the topmost section level when moving up.
+    As Molly allows .b. section levels 0 to 99./b. to be used in the document, it is very 
+    unlikely you'll be in the 90s to have to check the innermost subsection level when
+    moving down.
+
+.b..i. Moving ./i../b.
+    After renumbering, one may need to move the subtree. This is standard and does not deserve
+    description, but:
+    cut and copy the subtree to the new parent, if needed, again folding it first ("za"),
+    then selecting with "v" or mouse, cutting with "d", and printing to the new place with "p".
+
+.p.
+.b. Procedure for Geany ./b.
+
+    Geany is a small, fast editor with a very nice set of features. As a matter of fact, it
+    almost mimics Vim in some aspects, and to me looks like vim-light with windows-like
+    keystrokes: .a. http://www.geany.org/ ./a.
+
+    One can set external filters to be applied on code selection in Geany, the result is then
+    reimported and substitutes the original. Those are set under "edit->format->send selection to"
+    You'll have to add the "replant-tree 1 " and "replant-tree -1 "  there first, and then you'll
+    be able to use them with Ctrl-1 and Ctrl-2 keys. 
+    You may choose to keep 1 or 2-level jumps there, or set it every time for your particular
+    replant precisely: geany does not allow passing args the way Vim does on its command line.
+
+
+    .i.Similar functionality is widely implemented in many other programming editors../i.
+
+.p.
+.b. Shifting tree levels of a whole file ./b.
+
+    Scenario: you split a large Literate Source file into pieces, and later need to re-assemble
+    them. OR: you are copying part of a file to another project file. In such cases it may be 
+    necessary to adjust section levels  for a whole file.
+    You can run MOLLY.pl as a filter from command line and get output on STDOUT like this:
+    .pre. MOLLY.pl -t-2 < LitSource.file ./pre.
+
+
+#--------------------------------------------------------------
+.h5. A standalone version of the same renumbering filter ./h5.
+#--------------------------------------------------------------
+
+A  standalone filter for my convention in the Literate Source files (marked with HTML)
+is:
+
+<<replant-tree>>=
+#!/usr/bin/perl
+
+$tag_open = "<";
+$tag_close = ">";
+$shift_by_numlevels = $ARGV[0] || 0;
+
+while (<STDIN>) {
+
+    #~  html headings -- /change var for raw/dotHTML switching/
+    s/(\s*)($tag_open\+?h)(\d+)(.*?$tag_close)(.*)($tag_open\/h)(\d+)$tag_close/
+        $1
+        .$2.($3+$shift_by_numlevels).$4
+        .$5
+        .$6.($7+$shift_by_numlevels)."$tag_close"
+    /ex;
+
+    #~ vim folds - opening
+    s/^(\{\{\{)(\d+)/$1.($2+$shift_by_numlevels)/e;
+    #~ vim folds - closing
+    s/^(\}\}\})(\d+)/$1.($2+$shift_by_numlevels)/e;
+
+    print;
+
+} # elihw
+
+@
+
+You can tangle this one out and use it as an external filter following the procedure
+detailed above.
+Remember to make it executable ("chmod 755 replant-tree").
+
+This code can serve as a template in case other markups ever implemented in Molly
+
 
 
 #-------------------------------------------------
@@ -2530,7 +2656,7 @@ ALSO: tangling, split or not: test for DAG loops
 <<main despatcher>>
 <<tangle me>>
 <<weave me>>
-
+<<forestry filter mode - move subtrees>>
 # just in case:
 exit;
 
@@ -2630,12 +2756,12 @@ This is selected here:
         $weave_markup = $weave_markup || "rawHTML"; # default is "rawHTML"
         
         if ($weave_markup eq "dotHTML") {
-        $tag_open_symbol = $dot;        # this will take care of default
-        $tag_close_symbol = $dot;       # when no var is set in the Lit Src file
+        $tag_open = $dot;        # this will take care of default
+        $tag_close = $dot;       # when no var is set in the Lit Src file
         }
         elsif ($weave_markup eq "rawHTML") { 
-        $tag_open_symbol = $lt;
-        $tag_close_symbol = $gt;
+        $tag_open = $lt;
+        $tag_close = $gt;
         } #fi
 
 @
@@ -2719,15 +2845,7 @@ my %LITSOURCE_hash = ();
         goto TANGLE_ME;
   }
 
-  # -2- several cases for application of Molly to an external target file. --- 
-
-  elsif (-t STDIN) { 
-
-    <<running on interactive TTY>>
-
-    }
-
-  # -3- MOLLY.pl as a standalone script is called from CGI, nothing in here yet ---
+  # -2- MOLLY.pl as a standalone script is called from CGI, nothing in here yet ---
 
   elsif (defined $ENV{'REQUEST_METHOD'}) {
 
@@ -2735,13 +2853,22 @@ my %LITSOURCE_hash = ();
 
   }
 
-  # -4- other cases ---
+  # -3- several cases for application of Molly to an external target file from CL --- 
 
-  else {
+  #elsif (-t STDIN) { 
+  else { # do not check; assume it is command line now; will take piped input now.
 
-        die "MOLLY.pl: I do not know how I was called, exiting anyway\n";
+    <<running on interactive TTY>>
 
-  } # esle, fi - end of despatcher
+    }
+
+#  # -4- other cases ---
+#
+#  else {
+#
+#        die "MOLLY.pl: I do not know how I was called, exiting anyway\n";
+#
+#  } # esle, fi - end of despatcher
 
 exit;  # just in case
   
@@ -2757,8 +2884,24 @@ exit;  # just in case
 
     #print STDERR "$0 was called from command line..\n";
 
-    #getopts("hwu:l:d:R:", \%cl_args);
-        getopts("hwl:R:i", \%cl_args);
+    #-- getopts invocation
+        getopts("hwdt:l:R:i", \%cl_args);
+
+    # -- set doc sections markup (if not default=html): 
+        if($cl_args{d}) { 
+            $tag_open = $dot;
+            $tag_close = $dot;
+            $weave_markup = "dotHTML";
+            #print STDERR setting dotHTML markup\n";
+        }
+
+    # -- "forestry"  mode - act as a filter to move subtree levels
+        if($cl_args{t}) { 
+            $replant_tree = $cl_args{t};
+            #print STDERR "moving subtree by '$replant_tree' levels\n";
+            goto FORESTRY;
+        }
+
 
     # -- print USAGE if not evoked correctly
         if( (! defined $ARGV[0] ) or  ( $cl_args{h} ) ) { usage(); exit };
@@ -2776,7 +2919,7 @@ exit;  # just in case
     # -- Final CL despatch, do it: --
         
 
-        if($cl_args{w}) { # this is weaving
+        if($cl_args{w}) { # this is weaving - and I put "forestry" in here too 
 
             if (@ARGV > 1) {
             print STDERR "\n\n\tDo not know how to weave several files\n";
@@ -2903,8 +3046,24 @@ sub usage {
 
         WEAVING options:
 
-        -w,  weave from the external target file
-            This option presupposes html-marked document sections,
+        -w,  
+            weave from the external target file (rawHTML), or
+        -wd 
+            same for dotHTML-encoded files
+
+
+        FORESTRY mode:
+
+        -t -1, or -t 3 etc. (for default rawHTML-encoded files)
+        -dt -2, or -dt 1 etc. (for "dotHTML"-encoded files)
+            run as a "tree replant" filter: 
+            move subtree up 1 level or down 3 levels, etc. 
+            when employed as a filter on an editor's selected text.
+            Renumbers html headings and vim folding marks.
+
+        MOLLY.pl [-d] -t# < LitSource.file 
+            renumber headings and vim folding marks for a whole file from CL
+
 
 
     FOR INTERNALLY MOLLIFIED FILES:
@@ -3203,7 +3362,7 @@ of the same Literate Project ./s.
 }}}5
 
 #-----------------
-{az{{5 <h5>The code</h5>
+{{{5 <h5>The code</h5>
 #-----------------
 
 <<seek-peek tangler>>=
@@ -4925,7 +5084,7 @@ collapsed ('none')
 # -- SECTION HEADINGS 
 #elsif ( m!\.(\+)?h(\d)\.(.*?)\./h\d\.! ) {     # old version, no "rawHTML" enabled yet
 elsif
-  ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/h\d{1,2}$tag_close_symbol! )
+  ( m!$tag_open(\+)?h(\d{1,2})$tag_close(.*?)$tag_open/h\d{1,2}$tag_close! )
   {  
 
         # -- using split vars for substitution to avoid
@@ -5718,7 +5877,6 @@ This is how it was before chunk links, section links  and flinks:
 
 }}}3
 
-
 .h3. ./h3.
 
 #--------------------------------------------------------------------------------
@@ -5811,12 +5969,11 @@ attribute on cloning
 
 {{{4 .h4. Actual implementation (with links to affected code sections ./h4.
 
-.b. 1. ./b. All implementation changes are done belowe "WEAVER" section
+.b. 1. ./b. All implementation changes are done below the "WEAVER" section
 
 .b. 2. ./b. Two functions, to clone a given ID under a "div" with a known ID,
-    and to destroy the cloned (actually, all children) under a "div"
-    with a know id, 
-    were tested separately.
+    and to destroy the cloned (actually, all children) under a "div" with a know
+    id, were tested separately.
 
 Then, a cut-in chunk was created in
 
@@ -5828,7 +5985,7 @@ where the functions themselves live in the subsection below this one
 
 The functions were created from some scrib, and can actually be combined
 
-.b. .i. todo ./i. ./b. The "create" function needs an addition of a unique ID for the cloned
+.s. .b. .i. todo ./i. ./b. The "create" function needs an addition of a unique ID for the cloned
 section. Otherwise the cloned section preserves the same ID as another clone,
 or the original section. If those are open, closing a later clone will close
 the first ones. Which is bery untidy and not possible to fix cleanly.
@@ -5837,7 +5994,7 @@ The problem is much less in case of LINKED_CHUNKs, as the original chunks
 are not collapsible and aren't affected. Similar cnflict is poss only btw
 2 clones, if those are opened at the same time.
 
-Assignement of a unique Id upon creation will fix it.
+Assignement of a unique Id upon creation will fix it../s.
 
 .b. 3. ./b. Next, a number of changes was required in the code where formation of the
 output $chunkbuf takes place.
@@ -5874,7 +6031,7 @@ Again, a cut-in was created and a simple print-out renamed and put out of the wa
 [[LINKED_CHUNK print out - simple]]
 
 (Actually, I can switch btw them on a configuration var, sth like "enable virtual
-linking", but let's keep this functionality always on for now.
+linking", but let's keep this functionality always on for now.)
 
 Instead of just dumping it, I now iterate line by line on this buffer string
 in memory with regular expressions
@@ -6095,6 +6252,80 @@ I will start using flinks and see how browsers behave. So status: good enough fo
 
 .h3. ./h3.
 
+#--------------------------------------------------------------------------------
+{{{3 .h3.(VIRTUAL VIEW): Molly Forestry add-on - replanting subtrees ./h3.
+#--------------------------------------------------------------------------------
+
+Promouting and demoting subtrees in-place can be done with a simple filter, which
+takes STDIN, outputs to STDOUT, and is used from a programming editor on a selection.
+Usage is described here [[FLINK Molly Forestry: moving and replanting trees]]
+
+The snippet in question is this:
+[[LINKED_CHUNK replant-tree]]
+
+To incorporate the script into Molly, the changes should be done in sth like 4 places.
+
+(1) Despatcher must take a new option (say, "-t '-1' " for "trees").
+This should run on CL, as the option from a mollified file does not make sense.
+
+[[LINKED_CHUNK running on interactive TTY]]
+
+
+(2) The script itself .s. should be cut into "accumulate the result" before the 
+code, header, body processing starts./s.
+Wrong: that's inside "while" already
+
+SO: it can/should be place after the external vars, the parameters, have been set,
+before any actual weaving, and this mode should exit after finishing.
+..let's cut it in here:
+
+[[LINKED_CHUNK MOLLY.pl module]]
+
+Then, the snippet itself
+    1. Tag open/close symbols were set in general settings, before the despatcher, OK.
+
+<<forestry filter mode - move subtrees>>=
+
+FORESTRY:
+
+$shift_by_numlevels = $replant_tree || 0;
+
+while (<STDIN>) {
+
+    #~  html headings -- /change var for raw/dotHTML switching/
+    s/(\s*)($tag_open\+?h)(\d+)(.*?$tag_close)(.*)($tag_open\/h)(\d+)$tag_close/
+        $1
+        .$2.($3+$shift_by_numlevels).$4
+        .$5
+        .$6.($7+$shift_by_numlevels)."$tag_close"
+    /ex;
+
+    #~ vim folds - opening
+    s/^(\{\{\{)(\d+)/$1.($2+$shift_by_numlevels)/e;
+    #~ vim folds - closing
+    s/^(\}\}\})(\d+)/$1.($2+$shift_by_numlevels)/e;
+
+    print;
+
+} # elihw
+
+close LITSOURCE;
+exit;
+
+@
+
+(3) the "sub usage"  
+ 
+[[LINKED_CHUNK sub print usage]]
+
+(4) and the doc section for CL options must be updated
+
+[[FLINK Command-line options (ref)]]
+
+}}}3
+
+.h3. ./h3.
+
 #-------------------------------------------------------------
 {{{3 .h3. (VIRTUAL VIEW): example of additional markup - dotHTML./h3.
 #-------------------------------------------------------------
@@ -6118,7 +6349,7 @@ All other formatters (and this is extensible, of course) can be added here to th
 below, and the actual implementation (in its own subsection, the regex line-by-line 
 filters/susbtitutions in the  doc chunk bodies, must be wrapped in the same two lines:
 
-<<my_new_markup - disabled - add to "other body formatters" below>>=
+<<my_new_markup - disabled>>=
 
         elsif( $weave_markup eq "name_of_your_markup" ) { # comment
 
@@ -6131,18 +6362,22 @@ filters/susbtitutions in the  doc chunk bodies, must be wrapped in the same two 
 
 @
 
-This new markup of your of course must be added to the 'other body formatters' chunk.
+.b.Note./b. that you have to append the changed line to $chunkbuf, the generated output string.
+
+.b.Note also./b. that you won't be able to change HTML headings creation/formatting without
+breaking the whole script. If a new mark-up changes the way "<h*>...</h*>" strings
+are formed, one has to change order of processing at least - to transform lines
+first of all, and only  then match on section headings, ends, bodies and code chunks.
+
+Hmm.. I probably should change code to do that in any case: first, the markup transformations,
+next any matches on the transformed lines. Will eliminate hardcoded dependence in format
+of html headins. ... - do I need that?
 
 
-.b. The actual working example./b. below implements a "dotHTML" formatter (this very 
-file is marked with it rather than the default HTML).
+This new markup of course must be added to the 'other body formatters' chunk.
 
-This is  my own kind of simple markdown for quick typing.  
-
-<<other body formatters>>=
-
-<<dotHTML formatter>>
-        
+<<other body formatters - disabled>>=
+<<my_new_markup>>  
 @
 
 
@@ -6161,6 +6396,22 @@ LitSource document, although it has been marked in dotHTML already and is not
 going to reform ;)) . You might want it because this file serves as the central example
 itself, and so some people might copy the config section from here to start their 
 own projects.
+
+.b. One more thing ./b. - if I incorporate the "subtree-replanting" function into Molly,
+I'll have to think of that, too, as it matches on HTML header strings to renumber sections.
+
+.p.
+.b. 3. The actual working example./b. below implements a "dotHTML" formatter (this very 
+file is marked with it rather than the default HTML).
+
+This is  my own kind of simple markdown for quick typing.  
+
+<<other body formatters>>=
+
+<<dotHTML formatter>>
+        
+@
+
 
 
 #------------------------------------------

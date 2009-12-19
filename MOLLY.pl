@@ -69,12 +69,12 @@
         $weave_markup = $weave_markup || "rawHTML"; # default is "rawHTML"
         
         if ($weave_markup eq "dotHTML") {
-        $tag_open_symbol = $dot;        # this will take care of default
-        $tag_close_symbol = $dot;       # when no var is set in the Lit Src file
+        $tag_open = $dot;        # this will take care of default
+        $tag_close = $dot;       # when no var is set in the Lit Src file
         }
         elsif ($weave_markup eq "rawHTML") { 
-        $tag_open_symbol = $lt;
-        $tag_close_symbol = $gt;
+        $tag_open = $lt;
+        $tag_close = $gt;
         } #fi
 
 
@@ -111,8 +111,24 @@ sub usage {
 
         WEAVING options:
 
-        -w,  weave from the external target file
-            This option presupposes html-marked document sections,
+        -w,  
+            weave from the external target file (rawHTML), or
+        -wd 
+            same for dotHTML-encoded files
+
+
+        FORESTRY mode:
+
+        -t -1, or -t 3 etc. (for default rawHTML-encoded files)
+        -dt -2, or -dt 1 etc. (for "dotHTML"-encoded files)
+            run as a "tree replant" filter: 
+            move subtree up 1 level or down 3 levels, etc. 
+            when employed as a filter on an editor's selected text.
+            Renumbers html headings and vim folding marks.
+
+        MOLLY.pl [-d] -t# < LitSource.file 
+            renumber headings and vim folding marks for a whole file from CL
+
 
 
     FOR INTERNALLY MOLLIFIED FILES:
@@ -149,15 +165,54 @@ my %LITSOURCE_hash = ();
         goto TANGLE_ME;
   }
 
-  # -2- several cases for application of Molly to an external target file. --- 
+  # -2- MOLLY.pl as a standalone script is called from CGI, nothing in here yet ---
 
-  elsif (-t STDIN) { 
+  elsif (defined $ENV{'REQUEST_METHOD'}) {
+
+
+    print "Content-Type: text/html; charset=utf-8\n\n";
+        print <<_XXX_;
+        <html><body>
+        <p>
+        <b>I was caled as CGI, but this invocation seems to be meaningless.</b><br>
+        Maybe you meant to "weave", but set a wrong file extension.<br>
+        Goodbye.<br>
+        <i>-- MOLLY.pl --</i>
+        <p>
+        </body></html>
+_XXX_
+
+  exit;
+
+
+  }
+
+  # -3- several cases for application of Molly to an external target file from CL --- 
+
+  #elsif (-t STDIN) { 
+  else { # do not check; assume it is command line now; will take piped input now.
 
     
         #print STDERR "$0 was called from command line..\n";
     
-        #getopts("hwu:l:d:R:", \%cl_args);
-            getopts("hwl:R:i", \%cl_args);
+        #-- getopts invocation
+            getopts("hwdt:l:R:i", \%cl_args);
+    
+        # -- set doc sections markup (if not default=html): 
+            if($cl_args{d}) { 
+                $tag_open = $dot;
+                $tag_close = $dot;
+                $weave_markup = "dotHTML";
+                #print STDERR setting dotHTML markup\n";
+            }
+    
+        # -- "forestry"  mode - act as a filter to move subtree levels
+            if($cl_args{t}) { 
+                $replant_tree = $cl_args{t};
+                #print STDERR "moving subtree by '$replant_tree' levels\n";
+                goto FORESTRY;
+            }
+    
     
         # -- print USAGE if not evoked correctly
             if( (! defined $ARGV[0] ) or  ( $cl_args{h} ) ) { usage(); exit };
@@ -175,7 +230,7 @@ my %LITSOURCE_hash = ();
         # -- Final CL despatch, do it: --
             
     
-            if($cl_args{w}) { # this is weaving
+            if($cl_args{w}) { # this is weaving - and I put "forestry" in here too 
     
                 if (@ARGV > 1) {
                 print STDERR "\n\n\tDo not know how to weave several files\n";
@@ -237,35 +292,13 @@ my %LITSOURCE_hash = ();
 
     }
 
-  # -3- MOLLY.pl as a standalone script is called from CGI, nothing in here yet ---
-
-  elsif (defined $ENV{'REQUEST_METHOD'}) {
-
-
-    print "Content-Type: text/html; charset=utf-8\n\n";
-        print <<_XXX_;
-        <html><body>
-        <p>
-        <b>I was caled as CGI, but this invocation seems to be meaningless.</b><br>
-        Maybe you meant to "weave", but set a wrong file extension.<br>
-        Goodbye.<br>
-        <i>-- MOLLY.pl --</i>
-        <p>
-        </body></html>
-_XXX_
-
-  exit;
-
-
-  }
-
-  # -4- other cases ---
-
-  else {
-
-        die "MOLLY.pl: I do not know how I was called, exiting anyway\n";
-
-  } # esle, fi - end of despatcher
+#  # -4- other cases ---
+#
+#  else {
+#
+#        die "MOLLY.pl: I do not know how I was called, exiting anyway\n";
+#
+#  } # esle, fi - end of despatcher
 
 exit;  # just in case  
 
@@ -1039,7 +1072,7 @@ if ( m!^<\<(.*)>\>=! ... m!^@\s*$! ) { # -- CODE CHUNKS --
 # -- SECTION HEADINGS 
 #elsif ( m!\.(\+)?h(\d)\.(.*?)\./h\d\.! ) {     # old version, no "rawHTML" enabled yet
 elsif
-  ( m!$tag_open_symbol(\+)?h(\d{1,2})$tag_close_symbol(.*?)$tag_open_symbol/h\d{1,2}$tag_close_symbol! )
+  ( m!$tag_open(\+)?h(\d{1,2})$tag_close(.*?)$tag_open/h\d{1,2}$tag_close! )
   {  
 
         # -- using split vars for substitution to avoid
@@ -1605,6 +1638,32 @@ else{ # -- BODY OF THE DOCUMENT--  no virtual links met. Just print
 
 exit;
 
+
+FORESTRY:
+
+$shift_by_numlevels = $replant_tree || 0;
+
+while (<STDIN>) {
+
+    #~  html headings -- /change var for raw/dotHTML switching/
+    s/(\s*)($tag_open\+?h)(\d+)(.*?$tag_close)(.*)($tag_open\/h)(\d+)$tag_close/
+        $1
+        .$2.($3+$shift_by_numlevels).$4
+        .$5
+        .$6.($7+$shift_by_numlevels)."$tag_close"
+    /ex;
+
+    #~ vim folds - opening
+    s/^(\{\{\{)(\d+)/$1.($2+$shift_by_numlevels)/e;
+    #~ vim folds - closing
+    s/^(\}\}\})(\d+)/$1.($2+$shift_by_numlevels)/e;
+
+    print;
+
+} # elihw
+
+close LITSOURCE;
+exit;
 
 # just in case:
 exit;
