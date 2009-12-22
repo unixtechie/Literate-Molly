@@ -658,6 +658,9 @@ See details about this setup and possible uses of it below.
     -wd 
         same for dotHTML-encoded files
 
+    -m 'URL or path/to/ASCIIMathML.js library'
+        .i. process the file with ASCIIMathML lib. Option used in addition to
+        mode-setting -w or -wd./i.
 
     .b..i.FORESTRY mode:./i../b.
 
@@ -1275,7 +1278,7 @@ Mostly explained here:
 
     One can set external filters to be applied on code selection in Geany, the result is then
     reimported and substitutes the original. Those are set under "edit->format->send selection to"
-    You'll have to add the "replant-tree 1 " and "replant-tree -1 "  there first, and then you'll
+    You'll have to add the "MOLLY.pl -t 1 " and "MOLLY.pl -t -1 "  there first, and then you'll
     be able to use them with Ctrl-1 and Ctrl-2 keys. 
     You may choose to keep 1 or 2-level jumps there, or set it every time for your particular
     replant precisely: geany does not allow passing args the way Vim does on its command line.
@@ -1358,7 +1361,7 @@ Opera and Firefox.
 }}}3
 
 #------------------------------------------------------
-{{{3 .h3. Tangling - extracting code from LSFile ./h3.
+{{{3 .h3. TANGLE - extract code from LSFile ./h3.
 #------------------------------------------------------
 
 
@@ -1485,32 +1488,91 @@ and reassemble them at your  will.
 }}}3
 
 #------------------------------------------------------------------------------
-{{{3 .h3. Mathematical Formulae - MathML inside Mollified Literate source files ./h3.
+{{{3 .h3. MATHEMATICS - LaTeX, MathML inside Mollified Literate source files ./h3.
 #------------------------------------------------------------------------------
 
-.b..i. /-- section needs rewriting - too disorganized and redundant --/ ./i../b.
-
 .i. The most common reason users put forward for the continued use of (La)TeX in this day 
-is its facility in dealing with mathematical notation. However today much .b. simpler HTML ./b. 
-(which is often further reduced to "markdown" level) if .b. used with MathML ./b. can cover 
-most of such needs./i.
+is its facility in dealing with mathematical notation../i. 
 
-.b. 1 ./b. There are two libraries in JavaScript, ASCIIMathML.js and LaTeXMathML.js (derived 
-from the former) which do translation "on the fly" in the reader's browser. Those provide 
-almost a drop-in  functionality and can be used with Molly.
+However today much simpler HTML (which is often further reduced to "markdown" level) if
+used with MathML can cover most of such needs
+HTML can also be used with dynamically generated images representing the formulas.
+These two options can be implemented in a number of ways. Here are two simple ones.
+.ul.
+.b. 1. ./b. A standalone mimeTeX utility can be used directly with Molly to insert GIF images
+created on the fly from formulas in TeX notation.
+ 
+.b. 2 ./b. There is a  library in JavaScript, ASCIIMathML.js, which turns LaTex and simple
+ASCII-based math into MathML, which in turn can be displayed in MathML aware browsers.
 
-The latest version of the ASCIIMathML.js library (2.0.1) includes .b. .i. both ./i. ./b. 
-ASCII and LaTex processing. 
+There used to be two libraries, but  latest version of the ASCIIMathML.js library (2.0.1) includes
+.b. .i. both ./i. ./b.  ASCII and LaTex processing. 
+./ul.
 
-.b. 2 ./b. There is a very nice "mimeTeX" application which is a C program that can be run
-as CGI (i.e. under the same web browser you use for Molly), which produces GIF renderings
-of LaTeX formulas on the fly. It is more complete that ASCIIMathML.js.
-I will include an option to use it with Molly if it is dropped into your work directory in
-a next version.
+#----------------------------------------
+{{{4 .h4. mimeTeX and Molly ./h4.
+#----------------------------------------
+
+Extremely simple.
+
+Supposing you obtained and compiled mimeTeX on your platform from
+.a. http://www.forkosh.com/mimetexmanual.html ./a. and so you have the "mimetex.cgi" binary.
+
+.b.(a)./b. drop it in any place your web browser considers appropriate for cgi programs, e.g.
+in the same directory your MOLLY.pl script lives in
+
+.b.(b)./b. in the Literate Source file (assuming it is HTML-formatted) write your math
+formulas as attributes of an image tag:
+.pre. 
+<img src="/web/server/path/to/mimetex.cgi?x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}">
+<br>
+./pre.
+Put a line break after it. That's it.
+
+General format  can be seen from this example (taken from mimeTeX manual):
+.pre. <img src="/web/server/path/to/mimetex.cgi?\large
+f(x)=\int_{-\infty}^xe^{-t^2}dt" alt="" border=0 align=middle>
+<br>
+./pre.
+.b..i.NOTE./i../b. that with Molly processing the formula can be split over several lines, while
+attributes after it must be sitting on the same line as the end of the formula. Put a linebreak
+after the image tag./i.
+
+One useful tuning could be the font size of the generated math expressions. Allowed values 
+are (quoting from mimeTeX manual): 
+.ul.
+MimeTeX currently has eight font sizes selected 
+by one of the usual directives   \tiny or \small or 
+\normalsize , or \large (default) or \Large or 
+\LARGE , or \huge or \Huge .     Unlike standard 
+LaTeX, font size directives may appear within 
+math mode expressions. They affect everything 
+to their right, except that their scope will be 
+limited to any { }-enclosed subexpression in 
+which they occur. For example,   "a+\small 
+b+c"   renders   ,   whereas   "\small a+{\Large 
+b+}c"   renders   . 
+./ul.
+
+Please see further details at mimeTeX web site (ref. above)
+
+.b.Saving ./b. your molly-generated folding HTML with included GIFs is described below in
+[[FLINK How to distribute your final folding HTML-formatted work]]
+but generally, save as *.mht, and it will include all javascript and images in the bundled file.
+
+}}}4
 
 #----------------------------------------
 {{{4 .h4. How to use ASCIIMathML.js in Molly ./h4.
 #----------------------------------------
+
+.b.Brief answer./b.
+By enabling an option in the "mollifying" configuration part of your Literate Source file
+(or by using " -wm 'path/to/ASCIIMathML.js' " option from command line), and using
+expressions in the LItSource file. 
+
+.p.
+.b. In excruciating detail ./b.
 
 .b. 1 ./b.. To enable MathML one needs to use a compliant browser. Currently MathML is built in
 Firefox, or it can be enabled in Internet Explorer with a (free) plugin.
@@ -1519,7 +1581,7 @@ For Opera the support is also built-in, however the library actually checks for 
 and then it seems disallows Opera. The Opera browser, however, has another feature to bypass
 exactly that and lie about its identity. If "identify as Firefox" is set in your Opera browser,
 the MathML output is caught and rendered.
-I did not see any difference between Firefox and Opera_pretending_to_be_Firefox in rendering
+I did not see any difference between Firefox and Opera.i.-pretending-to-be-Firefox./i. in rendering
 output of the library.
 
 .b. 2 ./b.. To enable MathML while dynamically creating the folding-html file, I use an LGPLed
@@ -1528,9 +1590,13 @@ Javascript library called "ASCIIMathML.js" from
 (the home page), while only the library itself can be copied from
 .a. http://www1.chapman.edu/~jipsen/mathml/ASCIIMathML.js ./a.
 
-.b. 3 ./b.. The use of MathML must be .b. enabled in the "mollifying" template ./b. at the top of your
-Literate Project file, and the path to the ASCIIMathML.js added. See the config. 
-template subsection above
+.b. 3 ./b.. The use of MathML must be .b. enabled in the "mollifying" template ./b. at the top
+of your Literate Project file, and the path to the ASCIIMathML.js added. See the config. template
+subsection above
+Otherwise, if you invoke Molly from .b.command line, "-m" option./b. pointing to the location of the
+library must be used with "-w" for "weave":
+.pre.MOLLY.pl -wm 'URL or path/to/ASCIIMathML.js' LitSource.file >output.html (html-encoded litsource)
+MOLLY.pl -wdm 'URL or path/to/ASCIIMathML.js' LitSource.file >output.html (dotHTML)./pre.
 
 .b. 4 ./b.. I had to .b. change escape symbols ./b. in the library not to conflict with 
 .i. programming symbols ./i. - now it's double backticks instead of single ones -- and 
@@ -1561,7 +1627,7 @@ could be
 }}}4
 
 #----------------------------------
-{{{4 .h4. 6 . Some examples and LaTexMathML.js library versions ./h4. 
+{{{5 .h5. Some examples and LaTexMathML.js library versions ./h5. 
 #----------------------------------
 
 
@@ -1598,8 +1664,22 @@ your page.
  section in this document). The reason is most likely that the lib was 
 never told about those 1 or 2 constants and operators on which it fails
 
-.b. To solve ./b. the problem one might explore another version of the library, "LaTexMathML.js"
-(of which there are 2 or 3 versions) changed to  interpret  the actual LaTex code:
+.p.
+.b. First./b. the home page for the library mentions (at the very bottom) that the library
+encoding in its JavaScript source file is straightforward and more translations can be added
+as needed.
+Here is the URL: .a. http://www1.chapman.edu/~jipsen/mathml/asciimathextend.html ./a.
+
+See further information here: [[FLINK ASCIIMathML and LaTeXMathML inside Molly]]
+
+.p.
+.b. Secondly ./b. one might explore another version of the library, "LaTexMathML.js". This
+library is a derivative of the ASCII version, and its usage is the same.
+This is of doubtful value, as the latest ASCIIMathML.js again united the ASCII and the
+LaTeX parts in one package.
+
+Here are however the URLs, just in case:
+
 .a. http://www.maths.nottingham.ac.uk/personal/drw/lm.html ./a.
 
 One more version is here:
@@ -1613,38 +1693,14 @@ One more version (related) of LaTexMathML.js is here:
 .a. http://pillars.che.pitt.edu/LaTeXMathML/ ./a.
 (which also can potentially be used from MOLLY)
 
-
 I have not tested those in full, but the use of JavaScript libraries from MOLLY should be
 identical (and so it says in the documentation inside the libraries) to that of ASCIIMathML.js
-They are directly interchangeable in a standalone HTML-based editor. Just point to a copy of the 
-needed lib in the configuration section of your Literate Source file.
+Just point to a copy of the  needed lib in the configuration section of your Literate Source file.
 
-.b. Secondly ./b. the home page for the library mentions (at the very bottom) that the library
-encoding in its JavaScript source file is straightforward and more translations can be added
-as needed.
-Here is the URL: .a. http://www1.chapman.edu/~jipsen/mathml/asciimathextend.html ./a.
-
-I will provide a section in the Literater Source of Molly (in the ADD-ON section for MathML) 
-to add all necessary definitions. It .b. .i. is ./i. ./b. very easy ;))
-
-.b. NOTE ./b. 
-.ul. .li. I had to adjust the lib (double backticks and preservation of $) because I was concerned
-with programming languages. The source code must stay untouched by the math library 
-(mis)translations. That is why I provide a copy of the lib with MOLLY.
-
-./li. .li. If one wishes to use MOLLY for writing mathematical notation without conflicting computer\
-language code sections, one can always .b. link to an unmodified copy of the same lib ./b.
-and distribute that one with your work ( in *.mht files, see below) or even link to an 
-address on the web.
-
-./li. .li.The same applies to a version of the lib to interpret TeX rather than ASCII math notation: 
-MOLLY inclusion of the library is generic, just point to the correct javascript library.
-./li. ./ul.
-
-}}}4
+}}}5
 
 #--------------------------------------------------
-{{{4 .h4. 7 .  ASCIIMathML Markup - reference ./h4.
+{{{5 .h5. ASCIIMathML Markup - reference ./h5.
 #--------------------------------------------------
 
 The full set of ASCII notation conventions for the library can be found on its
@@ -1674,7 +1730,7 @@ into my target file.
 
 Useful. Just delete the spy from google, "the urchin tracker" from the page ;)) .
 
-}}}4
+}}}5
 
 #----------------------------------------------------------------
 {{{4 .h4. How to distribute your final folding HTML-formatted work ./h4.
@@ -1707,8 +1763,8 @@ So: (a) weave an HTML file from Molly
     (b) open it in IE or Firefox with MHT add-on, and 
     (c) save it as one file.
 
-This will allow you to distribute your MathML marked files with included images, plots
-etc. in a convenient manner.
+This will allow you to distribute your MathML marked files and/or/files with included
+images, plots etc. in a convenient manner.
 If you are strictly Firefox-based, you can also use the open zip-based MAF format.
 
 
@@ -2076,58 +2132,181 @@ Use .b."mollify"./b. as  a technical term (insert MOLLY.pl invocation into the L
 {{{2 .h2. PART III ------------ LITERATE SOURCE OF THE SCRIPT ------------ ./h2.
 #-------------------------------------------------------
 
-
 #----------------------------------------
-{{{3 .h3. Local Reference ./h3.
+{{{3 .h3. PRELIMINARIES ./h3.
 #--------------------------------
 
-.b. VIM regexp to highlight literate code sections only: ./b.
-.i. HAD TO spoil it because "notangle" complained about double diamonds 
-"in documentation chunk", bastard ./i. .b. delete spaces btw angl brckrs ./b.
-.pre. ^< <.*> >=\_.\{-1,}\n^@/e ./pre.
-.. and vice versa, highlight text, leave only code unhighlighted:
-.pre. ^@\_.\{-1,}\n^< <.*> >=/e ./pre.
+#-------------------------------------------------------------------
+{{{4 .h4. Script layout and idea ./h4.
+#-----------------------------------------
 
+.. are very simple.
 
-.b. In SciTE, and works in geany, too. Poss. built into Scincilla ./b.
-the //{ and //} allow explicit folding marks in "languages like C etc"
-Seems to work in Perl. At least, I could correct/improve geany's folding
-by adding leading // to my vim closing fold marks, what does not afect vim.
+.b.1. ./b. It is possible to include an invocation of a  perl script with 
+.pre. "do script.pl" or "use script.pl"  ./pre.
+as the first lines in a Literate Source file.  This turns the source into a standalone perl script. 
+If we write the script to process the L.Source file itself ($0 in perl parlance) then the script can do 
+weaving and tangling of it. The output, which is formatted documentation (which was "weaved" from L.P.) 
+or the sources usable by a computer ("tangled") can be  saved in a file, as with traditional literate 
+programming tools. But which is more convenient, the formatted documentation on STDOUT can 
+be  picked up by a web  server.  We'll see formatted representation of work in progress immediately
+upon reload of the page in a web browser. 
 
-Should add that to the filtering expression in MOLLY
+When I think, I prefer to look at the formatted document, and when I edit, I do it "locally" in a good
+programming editor (such as "vim"). Even with vim folding the difference in perception is enormous.
 
+.b. 2. ./b.I see three advantages to such an arrangement:  
+.ul..li.first, web markup is ubiquitous today, and it is quite sufficient for most publishing needs. 
+So Literate Programming with HTML will free us from a tie to TeX which so negatively affected 
+perception of L.P. by the masses of programmers. The markup becomes very, very simple. 
 
+This eliminates a source of one major complaint about the traditional L.P. - that the programmer
+has to maintain not one, but two "programming languages" while working with LP, the target one
+and the formatting one. This - the complaint goes - becomes a source of errors from an additional
+layer of programming in addition to writing the code itself. It taxes the programmer's mind rather
+than relieving it.
 
-}}}3
+In fact, simple HTML is almost self-correcting, as wrong markup becomes immediately obvious
+in the browser. 
 
+./li. .li. secondly, this eliminates "weaving" as a separate step during development, but more
+importantly, such an arrangement allows a programmer to think about his program while looking
+at a .i.folding./i. document, in which only relevant sections are open.
 
+I perceive .i. folding ./i. as a major advantage
 
-#----------------------------------------------
-{{{3 .h3. Bugs, status, changes ./h3.
-#----------------------------------------------
+With .i.folding./i. the Literate Source file becomes manageable even for really large texts. 
+This in turn allows the programmer to keep .i. many files ./i. inside the LPSource, including
+test snippets, the makefile, preserve old versions of parts of the source etc. etc.
+Literate Source file is painlessely turned into a Project File, one file, from which anything
+can be easily generated.
+It is this one file that my version control system must track now. For really large projects,
+we can keep a meta-file (also in the folding format) with largish partial files as links,
+corresponding to logical pieces of the project, which will open in the browser as automatically
+weaved Literate Source Files.
 
-#-------------------------------
-{{{4 .h4. Bugs ./h4.
-#-------------------------------
+I attempted to explain this at length in introductory sections above.
+./li../ul.
 
-.b.Mistreatment of tabs in _some_ cases. ./b.
-.s.       (*) Molly tangler will treat tabs OK .i. unless ./i. they were met
-        in the "while over regexp" where Molly just calculates the length
-        of the left margin, which is filled with spaces in "pass 2 - print"
+.b.3. ./b. How the script works overall
 
-I.e. chunks referenced from within Makefiles .i. have to ./i. be in pos 1
-on the line and all tabs used explicitly in their bodies.
+After figuring out how it was invoked, the script:
+.ul..li. .b.when it is supposed to weave./b., scans into memory the Literate Source 
+file, marked up in "noweb" notation (and its document sections marked with raw HTML 
+or in "dotHTML") doing necessary substitutions and conversions along the way.
+Then the buffered string thus formed and several auxilliary buffers (for document TOC 
+and Index sections) are printed out to STDOUT. They can be redirected into files, if 
+LPSource, now also an executable script itself, is run from command line, or they can 
+be picked up by a local personal web server that is used by the developer, which  should 
+recognize the LPSource as a valid CGI script
 
-This can be fixed, but not now. ./s.
+After any changes in the script, the user can reload the page in his web browser and 
+immediately see the changes.
 
-I made sure to "et!" (=expand tabs)  and "retab" in vim to make sure
-all indentation I type in code is preserved in folding html 
-/which may be a good idea generally/
+./li..li. .b.If invoked to tangle./b. the source of the program, this version of the 
+script will either use the built-in tangler, or refer the actual tangling to the 
+"notangle" utility from "noweb" suite of  tools by Ramsey, depending on configuration 
+at the top of your litsource file
+
+The built-in tangler does not scan the file into memory. Rather, it does a first pass over
+the file noting the offsets where code chunks start, end or get referred to.
+The second pass then recursively prints them to STDOUT.
+./li../ul.
+.b.5. ./b. .x. A future version ./x. of the script may be made completely self-contained, i.e. 
+include a mini-web server as well as a folding weaver and a tangler.
 
 }}}4
 
+#------------------------------------------------------
+{{{4 .h4. Makefile(s) ./h4.
+#------------------------------------------------------
+
+
+<<Makefile for split MOLLY-top and MOLLY-bottom>>=
+
+all: help
+#-
+
+help:
+        @echo;
+        @echo " ---TARGETS---";
+        @echo " new - tangle out MOLLYs-new.pl";
+        <<other Makefile help commands>>
+        @echo;
+#-
+
+new:
+        perl ./MOLLY.pl -R'MOLLY.pl module' MOLLYs-bottom.weave >MOLLYs-new.pl;
+#-
+
+<<other Makefile commands>>
+
+@
+
+Checking my Makefile insertions ;)). This is going to be a test of M's tangling
+as well, actually
+
+The help insertions have already been indented with  a tab
+
+<<other Makefile help commands>>=
+@echo " td  - run a tanglediff against MOLLY.pl";
+@echo " fld - tangle and run a GUI diff tool, fldiff";
+@
+
+<<other Makefile commands>>=
+
+td:
+        MOLLYs-bottom.tangle | diff -y -w --left-column MOLLY.pl - |less;
+#-
+
+fld:
+        perl ./MOLLY.pl -R'MOLLY.pl module' MOLLYs-bottom.weave >MOLLYs-new.pl;
+        fldiff MOLLY.pl MOLLYs-new.pl;
+#-
+
+@
+
+}}}4
+
+#------------------------------------------------------
+{{{4 .h4. Tests to run on a newly tangled script./h4.
+#------------------------------------------------------
+
+.. will append to the Makefile, mostly.
+
+FIRST, tests go into ./tests.and.examples subdir
+
+TANGLING
+1. Check it tangles itself out
+    "make fd" "make fld" already do that
+    maybe: check sizes and/or MD5s
+
+2. Check tangling of the "substitution torture test"(s)
+
+3. Check tangling of split script(s)
+
+4. I have 2 modes: command line and Quick Mode
+Testing CL involves:
+
+    Usage printout - no ARGV[0], wrong options (several poss)
+    weaving from CL
+    tangling from CL
+    weaving, tangling from Quick Mode; compare output?
+
+Running against "notangle" in several tests above.
+
+ALSO: tangling, split or not: test for DAG loops
+/toposort not added yet/
+
+
+}}}4
+
+#----------------------------------------------
+{{{4 .h4. Bugs, status, changes ./h4.
+#----------------------------------------------
+
 #-------------------------------
-{{{4 .h4. Ideas - versions - changes./h4.
+{{{5 .h5. Status and ideas ./h5.
 #-------------------------------
 
 Current version:
@@ -2150,7 +2329,7 @@ Current version:
 
 
 #--------------------------------
-{{{5 .h5. first ideas ./h5.
+{{{6 .h6. first ideas ./h6.
 #--------------------------------
     
 
@@ -2247,12 +2426,12 @@ Current version:
 ./li. .li. .b. context diffs and sections editing ./b.   
 ./li. ./ul.
 
-}}}5
+}}}6
 
 
 
 #-----------------------------------
-{{{5 .h5. more ideas ./h5.
+{{{6 .h6. more ideas ./h6.
 #-----------------------------------
 
 .b. More ideas: ./b.
@@ -2292,13 +2471,13 @@ OR: .b. TOC/Index in a floating window? ./b. -- should be easy, just  name the
     // no jumps from the TOC? or with a separate 'jump' icon? //
     // no jumps to closed sections will work anyway, then what to do? //
 
-}}}5
+}}}6
 
 
 
 
 #-------------------------------------------
-{{{5 .h5.  Contract programming  and Molly?? ./h5.
+{{{6 .h6.  Contract programming  and Molly?? ./h6.
 #-------------------------------------------
 
 possibly add conditional tangling to produce a contract-assertion-littereted prog during
@@ -2341,10 +2520,10 @@ by simply filtering with
 
 Should be easy enough ;))
 
-}}}5
+}}}6
 
 #-------------------------------------------
-{{{5 .h5. Editor highlighting, Perl POD and Literate Markup ./h5.
+{{{6 .h6. Editor highlighting, Perl POD and Literate Markup ./h6.
 #-------------------------------------------
 
 The editor highlighting and literate marks  - is .i. bullshit ./i.
@@ -2367,44 +2546,35 @@ as simple PODs stand for nothing
 
 So, I could use it, it seems? OR: is there any sense in that??
 
-}}}5
-
-}}}4
-
-
-#----------------
-{{{4 .h4.Done ./h4.
-#----------------
-
-
-#-------------------------------------------
-{{{5 .h5. done for Tangling ./h5.
-#-------------------------------------------
-
-1. command-line options (for weaver, too?) to imitate "noweb" (?)
-Options: 
-    .ul. -to show all roots??
-    - .s. mark refline nums and offsets of the Lit Source in the tangled code ./s.
-    - .s. root to tangle ./s.
-    - keep docs in comments (and/or Pod sections?? ./ul.
-
-2. ability   to tangle over several file. I.e.
-    .ul. .s. I grow my LitSource for a while, then split it almost
-    mechanically, not making splinters self-contained
-    I then supply all splinter file names to "MOLLY.pl my.project-*.weave"
-    and it tangles them out, however my prog is going through the splinters. ./s.
-    ./ul.
-
-3. 
+}}}6
 
 }}}5
 
-}}}4
+#-------------------------------
+{{{5 .h5. Bugs ./h5.
+#-------------------------------
 
+.b.Mistreatment of tabs in _some_ cases. ./b.
+.s.       (*) Molly tangler will treat tabs OK .i. unless ./i. they were met
+        in the "while over regexp" where Molly just calculates the length
+        of the left margin, which is filled with spaces in "pass 2 - print"
+
+I.e. chunks referenced from within Makefiles .i. have to ./i. be in pos 1
+on the line and all tabs used explicitly in their bodies.
+
+This can be fixed, but not now. ./s.
+
+I made sure to "et!" (=expand tabs)  and "retab" in vim to make sure
+all indentation I type in code is preserved in folding html 
+/which may be a good idea generally/
+
+}}}5
 
 #----------------
-{{{4 .h4.Todo -  current./h4.
+{{{5 .h5.Todo ./h5.
 #----------------
+
+.b..i.Outdated, historical ./i../b.
 
 .b.1. Problem of double diamonds in doc chunks ./b.
 .ul.
@@ -2455,174 +2625,32 @@ DONE although not very cleanly. The tag will break across several lines
 
 
 
+}}}5
+
 }}}4
 
-}}}3
+#----------------------------------------
+{{{4 .h4. Local Reference ./h4.
+#--------------------------------
+
+.b. VIM regexp to highlight literate code sections only: ./b.
+.i. HAD TO spoil it because "notangle" complained about double diamonds 
+"in documentation chunk", bastard ./i. .b. delete spaces btw angl brckrs ./b.
+.pre. ^< <.*> >=\_.\{-1,}\n^@/e ./pre.
+.. and vice versa, highlight text, leave only code unhighlighted:
+.pre. ^@\_.\{-1,}\n^< <.*> >=/e ./pre.
+
+
+.b. In SciTE, and works in geany, too. Poss. built into Scincilla ./b.
+the //{ and //} allow explicit folding marks in "languages like C etc"
+Seems to work in Perl. At least, I could correct/improve geany's folding
+by adding leading // to my vim closing fold marks, what does not afect vim.
+
+Should add that to the filtering expression in MOLLY
 
 
 
-#-------------------------------------------------------------------
-{{{3 .h3. PRELIMINARIES: The script layout and idea ./h3.
-#-----------------------------------------
-
-.. are very simple.
-
-.b.1. ./b. It is possible to include an invocation of a  perl script with 
-.pre. "do script.pl" or "use script.pl"  ./pre.
-as the first lines in a Literate Source file.  This turns the source into a standalone perl script. 
-If we write the script to process the L.Source file itself ($0 in perl parlance) then the script can do 
-weaving and tangling of it. The output, which is formatted documentation (which was "weaved" from L.P.) 
-or the sources usable by a computer ("tangled") can be  saved in a file, as with traditional literate 
-programming tools. But which is more convenient, the formatted documentation on STDOUT can 
-be  picked up by a web  server.  We'll see formatted representation of work in progress immediately
-upon reload of the page in a web browser. 
-
-When I think, I prefer to look at the formatted document, and when I edit, I do it "locally" in a good
-programming editor (such as "vim"). Even with vim folding the difference in perception is enormous.
-
-.b. 2. ./b.I see three advantages to such an arrangement:  
-.ul..li.first, web markup is ubiquitous today, and it is quite sufficient for most publishing needs. 
-So Literate Programming with HTML will free us from a tie to TeX which so negatively affected 
-perception of L.P. by the masses of programmers. The markup becomes very, very simple. 
-
-This eliminates a source of one major complaint about the traditional L.P. - that the programmer
-has to maintain not one, but two "programming languages" while working with LP, the target one
-and the formatting one. This - the complaint goes - becomes a source of errors from an additional
-layer of programming in addition to writing the code itself. It taxes the programmer's mind rather
-than relieving it.
-
-In fact, simple HTML is almost self-correcting, as wrong markup becomes immediately obvious
-in the browser. 
-
-./li. .li. secondly, this eliminates "weaving" as a separate step during development, but more
-importantly, such an arrangement allows a programmer to think about his program while looking
-at a .i.folding./i. document, in which only relevant sections are open.
-
-I perceive .i. folding ./i. as a major advantage
-
-With .i.folding./i. the Literate Source file becomes manageable even for really large texts. 
-This in turn allows the programmer to keep .i. many files ./i. inside the LPSource, including
-test snippets, the makefile, preserve old versions of parts of the source etc. etc.
-Literate Source file is painlessely turned into a Project File, one file, from which anything
-can be easily generated.
-It is this one file that my version control system must track now. For really large projects,
-we can keep a meta-file (also in the folding format) with largish partial files as links,
-corresponding to logical pieces of the project, which will open in the browser as automatically
-weaved Literate Source Files.
-
-I attempted to explain this at length in introductory sections above.
-./li../ul.
-
-.b.3. ./b. How the script works overall
-
-After figuring out how it was invoked, the script:
-.ul..li. .b.when it is supposed to weave./b., scans into memory the Literate Source 
-file, marked up in "noweb" notation (and its document sections marked with raw HTML 
-or in "dotHTML") doing necessary substitutions and conversions along the way.
-Then the buffered string thus formed and several auxilliary buffers (for document TOC 
-and Index sections) are printed out to STDOUT. They can be redirected into files, if 
-LPSource, now also an executable script itself, is run from command line, or they can 
-be picked up by a local personal web server that is used by the developer, which  should 
-recognize the LPSource as a valid CGI script
-
-After any changes in the script, the user can reload the page in his web browser and 
-immediately see the changes.
-
-./li..li. .b.If invoked to tangle./b. the source of the program, this version of the 
-script will either use the built-in tangler, or refer the actual tangling to the 
-"notangle" utility from "noweb" suite of  tools by Ramsey, depending on configuration 
-at the top of your litsource file
-
-The built-in tangler does not scan the file into memory. Rather, it does a first pass over
-the file noting the offsets where code chunks start, end or get referred to.
-The second pass then recursively prints them to STDOUT.
-./li../ul.
-.b.5. ./b. .x. A future version ./x. of the script may be made completely self-contained, i.e. 
-include a mini-web server as well as a folding weaver and a tangler.
-
-}}}3
-
-#------------------------------------------------------
-{{{3 .h3. Makefile./h3.
-#------------------------------------------------------
-
-
-<<Makefile for split MOLLY-top and MOLLY-bottom>>=
-
-all: help
-#-
-
-help:
-        @echo;
-        @echo " ---TARGETS---";
-        @echo " new - tangle out MOLLYs-new.pl";
-        <<other Makefile help commands>>
-        @echo;
-#-
-
-new:
-        perl ./MOLLY.pl -R'MOLLY.pl module' MOLLYs-bottom.weave >MOLLYs-new.pl;
-#-
-
-<<other Makefile commands>>
-
-@
-
-Checking my Makefile insertions ;)). This is going to be a test of M's tangling
-as well, actually
-
-The help insertions have already been indented with  a tab
-
-<<other Makefile help commands>>=
-@echo " td  - run a tanglediff against MOLLY.pl";
-@echo " fld - tangle and run a GUI diff tool, fldiff";
-@
-
-<<other Makefile commands>>=
-
-td:
-        MOLLYs-bottom.tangle | diff -y -w --left-column MOLLY.pl - |less;
-#-
-
-fld:
-        perl ./MOLLY.pl -R'MOLLY.pl module' MOLLYs-bottom.weave >MOLLYs-new.pl;
-        fldiff MOLLY.pl MOLLYs-new.pl;
-#-
-
-@
-
-}}}3
-
-#------------------------------------------------------
-{{{3 .h3. Tests to run on a newly tangled script./h3.
-#------------------------------------------------------
-
-.. will append to the Makefile, mostly.
-
-FIRST, tests go into ./tests.and.examples subdir
-
-TANGLING
-1. Check it tangles itself out
-    "make fd" "make fld" already do that
-    maybe: check sizes and/or MD5s
-
-2. Check tangling of the "substitution torture test"(s)
-
-3. Check tangling of split script(s)
-
-4. I have 2 modes: command line and Quick Mode
-Testing CL involves:
-
-    Usage printout - no ARGV[0], wrong options (several poss)
-    weaving from CL
-    tangling from CL
-    weaving, tangling from Quick Mode; compare output?
-
-Running against "notangle" in several tests above.
-
-ALSO: tangling, split or not: test for DAG loops
-/toposort not added yet/
-
+}}}4
 
 }}}3
 
@@ -2885,7 +2913,7 @@ exit;  # just in case
     #print STDERR "$0 was called from command line..\n";
 
     #-- getopts invocation
-        getopts("hwdt:l:R:i", \%cl_args);
+        getopts("hwm:dt:l:R:i", \%cl_args);
 
     # -- set doc sections markup (if not default=html): 
         if($cl_args{d}) { 
@@ -2926,6 +2954,12 @@ exit;  # just in case
             print STDERR "\tweaving the first one: $cl_args{w}\n\n"; 
             }
 
+            if ($cl_args{m}) {
+                # print STDERR "using ASCIIMathML.js - located at $cl_args{m}\n";
+                $enable_ASCIIMathML = 1;
+                $path_to_ASCIIMathML = $cl_args{m};
+            }
+
             open LITSOURCE, "< $ARGV[0]" || die "could not open the target file\n";
             goto WEAVE_ME;
 
@@ -2957,31 +2991,31 @@ exit;  # just in case
 
 <<process args for tangling an external file from CL>>=
 
-        if($cl_args{d}) { 
-            #print STDERR "doc sections in coments; comment char is $cl_args{d}\n" 
-            };
+    if($cl_args{d}) { 
+        #print STDERR "doc sections in coments; comment char is $cl_args{d}\n";
+        };
 
-        if($cl_args{u}) { 
-            #print STDERR "applying UN-tangling with script char is $cl_args{u}\n" 
-            };
+    if($cl_args{u}) { 
+        #print STDERR "applying UN-tangling with script char is $cl_args{u}\n";
+        };
 
-        if($cl_args{i}) { 
-            #print STDERR "printing information on roots, discovered chunks\n" 
-            $show_all_roots = 1;
-            
-            };
+    if($cl_args{i}) { 
+        #print STDERR "printing information on roots, discovered chunks\n";
+        $show_all_roots = 1;
+        
+        };
 
-        if($cl_args{l}) { 
-            #print STDERR "will add reflines; comment char is $cl_args{l}\n" 
-            $print_ref_linenos_when_tangling = 1;
-            $code_sections_comment_symbol = $cl_args{l};
-            };
+    if($cl_args{l}) { 
+        #print STDERR "will add reflines; comment char is $cl_args{l}\n";
+        $print_ref_linenos_when_tangling = 1;
+        $code_sections_comment_symbol = $cl_args{l};
+        };
 
-        # -- getting the root chunk for tangling --
-        if($cl_args{R}) { 
-            $root_chunk = $cl_args{R};
-            print STDERR "tangling root chunk '$root_chunk'\n"
-            };
+    # -- getting the root chunk for tangling --
+    if($cl_args{R}) { 
+        $root_chunk = $cl_args{R};
+        print STDERR "tangling root chunk '$root_chunk'\n";
+        };
 
 @
 
@@ -3050,6 +3084,10 @@ sub usage {
             weave from the external target file (rawHTML), or
         -wd 
             same for dotHTML-encoded files
+
+        -m 'URL or path/to/ASCIIMathML.js library'
+            process the file with ASCIIMathML lib. Option used in addition
+            to mode-setting -w or -wd
 
 
         FORESTRY mode:
@@ -4017,6 +4055,7 @@ Now $snippet_position and $snippet_end are not just offsets, but strings like
 I'll need to split them and supply the two pieces to "seek" and "read".
 
 <<else print out the chunk>>=
+
     else { # .. print it here
 
         (my $litsrc_fhname_beg, my $litsrc_line_beg) =
@@ -4774,6 +4813,17 @@ PRE     {
         background: #f5f5f5;    
         width: 70%;
         }
+.hl-white     {
+        PADDING-LEFT: 5px; PADDING-RIGHT: 5px; 
+        padding-top: 5px; padding-bottom: 5px;
+        MARGIN-BOTTOM: 1px; 
+        BORDER-TOP: #a9a9a9 0px solid;
+        BORDER-RIGHT: #a9a9a9 0px solid; 
+        BORDER-LEFT: #a9a9a9 0px solid;
+        BORDER-BOTTOM: #a9a9a9 0px solid;        
+        background: #fff;    
+        width: 70%;
+        }
 .hl-wide {
         PADDING-LEFT: 5px; 
         PADDING-RIGHT: 5px; 
@@ -5224,7 +5274,7 @@ output buffer for printing TOC with needed indentation, "$tocbuf"
                 . $section_num . 
                 q/);" >/ . '<i>' . $section_num . '</i></a>';
 
-        $toc_indent = "&nbsp;"x4 . "." x (($section_level-1) * 7);
+        $toc_indent = "&nbsp;"x4 . ".&nbsp;" x (($section_level-1) * 3);
 
         # old-disabled
         #$toc_indent = "&nbsp;" x ($section_level * 7);
@@ -5433,6 +5483,11 @@ print <<end_of_print;
 <a href="javascript:;" onmousedown="toggleDiv('tocmain');">
 <b>TABLE OF CONTENTS [expand/collapse]</b></a>
 <a name="tocancor"></a>
+</div>
+
+<div id='tocmain' style='display:$toc_expanded' style='background:#ffffff'> 
+
+<div class='hl-white' align=center>
 <font size=-1 color=darkgrey><i>
 <p><b>Section name</b> toggles expanded state. <b>Subsection number</b> on the left opens
 <br>all parent sections to make it visible. <b>Leftmost symbol</b> opens parents and
@@ -5440,10 +5495,6 @@ print <<end_of_print;
 </i></font>
 </div>
 
-<div id='tocmain' style='display:$toc_expanded' style='background:#ffffff'> 
-<p>
-<br>
-<p>
 end_of_print
 
 @
@@ -5877,7 +5928,82 @@ This is how it was before chunk links, section links  and flinks:
 
 }}}3
 
-.h3. ./h3.
+.h3.  ./h3.
+
+#--------------------------------------------------------------------------------
+{{{3 .h3.(VIRTUAL VIEW): Molly Forestry add-on - replanting subtrees ./h3.
+#--------------------------------------------------------------------------------
+
+Promouting and demoting subtrees in-place can be done with a simple filter, which
+takes STDIN, outputs to STDOUT, and is used from a programming editor on a selection.
+Usage is described here [[FLINK Molly Forestry: moving and replanting trees]]
+
+The snippet in question is this:
+[[LINKED_CHUNK replant-tree]]
+
+To incorporate the script into Molly, the changes should be done in sth like 4 places.
+
+(1) Despatcher must take a new option (say, "-t '-1' " for "trees").
+This should run on CL, as the option from a mollified file does not make sense.
+
+[[LINKED_CHUNK running on interactive TTY]]
+
+
+(2) The script itself .s. should be cut into "accumulate the result" before the 
+code, header, body processing starts./s.
+Wrong: that's inside "while" already
+
+SO: it can/should be place after the external vars, the parameters, have been set,
+before any actual weaving, and this mode should exit after finishing.
+..let's cut it in here:
+
+[[LINKED_CHUNK MOLLY.pl module]]
+
+Then, the snippet itself
+    1. Tag open/close symbols were set in general settings, before the despatcher, OK.
+
+<<forestry filter mode - move subtrees>>=
+
+FORESTRY:
+
+$shift_by_numlevels = $replant_tree || 0;
+
+while (<STDIN>) {
+
+    #~  html headings -- /change var for raw/dotHTML switching/
+    s/(\s*)($tag_open\+?h)(\d+)(.*?$tag_close)(.*)($tag_open\/h)(\d+)$tag_close/
+        $1
+        .$2.($3+$shift_by_numlevels).$4
+        .$5
+        .$6.($7+$shift_by_numlevels)."$tag_close"
+    /ex;
+
+    #~ vim folds - opening
+    s/^(\{\{\{)(\d+)/$1.($2+$shift_by_numlevels)/e;
+    #~ vim folds - closing
+    s/^(\}\}\})(\d+)/$1.($2+$shift_by_numlevels)/e;
+
+    print;
+
+} # elihw
+
+close LITSOURCE;
+exit;
+
+@
+
+(3) the "sub usage"  
+ 
+[[LINKED_CHUNK sub print usage]]
+
+(4) and the doc section for CL options must be updated
+
+[[FLINK Command-line options (ref)]]
+
+}}}3
+
+.h3.  ./h3.
+
 
 #--------------------------------------------------------------------------------
 {{{3 .h3.(VIRTUAL VIEW): Creation of Linked Chunk functionality./h3.
@@ -5967,7 +6093,7 @@ attribute on cloning
 }}}4
 
 
-{{{4 .h4. Actual implementation (with links to affected code sections ./h4.
+{{{4 .h4. Actual implementation (with links to affected code sections) ./h4.
 
 .b. 1. ./b. All implementation changes are done below the "WEAVER" section
 
@@ -6250,81 +6376,6 @@ I will start using flinks and see how browsers behave. So status: good enough fo
 
 }}}3
 
-.h3. ./h3.
-
-#--------------------------------------------------------------------------------
-{{{3 .h3.(VIRTUAL VIEW): Molly Forestry add-on - replanting subtrees ./h3.
-#--------------------------------------------------------------------------------
-
-Promouting and demoting subtrees in-place can be done with a simple filter, which
-takes STDIN, outputs to STDOUT, and is used from a programming editor on a selection.
-Usage is described here [[FLINK Molly Forestry: moving and replanting trees]]
-
-The snippet in question is this:
-[[LINKED_CHUNK replant-tree]]
-
-To incorporate the script into Molly, the changes should be done in sth like 4 places.
-
-(1) Despatcher must take a new option (say, "-t '-1' " for "trees").
-This should run on CL, as the option from a mollified file does not make sense.
-
-[[LINKED_CHUNK running on interactive TTY]]
-
-
-(2) The script itself .s. should be cut into "accumulate the result" before the 
-code, header, body processing starts./s.
-Wrong: that's inside "while" already
-
-SO: it can/should be place after the external vars, the parameters, have been set,
-before any actual weaving, and this mode should exit after finishing.
-..let's cut it in here:
-
-[[LINKED_CHUNK MOLLY.pl module]]
-
-Then, the snippet itself
-    1. Tag open/close symbols were set in general settings, before the despatcher, OK.
-
-<<forestry filter mode - move subtrees>>=
-
-FORESTRY:
-
-$shift_by_numlevels = $replant_tree || 0;
-
-while (<STDIN>) {
-
-    #~  html headings -- /change var for raw/dotHTML switching/
-    s/(\s*)($tag_open\+?h)(\d+)(.*?$tag_close)(.*)($tag_open\/h)(\d+)$tag_close/
-        $1
-        .$2.($3+$shift_by_numlevels).$4
-        .$5
-        .$6.($7+$shift_by_numlevels)."$tag_close"
-    /ex;
-
-    #~ vim folds - opening
-    s/^(\{\{\{)(\d+)/$1.($2+$shift_by_numlevels)/e;
-    #~ vim folds - closing
-    s/^(\}\}\})(\d+)/$1.($2+$shift_by_numlevels)/e;
-
-    print;
-
-} # elihw
-
-close LITSOURCE;
-exit;
-
-@
-
-(3) the "sub usage"  
- 
-[[LINKED_CHUNK sub print usage]]
-
-(4) and the doc section for CL options must be updated
-
-[[FLINK Command-line options (ref)]]
-
-}}}3
-
-.h3. ./h3.
 
 #-------------------------------------------------------------
 {{{3 .h3. (VIRTUAL VIEW): example of additional markup - dotHTML./h3.
@@ -6611,8 +6662,6 @@ $str_sp = $ARGV[0];
 
 }}}3
 
-.h3. ./h3.
-
 #-------------------------------------------------------------
 {{{3 .h3. ASCIIMathML and LaTeXMathML inside Molly  ./h3.
 #-------------------------------------------------------------
@@ -6708,6 +6757,8 @@ tags are already provided in the code, do NOT retype them, input only the conten
 
 @
 
+.b..i. This is a simple cut-in into the "head" section of the generated html file. Not put in yet ./i../b.
+
 }}}4
 
 #--------------------------------------------------------------------------
@@ -6787,14 +6838,13 @@ endamath
 It includes roots ``\Delta=\left\{k\delta+\alpha|k\in Z,\; \alpha\in \Delta_0\right\}``
 positive roots ``\Delta^{+}=\{k\delta+\alpha|k\geq 0,\; \alpha\in \Delta_0^{+}\}\cup \{k\delta+\alpha|k\geq 1,\; \alpha\in \Delta_0\setminus \Delta_0^{+}\}``
 
-.b. The above is rendered correctly by ASCIIMathML.js and LaTeXMathML.js ./b. 
-libraries from the standalone Editor.It is rendered correctly with 
-ASCIIMathML_with_modified_escapes.js from Molly 
+.i. The above is rendered correctly./i. by ASCIIMathML_with_modified_escapes.js and by
+LaTeXMathML.js from Molly
 (Testing with LaTeXMathML.js requires wrapping the formulas in dollar signs)
 
 
-.b. 2. The following long formulas .i. fail on both ./i. ASCII and LaTeX libraries ./b. tested
-from the standalone Editor and ASCII_with_modified_escapes from Molly
+.b. 2. The following long formulas .i. fail on both ./i. ASCII and LaTeX libraries ./b.
+tested from the standalone Editor and ASCII_with_modified_escapes from Molly
 The number of incorrect renderings is small (1 or 2 elements left unrendered), and
 suggests those elemens are simply missing in definitions.
 
@@ -6811,7 +6861,7 @@ set ``\Gamma_{\fr ak{a}\subset \fr ak{g}}``  is introduced as the
 combination of projection of positive roots ``\Delta^{+}`` of algebra
 ``\fr ak{g}`` using formulae:
 
-.b. .i. The above paragraph is OK ./i. ./b.
+.i. The above paragraph is not quite OK ./i.
 The following is rendered incompletely:
 
 {eq:7}

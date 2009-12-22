@@ -116,6 +116,10 @@ sub usage {
         -wd 
             same for dotHTML-encoded files
 
+        -m 'URL or path/to/ASCIIMathML.js library'
+            process the file with ASCIIMathML lib. Option used in addition
+            to mode-setting -w or -wd
+
 
         FORESTRY mode:
 
@@ -196,7 +200,7 @@ _XXX_
         #print STDERR "$0 was called from command line..\n";
     
         #-- getopts invocation
-            getopts("hwdt:l:R:i", \%cl_args);
+            getopts("hwm:dt:l:R:i", \%cl_args);
     
         # -- set doc sections markup (if not default=html): 
             if($cl_args{d}) { 
@@ -237,6 +241,12 @@ _XXX_
                 print STDERR "\tweaving the first one: $cl_args{w}\n\n"; 
                 }
     
+                if ($cl_args{m}) {
+                    # print STDERR "using ASCIIMathML.js - located at $cl_args{m}\n";
+                    $enable_ASCIIMathML = 1;
+                    $path_to_ASCIIMathML = $cl_args{m};
+                }
+    
                 open LITSOURCE, "< $ARGV[0]" || die "could not open the target file\n";
                 goto WEAVE_ME;
     
@@ -245,31 +255,31 @@ _XXX_
             else { # this is tangling, default action, no opt
     
                 
-                    if($cl_args{d}) { 
-                        #print STDERR "doc sections in coments; comment char is $cl_args{d}\n" 
-                        };
+                if($cl_args{d}) { 
+                    #print STDERR "doc sections in coments; comment char is $cl_args{d}\n";
+                    };
             
-                    if($cl_args{u}) { 
-                        #print STDERR "applying UN-tangling with script char is $cl_args{u}\n" 
-                        };
+                if($cl_args{u}) { 
+                    #print STDERR "applying UN-tangling with script char is $cl_args{u}\n";
+                    };
             
-                    if($cl_args{i}) { 
-                        #print STDERR "printing information on roots, discovered chunks\n" 
-                        $show_all_roots = 1;
-                        
-                        };
+                if($cl_args{i}) { 
+                    #print STDERR "printing information on roots, discovered chunks\n";
+                    $show_all_roots = 1;
+                    
+                    };
             
-                    if($cl_args{l}) { 
-                        #print STDERR "will add reflines; comment char is $cl_args{l}\n" 
-                        $print_ref_linenos_when_tangling = 1;
-                        $code_sections_comment_symbol = $cl_args{l};
-                        };
+                if($cl_args{l}) { 
+                    #print STDERR "will add reflines; comment char is $cl_args{l}\n";
+                    $print_ref_linenos_when_tangling = 1;
+                    $code_sections_comment_symbol = $cl_args{l};
+                    };
             
-                    # -- getting the root chunk for tangling --
-                    if($cl_args{R}) { 
-                        $root_chunk = $cl_args{R};
-                        print STDERR "tangling root chunk '$root_chunk'\n"
-                        };
+                # -- getting the root chunk for tangling --
+                if($cl_args{R}) { 
+                    $root_chunk = $cl_args{R};
+                    print STDERR "tangling root chunk '$root_chunk'\n";
+                    };
             
     
                 for (my $countem=0; $countem < @ARGV; $countem++) {
@@ -566,7 +576,8 @@ exit;
             print_chunk($snippet_end, $snippet_left_margin_ref, 0);
         
         }
-                else { # .. print it here
+            
+        else { # .. print it here
     
             (my $litsrc_fhname_beg, my $litsrc_line_beg) =
                 split '-', $file_lines_hash{$chunk_being_printed}[$iterate_lines++];
@@ -863,6 +874,17 @@ PRE     {
         BORDER-LEFT: #a9a9a9 0px solid;
         BORDER-BOTTOM: #a9a9a9 0px solid;        
         background: #f5f5f5;    
+        width: 70%;
+        }
+.hl-white     {
+        PADDING-LEFT: 5px; PADDING-RIGHT: 5px; 
+        padding-top: 5px; padding-bottom: 5px;
+        MARGIN-BOTTOM: 1px; 
+        BORDER-TOP: #a9a9a9 0px solid;
+        BORDER-RIGHT: #a9a9a9 0px solid; 
+        BORDER-LEFT: #a9a9a9 0px solid;
+        BORDER-BOTTOM: #a9a9a9 0px solid;        
+        background: #fff;    
         width: 70%;
         }
 .hl-wide {
@@ -1183,7 +1205,7 @@ elsif
                 . $section_num . 
                 q/);" >/ . '<i>' . $section_num . '</i></a>';
 
-        $toc_indent = "&nbsp;"x4 . "." x (($section_level-1) * 7);
+        $toc_indent = "&nbsp;"x4 . ".&nbsp;" x (($section_level-1) * 3);
 
         # old-disabled
         #$toc_indent = "&nbsp;" x ($section_level * 7);
@@ -1414,6 +1436,11 @@ print <<end_of_print;
 <a href="javascript:;" onmousedown="toggleDiv('tocmain');">
 <b>TABLE OF CONTENTS [expand/collapse]</b></a>
 <a name="tocancor"></a>
+</div>
+
+<div id='tocmain' style='display:$toc_expanded' style='background:#ffffff'> 
+
+<div class='hl-white' align=center>
 <font size=-1 color=darkgrey><i>
 <p><b>Section name</b> toggles expanded state. <b>Subsection number</b> on the left opens
 <br>all parent sections to make it visible. <b>Leftmost symbol</b> opens parents and
@@ -1421,10 +1448,6 @@ print <<end_of_print;
 </i></font>
 </div>
 
-<div id='tocmain' style='display:$toc_expanded' style='background:#ffffff'> 
-<p>
-<br>
-<p>
 end_of_print
 
 
