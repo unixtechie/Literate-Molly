@@ -168,8 +168,86 @@ I am not going to tangle the 2 pieces together at the moment -- therefore "*" is
 {{{2 .h2. PART I ----------- CONCEPTS ------------ ./h2.
 #-------------------------------------------------------------------------------------
 
-If you do not know what Literate Programming is already, skip this section.
-This is mostly argument.
+.h3. WHAT LITERATE PROGRAMMING IS, in a nutshell./h3.
+
+It is writing your source files like this:
+
+.pre.
+    .i.Text explaining the meaning and logic
+    of your program. text text text text ./i.
+
+    .i. This text is marked up with HTML (default
+    for Molly) or TeX or some other such mark-up
+    language to create a nicely looking document
+    after processing ./i.
+
+    <<meaningful name of code chunk>>=
+    code code code code code
+
+        code with any indentation and formatting
+        <<reference to a chunk of code by name>>
+        code code code code
+
+        code code <<reference to another chunk>> code
+
+    code code code code code
+
+    if(<<chunks can be inside any language operator too>>){
+        code code code code code
+        code code code code code
+    }
+    @
+
+    .i.text explaining the logic of your code
+    text text text text text text text
+
+    then definition of another chunk of code
+    (which chunks come in LOGICAL ORDER, rather
+    than in the order demanded by the machine)./i.
+
+    <<reference to another chunk>>=
+        code code code code code
+        code code code code code
+    @
+
+    .i.text text text text text text text 
+    text text text text text text text./i.
+
+    .i. ..where already existing chunk can be continued
+    (and inserted in the resulting program appended to
+    the first instance of definition of the chunk by
+    this name) simply like this:./i.
+
+    <<reference to another chunk>>=
+        code code code code code
+        code code code code code
+    @
+
+    .i...and so on./i.
+./pre.
+
+You subdivide your code into chunks according to logic, very often very much
+like subdividing it into "functions" or "subroutines" (when needed not by the
+machine, but by you the programmer to to be able to keep track of it all in
+your head). This does not however introduce any overhead or "passing parameters"
+etc.
+
+So you pretty much .b.write your programs in pseudocode./b., interspersing it
+with explanations, and defining the pseudocode chunks (which can contain other
+such chunks among code) finally with your programming language expressions.
+
+From a "literate source file" written in this manner one command (with the Molly
+itility
+.pre.MOLLY.pl -R'root chunk from which to start' literate.source.filename./pre.
+or "notangle" from "noweb" tools) will exctract all code, correctly ordered
+And another command (again Molly itself as in
+.pre.MOLLY.pl -w literate.source.filename./pre.
+or "noweave" from "noweb" tools by N. Ramsey) creates formatted documentation.
+Molly will produce a "folding HTML" file of the kind you are reading now.
+
+
+.b..i.The rest of the section is mostly argument, not technical description
+nor instructions how to use the Molly utility../i../b.
 
 #-------------------------------------------------------------------------------------
 {{{3 .h3. Краткое описание для русских пользователей ./h3.
@@ -962,7 +1040,7 @@ $PROJECT_ADMIN_DIR/thttpd -C $PROJECT_ADMIN_DIR/thttpd.config
 .h4. Markup of code and documentation sections ./h4.
 #----------------------------------------------------
 
-    .b. .i. Markup ./i. ./b.
+    .b.Markup./b.
     
     (a) all between .b.<<chunk name>>=./b. and .b.@./b. .b..i.in the first position
     on their own lines./i../b.  is code.
@@ -985,8 +1063,69 @@ $PROJECT_ADMIN_DIR/thttpd -C $PROJECT_ADMIN_DIR/thttpd.config
     chunks must end with "@" in the first postn on its own line./b. 
     Noweb allows one to skip them if code sections come one after another../i.
 
+
     .p.
-    .b. .i. Escapes ./i. ./b.
+    .b.Example "literate source" snippet./b.
+
+    .. could look like this:
+
+.pre.
+        .i.Text explaining the meaning and logic
+        of your program. text text text text ./i.
+
+        .i. This text is marked up with HTML (default
+        for Molly) or TeX or some other such mark-up
+        language to create a nicely looking document
+        after processing ./i.
+
+        <<meaningful name of code chunk>>=
+        code code code code code
+
+            code with any indentation and formatting
+            <<reference to a chunk of code by name>>
+            code code code code
+
+            code code <<reference to another chunk>> code
+
+        code code code code code
+
+        if(<<chunks can be inside any language operator too>>){
+            code code code code code
+            code code code code code
+        }
+        @
+
+        .i.text explaining the logic of your code
+        text text text text text text text
+
+        then definition of another chunk of code
+        (which chunks come in LOGICAL ORDER, rather
+        than in the order demanded by the machine)./i.
+
+        <<reference to another chunk>>=
+            code code code code code
+            code code code code code
+        @
+
+        .i.text text text text text text text 
+        text text text text text text text./i.
+
+        .i. ..where already existing chunk can be continued
+        (and inserted in the resulting program appended to
+        the first instance of definition of the chunk by
+        this name) simply like this:./i.
+
+        <<reference to another chunk>>=
+            code code code code code
+            code code code code code
+        @
+
+        .i...and so on./i.
+./pre.
+
+
+    .p.
+    .b.Escapes./b.
 
     (a) Inside code chunks:  "<<", any text, ">>" on one line will be taken as "chunk ref"
     If your code employs these constructions, substitute with vars (e.g. $lt$lt, $gt$gt 
