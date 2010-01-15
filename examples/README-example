@@ -1,0 +1,28 @@
+
+1. This example is a hybrid: TeX source was puth through a converter, then
+adjusted manually with regular expressions from Vim. 
+Therefore all those &nbsp; lines, which otherwise would not be present in
+literate source, only automatically inserted by Molly in the "folding html'
+output of its weaver.
+
+2. I did not even download references; Molly does not have functionality to
+automatically number equations and definitions, or deal with foonotes or
+references.  It might be the TeX to HTML converted could deal with refs if I
+included them
+
+3. \dots in the original had to be changed to \ldots to display correctly
+
+4. TeX escapes $....$ for math were changed to ``...`` not to conflict with
+other parts of the document
+
+5. Display of some elements with the math font included with Firefox and
+Opera looks ugly (and is almost unreadable for some "h"-like  and "h*"
+characters).
+
+It is possible to avoid using ASCIIMathML.js and use mimeTeX directly; it
+will produce images (supposedly better rendered). 
+
+Multiple gif images for math formulas could be saved exactly like
+ASCIIMathML.js copy is saved inside the output.mht file.
+
+

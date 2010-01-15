@@ -1,14 +1,19 @@
-Content-Type: multipart/related; start=<op.mhtml.1263516827839.ca5fd92d4d1538ab@192.168.140.127>; boundary=----------orQNYLOGidVp88I2yKagMz
-Content-Location: http://localhost:8000/012-weaver.MOLLY/DVLP_SPLIT/tmp-tests/anton_nazarov.at.lj/LiterateLie.weave
+Content-Type: multipart/related; start=<op.mhtml.1263543349530.9145894857192853@192.168.140.127>; boundary=----------dO9CwwGVw6xFL2Ua8fX2C1
+Content-Location: http://localhost:8000/012-weaver.MOLLY/DVLP_SPLIT/tmp-tests/anton_nazarov.at.lj/LiterateLie.html
 Subject: =?utf-8?Q?Finite=20dimensional=20Lie=20algebras?=
 MIME-Version: 1.0
 
-------------orQNYLOGidVp88I2yKagMz
-Content-Disposition: inline; filename=LiterateLie.htm
-Content-Type: text/html; name=LiterateLie.htm
-Content-ID: <op.mhtml.1263516827839.ca5fd92d4d1538ab@192.168.140.127>
-Content-Location: http://localhost:8000/012-weaver.MOLLY/DVLP_SPLIT/tmp-tests/anton_nazarov.at.lj/LiterateLie.weave
+------------dO9CwwGVw6xFL2Ua8fX2C1
+Content-Disposition: inline; filename=LiterateLie.html
+Content-Type: text/html; charset=iso-8859-1; name=LiterateLie.html
+Content-ID: <op.mhtml.1263543349530.9145894857192853@192.168.140.127>
+Content-Location: http://localhost:8000/012-weaver.MOLLY/DVLP_SPLIT/tmp-tests/anton_nazarov.at.lj/LiterateLie.html
 Content-Transfer-Encoding: 8bit
+
+<html>
+  
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 
 
 <script type="text/javascript" src="ASCIIMathML_with_modified_escapes.js"></script>
@@ -194,6 +199,17 @@ PRE     {
         background: #f5f5f5;    
         width: 70%;
         }
+.hl-white     {
+        PADDING-LEFT: 5px; PADDING-RIGHT: 5px; 
+        padding-top: 5px; padding-bottom: 5px;
+        MARGIN-BOTTOM: 1px; 
+        BORDER-TOP: #a9a9a9 0px solid;
+        BORDER-RIGHT: #a9a9a9 0px solid; 
+        BORDER-LEFT: #a9a9a9 0px solid;
+        BORDER-BOTTOM: #a9a9a9 0px solid;        
+        background: #fff;    
+        width: 70%;
+        }
 .hl-wide {
         PADDING-LEFT: 5px; 
         PADDING-RIGHT: 5px; 
@@ -305,6 +321,11 @@ a:visited { color: blue; }
 <a href="javascript:;" onmousedown="toggleDiv('tocmain');">
 <b>TABLE OF CONTENTS [expand/collapse]</b></a>
 <a name="tocancor"></a>
+</div>
+
+<div id='tocmain' style='display:block' style='background:#ffffff'> 
+
+<div class='hl-white' align=center>
 <font size=-1 color=darkgrey><i>
 <p><b>Section name</b> toggles expanded state. <b>Subsection number</b> on the left opens
 <br>all parent sections to make it visible. <b>Leftmost symbol</b> opens parents and
@@ -312,23 +333,19 @@ a:visited { color: blue; }
 </i></font>
 </div>
 
-<div id='tocmain' style='display:block' style='background:#ffffff'> 
-<p>
-<br>
-<p>
-&nbsp;<a href="#1" onmousedown="open_all_above(1);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(1);" ><i>1</i></a>&nbsp;&nbsp;&nbsp;&nbsp;.......&nbsp;<a href="javascript:;" onmousedown="toggleCombined(1);" id="toc1"><b> Abstract</a>&nbsp;<a><font class='lnum' size=-1><i>(line 89)</i></font></b></a><br>
-&nbsp;<a href="#2" onmousedown="open_all_above(2);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(2);" ><i>2</i></a>&nbsp;&nbsp;&nbsp;&nbsp;.......&nbsp;<a href="javascript:;" onmousedown="toggleCombined(2);" id="toc2"><b>1&nbsp;&nbsp;Introduction</a>&nbsp;<a><font class='lnum' size=-1><i>(line 96)</i></font></b></a><br>
-&nbsp;<a href="#3" onmousedown="open_all_above(3);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(3);" ><i>3</i></a>&nbsp;&nbsp;&nbsp;&nbsp;.......&nbsp;<a href="javascript:;" onmousedown="toggleCombined(3);" id="toc3"><b>2&nbsp;&nbsp;Lie algebras</a>&nbsp;<a><font class='lnum' size=-1><i>(line 109)</i></font></b></a><br>
-&nbsp;<a href="#4" onmousedown="open_all_above(4);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(4);" ><i>4</i></a>&nbsp;&nbsp;&nbsp;&nbsp;.......&nbsp;<a href="javascript:;" onmousedown="toggleCombined(4);" id="toc4"><b>3&nbsp;&nbsp;Semisimple Lie algebras</a>&nbsp;<a><font class='lnum' size=-1><i>(line 185)</i></font></b></a><br>
-&nbsp;<a href="#5" onmousedown="open_all_above(5);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(5);" ><i>5</i></a>&nbsp;&nbsp;&nbsp;&nbsp;..............&nbsp;<a href="javascript:;" onmousedown="toggleCombined(5);" id="toc5"><b>3.1&nbsp;&nbsp;Root systems</a>&nbsp;<a><font class='lnum' size=-1><i>(line 202)</i></font></b></a><br>
-&nbsp;<a href="#6" onmousedown="open_all_above(6);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(6);" ><i>6</i></a>&nbsp;&nbsp;&nbsp;&nbsp;..............&nbsp;<a href="javascript:;" onmousedown="toggleCombined(6);" id="toc6"><b>3.2&nbsp;&nbsp;Simple Lie algebras</a>&nbsp;<a><font class='lnum' size=-1><i>(line 321)</i></font></b></a><br>
-&nbsp;<a href="#7" onmousedown="open_all_above(7);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(7);" ><i>7</i></a>&nbsp;&nbsp;&nbsp;&nbsp;.......&nbsp;<a href="javascript:;" onmousedown="toggleCombined(7);" id="toc7"><b> 4&nbsp;&nbsp;Representations</a>&nbsp;<a><font class='lnum' size=-1><i>(line 396)</i></font></b></a><br>
-&nbsp;<a href="#8" onmousedown="open_all_above(8);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(8);" ><i>8</i></a>&nbsp;&nbsp;&nbsp;&nbsp;.......&nbsp;<a href="javascript:;" onmousedown="toggleCombined(8);" id="toc8"><b>5&nbsp;&nbsp;General outline of the code</a>&nbsp;<a><font class='lnum' size=-1><i>(line 450)</i></font></b></a><br>
-&nbsp;<a href="#9" onmousedown="open_all_above(9);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(9);" ><i>9</i></a>&nbsp;&nbsp;&nbsp;&nbsp;.......&nbsp;<a href="javascript:;" onmousedown="toggleCombined(9);" id="toc9"><b>A&nbsp;&nbsp;Library</a>&nbsp;<a><font class='lnum' size=-1><i>(line 469)</i></font></b></a><br>
-&nbsp;<a href="#10" onmousedown="open_all_above(10);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(10);" ><i>10</i></a>&nbsp;&nbsp;&nbsp;&nbsp;..............&nbsp;<a href="javascript:;" onmousedown="toggleCombined(10);" id="toc10"><b>A.1&nbsp;&nbsp;Commonly used Scheme procedures</a>&nbsp;<a><font class='lnum' size=-1><i>(line 484)</i></font></b></a><br>
-&nbsp;<a href="#11" onmousedown="open_all_above(11);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(11);" ><i>11</i></a>&nbsp;&nbsp;&nbsp;&nbsp;..............&nbsp;<a href="javascript:;" onmousedown="toggleCombined(11);" id="toc11"><b>A.2&nbsp;&nbsp;Object system</a>&nbsp;<a><font class='lnum' size=-1><i>(line 565)</i></font></b></a><br>
-&nbsp;<a href="#12" onmousedown="open_all_above(12);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(12);" ><i>12</i></a>&nbsp;&nbsp;&nbsp;&nbsp;..............&nbsp;<a href="javascript:;" onmousedown="toggleCombined(12);" id="toc12"><b>A.3&nbsp;&nbsp;Vector and matrix manipulation</a>&nbsp;<a><font class='lnum' size=-1><i>(line 693)</i></font></b></a><br>
-&nbsp;<a href="#13" onmousedown="open_all_above(13);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(13);" ><i>13</i></a>&nbsp;&nbsp;&nbsp;&nbsp;.......&nbsp;<a href="javascript:;" onmousedown="toggleCombined(13);" id="toc13"><b>Footnotes:</a>&nbsp;<a><font class='lnum' size=-1><i>(line 771)</i></font></b></a><br>
+&nbsp;<a href="#1" onmousedown="open_all_above(1);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(1);" ><i>1</i></a>&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;.&nbsp;.&nbsp;&nbsp;<a href="javascript:;" onmousedown="toggleCombined(1);" id="toc1"><b> Abstract</a>&nbsp;<a><font class='lnum' size=-1><i>(line 11)</i></font></b></a><br>
+&nbsp;<a href="#2" onmousedown="open_all_above(2);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(2);" ><i>2</i></a>&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;.&nbsp;.&nbsp;&nbsp;<a href="javascript:;" onmousedown="toggleCombined(2);" id="toc2"><b>1. Introduction</a>&nbsp;<a><font class='lnum' size=-1><i>(line 18)</i></font></b></a><br>
+&nbsp;<a href="#3" onmousedown="open_all_above(3);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(3);" ><i>3</i></a>&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;.&nbsp;.&nbsp;&nbsp;<a href="javascript:;" onmousedown="toggleCombined(3);" id="toc3"><b>2. Lie algebras</a>&nbsp;<a><font class='lnum' size=-1><i>(line 33)</i></font></b></a><br>
+&nbsp;<a href="#4" onmousedown="open_all_above(4);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(4);" ><i>4</i></a>&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;.&nbsp;.&nbsp;&nbsp;<a href="javascript:;" onmousedown="toggleCombined(4);" id="toc4"><b>3. Semisimple Lie algebras</a>&nbsp;<a><font class='lnum' size=-1><i>(line 109)</i></font></b></a><br>
+&nbsp;<a href="#5" onmousedown="open_all_above(5);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(5);" ><i>5</i></a>&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;&nbsp;<a href="javascript:;" onmousedown="toggleCombined(5);" id="toc5"><b>3.1. Root systems</a>&nbsp;<a><font class='lnum' size=-1><i>(line 126)</i></font></b></a><br>
+&nbsp;<a href="#6" onmousedown="open_all_above(6);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(6);" ><i>6</i></a>&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;&nbsp;<a href="javascript:;" onmousedown="toggleCombined(6);" id="toc6"><b>3.2. Simple Lie algebras</a>&nbsp;<a><font class='lnum' size=-1><i>(line 245)</i></font></b></a><br>
+&nbsp;<a href="#7" onmousedown="open_all_above(7);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(7);" ><i>7</i></a>&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;.&nbsp;.&nbsp;&nbsp;<a href="javascript:;" onmousedown="toggleCombined(7);" id="toc7"><b> 4. Representations</a>&nbsp;<a><font class='lnum' size=-1><i>(line 320)</i></font></b></a><br>
+&nbsp;<a href="#8" onmousedown="open_all_above(8);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(8);" ><i>8</i></a>&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;.&nbsp;.&nbsp;&nbsp;<a href="javascript:;" onmousedown="toggleCombined(8);" id="toc8"><b>5. General outline of the code</a>&nbsp;<a><font class='lnum' size=-1><i>(line 374)</i></font></b></a><br>
+&nbsp;<a href="#9" onmousedown="open_all_above(9);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(9);" ><i>9</i></a>&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;.&nbsp;.&nbsp;&nbsp;<a href="javascript:;" onmousedown="toggleCombined(9);" id="toc9"><b>A. Library</a>&nbsp;<a><font class='lnum' size=-1><i>(line 393)</i></font></b></a><br>
+&nbsp;<a href="#10" onmousedown="open_all_above(10);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(10);" ><i>10</i></a>&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;&nbsp;<a href="javascript:;" onmousedown="toggleCombined(10);" id="toc10"><b>A.1. Commonly used Scheme procedures</a>&nbsp;<a><font class='lnum' size=-1><i>(line 408)</i></font></b></a><br>
+&nbsp;<a href="#11" onmousedown="open_all_above(11);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(11);" ><i>11</i></a>&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;&nbsp;<a href="javascript:;" onmousedown="toggleCombined(11);" id="toc11"><b>A.2. Object system</a>&nbsp;<a><font class='lnum' size=-1><i>(line 489)</i></font></b></a><br>
+&nbsp;<a href="#12" onmousedown="open_all_above(12);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(12);" ><i>12</i></a>&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;.&nbsp;&nbsp;<a href="javascript:;" onmousedown="toggleCombined(12);" id="toc12"><b>A.3. Vector and matrix manipulation</a>&nbsp;<a><font class='lnum' size=-1><i>(line 617)</i></font></b></a><br>
+&nbsp;<a href="#13" onmousedown="open_all_above(13);" >))</a>&nbsp;&nbsp;<a href="javascript:;" onmousedown="open_all_above(13);" ><i>13</i></a>&nbsp;&nbsp;&nbsp;&nbsp;.&nbsp;.&nbsp;.&nbsp;&nbsp;<a href="javascript:;" onmousedown="toggleCombined(13);" id="toc13"><b>Footnotes:</a>&nbsp;<a><font class='lnum' size=-1><i>(line 695)</i></font></b></a><br>
 </div>
 <p>
 <br>
@@ -378,9 +395,6 @@ collapse all</a>
 </i></div><p>
 </ul></fieldset><p>
 <br><p>
-<p>
-<p>
-<p>
 <title>Finite dimensional Lie algebras</title><br>
 <div align=center>    <br>
 <font size=+2><b>Finite dimensional Lie algebras </b></font><br>
@@ -391,7 +405,7 @@ collapse all</a>
 <p>
 <p>
         <fieldset><legend><a href="javascript:;" onmousedown="toggleCombined('1');">
-<font class='lnum'><i>(1)</i></font>&nbsp; Abstract</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 89)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='1'></a></legend></fieldset>
+<font class='lnum'><i>(1)</i></font>&nbsp; Abstract</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 11)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='1'></a></legend></fieldset>
 <p>
 <div id="1" style="display:none">   
 <ul>
@@ -419,7 +433,7 @@ collapse all</a>
 </div>
 
         <fieldset><legend><a href="javascript:;" onmousedown="toggleCombined('2');">
-<font class='lnum'><i>(2)</i></font>&nbsp;1&nbsp;&nbsp;Introduction</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 96)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='2'></a></legend></fieldset>
+<font class='lnum'><i>(2)</i></font>&nbsp;1. Introduction</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 18)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='2'></a></legend></fieldset>
 <p>
 <div id="2" style="display:none">   
 <ul>
@@ -427,7 +441,9 @@ collapse all</a>
 <p>
 <p>
 Representation theory of finite-dimensional Lie algebras is central to the study of continuous symmetries in physics. This theory is well-understood and there exist standard courses and textbooks on the subject [], [humphreys]. Nevertheless some problems of the representation theory require extensive computation and no standard textbook on the computational algorithms is known to the author of this notes. There exists a volume [], but it was written in 1970-es and have not been updated since, so its contents are limited to the early approaches and implementations on the old hardware which is unavailable now. Also some progress was made in the computational algorithms of the representation theory since the publication of []. It is important to mention series of papers by Patera et al. (see [] and references therein) and books [], [] which introduce new and optimised algorithms although do not discuss the implementations.<br>
+<p>
 There exist several solid implementation of the core algorithms. We want to mention Maple package Coxeter/Weyl [] and standalone programs LiE [] and LambdaTensor []. These programs are solid and rather fast but have not seen any updates in last several years. Also they are not always convenient to use since they lack graphical user interface and interoperability with the popular programming languages and mathematical programs such as Mathematica, Python or Fortran.<br>
+<p>
 We want to summarise some basic notions and algorithms of representation theory in order to stimulate the emergence of more modern and universal software or at least give some tools to the scientists who by some reasons can not use the existing software.<br>
 <p>
 Our implementation use programming language Scheme and is presented as the Literate program []. The choice of the language is due to high portability of its implementations <a href="#tthFtNtAAB" name="tthFrefAAB"><sup>1</sup></a>, wide use of Scheme for the teaching [] and personal preferences of the author. <br>
@@ -453,7 +469,7 @@ collapse all</a>
 </div>
 
         <fieldset><legend><a href="javascript:;" onmousedown="toggleCombined('3');">
-<font class='lnum'><i>(3)</i></font>&nbsp;2&nbsp;&nbsp;Lie algebras</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 109)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='3'></a></legend></fieldset>
+<font class='lnum'><i>(3)</i></font>&nbsp;2. Lie algebras</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 33)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='3'></a></legend></fieldset>
 <p>
 <div id="3" style="display:none">   
 <ul>
@@ -472,12 +488,12 @@ Lie algebras can be finite- or infinite-dimensional. Finite-dimensional Lie alge
 We will represent Lie algebra in the code as the object of class <i>lie-algebra</i>. We use very simple class system, which is described in the Appendix . So <i>lie-algebra</i> is really an interface, but since our object system doesn't have interfaces we make it an abstract class and concrete classes such as <i>semisimple-lie-algebra</i> inherit it.<br>
 Lie algebra is a vector space, so we really should create class for the vector space which contains methods for the change of basis. But for now we use only one standard basis for Lie algebras and <i>lie-algebra</i> is the subclass of the most genral class <i>object</i>.<br>
 <p>
-<font class='lnum'>124</font>   
-                <div id=codechunk124>
+<font class='lnum'>48</font>   
+                <div id=codechunk48>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;Lie algebra class .scm&gt;&gt<sub></sub>=</legend>
-<font class='lnum'>125</font>   (class 'lie-algebra 'object
-<font class='lnum'>126</font>          <font class='chunkref'>&lt;&lt;Lie algebra methods .scm&gt;&gt;</font>)
-<font class='lnum'>127</font>   </fieldset></pre>
+<font class='lnum'>49</font>   (class 'lie-algebra 'object
+<font class='lnum'>50</font>          <font class='chunkref'>&lt;&lt;Lie algebra methods .scm&gt;&gt;</font>)
+<font class='lnum'>51</font>   </fieldset></pre>
 </div><p>
 <p>
 We need to add several definitions and describe a structure of Lie algebra in order to discuss fields and methods of <i>lie-algebra</i> class.<br>
@@ -504,34 +520,34 @@ Now we need to discuss internal structre of Lie algebras, which can be represent
 <p>
 <p>
 <p>
-<font class='lnum'>154</font>   
-                <div id=codechunk154>
+<font class='lnum'>78</font>   
+                <div id=codechunk78>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;Lie algebra methods .scm&gt;&gt<sub></sub>=</legend>
-<font class='lnum'>155</font>   `(rank ,(lambda (self)
-<font class='lnum'>156</font>   	      (error "Abstract class!")))
-<font class='lnum'>157</font>   `(dimension ,(lambda (self)
-<font class='lnum'>158</font>   	      (error "Abstract class!")))
-<font class='lnum'>159</font>   `(cartan-subalgebra ,(lambda (self) 
-<font class='lnum'>160</font>   	      (error "Abstract class!")))
-<font class='lnum'>161</font>   
-<font class='lnum'>162</font>   </fieldset></pre>
+<font class='lnum'>79</font>   `(rank ,(lambda (self)
+<font class='lnum'>80</font>   	      (error "Abstract class!")))
+<font class='lnum'>81</font>   `(dimension ,(lambda (self)
+<font class='lnum'>82</font>   	      (error "Abstract class!")))
+<font class='lnum'>83</font>   `(cartan-subalgebra ,(lambda (self) 
+<font class='lnum'>84</font>   	      (error "Abstract class!")))
+<font class='lnum'>85</font>   
+<font class='lnum'>86</font>   </fieldset></pre>
 </div><p>
 <p>
 Commutative algebras constitute first concrete class of Lie algebras.<br>
 <p>
-<font class='lnum'>167</font>   
-                <div id=codechunk167>
+<font class='lnum'>91</font>   
+                <div id=codechunk91>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;Commutative algebra .scm&gt;&gt<sub></sub>=</legend>
-<font class='lnum'>168</font>   (class 'commutative-algebra 'lie-algebra
-<font class='lnum'>169</font>          '(dim 1)
-<font class='lnum'>170</font>          `(rank ,(lambda (self) (send self 'dim)))
-<font class='lnum'>171</font>          `(dimension ,(lambda (self) (send self 'dim)))
-<font class='lnum'>172</font>          `(cartan-subalgebra ,(lambda (self) self)))
-<font class='lnum'>173</font>   
-<font class='lnum'>174</font>   ;; The constructor
-<font class='lnum'>175</font>   (define (make-commutative-algebra dim)
-<font class='lnum'>176</font>     (new 'commutative-algebra `(dim ,dim)))
-<font class='lnum'>177</font>   </fieldset></pre>
+<font class='lnum'>92</font>   (class 'commutative-algebra 'lie-algebra
+<font class='lnum'>93</font>          '(dim 1)
+<font class='lnum'>94</font>          `(rank ,(lambda (self) (send self 'dim)))
+<font class='lnum'>95</font>          `(dimension ,(lambda (self) (send self 'dim)))
+<font class='lnum'>96</font>          `(cartan-subalgebra ,(lambda (self) self)))
+<font class='lnum'>97</font>   
+<font class='lnum'>98</font>   ;; The constructor
+<font class='lnum'>99</font>   (define (make-commutative-algebra dim)
+<font class='lnum'>100</font>     (new 'commutative-algebra `(dim ,dim)))
+<font class='lnum'>101</font>   </fieldset></pre>
 </div><p>
 <b>TODO</b><br /><br>
 It can be interesting and useful to add a method which show commutation relatons of the algebra in the symbolic form, but this task is left for the future  <br>
@@ -556,7 +572,7 @@ collapse all</a>
 </div>
 
         <fieldset><legend><a href="javascript:;" onmousedown="toggleCombined('4');">
-<font class='lnum'><i>(4)</i></font>&nbsp;3&nbsp;&nbsp;Semisimple Lie algebras</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 185)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='4'></a></legend></fieldset>
+<font class='lnum'><i>(4)</i></font>&nbsp;3. Semisimple Lie algebras</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 109)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='4'></a></legend></fieldset>
 <p>
 <div id="4" style="display:none">   
 <ul>
@@ -565,22 +581,22 @@ collapse all</a>
 <p>
 The structure of simple and semisimple Lie algebras can be encoded by the set of simple roots. <br>
 <p>
-<font class='lnum'>190</font>   
-                <div id=codechunk190>
+<font class='lnum'>114</font>   
+                <div id=codechunk114>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;Semisimple Lie algebra .scm&gt;&gt<sub></sub>=</legend>
-<font class='lnum'>191</font>   (class 'semisimple-lie-algebra 'lie-algebra
-<font class='lnum'>192</font>          '(simple-roots ())
-<font class='lnum'>193</font>          <font class='chunkref'>&lt;&lt;Semisimple Lie algebra methods .scm&gt;&gt;</font>)
-<font class='lnum'>194</font>   ;; The constructor
-<font class='lnum'>195</font>   (define (make-semisimple-lie-algebra simple-roots)
-<font class='lnum'>196</font>     (new 'semisimple-lie-algebra `(simple-roots ,simple-roots)))
-<font class='lnum'>197</font>   
-<font class='lnum'>198</font>   </fieldset></pre>
+<font class='lnum'>115</font>   (class 'semisimple-lie-algebra 'lie-algebra
+<font class='lnum'>116</font>          '(simple-roots ())
+<font class='lnum'>117</font>          <font class='chunkref'>&lt;&lt;Semisimple Lie algebra methods .scm&gt;&gt;</font>)
+<font class='lnum'>118</font>   ;; The constructor
+<font class='lnum'>119</font>   (define (make-semisimple-lie-algebra simple-roots)
+<font class='lnum'>120</font>     (new 'semisimple-lie-algebra `(simple-roots ,simple-roots)))
+<font class='lnum'>121</font>   
+<font class='lnum'>122</font>   </fieldset></pre>
 </div><p>
 <p>
 <p>
         <fieldset><legend><a href="javascript:;" onmousedown="toggleCombined('5');">
-<font class='lnum'><i>(5)</i></font>&nbsp;3.1&nbsp;&nbsp;Root systems</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 202)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='5'></a></legend></fieldset>
+<font class='lnum'><i>(5)</i></font>&nbsp;3.1. Root systems</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 126)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='5'></a></legend></fieldset>
 <p>
 <div id="5" style="display:none">   
 <ul>
@@ -591,20 +607,20 @@ The structure of simple and semisimple Lie algebras can be encoded by the set of
   In the <b> Cartan-Weyl</b> basis the genrators are constructed as follows.<br>
   First we choose the genrators ``H_i\in \mathfrak{h}`` of the Cartan subalgebra. All these generators commute ``[H_i,H_j]=0`` and their representations can be diagonalised simultaneously. The remaining generators ``E_{\alpha}`` are chosen to be a linear combinations of ``J_a`` such that <i>(eq:4)</i><br>
     <ul>``[H_i,E_{\alpha}]=\alpha_i E_{\alpha}``</ul><br>
-  The vector ``\alpha=(\alpha_1,\dots,\alpha_r),\; r=rank(\mathfrak{g})`` is called a <b> root</b> and the corresponding operator ``E_{\alpha}`` is called <b> ladder operator</b>.<br>
+  The vector ``\alpha=(\alpha_1,\ldots,\alpha_r),\; r=rank(\mathfrak{g})`` is called a <b> root</b> and the corresponding operator ``E_{\alpha}`` is called <b> ladder operator</b>.<br>
 <p>
 The root ``\alpha`` maps ``H_i`` to the number ``\alpha(H_i)=\alpha_i`` hence ``\alpha\in \mathfrak{h}^{*}`` - element of the dual to the Cartan subalgebra. The set of all the roos ``\alpha`` is denoted by ``\Delta=\{\alpha,\; \alpha \text{ - root}\}``. So it is natural for the <i>lie-algebra</i> class to have a method which lists all the roots.<br>
 <p>
-<font class='lnum'>213</font>   
-                <div id=codechunk213>
+<font class='lnum'>137</font>   
+                <div id=codechunk137>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;Semisimple Lie algebra methods .scm&gt;&gt<sub></sub>=</legend>
-<font class='lnum'>214</font>   `(rank ,(lambda (self)
-<font class='lnum'>215</font>       (length (send self 'simple-roots))))
-<font class='lnum'>216</font>   
-<font class='lnum'>217</font>   `(cartan-subalgebra ,(lambda (self)
-<font class='lnum'>218</font>       (make-commutative-algebra (send self 'rank))))
-<font class='lnum'>219</font>   <font class='chunkref'>&lt;&lt;Root system methods .scm&gt;&gt;</font>
-<font class='lnum'>220</font>   </fieldset></pre>
+<font class='lnum'>138</font>   `(rank ,(lambda (self)
+<font class='lnum'>139</font>       (length (send self 'simple-roots))))
+<font class='lnum'>140</font>   
+<font class='lnum'>141</font>   `(cartan-subalgebra ,(lambda (self)
+<font class='lnum'>142</font>       (make-commutative-algebra (send self 'rank))))
+<font class='lnum'>143</font>   <font class='chunkref'>&lt;&lt;Root system methods .scm&gt;&gt;</font>
+<font class='lnum'>144</font>   </fieldset></pre>
 </div><p>
 All the roots are the linear combinations of simple roots with the integral coefficients. There exists discrete group of symmetry called <b>Weyl group</b> which can be used to produce all the roots from the set of simple roots. <br>
 <p>
@@ -613,36 +629,36 @@ All the roots are the linear combinations of simple roots with the integral coef
 <b> Weyl group ``W``</b> of finite-dimension Lie algebra is a finite reflection group of ``\mathfrak{h}^*`` generated by the basic reflections corresponding to the simple roots. <br>
   Each simple root ``\alpha_i`` corresponds to the reflection ``r_{i}`` in hyperplane orthogonal to ``\alpha``.  <i>(eq 5)</i><br>
     <ul>``r_{i}\lambda=\lambda-\frac{(\lambda,\alpha_i)}{(\alpha_i,\alpha_i)}\alpha_i``</ul><br>
-  For ``w\in W`` there exists several equivalent realizations of the form ``w=r_{i_1}\cdot r_{i_2}\dots r_{i_k},\; i_1\dots i_k=1..r``. The expression of the smallest  <i>length</i> is called  <i>reduced</i>. <br>
+  For ``w\in W`` there exists several equivalent realizations of the form ``w=r_{i_1}\cdot r_{i_2} \ldots r_{i_k},\; i_1 \ldots i_k=1..r``. The expression of the smallest  <i>length</i> is called  <i>reduced</i>. <br>
 <p>
 We will implement represent Weyl group elements as the lists of numbers of basic reflection <i>(eq 6)</i><br>
-<ul>``w=r_{i_1}\cdot r_{i_2}\dots r_{i_k} \leftrightarrow (i_1, i_2,\dots,i_k)``</ul><br>
+<ul>``w=r_{i_1}\cdot r_{i_2} \ldots r_{i_k} \leftrightarrow (i_1, i_2, \ldots ,i_k)``</ul><br>
 <p>
 <p>
 Then we will implement action of Weyl group elements on ``\mathfrak{h}^*`` using the recipies from \cite{stembridge2001computational}, \cite{casselman1994machine}, but it will be done in the future. For now we are not implementing abstract construction of Weyl group since it is enough to be able to construct Weyl group orbits of ``\mathfrak{h}^*`` elements.<br>
 <p>
 So we need just two following general functions:<br>
 <p>
-<font class='lnum'>239</font>   
-                <div id=codechunk239>
+<font class='lnum'>163</font>   
+                <div id=codechunk163>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;Functions for root systems .scm&gt;&gt<sub></sub>=</legend>
-<font class='lnum'>240</font>   (define (co-root r)
-<font class='lnum'>241</font>     (div (mul 2 r) (prod r r)))
-<font class='lnum'>242</font>   
-<font class='lnum'>243</font>   (define (reflect weight root)
-<font class='lnum'>244</font>     (sub weight (mul (prod weight (co-root root)) root)))
-<font class='lnum'>245</font>   </fieldset></pre>
+<font class='lnum'>164</font>   (define (co-root r)
+<font class='lnum'>165</font>     (div (mul 2 r) (prod r r)))
+<font class='lnum'>166</font>   
+<font class='lnum'>167</font>   (define (reflect weight root)
+<font class='lnum'>168</font>     (sub weight (mul (prod weight (co-root root)) root)))
+<font class='lnum'>169</font>   </fieldset></pre>
 </div><p>
 Here <i>co-root</i> ``\alpha^{\vee}`` is the element of the dual space ``(\mathfrak{h}^*)^*`` which is identified with ``\mathfrak{h}^*\approx \mathfrak{h}`` since we have scalar product on ``\mathfrak{h}``.<br>
 <p>
 Now we can implement wide range of root system related methods of <i>semisimple-lie-algebra</i> class<br>
 <p>
-<font class='lnum'>251</font>   
-                <div id=codechunk251>
+<font class='lnum'>175</font>   
+                <div id=codechunk175>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;Root system methods .scm&gt;&gt<sub></sub>=</legend>
-<font class='lnum'>252</font>   `(simple-co-roots ,(lambda (self)
-<font class='lnum'>253</font>   	      (map co-root (send self 'simple-roots))))
-<font class='lnum'>254</font>   </fieldset></pre>
+<font class='lnum'>176</font>   `(simple-co-roots ,(lambda (self)
+<font class='lnum'>177</font>   	      (map co-root (send self 'simple-roots))))
+<font class='lnum'>178</font>   </fieldset></pre>
 </div><p>
 <p>
 <p><br>
@@ -651,71 +667,71 @@ Now we can implement wide range of root system related methods of <i>semisimple-
     <ul>``a_{ij}=(\alpha_i,\alpha_j^{\vee})=\frac{2(\alpha_i,\alpha_j)}{(\alpha_j,\alpha_j)}``</ul><br>
   completely determines the set of simple roots and is useful for the classification and compact description of Lie algebras.<br>
 <p>
-<font class='lnum'>263</font>   
-                <div id=codechunk263>
+<font class='lnum'>187</font>   
+                <div id=codechunk187>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;Root system methods .scm&gt;&gt<sub>2</sub>=</legend>
-<font class='lnum'>264</font>   `(cartan-matrix
-<font class='lnum'>265</font>     ,(lambda (self)
-<font class='lnum'>266</font>        (map (lambda (a)
-<font class='lnum'>267</font>   	    (map (lambda (av) (prod a av)) (send self 'simple-co-roots)))
-<font class='lnum'>268</font>   	 (send self 'simple-roots))))
-<font class='lnum'>269</font>   </fieldset></pre>
+<font class='lnum'>188</font>   `(cartan-matrix
+<font class='lnum'>189</font>     ,(lambda (self)
+<font class='lnum'>190</font>        (map (lambda (a)
+<font class='lnum'>191</font>   	    (map (lambda (av) (prod a av)) (send self 'simple-co-roots)))
+<font class='lnum'>192</font>   	 (send self 'simple-roots))))
+<font class='lnum'>193</font>   </fieldset></pre>
 </div><p>
 <p>
 We have already introduced Weyl group of reflections <a href="#weyl-group-def">3.1</a>, now we implement procedure which constructs the union of Weyl group orbits of the set of weights.<br>
 <p>
-<font class='lnum'>274</font>   
-                <div id=codechunk274>
+<font class='lnum'>198</font>   
+                <div id=codechunk198>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;Root system methods .scm&gt;&gt<sub>3</sub>=</legend>
-<font class='lnum'>275</font>   `(orbit ,
-<font class='lnum'>276</font>     (lambda (self weights)
-<font class='lnum'>277</font>       (let ((addon 
-<font class='lnum'>278</font>   	   (filter (lambda (x) (not (element-of-set? x weights)))
-<font class='lnum'>279</font>   		   (fold-right union-set '() 
-<font class='lnum'>280</font>   			       (map (lambda (w)
-<font class='lnum'>281</font>   				      (map
-<font class='lnum'>282</font>   				       (lambda (x) (reflect w x))
-<font class='lnum'>283</font>   				       (send self 'simple-roots)))
-<font class='lnum'>284</font>   				    weights)))))
-<font class='lnum'>285</font>         (if (null? addon)
-<font class='lnum'>286</font>   	  weights
-<font class='lnum'>287</font>   	  (send self 'orbit (union-set weights addon) )))))
-<font class='lnum'>288</font>   </fieldset></pre>
+<font class='lnum'>199</font>   `(orbit ,
+<font class='lnum'>200</font>     (lambda (self weights)
+<font class='lnum'>201</font>       (let ((addon 
+<font class='lnum'>202</font>   	   (filter (lambda (x) (not (element-of-set? x weights)))
+<font class='lnum'>203</font>   		   (fold-right union-set '() 
+<font class='lnum'>204</font>   			       (map (lambda (w)
+<font class='lnum'>205</font>   				      (map
+<font class='lnum'>206</font>   				       (lambda (x) (reflect w x))
+<font class='lnum'>207</font>   				       (send self 'simple-roots)))
+<font class='lnum'>208</font>   				    weights)))))
+<font class='lnum'>209</font>         (if (null? addon)
+<font class='lnum'>210</font>   	  weights
+<font class='lnum'>211</font>   	  (send self 'orbit (union-set weights addon) )))))
+<font class='lnum'>212</font>   </fieldset></pre>
 </div><p>
 <p>
 <b>Definition 10: </b><br>
-<b>Fundamental weights</b> form a basis ``w_1,...,w_r`` dual to the basis of simple co-roots ``\alpha_1^{\vee},...,\alpha_r^{\vee}``.<br>
+<b>Fundamental weights</b> form a basis ``w_1,\ldots,w_r`` dual to the basis of simple co-roots ``\alpha_1^{\vee},\ldots,\alpha_r^{\vee}``.<br>
 <p>
-<font class='lnum'>294</font>   
-                <div id=codechunk294>
+<font class='lnum'>218</font>   
+                <div id=codechunk218>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;Root system methods .scm&gt;&gt<sub>4</sub>=</legend>
-<font class='lnum'>295</font>   `(fundamental-weights
-<font class='lnum'>296</font>     ,(lambda (self)
-<font class='lnum'>297</font>        (map (lambda (x)
-<font class='lnum'>298</font>   	    (sum (map-n (lambda (y z) (mul y z)) x (send self 'simple-roots))))
-<font class='lnum'>299</font>   	  (matrix-inverse (send self 'cartan-matrix)))))
-<font class='lnum'>300</font>   </fieldset></pre>
+<font class='lnum'>219</font>   `(fundamental-weights
+<font class='lnum'>220</font>     ,(lambda (self)
+<font class='lnum'>221</font>        (map (lambda (x)
+<font class='lnum'>222</font>   	    (sum (map-n (lambda (y z) (mul y z)) x (send self 'simple-roots))))
+<font class='lnum'>223</font>   	  (matrix-inverse (send self 'cartan-matrix)))))
+<font class='lnum'>224</font>   </fieldset></pre>
 </div><p>
 <b>Weyl vector</b> ``\rho=\sum_i w_i=\frac{1}{2}\sum_{\alpha\in \Delta^{+}}\alpha``.<br>
 <p>
 <p>
-<font class='lnum'>305</font>   
-                <div id=codechunk305>
+<font class='lnum'>229</font>   
+                <div id=codechunk229>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;Root system methods .scm&gt;&gt<sub>5</sub>=</legend>
-<font class='lnum'>306</font>   `(rho ,(lambda (self)
-<font class='lnum'>307</font>   	 (sum (send self 'fundamental-weights))))
-<font class='lnum'>308</font>   
-<font class='lnum'>309</font>   </fieldset></pre>
+<font class='lnum'>230</font>   `(rho ,(lambda (self)
+<font class='lnum'>231</font>   	 (sum (send self 'fundamental-weights))))
+<font class='lnum'>232</font>   
+<font class='lnum'>233</font>   </fieldset></pre>
 </div><p>
 <p>
 We can construct the full set of Lie algebra roots using Weyl symmetry.<br>
 <p>
-<font class='lnum'>314</font>   
-                <div id=codechunk314>
+<font class='lnum'>238</font>   
+                <div id=codechunk238>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;Root system methods .scm&gt;&gt<sub>6</sub>=</legend>
-<font class='lnum'>315</font>   `(roots ,(lambda (self)
-<font class='lnum'>316</font>   	   (send self 'orbit (send self 'simple-roots))))
-<font class='lnum'>317</font>   </fieldset></pre>
+<font class='lnum'>239</font>   `(roots ,(lambda (self)
+<font class='lnum'>240</font>   	   (send self 'orbit (send self 'simple-roots))))
+<font class='lnum'>241</font>   </fieldset></pre>
 </div><p>
 <p>
 <p>
@@ -736,7 +752,7 @@ collapse all</a>
 </div>
 
         <fieldset><legend><a href="javascript:;" onmousedown="toggleCombined('6');">
-<font class='lnum'><i>(6)</i></font>&nbsp;3.2&nbsp;&nbsp;Simple Lie algebras</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 321)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='6'></a></legend></fieldset>
+<font class='lnum'><i>(6)</i></font>&nbsp;3.2. Simple Lie algebras</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 245)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='6'></a></legend></fieldset>
 <p>
 <div id="6" style="display:none">   
 <ul>
@@ -748,71 +764,71 @@ Simple Lie algebras are classified by the use of Dynkin diagrams (which we will 
 <p><br>
 Here we explicitly construct simple roots for the classical series of finite-dimensional Lie algebras<br>
 <p>
-<font class='lnum'>329</font>   
-                <div id=codechunk329>
+<font class='lnum'>253</font>   
+                <div id=codechunk253>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;Simple Lie algebras .scm&gt;&gt<sub></sub>=</legend>
-<font class='lnum'>330</font>   (define (make-simple-lie-algebra series rank)
-<font class='lnum'>331</font>     (define (simple-roots series rank)
-<font class='lnum'>332</font>       (cond ((eq? series 'A)
-<font class='lnum'>333</font>   	   (do ((i 0 (+ i 1))
-<font class='lnum'>334</font>   		(base '()
-<font class='lnum'>335</font>   		      (cons 
-<font class='lnum'>336</font>   		       (do ((j 0 (+ j 1))
-<font class='lnum'>337</font>   			    (v '()
-<font class='lnum'>338</font>   			       (cons
-<font class='lnum'>339</font>   				(cond ((= j i) 1)
-<font class='lnum'>340</font>   				      ((= j (+ i 1)) -1)
-<font class='lnum'>341</font>   				      (else 0))
-<font class='lnum'>342</font>   				v)))
-<font class='lnum'>343</font>   			   ((&gt; j rank) (reverse v)))
-<font class='lnum'>344</font>   		       base)))
-<font class='lnum'>345</font>   	       ((= i rank) (reverse base))))
-<font class='lnum'>346</font>   	  ((eq? series 'B)
-<font class='lnum'>347</font>   	   (do ((i 0 (+ i 1))
-<font class='lnum'>348</font>   		(base '()
-<font class='lnum'>349</font>   		      (cons 
-<font class='lnum'>350</font>   		       (do ((j 0 (+ j 1))
-<font class='lnum'>351</font>   			    (v '()
-<font class='lnum'>352</font>   			       (cons
-<font class='lnum'>353</font>   				(cond ((= j i) 1)
-<font class='lnum'>354</font>   				      ((= j (+ i 1)) -1)
-<font class='lnum'>355</font>   				      (else 0))
-<font class='lnum'>356</font>   				v)))
-<font class='lnum'>357</font>   			   ((= j rank) (reverse v)))
-<font class='lnum'>358</font>   		       base)))
-<font class='lnum'>359</font>   	       ((= i rank) (reverse base))))
-<font class='lnum'>360</font>   	  ((eq? series 'C)
-<font class='lnum'>361</font>   	   (do ((i 0 (+ i 1))
-<font class='lnum'>362</font>   		(base '()
-<font class='lnum'>363</font>   		      (cons 
-<font class='lnum'>364</font>   		       (do ((j 0 (+ j 1))
-<font class='lnum'>365</font>   			    (v '()
-<font class='lnum'>366</font>   			       (cons
-<font class='lnum'>367</font>   				(cond ((and (= i (- rank 1)) (= i j)) 2)
-<font class='lnum'>368</font>   				      ((= j i) 1)
-<font class='lnum'>369</font>   				      ((= j (+ i 1)) -1)
-<font class='lnum'>370</font>   				      (else 0))
-<font class='lnum'>371</font>   				v)))
-<font class='lnum'>372</font>   			   ((= j rank) (reverse v)))
-<font class='lnum'>373</font>   		       base)))
-<font class='lnum'>374</font>   	       ((= i rank) (reverse base))))
-<font class='lnum'>375</font>   	  ((eq? series 'D)
-<font class='lnum'>376</font>   	   (do ((i 0 (+ i 1))
-<font class='lnum'>377</font>   		(base '()
-<font class='lnum'>378</font>   		      (cons 
-<font class='lnum'>379</font>   		       (do ((j 0 (+ j 1))
-<font class='lnum'>380</font>   			    (v '()
-<font class='lnum'>381</font>   			       (cons
-<font class='lnum'>382</font>   				(cond ((and (= i (- rank 1)) (= (- i 1) j)) 1)
-<font class='lnum'>383</font>   				      ((= j i) 1)
-<font class='lnum'>384</font>   				      ((= j (+ i 1)) -1)
-<font class='lnum'>385</font>   				      (else 0))
-<font class='lnum'>386</font>   				v)))
-<font class='lnum'>387</font>   			   ((= j rank) (reverse v)))
-<font class='lnum'>388</font>   		       base)))
-<font class='lnum'>389</font>   	       ((= i rank) (reverse base))))))
-<font class='lnum'>390</font>     (make-semisimple-lie-algebra (simple-roots series rank)))
-<font class='lnum'>391</font>   </fieldset></pre>
+<font class='lnum'>254</font>   (define (make-simple-lie-algebra series rank)
+<font class='lnum'>255</font>     (define (simple-roots series rank)
+<font class='lnum'>256</font>       (cond ((eq? series 'A)
+<font class='lnum'>257</font>   	   (do ((i 0 (+ i 1))
+<font class='lnum'>258</font>   		(base '()
+<font class='lnum'>259</font>   		      (cons 
+<font class='lnum'>260</font>   		       (do ((j 0 (+ j 1))
+<font class='lnum'>261</font>   			    (v '()
+<font class='lnum'>262</font>   			       (cons
+<font class='lnum'>263</font>   				(cond ((= j i) 1)
+<font class='lnum'>264</font>   				      ((= j (+ i 1)) -1)
+<font class='lnum'>265</font>   				      (else 0))
+<font class='lnum'>266</font>   				v)))
+<font class='lnum'>267</font>   			   ((&gt; j rank) (reverse v)))
+<font class='lnum'>268</font>   		       base)))
+<font class='lnum'>269</font>   	       ((= i rank) (reverse base))))
+<font class='lnum'>270</font>   	  ((eq? series 'B)
+<font class='lnum'>271</font>   	   (do ((i 0 (+ i 1))
+<font class='lnum'>272</font>   		(base '()
+<font class='lnum'>273</font>   		      (cons 
+<font class='lnum'>274</font>   		       (do ((j 0 (+ j 1))
+<font class='lnum'>275</font>   			    (v '()
+<font class='lnum'>276</font>   			       (cons
+<font class='lnum'>277</font>   				(cond ((= j i) 1)
+<font class='lnum'>278</font>   				      ((= j (+ i 1)) -1)
+<font class='lnum'>279</font>   				      (else 0))
+<font class='lnum'>280</font>   				v)))
+<font class='lnum'>281</font>   			   ((= j rank) (reverse v)))
+<font class='lnum'>282</font>   		       base)))
+<font class='lnum'>283</font>   	       ((= i rank) (reverse base))))
+<font class='lnum'>284</font>   	  ((eq? series 'C)
+<font class='lnum'>285</font>   	   (do ((i 0 (+ i 1))
+<font class='lnum'>286</font>   		(base '()
+<font class='lnum'>287</font>   		      (cons 
+<font class='lnum'>288</font>   		       (do ((j 0 (+ j 1))
+<font class='lnum'>289</font>   			    (v '()
+<font class='lnum'>290</font>   			       (cons
+<font class='lnum'>291</font>   				(cond ((and (= i (- rank 1)) (= i j)) 2)
+<font class='lnum'>292</font>   				      ((= j i) 1)
+<font class='lnum'>293</font>   				      ((= j (+ i 1)) -1)
+<font class='lnum'>294</font>   				      (else 0))
+<font class='lnum'>295</font>   				v)))
+<font class='lnum'>296</font>   			   ((= j rank) (reverse v)))
+<font class='lnum'>297</font>   		       base)))
+<font class='lnum'>298</font>   	       ((= i rank) (reverse base))))
+<font class='lnum'>299</font>   	  ((eq? series 'D)
+<font class='lnum'>300</font>   	   (do ((i 0 (+ i 1))
+<font class='lnum'>301</font>   		(base '()
+<font class='lnum'>302</font>   		      (cons 
+<font class='lnum'>303</font>   		       (do ((j 0 (+ j 1))
+<font class='lnum'>304</font>   			    (v '()
+<font class='lnum'>305</font>   			       (cons
+<font class='lnum'>306</font>   				(cond ((and (= i (- rank 1)) (= (- i 1) j)) 1)
+<font class='lnum'>307</font>   				      ((= j i) 1)
+<font class='lnum'>308</font>   				      ((= j (+ i 1)) -1)
+<font class='lnum'>309</font>   				      (else 0))
+<font class='lnum'>310</font>   				v)))
+<font class='lnum'>311</font>   			   ((= j rank) (reverse v)))
+<font class='lnum'>312</font>   		       base)))
+<font class='lnum'>313</font>   	       ((= i rank) (reverse base))))))
+<font class='lnum'>314</font>     (make-semisimple-lie-algebra (simple-roots series rank)))
+<font class='lnum'>315</font>   </fieldset></pre>
 </div><p>
 <p>
 <p>
@@ -850,7 +866,7 @@ collapse all</a>
 </div>
 
         <fieldset><legend><a href="javascript:;" onmousedown="toggleCombined('7');">
-<font class='lnum'><i>(7)</i></font>&nbsp; 4&nbsp;&nbsp;Representations</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 396)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='7'></a></legend></fieldset>
+<font class='lnum'><i>(7)</i></font>&nbsp; 4. Representations</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 320)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='7'></a></legend></fieldset>
 <p>
 <div id="7" style="display:none">   
 <ul>
@@ -865,53 +881,53 @@ There exists a classification of finite-dimensional representations of Lie algeb
 <p>
 For the finite-dimensional representations we introduce abstract class <i>representation</i> and concrete class <i>highest-weight-representation</i>. Then we can describe  tensor product of two highest weight representations as the object of class <i>representation</i> (but not of class <i>highest-weight-representation</i>.<br>
 <p>
-<font class='lnum'>407</font>   
-                <div id=codechunk407>
+<font class='lnum'>331</font>   
+                <div id=codechunk331>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;Representations .scm&gt;&gt<sub></sub>=</legend>
-<font class='lnum'>408</font>   (class 'representation 'object
-<font class='lnum'>409</font>          `(dim ())
-<font class='lnum'>410</font>          `(multiplicity , (lambda (self weight)
-<font class='lnum'>411</font>   			  (error "Class is abstract!")))
-<font class='lnum'>412</font>          '(lie-algebra ())
-<font class='lnum'>413</font>          )
-<font class='lnum'>414</font>   </fieldset></pre>
+<font class='lnum'>332</font>   (class 'representation 'object
+<font class='lnum'>333</font>          `(dim ())
+<font class='lnum'>334</font>          `(multiplicity , (lambda (self weight)
+<font class='lnum'>335</font>   			  (error "Class is abstract!")))
+<font class='lnum'>336</font>          '(lie-algebra ())
+<font class='lnum'>337</font>          )
+<font class='lnum'>338</font>   </fieldset></pre>
 </div><p>
 <p>
 <p><br>
 <p>
-<font class='lnum'>419</font>   
-                <div id=codechunk419>
+<font class='lnum'>343</font>   
+                <div id=codechunk343>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;Representations .scm&gt;&gt<sub>2</sub>=</legend>
-<font class='lnum'>420</font>   (class 'highest-weight-representation 'representation
-<font class='lnum'>421</font>          '(highest-weight ())
-<font class='lnum'>422</font>          <font class='chunkref'>&lt;&lt;Anomalous weights computation .scm&gt;&gt;</font>
-<font class='lnum'>423</font>          <font class='chunkref'>&lt;&lt;Weight multiplicities computation .scm&gt;&gt;</font>)
-<font class='lnum'>424</font>   `(multiplicity , (lambda (self weight)
-<font class='lnum'>425</font>   </fieldset></pre>
+<font class='lnum'>344</font>   (class 'highest-weight-representation 'representation
+<font class='lnum'>345</font>          '(highest-weight ())
+<font class='lnum'>346</font>          <font class='chunkref'>&lt;&lt;Anomalous weights computation .scm&gt;&gt;</font>
+<font class='lnum'>347</font>          <font class='chunkref'>&lt;&lt;Weight multiplicities computation .scm&gt;&gt;</font>)
+<font class='lnum'>348</font>   `(multiplicity , (lambda (self weight)
+<font class='lnum'>349</font>   </fieldset></pre>
 </div><p>
 <p>
 We use the recurrent method of calculation of weight multiplicities described in [], []. Weight multiplicities are determined using the set of anomalous points, which is constructed by the code below.<br>
 <p>
-<font class='lnum'>430</font>   
-                <div id=codechunk430>
+<font class='lnum'>354</font>   
+                <div id=codechunk354>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;Anomalous weights computation .scm&gt;&gt<sub></sub>=</legend>
-<font class='lnum'>431</font>          `(anomalous-weights , 
-<font class='lnum'>432</font>   	 (lambda (self)
-<font class='lnum'>433</font>   	   (let* ((algebra (send self 'lie-algebra))
-<font class='lnum'>434</font>   		  (rho (send algebra 'rho)))
-<font class='lnum'>435</font>   	     (map (lambda (x)
-<font class='lnum'>436</font>   		    (sub x rho))
-<font class='lnum'>437</font>   		  (send algebra 'orbit (add (send self 'highest-weight) rho))))))
-<font class='lnum'>438</font>   </fieldset></pre>
+<font class='lnum'>355</font>          `(anomalous-weights , 
+<font class='lnum'>356</font>   	 (lambda (self)
+<font class='lnum'>357</font>   	   (let* ((algebra (send self 'lie-algebra))
+<font class='lnum'>358</font>   		  (rho (send algebra 'rho)))
+<font class='lnum'>359</font>   	     (map (lambda (x)
+<font class='lnum'>360</font>   		    (sub x rho))
+<font class='lnum'>361</font>   		  (send algebra 'orbit (add (send self 'highest-weight) rho))))))
+<font class='lnum'>362</font>   </fieldset></pre>
 </div><p>
 <p>
 <p><br>
 <p>
-<font class='lnum'>443</font>   
-                <div id=codechunk443>
+<font class='lnum'>367</font>   
+                <div id=codechunk367>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;Weight multiplicities computation .scm&gt;&gt<sub></sub>=</legend>
-<font class='lnum'>444</font>   
-<font class='lnum'>445</font>   </fieldset></pre>
+<font class='lnum'>368</font>   
+<font class='lnum'>369</font>   </fieldset></pre>
 </div><p>
 <p>
 <p>
@@ -933,7 +949,7 @@ collapse all</a>
 </div>
 
         <fieldset><legend><a href="javascript:;" onmousedown="toggleCombined('8');">
-<font class='lnum'><i>(8)</i></font>&nbsp;5&nbsp;&nbsp;General outline of the code</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 450)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='8'></a></legend></fieldset>
+<font class='lnum'><i>(8)</i></font>&nbsp;5. General outline of the code</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 374)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='8'></a></legend></fieldset>
 <p>
 <div id="8" style="display:none">   
 <ul>
@@ -943,16 +959,16 @@ collapse all</a>
 The code goes to several files of which <i>library.scm</i> is a compatibility layer which consists of auxiliary functions and allows portability between different Scheme implementations on different OS-es and hardware platforms. <i>library.scm</i> is described in the appendix .<br>
 All the mathematical code which is connected with Lie theory is collected in the file <i>lie-algebra.scm</i>.<br>
 <p>
-<font class='lnum'>456</font>   
-                <div id=codechunk456>
+<font class='lnum'>380</font>   
+                <div id=codechunk380>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;lie-algebra.scm&gt;&gt<sub></sub>=</legend>
-<font class='lnum'>457</font>   <font class='chunkref'>&lt;&lt;Lie algebra class .scm&gt;&gt;</font>
-<font class='lnum'>458</font>   <font class='chunkref'>&lt;&lt;Commutative algebra .scm&gt;&gt;</font>
-<font class='lnum'>459</font>   <font class='chunkref'>&lt;&lt;Semisimple Lie algebra .scm&gt;&gt;</font>
-<font class='lnum'>460</font>   <font class='chunkref'>&lt;&lt;Functions for root systems .scm&gt;&gt;</font>
-<font class='lnum'>461</font>   <font class='chunkref'>&lt;&lt;Simple Lie algebras .scm&gt;&gt;</font>
-<font class='lnum'>462</font>   <font class='chunkref'>&lt;&lt;Representations .scm&gt;&gt;</font>
-<font class='lnum'>463</font>   </fieldset></pre>
+<font class='lnum'>381</font>   <font class='chunkref'>&lt;&lt;Lie algebra class .scm&gt;&gt;</font>
+<font class='lnum'>382</font>   <font class='chunkref'>&lt;&lt;Commutative algebra .scm&gt;&gt;</font>
+<font class='lnum'>383</font>   <font class='chunkref'>&lt;&lt;Semisimple Lie algebra .scm&gt;&gt;</font>
+<font class='lnum'>384</font>   <font class='chunkref'>&lt;&lt;Functions for root systems .scm&gt;&gt;</font>
+<font class='lnum'>385</font>   <font class='chunkref'>&lt;&lt;Simple Lie algebras .scm&gt;&gt;</font>
+<font class='lnum'>386</font>   <font class='chunkref'>&lt;&lt;Representations .scm&gt;&gt;</font>
+<font class='lnum'>387</font>   </fieldset></pre>
 </div><p>
 <p>
 <p>
@@ -975,7 +991,7 @@ collapse all</a>
 </div>
 
         <fieldset><legend><a href="javascript:;" onmousedown="toggleCombined('9');">
-<font class='lnum'><i>(9)</i></font>&nbsp;A&nbsp;&nbsp;Library</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 469)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='9'></a></legend></fieldset>
+<font class='lnum'><i>(9)</i></font>&nbsp;A. Library</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 393)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='9'></a></legend></fieldset>
 <p>
 <div id="9" style="display:none">   
 <ul>
@@ -985,19 +1001,19 @@ collapse all</a>
 Since one of our target implementations of Scheme is LispMe, which is only partially R4RS-compliant, we create compatibility layer of common functions.<br>
 Also this library can be used to port the code for Lie algebras to other Scheme implementations.<br>
 <p>
-<font class='lnum'>475</font>   
-                <div id=codechunk475>
+<font class='lnum'>399</font>   
+                <div id=codechunk399>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;library.scm&gt;&gt<sub></sub>=</legend>
-<font class='lnum'>476</font>   <font class='chunkref'>&lt;&lt;Semi-standard Scheme procedures .scm&gt;&gt;</font>
-<font class='lnum'>477</font>   <font class='chunkref'>&lt;&lt;Sets .scm&gt;&gt;</font>
-<font class='lnum'>478</font>   <font class='chunkref'>&lt;&lt;Vector and matrix tools .scm&gt;&gt;</font>
-<font class='lnum'>479</font>   <font class='chunkref'>&lt;&lt;LispMe Objects .scm&gt;&gt;</font>
-<font class='lnum'>480</font>   </fieldset></pre>
+<font class='lnum'>400</font>   <font class='chunkref'>&lt;&lt;Semi-standard Scheme procedures .scm&gt;&gt;</font>
+<font class='lnum'>401</font>   <font class='chunkref'>&lt;&lt;Sets .scm&gt;&gt;</font>
+<font class='lnum'>402</font>   <font class='chunkref'>&lt;&lt;Vector and matrix tools .scm&gt;&gt;</font>
+<font class='lnum'>403</font>   <font class='chunkref'>&lt;&lt;LispMe Objects .scm&gt;&gt;</font>
+<font class='lnum'>404</font>   </fieldset></pre>
 </div><p>
 <p>
 <p>
         <fieldset><legend><a href="javascript:;" onmousedown="toggleCombined('10');">
-<font class='lnum'><i>(10)</i></font>&nbsp;A.1&nbsp;&nbsp;Commonly used Scheme procedures</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 484)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='10'></a></legend></fieldset>
+<font class='lnum'><i>(10)</i></font>&nbsp;A.1. Commonly used Scheme procedures</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 408)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='10'></a></legend></fieldset>
 <p>
 <div id="10" style="display:none">   
 <ul>
@@ -1007,81 +1023,81 @@ Also this library can be used to port the code for Lie algebras to other Scheme 
 Due to the limitations of Palm OS platform functions such as <i>map</i> or <i>fold-left</i> in LispMe are in the separate library, which should be loaded by hand. Also function <i>map</i> accepts only 1-argument function and list, so we add these functions to our library. <br>
 <p>
 <p>
-<font class='lnum'>490</font>   
-                <div id=codechunk490>
+<font class='lnum'>414</font>   
+                <div id=codechunk414>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;Semi-standard Scheme procedures .scm&gt;&gt<sub></sub>=</legend>
-<font class='lnum'>491</font>   (define nil ())
-<font class='lnum'>492</font>   (define true #t)
-<font class='lnum'>493</font>   (define false #f)
-<font class='lnum'>494</font>   
-<font class='lnum'>495</font>   (define (zero? v)
-<font class='lnum'>496</font>   	(= v 0))
-<font class='lnum'>497</font>   
-<font class='lnum'>498</font>   (define (map op list)
-<font class='lnum'>499</font>   	(if (null? list) ()
-<font class='lnum'>500</font>   		(cons (op (car list)) (map op (cdr list)))))
-<font class='lnum'>501</font>   
-<font class='lnum'>502</font>   (define (map-n op . lists) 
-<font class='lnum'>503</font>       (define (map-n0 op  lists)
-<font class='lnum'>504</font>   	(if (or (null? lists) (null? (car lists))) '()
-<font class='lnum'>505</font>   	(cons (apply op (map car lists))
-<font class='lnum'>506</font>   		(map-n0 op  (map cdr lists)))))
-<font class='lnum'>507</font>       (map-n0 op lists))
-<font class='lnum'>508</font>   
-<font class='lnum'>509</font>   (define (accumulate op initial sequence)
-<font class='lnum'>510</font>     (if (null? sequence)
-<font class='lnum'>511</font>         initial
-<font class='lnum'>512</font>         (op (car sequence)
-<font class='lnum'>513</font>             (accumulate op initial (cdr sequence)))))
-<font class='lnum'>514</font>   
-<font class='lnum'>515</font>   (define (filter predicate sequence)
-<font class='lnum'>516</font>     (cond ((null? sequence) ())
-<font class='lnum'>517</font>           ((predicate (car sequence))
-<font class='lnum'>518</font>            (cons (car sequence)
-<font class='lnum'>519</font>                  (filter predicate (cdr sequence))))
-<font class='lnum'>520</font>           (else (filter predicate (cdr sequence)))))
-<font class='lnum'>521</font>   
-<font class='lnum'>522</font>   (define (fold-left op initial sequence)
-<font class='lnum'>523</font>     (define (iter result rest)
-<font class='lnum'>524</font>       (if (null? rest)
-<font class='lnum'>525</font>           result
-<font class='lnum'>526</font>           (iter (op result (car rest))
-<font class='lnum'>527</font>                 (cdr rest))))
-<font class='lnum'>528</font>     (iter initial sequence))
-<font class='lnum'>529</font>   
-<font class='lnum'>530</font>   (define (fold-right op init s) (accumulate op init s))
-<font class='lnum'>531</font>   </fieldset></pre>
+<font class='lnum'>415</font>   (define nil ())
+<font class='lnum'>416</font>   (define true #t)
+<font class='lnum'>417</font>   (define false #f)
+<font class='lnum'>418</font>   
+<font class='lnum'>419</font>   (define (zero? v)
+<font class='lnum'>420</font>   	(= v 0))
+<font class='lnum'>421</font>   
+<font class='lnum'>422</font>   (define (map op list)
+<font class='lnum'>423</font>   	(if (null? list) ()
+<font class='lnum'>424</font>   		(cons (op (car list)) (map op (cdr list)))))
+<font class='lnum'>425</font>   
+<font class='lnum'>426</font>   (define (map-n op . lists) 
+<font class='lnum'>427</font>       (define (map-n0 op  lists)
+<font class='lnum'>428</font>   	(if (or (null? lists) (null? (car lists))) '()
+<font class='lnum'>429</font>   	(cons (apply op (map car lists))
+<font class='lnum'>430</font>   		(map-n0 op  (map cdr lists)))))
+<font class='lnum'>431</font>       (map-n0 op lists))
+<font class='lnum'>432</font>   
+<font class='lnum'>433</font>   (define (accumulate op initial sequence)
+<font class='lnum'>434</font>     (if (null? sequence)
+<font class='lnum'>435</font>         initial
+<font class='lnum'>436</font>         (op (car sequence)
+<font class='lnum'>437</font>             (accumulate op initial (cdr sequence)))))
+<font class='lnum'>438</font>   
+<font class='lnum'>439</font>   (define (filter predicate sequence)
+<font class='lnum'>440</font>     (cond ((null? sequence) ())
+<font class='lnum'>441</font>           ((predicate (car sequence))
+<font class='lnum'>442</font>            (cons (car sequence)
+<font class='lnum'>443</font>                  (filter predicate (cdr sequence))))
+<font class='lnum'>444</font>           (else (filter predicate (cdr sequence)))))
+<font class='lnum'>445</font>   
+<font class='lnum'>446</font>   (define (fold-left op initial sequence)
+<font class='lnum'>447</font>     (define (iter result rest)
+<font class='lnum'>448</font>       (if (null? rest)
+<font class='lnum'>449</font>           result
+<font class='lnum'>450</font>           (iter (op result (car rest))
+<font class='lnum'>451</font>                 (cdr rest))))
+<font class='lnum'>452</font>     (iter initial sequence))
+<font class='lnum'>453</font>   
+<font class='lnum'>454</font>   (define (fold-right op init s) (accumulate op init s))
+<font class='lnum'>455</font>   </fieldset></pre>
 </div><p>
 We need couple of functions for sets. We represent set as list.<br>
 <p>
-<font class='lnum'>535</font>   
-                <div id=codechunk535>
+<font class='lnum'>459</font>   
+                <div id=codechunk459>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;Sets .scm&gt;&gt<sub></sub>=</legend>
-<font class='lnum'>536</font>   (define (element-of-set? x set)
-<font class='lnum'>537</font>     (cond ((null? set) false)
-<font class='lnum'>538</font>           ((equal? x (car set)) true)
-<font class='lnum'>539</font>           (else (element-of-set? x (cdr set)))))
-<font class='lnum'>540</font>   
-<font class='lnum'>541</font>   (define (adjoin-set x set)
-<font class='lnum'>542</font>     (if (element-of-set? x set)
-<font class='lnum'>543</font>         set
-<font class='lnum'>544</font>         (cons x set)))
-<font class='lnum'>545</font>   
-<font class='lnum'>546</font>   (define (intersection-set set1 set2)
-<font class='lnum'>547</font>     (cond ((or (null? set1) (null? set2)) '())
-<font class='lnum'>548</font>           ((element-of-set? (car set1) set2)        
-<font class='lnum'>549</font>            (cons (car set1)
-<font class='lnum'>550</font>                  (intersection-set (cdr set1) set2)))
-<font class='lnum'>551</font>           (else (intersection-set (cdr set1) set2))))
-<font class='lnum'>552</font>   
-<font class='lnum'>553</font>   (define (union-set set1 set2)
-<font class='lnum'>554</font>   	(if (null? set1) set2
-<font class='lnum'>555</font>   		(union-set (cdr set1)
-<font class='lnum'>556</font>   			   (adjoin-set (car set1) set2))
-<font class='lnum'>557</font>   	)
-<font class='lnum'>558</font>   )
-<font class='lnum'>559</font>   
-<font class='lnum'>560</font>   </fieldset></pre>
+<font class='lnum'>460</font>   (define (element-of-set? x set)
+<font class='lnum'>461</font>     (cond ((null? set) false)
+<font class='lnum'>462</font>           ((equal? x (car set)) true)
+<font class='lnum'>463</font>           (else (element-of-set? x (cdr set)))))
+<font class='lnum'>464</font>   
+<font class='lnum'>465</font>   (define (adjoin-set x set)
+<font class='lnum'>466</font>     (if (element-of-set? x set)
+<font class='lnum'>467</font>         set
+<font class='lnum'>468</font>         (cons x set)))
+<font class='lnum'>469</font>   
+<font class='lnum'>470</font>   (define (intersection-set set1 set2)
+<font class='lnum'>471</font>     (cond ((or (null? set1) (null? set2)) '())
+<font class='lnum'>472</font>           ((element-of-set? (car set1) set2)        
+<font class='lnum'>473</font>            (cons (car set1)
+<font class='lnum'>474</font>                  (intersection-set (cdr set1) set2)))
+<font class='lnum'>475</font>           (else (intersection-set (cdr set1) set2))))
+<font class='lnum'>476</font>   
+<font class='lnum'>477</font>   (define (union-set set1 set2)
+<font class='lnum'>478</font>   	(if (null? set1) set2
+<font class='lnum'>479</font>   		(union-set (cdr set1)
+<font class='lnum'>480</font>   			   (adjoin-set (car set1) set2))
+<font class='lnum'>481</font>   	)
+<font class='lnum'>482</font>   )
+<font class='lnum'>483</font>   
+<font class='lnum'>484</font>   </fieldset></pre>
 </div><p>
 <p>
 <p>
@@ -1103,7 +1119,7 @@ collapse all</a>
 </div>
 
         <fieldset><legend><a href="javascript:;" onmousedown="toggleCombined('11');">
-<font class='lnum'><i>(11)</i></font>&nbsp;A.2&nbsp;&nbsp;Object system</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 565)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='11'></a></legend></fieldset>
+<font class='lnum'><i>(11)</i></font>&nbsp;A.2. Object system</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 489)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='11'></a></legend></fieldset>
 <p>
 <div id="11" style="display:none">   
 <ul>
@@ -1115,7 +1131,7 @@ It is natural to represent Lie algebras, root systems and representation as obje
 Here is the original documentation:<br>
 <p>
 <pre>
-&nbsp;&nbsp;
+. 
 ;&nbsp;Classes
 
 &nbsp;;&nbsp;LispMeObjects
@@ -1157,82 +1173,82 @@ Instances of classes:<br>
 (define&nbsp;&lt;instance-name&#62;&nbsp;(new&nbsp;'&lt;classname&#62;&nbsp;(list&nbsp;'&lt;fieldname&#62;&nbsp;&lt;value&#62;)&nbsp;...))
 </pre><br>
 <p>
-<font class='lnum'>615</font>   
-                <div id=codechunk615>
+<font class='lnum'>539</font>   
+                <div id=codechunk539>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;LispMe Objects .scm&gt;&gt<sub></sub>=</legend>
-<font class='lnum'>616</font>   
-<font class='lnum'>617</font>   (define *classes* '())
-<font class='lnum'>618</font>   
-<font class='lnum'>619</font>   
-<font class='lnum'>620</font>    (define (clearClasses)
-<font class='lnum'>621</font>     (set! *classes* 
-<font class='lnum'>622</font>       `((object #f 
-<font class='lnum'>623</font>         (set ,setSlot)
-<font class='lnum'>624</font>         (super
-<font class='lnum'>625</font>            ,(lambda (self)
-<font class='lnum'>626</font>               (getClass (car self))))))))
-<font class='lnum'>627</font>   
-<font class='lnum'>628</font>   
-<font class='lnum'>629</font>    (define (setSlot self aSlotName aValue)
-<font class='lnum'>630</font>     (let ((slot (assoc aSlotName (cdr self))))
-<font class='lnum'>631</font>       (cond
-<font class='lnum'>632</font>         ((not slot) 
-<font class='lnum'>633</font>           (set-cdr! self 
-<font class='lnum'>634</font>             (cons 
-<font class='lnum'>635</font>               (list aSlotName  aValue) 
-<font class='lnum'>636</font>               (cdr self))))
-<font class='lnum'>637</font>         (else
-<font class='lnum'>638</font>           (set-car! (cdr slot) aValue))))
-<font class='lnum'>639</font>     aValue)
-<font class='lnum'>640</font>   
-<font class='lnum'>641</font>   
-<font class='lnum'>642</font>    (define (getClass aClass)
-<font class='lnum'>643</font>     (let ((class (assoc aClass *classes*)))
-<font class='lnum'>644</font>         (cond
-<font class='lnum'>645</font>           ((not class) #f)
-<font class='lnum'>646</font>           (else (cdr class)))))
-<font class='lnum'>647</font>   
-<font class='lnum'>648</font>   
-<font class='lnum'>649</font>    (define (class aName aSuperName . aDefinition)
-<font class='lnum'>650</font>     (set! *classes* 
-<font class='lnum'>651</font>       (cons 
-<font class='lnum'>652</font>         (cons aName (cons aSuperName aDefinition))
-<font class='lnum'>653</font>         *classes*))
-<font class='lnum'>654</font>     aName)
-<font class='lnum'>655</font>   
-<font class='lnum'>656</font>   
-<font class='lnum'>657</font>    (define (new aSuperName . args)
-<font class='lnum'>658</font>     (cons aSuperName args))
-<font class='lnum'>659</font>   
-<font class='lnum'>660</font>   
-<font class='lnum'>661</font>    (define (send anObject aMessage . args)
-<font class='lnum'>662</font>     (sendWithSelf anObject anObject aMessage args))
-<font class='lnum'>663</font>   
-<font class='lnum'>664</font>   
-<font class='lnum'>665</font>    (define (sendWithSelf self anObject aMessage args)
-<font class='lnum'>666</font>     (let 
-<font class='lnum'>667</font>       ((superName (car anObject))
-<font class='lnum'>668</font>        (slot (assoc aMessage (cdr anObject))))
-<font class='lnum'>669</font>       (cond
-<font class='lnum'>670</font>         (slot (valueOfSlot self slot args))
-<font class='lnum'>671</font>         ((not superName) #f)
-<font class='lnum'>672</font>         (else 
-<font class='lnum'>673</font>           (let ((superClass (getClass superName)))
-<font class='lnum'>674</font>             (cond
-<font class='lnum'>675</font>               ((not superClass) #f)
-<font class='lnum'>676</font>               (else
-<font class='lnum'>677</font>                 (sendWithSelf self superClass aMessage args))))))))
-<font class='lnum'>678</font>   
-<font class='lnum'>679</font>   
-<font class='lnum'>680</font>    (define (valueOfSlot self theSlot args)
-<font class='lnum'>681</font>     (let ((value (cadr theSlot)))
-<font class='lnum'>682</font>       (cond
-<font class='lnum'>683</font>         ((procedure? value)
-<font class='lnum'>684</font>           (apply value (cons self args)))
-<font class='lnum'>685</font>         (else value))))
-<font class='lnum'>686</font>   
-<font class='lnum'>687</font>   
-<font class='lnum'>688</font>   </fieldset></pre>
+<font class='lnum'>540</font>   
+<font class='lnum'>541</font>   (define *classes* '())
+<font class='lnum'>542</font>   
+<font class='lnum'>543</font>   
+<font class='lnum'>544</font>    (define (clearClasses)
+<font class='lnum'>545</font>     (set! *classes* 
+<font class='lnum'>546</font>       `((object #f 
+<font class='lnum'>547</font>         (set ,setSlot)
+<font class='lnum'>548</font>         (super
+<font class='lnum'>549</font>            ,(lambda (self)
+<font class='lnum'>550</font>               (getClass (car self))))))))
+<font class='lnum'>551</font>   
+<font class='lnum'>552</font>   
+<font class='lnum'>553</font>    (define (setSlot self aSlotName aValue)
+<font class='lnum'>554</font>     (let ((slot (assoc aSlotName (cdr self))))
+<font class='lnum'>555</font>       (cond
+<font class='lnum'>556</font>         ((not slot) 
+<font class='lnum'>557</font>           (set-cdr! self 
+<font class='lnum'>558</font>             (cons 
+<font class='lnum'>559</font>               (list aSlotName  aValue) 
+<font class='lnum'>560</font>               (cdr self))))
+<font class='lnum'>561</font>         (else
+<font class='lnum'>562</font>           (set-car! (cdr slot) aValue))))
+<font class='lnum'>563</font>     aValue)
+<font class='lnum'>564</font>   
+<font class='lnum'>565</font>   
+<font class='lnum'>566</font>    (define (getClass aClass)
+<font class='lnum'>567</font>     (let ((class (assoc aClass *classes*)))
+<font class='lnum'>568</font>         (cond
+<font class='lnum'>569</font>           ((not class) #f)
+<font class='lnum'>570</font>           (else (cdr class)))))
+<font class='lnum'>571</font>   
+<font class='lnum'>572</font>   
+<font class='lnum'>573</font>    (define (class aName aSuperName . aDefinition)
+<font class='lnum'>574</font>     (set! *classes* 
+<font class='lnum'>575</font>       (cons 
+<font class='lnum'>576</font>         (cons aName (cons aSuperName aDefinition))
+<font class='lnum'>577</font>         *classes*))
+<font class='lnum'>578</font>     aName)
+<font class='lnum'>579</font>   
+<font class='lnum'>580</font>   
+<font class='lnum'>581</font>    (define (new aSuperName . args)
+<font class='lnum'>582</font>     (cons aSuperName args))
+<font class='lnum'>583</font>   
+<font class='lnum'>584</font>   
+<font class='lnum'>585</font>    (define (send anObject aMessage . args)
+<font class='lnum'>586</font>     (sendWithSelf anObject anObject aMessage args))
+<font class='lnum'>587</font>   
+<font class='lnum'>588</font>   
+<font class='lnum'>589</font>    (define (sendWithSelf self anObject aMessage args)
+<font class='lnum'>590</font>     (let 
+<font class='lnum'>591</font>       ((superName (car anObject))
+<font class='lnum'>592</font>        (slot (assoc aMessage (cdr anObject))))
+<font class='lnum'>593</font>       (cond
+<font class='lnum'>594</font>         (slot (valueOfSlot self slot args))
+<font class='lnum'>595</font>         ((not superName) #f)
+<font class='lnum'>596</font>         (else 
+<font class='lnum'>597</font>           (let ((superClass (getClass superName)))
+<font class='lnum'>598</font>             (cond
+<font class='lnum'>599</font>               ((not superClass) #f)
+<font class='lnum'>600</font>               (else
+<font class='lnum'>601</font>                 (sendWithSelf self superClass aMessage args))))))))
+<font class='lnum'>602</font>   
+<font class='lnum'>603</font>   
+<font class='lnum'>604</font>    (define (valueOfSlot self theSlot args)
+<font class='lnum'>605</font>     (let ((value (cadr theSlot)))
+<font class='lnum'>606</font>       (cond
+<font class='lnum'>607</font>         ((procedure? value)
+<font class='lnum'>608</font>           (apply value (cons self args)))
+<font class='lnum'>609</font>         (else value))))
+<font class='lnum'>610</font>   
+<font class='lnum'>611</font>   
+<font class='lnum'>612</font>   </fieldset></pre>
 </div><p>
 <p>
 <p>
@@ -1254,7 +1270,7 @@ collapse all</a>
 </div>
 
         <fieldset><legend><a href="javascript:;" onmousedown="toggleCombined('12');">
-<font class='lnum'><i>(12)</i></font>&nbsp;A.3&nbsp;&nbsp;Vector and matrix manipulation</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 693)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='12'></a></legend></fieldset>
+<font class='lnum'><i>(12)</i></font>&nbsp;A.3. Vector and matrix manipulation</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 617)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='12'></a></legend></fieldset>
 <p>
 <div id="12" style="display:none">   
 <ul>
@@ -1263,81 +1279,81 @@ collapse all</a>
 <p>
 Here we have colleced simple tools for manipulation with vectors and matrices. They are important for the portability, since one of our target Scheme implementations doesn't support full R5RS-Scheme ([]) and portable Scheme libraries such as SLIB. <br>
 <p>
-<font class='lnum'>698</font>   
-                <div id=codechunk698>
+<font class='lnum'>622</font>   
+                <div id=codechunk622>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;Vector and matrix tools .scm&gt;&gt<sub></sub>=</legend>
-<font class='lnum'>699</font>   <font class='chunkref'>&lt;&lt;Vector operations .scm&gt;&gt;</font>
-<font class='lnum'>700</font>   <font class='chunkref'>&lt;&lt;Matrix inverse .scm&gt;&gt;</font>
-<font class='lnum'>701</font>   </fieldset></pre>
+<font class='lnum'>623</font>   <font class='chunkref'>&lt;&lt;Vector operations .scm&gt;&gt;</font>
+<font class='lnum'>624</font>   <font class='chunkref'>&lt;&lt;Matrix inverse .scm&gt;&gt;</font>
+<font class='lnum'>625</font>   </fieldset></pre>
 </div><p>
 We represent vectors with lists since for now we don't want to have object system <a href="#sec:object-system">A.2</a> overhead. It can be changed in the future.<br>
 <p>
-<font class='lnum'>705</font>   
-                <div id=codechunk705>
+<font class='lnum'>629</font>   
+                <div id=codechunk629>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;Vector operations .scm&gt;&gt<sub></sub>=</legend>
-<font class='lnum'>706</font>   (define (add a b)
-<font class='lnum'>707</font>     (map-n + a b))
-<font class='lnum'>708</font>   
-<font class='lnum'>709</font>   (define (sum list)
-<font class='lnum'>710</font>     (fold-left add (car list) (cdr list)))
-<font class='lnum'>711</font>   
-<font class='lnum'>712</font>   (define (sub a b)
-<font class='lnum'>713</font>     (map-n - a b))
-<font class='lnum'>714</font>   
-<font class='lnum'>715</font>   (define (mul a b)
-<font class='lnum'>716</font>     (cond ((and (list? a) (number? b)) (map (lambda (x) (* x b)) a))
-<font class='lnum'>717</font>   	((and (number? a) (list? b)) (mul b a))
-<font class='lnum'>718</font>   	((and (number? a) (number? b)) (* a b))
-<font class='lnum'>719</font>   	(else (error "Can not multiply"))))
-<font class='lnum'>720</font>   
-<font class='lnum'>721</font>   (define (div a b)
-<font class='lnum'>722</font>     (map (lambda (x) (/ x b)) a))
-<font class='lnum'>723</font>     
-<font class='lnum'>724</font>   (define (prod a b)
-<font class='lnum'>725</font>     (fold-left + 0 (map-n * a b)))
-<font class='lnum'>726</font>   </fieldset></pre>
+<font class='lnum'>630</font>   (define (add a b)
+<font class='lnum'>631</font>     (map-n + a b))
+<font class='lnum'>632</font>   
+<font class='lnum'>633</font>   (define (sum list)
+<font class='lnum'>634</font>     (fold-left add (car list) (cdr list)))
+<font class='lnum'>635</font>   
+<font class='lnum'>636</font>   (define (sub a b)
+<font class='lnum'>637</font>     (map-n - a b))
+<font class='lnum'>638</font>   
+<font class='lnum'>639</font>   (define (mul a b)
+<font class='lnum'>640</font>     (cond ((and (list? a) (number? b)) (map (lambda (x) (* x b)) a))
+<font class='lnum'>641</font>   	((and (number? a) (list? b)) (mul b a))
+<font class='lnum'>642</font>   	((and (number? a) (number? b)) (* a b))
+<font class='lnum'>643</font>   	(else (error "Can not multiply"))))
+<font class='lnum'>644</font>   
+<font class='lnum'>645</font>   (define (div a b)
+<font class='lnum'>646</font>     (map (lambda (x) (/ x b)) a))
+<font class='lnum'>647</font>     
+<font class='lnum'>648</font>   (define (prod a b)
+<font class='lnum'>649</font>     (fold-left + 0 (map-n * a b)))
+<font class='lnum'>650</font>   </fieldset></pre>
 </div><p>
 For the matrix inverse and determinant we use the implementation with the cofactors extracted from the SLIB. It is not the fastest and should be replaced with the Gaussian elimination.<br>
 <p>
-<font class='lnum'>730</font>   
-                <div id=codechunk730>
+<font class='lnum'>654</font>   
+                <div id=codechunk654>
     <pre><fieldset class='codefieldset'><legend class='codelegend'>&lt;&lt;Matrix inverse .scm&gt;&gt<sub></sub>=</legend>
-<font class='lnum'>731</font>   (define (matrix-cofactor mat i j)
-<font class='lnum'>732</font>     (define (butnth n lst)
-<font class='lnum'>733</font>       (if (&lt;= n 1)
-<font class='lnum'>734</font>   	(cdr lst)
-<font class='lnum'>735</font>   	(cons (car lst)
-<font class='lnum'>736</font>   	      (butnth (+ -1 n) (cdr lst)))))
-<font class='lnum'>737</font>     (define (minor matrix i j)
-<font class='lnum'>738</font>       (map (lambda (x)
-<font class='lnum'>739</font>   	   (butnth j x))
-<font class='lnum'>740</font>   	 (butnth i mat)))
-<font class='lnum'>741</font>     (* (if (odd? (+ i j)) -1 1)
-<font class='lnum'>742</font>        (matrix-determinant (minor mat i j))))
-<font class='lnum'>743</font>   
-<font class='lnum'>744</font>   (define (matrix-determinant mat)
-<font class='lnum'>745</font>     (let ((n (length mat)))
-<font class='lnum'>746</font>       (if (eqv? 1 n) (caar mat)
-<font class='lnum'>747</font>   	(do ((j n (+ -1 j))
-<font class='lnum'>748</font>   	     (ans 0 (+ ans (* (list-ref (car mat) (+ -1 j))
-<font class='lnum'>749</font>   			      (matrix-cofactor mat 1 j)))))
-<font class='lnum'>750</font>   	    ((&lt;= j 0) ans)))))
-<font class='lnum'>751</font>   
-<font class='lnum'>752</font>   
-<font class='lnum'>753</font>   (define (matrix-inverse mat)
-<font class='lnum'>754</font>     (let* ((det (matrix-determinant mat))
-<font class='lnum'>755</font>   	 (rank (length mat)))
-<font class='lnum'>756</font>       (and (not (zero? det))
-<font class='lnum'>757</font>   	 (do ((i rank (+ -1 i))
-<font class='lnum'>758</font>   	      (inv '() (cons
-<font class='lnum'>759</font>   			(do ((j rank (+ -1 j))
-<font class='lnum'>760</font>   			     (row '()
-<font class='lnum'>761</font>   				  (cons (/ (matrix-cofactor mat j i) det) row)))
-<font class='lnum'>762</font>   			    ((&lt;= j 0) row))
-<font class='lnum'>763</font>   			inv)))
-<font class='lnum'>764</font>   	     ((&lt;= i 0) inv)))))
-<font class='lnum'>765</font>   
-<font class='lnum'>766</font>   </fieldset></pre>
+<font class='lnum'>655</font>   (define (matrix-cofactor mat i j)
+<font class='lnum'>656</font>     (define (butnth n lst)
+<font class='lnum'>657</font>       (if (&lt;= n 1)
+<font class='lnum'>658</font>   	(cdr lst)
+<font class='lnum'>659</font>   	(cons (car lst)
+<font class='lnum'>660</font>   	      (butnth (+ -1 n) (cdr lst)))))
+<font class='lnum'>661</font>     (define (minor matrix i j)
+<font class='lnum'>662</font>       (map (lambda (x)
+<font class='lnum'>663</font>   	   (butnth j x))
+<font class='lnum'>664</font>   	 (butnth i mat)))
+<font class='lnum'>665</font>     (* (if (odd? (+ i j)) -1 1)
+<font class='lnum'>666</font>        (matrix-determinant (minor mat i j))))
+<font class='lnum'>667</font>   
+<font class='lnum'>668</font>   (define (matrix-determinant mat)
+<font class='lnum'>669</font>     (let ((n (length mat)))
+<font class='lnum'>670</font>       (if (eqv? 1 n) (caar mat)
+<font class='lnum'>671</font>   	(do ((j n (+ -1 j))
+<font class='lnum'>672</font>   	     (ans 0 (+ ans (* (list-ref (car mat) (+ -1 j))
+<font class='lnum'>673</font>   			      (matrix-cofactor mat 1 j)))))
+<font class='lnum'>674</font>   	    ((&lt;= j 0) ans)))))
+<font class='lnum'>675</font>   
+<font class='lnum'>676</font>   
+<font class='lnum'>677</font>   (define (matrix-inverse mat)
+<font class='lnum'>678</font>     (let* ((det (matrix-determinant mat))
+<font class='lnum'>679</font>   	 (rank (length mat)))
+<font class='lnum'>680</font>       (and (not (zero? det))
+<font class='lnum'>681</font>   	 (do ((i rank (+ -1 i))
+<font class='lnum'>682</font>   	      (inv '() (cons
+<font class='lnum'>683</font>   			(do ((j rank (+ -1 j))
+<font class='lnum'>684</font>   			     (row '()
+<font class='lnum'>685</font>   				  (cons (/ (matrix-cofactor mat j i) det) row)))
+<font class='lnum'>686</font>   			    ((&lt;= j 0) row))
+<font class='lnum'>687</font>   			inv)))
+<font class='lnum'>688</font>   	     ((&lt;= i 0) inv)))))
+<font class='lnum'>689</font>   
+<font class='lnum'>690</font>   </fieldset></pre>
 </div><p>
 <p>
 <p>
@@ -1375,7 +1391,7 @@ collapse all</a>
 </div>
 
         <fieldset><legend><a href="javascript:;" onmousedown="toggleCombined('13');">
-<font class='lnum'><i>(13)</i></font>&nbsp;Footnotes:</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 771)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='13'></a></legend></fieldset>
+<font class='lnum'><i>(13)</i></font>&nbsp;Footnotes:</a>&nbsp;<font class='lnum' size=-1><sub><i>(line 695)</i></sub></font> <font size=-2><i><a href='#tocancor'>toc</a></i></font><a name='13'></a></legend></fieldset>
 <p>
 <div id="13" style="display:none">   
 <ul>
@@ -1406,7 +1422,7 @@ collapse all</a>
 
 </td></tr></table></center></body></html>
 
-------------orQNYLOGidVp88I2yKagMz
+------------dO9CwwGVw6xFL2Ua8fX2C1
 Content-Disposition: inline; filename=ASCIIMathML_with_modified_escapes.js
 Content-Type: application/x-javascript; name=ASCIIMathML_with_modified_escapes.js
 Content-Location: http://localhost:8000/012-weaver.MOLLY/DVLP_SPLIT/tmp-tests/anton_nazarov.at.lj/ASCIIMathML_with_modified_escapes.js
@@ -4644,4 +4660,4 @@ b25sb2FkIGZ1bmN0aW9uCiAgICAgIGdlbmVyaWMoKTsKICAgIH07CiAgfQogIGVs
 c2UKICB7CiAgICAvL3NldHVwIG9ubG9hZCBmdW5jdGlvbgogICAgd2luZG93Lm9u
 bG9hZCA9IGdlbmVyaWM7CiAgfQp9Cgo=
 
-------------orQNYLOGidVp88I2yKagMz--
+------------dO9CwwGVw6xFL2Ua8fX2C1--
